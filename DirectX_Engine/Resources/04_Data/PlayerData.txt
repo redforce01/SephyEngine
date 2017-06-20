@@ -1,9 +1,0 @@
-Test PlayerData
-
-*ID : 01
- - Name : Actor01
- - Class : Warrior
-
-*ID : 02
- - Name : Actor02
- - Class : Mage
