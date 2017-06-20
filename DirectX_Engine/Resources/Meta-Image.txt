@@ -1,4 +1,0 @@
-== Sprite Data ==
-
-* Character_01 / 10, 5 / 200, 100 /
-* Character_02 / 10, 5 / 200, 100 /
