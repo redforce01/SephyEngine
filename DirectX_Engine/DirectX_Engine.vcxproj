@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BD3446FF-F1B2-4EC4-92AA-364D1AB30987}</ProjectGuid>
+    <RootNamespace>DirectX_Engine</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;winmm.lib;xinput.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>F:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;winmm.lib;xinput.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CameraSystem.cpp" />
+    <ClCompile Include="componentBase.cpp" />
+    <ClCompile Include="console.cpp" />
+    <ClCompile Include="cSingletonBase.cpp" />
+    <ClCompile Include="dashboard.cpp" />
+    <ClCompile Include="engineBoot.cpp" />
+    <ClCompile Include="engineButton.cpp" />
+    <ClCompile Include="engineCore.cpp" />
+    <ClCompile Include="engineDebugView.cpp" />
+    <ClCompile Include="engineEditControl.cpp" />
+    <ClCompile Include="engineImage.cpp" />
+    <ClCompile Include="engineINISetting.cpp" />
+    <ClCompile Include="engineInput.cpp" />
+    <ClCompile Include="engineResourceView.cpp" />
+    <ClCompile Include="engineInspectorView.cpp" />
+    <ClCompile Include="engineMenebar.cpp" />
+    <ClCompile Include="engineSceneView.cpp" />
+    <ClCompile Include="engineStatic.cpp" />
+    <ClCompile Include="engineSystem.cpp" />
+    <ClCompile Include="engineTable.cpp" />
+    <ClCompile Include="EngineTableCell.cpp" />
+    <ClCompile Include="engineWindowManager.cpp" />
+    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="engineWindow.cpp" />
+    <ClCompile Include="fileManager.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameObject.cpp" />
+    <ClCompile Include="gameObjectManager.cpp" />
+    <ClCompile Include="gocMessage.cpp" />
+    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="image.cpp" />
+    <ClCompile Include="imageManager.cpp" />
+    <ClCompile Include="input.cpp" />
+    <ClCompile Include="inputComponent.cpp" />
+    <ClCompile Include="inputDialog.cpp" />
+    <ClCompile Include="layer.cpp" />
+    <ClCompile Include="layerManager.cpp" />
+    <ClCompile Include="mainNode.cpp" />
+    <ClCompile Include="mapSystem.cpp" />
+    <ClCompile Include="messageDialog.cpp" />
+    <ClCompile Include="gocMessageManager.cpp" />
+    <ClCompile Include="metaBuilderMain.cpp" />
+    <ClCompile Include="metaBuilderUI.cpp" />
+    <ClCompile Include="myUtil.cpp" />
+    <ClCompile Include="render2DComponent.cpp" />
+    <ClCompile Include="renderComponent.cpp" />
+    <ClCompile Include="resourceTreeContent.cpp" />
+    <ClCompile Include="resourceTreeViewer.cpp" />
+    <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="scene_Lobby.cpp" />
+    <ClCompile Include="scene_Main.cpp" />
+    <ClCompile Include="scene_MapTool.cpp" />
+    <ClCompile Include="scene_Test.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="tabContent_A.cpp" />
+    <ClCompile Include="textDX.cpp" />
+    <ClCompile Include="textureManager.cpp" />
+    <ClCompile Include="tileObject.cpp" />
+    <ClCompile Include="timeManager.cpp" />
+    <ClCompile Include="uiButton.cpp" />
+    <ClCompile Include="uiFrame.cpp" />
+    <ClCompile Include="uiParent.cpp" />
+    <ClCompile Include="uiProgressBar.cpp" />
+    <ClCompile Include="uiTab.cpp" />
+    <ClCompile Include="winmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CameraSystem.h" />
+    <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="componentBase.h" />
+    <ClInclude Include="console.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="cSingletonBase.h" />
+    <ClInclude Include="dashboard.h" />
+    <ClInclude Include="engineBoot.h" />
+    <ClInclude Include="engineButton.h" />
+    <ClInclude Include="engineCore.h" />
+    <ClInclude Include="engineDebugView.h" />
+    <ClInclude Include="engineEditControl.h" />
+    <ClInclude Include="engineError.h" />
+    <ClInclude Include="engineImage.h" />
+    <ClInclude Include="engineINISetting.h" />
+    <ClInclude Include="engineInput.h" />
+    <ClInclude Include="engineResourceView.h" />
+    <ClInclude Include="engineInspectorView.h" />
+    <ClInclude Include="engineMenebar.h" />
+    <ClInclude Include="engineSceneView.h" />
+    <ClInclude Include="engineStatic.h" />
+    <ClInclude Include="engineSystem.h" />
+    <ClInclude Include="engineTable.h" />
+    <ClInclude Include="EngineTableCell.h" />
+    <ClInclude Include="engineWindowManager.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="engineWindow.h" />
+    <ClInclude Include="fileManager.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="gameError.h" />
+    <ClInclude Include="gameObject.h" />
+    <ClInclude Include="gameObjectManager.h" />
+    <ClInclude Include="gocMessage.h" />
+    <ClInclude Include="graphics.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="imageManager.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="inputComponent.h" />
+    <ClInclude Include="inputDialog.h" />
+    <ClInclude Include="layer.h" />
+    <ClInclude Include="layerManager.h" />
+    <ClInclude Include="mainNode.h" />
+    <ClInclude Include="mapSystem.h" />
+    <ClInclude Include="messageDialog.h" />
+    <ClInclude Include="gocMessageManager.h" />
+    <ClInclude Include="metaBuilderMain.h" />
+    <ClInclude Include="metaBuilderUI.h" />
+    <ClInclude Include="myUtil.h" />
+    <ClInclude Include="render2DComponent.h" />
+    <ClInclude Include="renderComponent.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resourceTreeContent.h" />
+    <ClInclude Include="resourceTreeViewer.h" />
+    <ClInclude Include="RTTI.h" />
+    <ClInclude Include="sceneManager.h" />
+    <ClInclude Include="scene_Lobby.h" />
+    <ClInclude Include="scene_Main.h" />
+    <ClInclude Include="scene_MapTool.h" />
+    <ClInclude Include="scene_Test.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="tabContent_A.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="textDX.h" />
+    <ClInclude Include="textureManager.h" />
+    <ClInclude Include="tileObject.h" />
+    <ClInclude Include="timeManager.h" />
+    <ClInclude Include="uiButton.h" />
+    <ClInclude Include="uiFrame.h" />
+    <ClInclude Include="uiParent.h" />
+    <ClInclude Include="uiProgressBar.h" />
+    <ClInclude Include="uiTab.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

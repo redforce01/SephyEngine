@@ -1,0 +1,221 @@
+#include "stdafx.h"
+#include "engineSystem.h"
+
+// EngineSystem Pointer For CALLBACK EngineProc
+EngineSystem* pEngine;
+
+//=============================================================================
+// Main Engine Proc
+//=============================================================================
+static LRESULT CALLBACK EngineProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+{
+	return pEngine->EngineProc(hWnd, Msg, wParam, lParam);
+}
+
+EngineSystem::EngineSystem()
+{
+
+}
+
+EngineSystem::~EngineSystem()
+{
+	SAFE_DELETE(engineSceneView);
+	SAFE_DELETE(engineResourceView);
+	SAFE_DELETE(engineInspectorView);
+	SAFE_DELETE(g_Graphics);
+	SAFE_DELETE(g_MainNode);
+}
+
+//=============================================================================
+// Engine Start
+// This Function Will Load When WinMain.cpp Start
+//=============================================================================
+bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
+{
+	FILEMANAGER->initialize();
+
+	bool success = false;
+
+	// pEngine->Set This Point. 
+	// For Static Engine & Game Proc
+	::pEngine = this;
+
+	try
+	{
+		engineInput = new EngineInput;
+
+		// Create Engine-Main Window
+		if (CreateMainWindow(g_hWndEngine, hInstance, nCmdShow) == false)
+			throw(EngineError(engineErrorNS::ENGINE_CORE_ERROR, "Engine Main Window Create Failed"));
+
+		if (engineMenubar.initialize() == false)
+			throw(EngineError(engineErrorNS::ENGINE_SYSTEM_MENU_ERROR, "EngineMenubar Create Failed"));
+
+		RECT rc;
+		GetClientRect(g_hWndEngine, &rc);
+		int height = (rc.bottom - rc.top) / 2;
+
+		//engineSceneView = new EngineSceneView;
+		//engineSceneView->initialize(new EngineInput, g_hWndEngine, (HMENU)1, 0, 0, 1920, 1080);
+		//engineResourceView = new EngineResourceView;
+		//engineResourceView->initialize(new EngineInput, g_hWndEngine, (HMENU)2, engineSceneView->getRect().right, 0, 250, rc.bottom - rc.top / 2);
+		//engineInspectorView = new EngineInspectorView;
+		//engineInspectorView->initialize(new EngineInput, g_hWndEngine, (HMENU)3, engineResourceView->getRect().right, 0, 400, rc.bottom - rc.top);
+
+		//g_hWndScene = engineSceneView->getHwnd();
+
+		success = true;
+	}
+	catch (const EngineError &err)
+	{
+		MessageBox(g_hWndEngine, err.getMessage(), "Error", MB_OK);
+	}
+	
+	return success;
+}
+
+//=============================================================================
+// Engine Run
+// Global Graphics Pointer initialize 
+// MainNode initialize
+// Window Message Loop -> MainNode.Update()
+// if has found something problem, It would be catched GameError
+//=============================================================================
+int EngineSystem::run()
+{
+	bEngineStart = true;
+
+	//Graphics Initialize
+	g_Graphics = new Graphics;
+	g_Graphics->initialize(g_hWndEngine, 0, 0, false);
+	//g_Graphics->initialize(g_hWndScene, 0, 0, false);
+
+	//Main Node Initialize
+	g_MainNode = new MainNode;
+	g_MainNode->initialize();
+
+	MSG msg;
+	try {
+		// main message loop
+		int done = 0;
+		while (!done)
+		{
+			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+			{
+				// look for quit message
+				if (msg.message == WM_QUIT)
+					done = 1;
+
+				// decode and pass messages on to WinProc
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+			else
+			{
+				g_MainNode->update();			// Main Node Update()  Message Loop -> Update()
+			}
+		}
+		//SAFE_DELETE (game);     // free memory before exit
+		return msg.wParam;
+	}
+	catch (const EngineError &err)
+	{
+		g_MainNode->release();													// MainNode release
+		DestroyWindow(g_hWndEngine);											// Destory Engine Window
+		//DestroyWindow(g_hWndScene);
+		MessageBox(NULL, err.getMessage(), "Error", MB_OK);
+	}
+	catch (...)
+	{
+		g_MainNode->release();													// MainNode release
+		DestroyWindow(g_hWndEngine);											// Destory Engine Window
+		//DestroyWindow(g_hWndScene);
+		MessageBox(NULL, "Unknown error occured in game.", "Error", MB_OK);
+	}
+
+	
+	return 0;
+}
+
+//=============================================================================
+// Create the window
+// Returns: false on error
+//=============================================================================
+bool EngineSystem::CreateMainWindow(HWND &hWnd, HINSTANCE hInstance, int nCmdShow)
+{
+	// Fill in the window class structure with parameters 
+    // that describe the main window. 
+	g_wcx.cbSize = sizeof(g_wcx);									// size of structure 
+	g_wcx.style = CS_HREDRAW | CS_VREDRAW;							// redraw if size changes 
+	g_wcx.lpfnWndProc = ::EngineProc;								// points to window procedure
+	g_wcx.cbClsExtra = 0;											// no extra class memory 
+	g_wcx.cbWndExtra = 0;											// no extra window memory 
+	g_wcx.hInstance = hInstance;									// handle to instance 
+	g_wcx.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+	g_wcx.hCursor = LoadCursor(NULL, IDC_ARROW);					// predefined arrow 
+	g_wcx.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);		// black background 
+	g_wcx.lpszMenuName = NULL;										// name of menu resource 
+	g_wcx.lpszClassName = CLASS_NAME;								// name of window class 
+	g_wcx.hIconSm = NULL;											// small class icon
+
+	g_hInst = g_wcx.hInstance;										// global hInstance = g_wcx.hInstance
+
+	// Register the window class. 
+	// RegisterClassEx returns 0 on error.
+	if (RegisterClassEx(&g_wcx) == 0)    // if error
+		return false;
+
+	//set up the screen in windowed or fullscreen mode?
+	DWORD style;
+	if (FULLSCREEN)
+		style = WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP;
+	else
+		style = WS_OVERLAPPEDWINDOW;
+	
+	// Create window
+	hWnd = CreateWindow(
+		CLASS_NAME,             // name of the window class
+		GAME_TITLE,             // title bar text
+		style,                  // window style
+		CW_USEDEFAULT,          // default horizontal position of window
+		CW_USEDEFAULT,          // default vertical position of window
+		WINSIZEX,				// width of window
+		WINSIZEY,				// height of the window
+		(HWND)NULL,				// no parent window
+		(HMENU)NULL,			// no menu
+		hInstance,              // handle to application instance
+		(LPVOID)NULL);			// no window parameters
+
+							   // if there was an error creating the window
+	if (!hWnd)
+		return false;
+
+	if (!FULLSCREEN)             // if window
+	{
+		// Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
+		RECT clientRect;
+		GetClientRect(hWnd, &clientRect);   // get size of client area of window
+		MoveWindow(hWnd,
+			0,                                           // Left
+			0,                                           // Top
+			WINSIZEX + (WINSIZEX - clientRect.right),    // Right
+			WINSIZEY + (WINSIZEY - clientRect.bottom),	 // Bottom
+			TRUE);                                       // Repaint the window
+	}
+
+	// Show the window
+	ShowWindow(hWnd, nCmdShow);
+
+	return true;
+}
+
+//=============================================================================
+// Window Event Callback Function
+// This Proc Function is Static 
+// It will be converted For Engine messageHandler
+//=============================================================================
+LRESULT EngineSystem::EngineProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+{	
+	//return (engineInput->messageHandler(hWnd, Msg, wParam, lParam));
+	return (g_MainNode->messageHandler(hWnd, Msg, wParam, lParam));
+}
