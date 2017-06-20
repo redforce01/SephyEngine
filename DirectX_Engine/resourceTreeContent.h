@@ -17,7 +17,7 @@ class ResourceTreeContent
 private:
 	Graphics* pGraphics;
 	Input* pInput;
-	TextDX dxFont;
+	TextDX* pDxFont;
 	
 	CONTENTSTYPE contentType;
 	std::string message;
@@ -27,24 +27,20 @@ private:
 	RECT rcText;
 	RECT rcContent;
 
-	bool visible;
 	bool initialized;
 public:
 	ResourceTreeContent();
 	~ResourceTreeContent();
 
-	bool initialize(Graphics* g, Input* i, CONTENTSTYPE type, std::string msg,
+	bool initialize(Graphics* g, Input* i, TextDX* font,
+		CONTENTSTYPE type, std::string msg,
 		float x, float y, float w, float h, float m);
 	void draw();
 
 	void changePos(float x, float y);
-
 	void setupRect();
-	void setShowHide();
-	void setShowHide(bool flag);
 
 	std::string getMessage() { return message; }
-	bool getVisible() { return visible; }
 	RECT getContentRect() { return rcContent; }
 };
 

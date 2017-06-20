@@ -11,7 +11,6 @@ ResourceTreeContent::ResourceTreeContent()
 	width = height = 0;
 	margin = 0;
 
-	visible = false;
 	initialized = false;
 }
 
@@ -20,7 +19,7 @@ ResourceTreeContent::~ResourceTreeContent()
 {
 }
 
-bool ResourceTreeContent::initialize(Graphics * g, Input * i, CONTENTSTYPE type, std::string msg, float x, float y, float w, float h, float m)
+bool ResourceTreeContent::initialize(Graphics * g, Input * i, TextDX* font, CONTENTSTYPE type, std::string msg, float x, float y, float w, float h, float m)
 {
 	bool success = false;
 
@@ -31,6 +30,7 @@ bool ResourceTreeContent::initialize(Graphics * g, Input * i, CONTENTSTYPE type,
 
 		pGraphics = g;
 		pInput = i;
+		pDxFont = font;
 		contentType = type;
 		message = msg;
 		posX = x, posY = y;
@@ -52,10 +52,13 @@ bool ResourceTreeContent::initialize(Graphics * g, Input * i, CONTENTSTYPE type,
 
 void ResourceTreeContent::draw()
 {
+	if (!initialized)
+		return;
+
 	pGraphics->spriteBegin();
 	
 	setupRect();
-	dxFont.print(message, rcText, DT_LEFT);
+	pDxFont->print(message, rcText, DT_LEFT);
 
 	pGraphics->spriteEnd();
 }
@@ -78,18 +81,4 @@ void ResourceTreeContent::setupRect()
 	rcText.right = (long)(rcText.right + width - margin);
 	rcText.top = rcText.bottom - rowHeight;
 	rcText.bottom = (long)(posY + height - 2 * margin - 2 * rowHeight);
-}
-
-void ResourceTreeContent::setShowHide()
-{
-	if (!initialized)
-		return;
-	visible = !visible;
-}
-
-void ResourceTreeContent::setShowHide(bool flag)
-{
-	if (!initialized)
-		return;
-	visible = flag;
 }
