@@ -2,22 +2,24 @@
 #include "ResourceTreeViewer.h"
 
 
-ResourceTreeViewer::ResourceTreeViewer()
+ResourceTreeViewer::ResourceTreeViewer() : SystemUIWindow()
 {
-
-
+	nSelectFile = 0;
+	pSelectFile = nullptr;
 
 	fontColor = treeViewerNS::FONT_COLOR;
 	backColor = treeViewerNS::BACK_COLOR;
-	vertexBuffer = nullptr;
-
-	initialized = false;
-	visible = false;
 }
 
 
 ResourceTreeViewer::~ResourceTreeViewer()
 {
+	for (auto iter : resFiles)
+	{
+		if (iter)
+			SAFE_DELETE(iter);
+		iter = nullptr;
+	}
 }
 
 bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
@@ -26,52 +28,21 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 
 	try
 	{
-		pGraphics = g;
-		pInput = i;
-
-		// top left
-		vtx[0].x = x;
-		vtx[0].y = y;
-		vtx[0].z = 0.0f;
-		vtx[0].rhw = 1.0f;
-		vtx[0].color = backColor;
-
-		// top right
-		vtx[1].x = x + treeViewerNS::WIDTH;
-		vtx[1].y = y;
-		vtx[1].z = 0.0f;
-		vtx[1].rhw = 1.0f;
-		vtx[1].color = backColor;
-
-		// bottom right
-		vtx[2].x = x + treeViewerNS::WIDTH;
-		vtx[2].y = y + treeViewerNS::HEIGHT;
-		vtx[2].z = 0.0f;
-		vtx[2].rhw = 1.0f;
-		vtx[2].color = backColor;
-
-		// bottom left
-		vtx[3].x = x;
-		vtx[3].y = y + treeViewerNS::HEIGHT;
-		vtx[3].z = 0.0f;
-		vtx[3].rhw = 1.0f;
-		vtx[3].color = backColor;
-
-		pGraphics->createVertexBuffer(vtx, sizeof vtx, vertexBuffer);
+		success = SystemUIWindow::initialize(g, i, treeViewerNS::X, treeViewerNS::Y, treeViewerNS::WIDTH, treeViewerNS::HEIGHT, treeViewerNS::MARGIN);
 
 		// initialize DirectX font
 		if (dxFont.initialize(pGraphics, treeViewerNS::FONT_HEIGHT, false,
-			false, consoleNS::FONT) == false)
+			false, treeViewerNS::FONT) == false)
 			return false;      // if failed
 		dxFont.setFontColor(fontColor);
 		
 		int resX, resY;
-		resX = 0;
-		resY = 5;
+		resX = x + margin;
+		resY = y + margin;
 		auto total = FILEMANAGER->getAllFile();
 		for (auto iter : total)
 		{
-			resX = 5;
+			resX = x + margin;
 			File* folder = new File();
 			folder->initialize(g, i, &dxFont, CONTENTSTYPE::CONTENTS_FOLDER, iter.first, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
 			addTreeRes(folder);
@@ -85,6 +56,12 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 				addTreeRes(file);
 				resY += viewerChildHeight;
 			}
+
+			resX = x;
+			File* cutline = new File();
+			cutline->initialize(g, i, &dxFont, CONTENTSTYPE::CONTENTS_UNKNOWN, treeViewerNS::CUT_LINE, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
+			addTreeRes(cutline);
+			resY += viewerChildHeight;
 		}
 
 		success = initialized = true;
@@ -99,23 +76,58 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 
 void ResourceTreeViewer::update(float frameTime)
 {
-
 }
 
 void ResourceTreeViewer::render()
 {
+	pGraphics->drawQuad(vertexBuffer);
+
+	if (resFiles.size() <= 0)
+		return;
+	
+	pGraphics->spriteBegin();
 	for (auto iter : resFiles)
 	{
-		iter.second->draw();
+		if (iter->getContentRect().bottom > height)
+			break;
+
+		iter->draw();
 	}
+	pGraphics->spriteEnd();
 }
 
 bool ResourceTreeViewer::addTreeRes(File * pChild)
 {
-	//auto check = pChild->getViewName();
-	//if (resFiles.find(check)->second == nullptr)
-	//	return false;
-	resFiles.emplace(pChild->getMessage(), pChild);
+	if (pChild == nullptr)
+		return false;
 
+	resFiles.emplace_back(pChild);
+	return true;
+}
+
+bool ResourceTreeViewer::checkTreeClicked()
+{
+	nSelectFile = 0;
+	for (auto iter : resFiles)
+	{
+		if (PtInRect(&iter->getContentRect(), PointMake(pInput->getMouseX(), pInput->getMouseY())))
+			return true;
+		nSelectFile++;
+	}
+
+	return false;
+}
+
+bool ResourceTreeViewer::checkMapClicked()
+{
+	return false;
+}
+
+bool ResourceTreeViewer::setSelectFile()
+{
+	if (resFiles.size() < nSelectFile)
+		return false;
+
+	pSelectFile = resFiles[nSelectFile];
 	return true;
 }

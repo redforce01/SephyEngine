@@ -11,10 +11,11 @@ MapSystem::MapSystem()
 
 MapSystem::~MapSystem()
 {
-	int size = arrTiles.size();
-	for (UINT i = 0; i < size; i++)
+	for (auto iter : arrTiles)
 	{
-		SAFE_DELETE(arrTiles[i]);
+		if(iter != nullptr)
+			SAFE_DELETE(iter);
+		iter = nullptr;
 	}
 	arrTiles.clear();
 }
@@ -27,13 +28,16 @@ bool MapSystem::initialize(Game* gamePtr)
 	int mapX, mapY;
 	mapX = mapY = 0;
 
+	if (gamePtr == nullptr)
+		return false;
+
 	for (UINT row = 0; row < MapSystemNS::mapSizeX; row++)
 	{
 		for (UINT col = 0; col < MapSystemNS::mapSizeY; col++)
 		{
 			TileObject* temp = new TileObject;
 			temp->initialize(UIDCount, mapX, mapY,
-				gamePtr->getGraphics(), 0, 0, 0, IMAGEMANAGER->getTexture("basicTile"));
+				gamePtr->getGraphics(), MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight, 0, IMAGEMANAGER->getTexture("isoBasicA"));
 			arrTiles.emplace_back(temp);
 			
 			mapX += MapSystemNS::tileBasicWidth;
@@ -45,71 +49,64 @@ bool MapSystem::initialize(Game* gamePtr)
 			mapX = 0;
 		else mapX = MapSystemNS::tileBasicWidth / 2;
 	}
-
+	
 	return success;
 }
 
 void MapSystem::update(float frameTime)
 {
-	int size = arrTiles.size();
-	for (UINT i = 0; i < size; i++)
+	for (auto iter : arrTiles)
 	{
-		if (MyUtil::getScreenIn(arrTiles[i]->getX(), arrTiles[i]->getY(), arrTiles[i]->getWidth(), arrTiles[i]->getHeight(), WINSIZEX, WINSIZEY))
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY))
 		{
-			arrTiles[i]->update(frameTime);
+			iter->update(frameTime);
 		}
 	}
 }
 
 void MapSystem::render()
 {
-	int size = arrTiles.size();
-	int maxRenderSizeX = WINSIZEX / MapSystemNS::tileBasicWidth;
-	int maxRenderSizeY = WINSIZEY / MapSystemNS::tileBasicHeight;
-
-	for (UINT i = 0; i < size; i++)
+	for (auto iter : arrTiles)
 	{
-		if (MyUtil::getScreenIn(arrTiles[i]->getX(), arrTiles[i]->getY(), arrTiles[i]->getWidth(), arrTiles[i]->getHeight(), WINSIZEX, WINSIZEY))
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY))
 		{
-			arrTiles[i]->render();
-			arrTiles[i]->renderSketch();
+			iter->renderSketch();			
+			iter->render();
 		}
 	}
 }
 
 void MapSystem::moveX(float distance)
 {
-	int size = arrTiles.size();
-	for (UINT i = 0; i < size; i++)
+	for (auto iter : arrTiles)
 	{
-		arrTiles[i]->moveX(distance);
-	}	
+		iter->moveX(distance);
+		iter->moveRectWidth(distance);
+	}
 }
 
 void MapSystem::moveY(float distance)
 {
-	int size = arrTiles.size();
-	for (UINT i = 0; i < size; i++)
+	for (auto iter : arrTiles)
 	{
-		arrTiles[i]->moveY(distance);
+		iter->moveY(distance);
+		iter->moveRectHeight(distance);
 	}
 }
 
 void MapSystem::scaleUp()
 {
-	int size = arrTiles.size();
-	for (UINT i = 0; i < size; i++)
+	for (auto iter : arrTiles)
 	{
-		arrTiles[i]->increaseScale();
+		iter->increaseScale();
 	}
 }
 
 void MapSystem::scaleDown()
 {
-	int size = arrTiles.size();
-	for (UINT i = 0; i < size; i++)
+	for (auto iter : arrTiles)
 	{
-		arrTiles[i]->decreaseScale();
+		iter->decreaseScale();
 	}
 }
 

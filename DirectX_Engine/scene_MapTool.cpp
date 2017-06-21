@@ -9,8 +9,8 @@ Scene_MapTool::Scene_MapTool() : Game()
 
 Scene_MapTool::~Scene_MapTool()
 {
-	safeDelete(mapSystem);
-	safeDelete(cameraSystem);
+	SAFE_DELETE(mapSystem);
+	SAFE_DELETE(cameraSystem);
 
 	releaseAll();
 }
@@ -36,6 +36,24 @@ void Scene_MapTool::update()
 	cameraSystem->update(this->getInput());
 	resourceTreeViewer->update(frameTime);
 
+	std::string str = "isoBasicB";
+	if (input->getMouseLButton())
+	{
+		auto arr = mapSystem->getAllTiles();
+		for (auto iter : arr)
+		{
+			if (PtInRect(&iter->getTileRect(), PointMake(input->getMouseX(), input->getMouseY())))
+			{
+				iter->changeTile(IMAGEMANAGER->getTexture(str));
+				break;
+			}
+		}
+	}
+
+	if (input->isKeyDown(MapToolNS::ESCAPE_KEY))
+	{
+		PostQuitMessage(0);
+	}
 }
 
 void Scene_MapTool::release()
@@ -55,9 +73,6 @@ void Scene_MapTool::render()
 	graphics->spriteBegin();
 
 	mapSystem->render();
-	resourceTreeViewer->render();
-	
-
 
 	// Scene View Information Render
 	static float worldSec;
@@ -72,6 +87,9 @@ void Scene_MapTool::render()
 	dxFont.print(std::string("SceneView"), 10, 50);
 
 	graphics->spriteEnd();
+
+
+	resourceTreeViewer->render();
 }
 
 void Scene_MapTool::releaseAll()

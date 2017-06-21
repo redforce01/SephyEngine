@@ -35,6 +35,7 @@ const UCHAR LEFT_KEY = VK_LEFT;
 const UCHAR RIGHT_KEY = VK_RIGHT;
 const UCHAR UP_KEY = VK_UP;
 const UCHAR DOWN_KEY = VK_DOWN;
+const UCHAR MOUSE_LBUTTON = VK_LBUTTON;
 
 //=============================================================================
 // Function templates for safely dealing with pointer referenced items.

@@ -150,7 +150,6 @@
     <ClCompile Include="engineBoot.cpp" />
     <ClCompile Include="engineButton.cpp" />
     <ClCompile Include="engineCore.cpp" />
-    <ClCompile Include="engineDebugView.cpp" />
     <ClCompile Include="engineEditControl.cpp" />
     <ClCompile Include="engineImage.cpp" />
     <ClCompile Include="engineINISetting.cpp" />
@@ -181,6 +180,8 @@
     <ClCompile Include="layerManager.cpp" />
     <ClCompile Include="mainNode.cpp" />
     <ClCompile Include="mapSystem.cpp" />
+    <ClCompile Include="mapTileData.cpp" />
+    <ClCompile Include="mapTileViewer.cpp" />
     <ClCompile Include="messageDialog.cpp" />
     <ClCompile Include="gocMessageManager.cpp" />
     <ClCompile Include="metaBuilderMain.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="systemUIWindow.cpp" />
     <ClCompile Include="tabContent_A.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
@@ -221,7 +223,6 @@
     <ClInclude Include="engineBoot.h" />
     <ClInclude Include="engineButton.h" />
     <ClInclude Include="engineCore.h" />
-    <ClInclude Include="engineDebugView.h" />
     <ClInclude Include="engineEditControl.h" />
     <ClInclude Include="engineError.h" />
     <ClInclude Include="engineImage.h" />
@@ -254,6 +255,8 @@
     <ClInclude Include="layerManager.h" />
     <ClInclude Include="mainNode.h" />
     <ClInclude Include="mapSystem.h" />
+    <ClInclude Include="mapTileData.h" />
+    <ClInclude Include="mapTileViewer.h" />
     <ClInclude Include="messageDialog.h" />
     <ClInclude Include="gocMessageManager.h" />
     <ClInclude Include="metaBuilderMain.h" />
@@ -271,6 +274,7 @@
     <ClInclude Include="scene_MapTool.h" />
     <ClInclude Include="scene_Test.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="systemUIWindow.h" />
     <ClInclude Include="tabContent_A.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="textDX.h" />

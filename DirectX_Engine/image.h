@@ -113,10 +113,10 @@ class Image
     virtual void setY(float newY)   {spriteData.y = newY;}
 
 	// Increase Scale += 0.1f
-	virtual void increaseScale() { spriteData.scale += 0.1f; }
+	virtual void increaseScale() { spriteData.scale += 0.01f; }
 
 	// Decrease Scale += 0.1f
-	virtual void decreaseScale() { spriteData.scale -= 0.1f; }
+	virtual void decreaseScale() { spriteData.scale -= 0.01f; }
 
     // Set scale.
     virtual void setScale(float s)  {spriteData.scale = s;}
@@ -220,10 +220,13 @@ class Image
 	virtual void drawNine(SpriteData sd, COLOR_ARGB color = graphicsNS::WHITE, UINT textureN = 0);
 	
 	// For Testing Draw Rect Function
-	virtual void drawRect(COLOR_ARGB color = graphicsNS::RED );
+	virtual void drawRect(COLOR_ARGB color = graphicsNS::WHITE );
 
 	// For Testing Draw Isometric Function
 	virtual void drawIsometric(COLOR_ARGB color = graphicsNS::WHITE);
+
+	// For Testing Draw Circle Function
+	virtual void drawCircle(COLOR_ARGB color = graphicsNS::WHITE);
 
     // Update the animation. frameTime is used to regulate the speed.
     virtual void update(float frameTime);

@@ -301,6 +301,13 @@ public:
     //=============================================================================
     void drawLine(float x1, float y1, float x2, float y2, float width = 1.0f, COLOR_ARGB color = graphicsNS::WHITE);
 
+	//=============================================================================
+	// Draw DirectX line from RECT
+	//	this function call drawLine function
+	//	each line -> draw line x4
+	//=============================================================================
+	void drawRect(RECT& rc, float width = 1.0f, COLOR_ARGB color = graphicsNS::WHITE);
+	
     //=============================================================================
     // Clear backbuffer and BeginScene()
     //=============================================================================

@@ -315,6 +315,14 @@ void Graphics::drawLine(float x1, float y1, float x2, float y2, float width, COL
     line->End();                        // end drawing lines
 }
 
+void Graphics::drawRect(RECT & rc, float width, COLOR_ARGB color)
+{	
+	drawLine(rc.left, rc.top, rc.right, rc.top);
+	drawLine(rc.left, rc.top, rc.left, rc.bottom);
+	drawLine(rc.left, rc.bottom, rc.right, rc.bottom);
+	drawLine(rc.right, rc.top, rc.right, rc.bottom);
+}
+
 //=============================================================================
 // Display the backbuffer
 //=============================================================================

@@ -48,8 +48,8 @@ bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 		if (CreateMainWindow(g_hWndEngine, hInstance, nCmdShow) == false)
 			throw(EngineError(engineErrorNS::ENGINE_CORE_ERROR, "Engine Main Window Create Failed"));
 
-		if (engineMenubar.initialize() == false)
-			throw(EngineError(engineErrorNS::ENGINE_SYSTEM_MENU_ERROR, "EngineMenubar Create Failed"));
+		//if (engineMenubar.initialize() == false)
+		//	throw(EngineError(engineErrorNS::ENGINE_SYSTEM_MENU_ERROR, "EngineMenubar Create Failed"));
 
 		RECT rc;
 		GetClientRect(g_hWndEngine, &rc);

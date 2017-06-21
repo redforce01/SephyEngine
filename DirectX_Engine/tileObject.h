@@ -20,9 +20,10 @@ namespace TileNS
 
 enum class TILEFEATURE : UINT
 {
-	SQUARE,
-	ISOMETRIC,
-	CIRCLE
+	FEATULRE_UNKNOWN,
+	FEATULRE_SQUARE,
+	FEATULRE_ISOMETRIC,
+	FEATULRE_CIRCLE
 };
 
 class TileObject : public Image
@@ -31,8 +32,8 @@ private:
 	UINT number;
 	UINT type;
 	TILEFEATURE feature;
+	RECT rcTile;
 
-	
 public:
 	TileObject();
 	~TileObject();
@@ -46,8 +47,40 @@ public:
 	// ( Square / Isometric / Circle )
 	void renderSketch();
 
-	void setFeature(TILEFEATURE f) { feature = f; }
-	TILEFEATURE getFeature() { return feature; }
+	inline TILEFEATURE getFeature()
+	{ 
+		return feature;
+	}
+
+	inline RECT getTileRect()
+	{
+		return rcTile;
+	}
+	
+	inline void moveRectWidth(float distance)
+	{
+		rcTile.left += distance;
+		rcTile.right += distance;
+	}
+
+	inline void moveRectHeight(float distance)
+	{
+		rcTile.top += distance;
+		rcTile.bottom += distance;
+	}
+
+	inline void setFeature(TILEFEATURE f)
+	{
+		feature = f;
+	}
+
+	inline bool changeTile(TextureManager* texture)
+	{
+		if (texture == nullptr)
+			return false;
+		setTextureManager(texture);
+		return true;
+	}
 };
 
 #endif // !_TILEOBJECT_H

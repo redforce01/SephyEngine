@@ -12,6 +12,7 @@ ResourceTreeContent::ResourceTreeContent()
 	margin = 0;
 
 	initialized = false;
+	selectable = false;
 }
 
 
@@ -27,6 +28,9 @@ bool ResourceTreeContent::initialize(Graphics * g, Input * i, TextDX* font, CONT
 	{
 		if (g == nullptr || i == nullptr)
 			return false;
+
+		if (type != CONTENTSTYPE::CONTENTS_UNKNOWN)
+			selectable = true;
 
 		pGraphics = g;
 		pInput = i;
@@ -54,20 +58,16 @@ void ResourceTreeContent::draw()
 {
 	if (!initialized)
 		return;
-
-	pGraphics->spriteBegin();
 	
-	setupRect();
-	pDxFont->print(message, rcText, DT_LEFT);
-
-	pGraphics->spriteEnd();
+	pDxFont->print(message, rcContent, DT_LEFT | DT_VCENTER);
+	pGraphics->drawRect(rcContent);
 }
 
 void ResourceTreeContent::changePos(float x, float y)
 {
 	posX = x;
 	posY = y;
-
+	
 	setupRect();
 }
 

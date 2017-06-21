@@ -5,7 +5,7 @@ TileObject::TileObject()
 {
 	number = 0;
 	type = 0x00000000;
-	feature = TILEFEATURE::ISOMETRIC;
+	feature = TILEFEATURE::FEATULRE_ISOMETRIC;
 }
 
 
@@ -19,6 +19,7 @@ bool TileObject::initialize(UINT PID, int startX, int startY,
 	bool success = false;
 
 	number = PID;
+	rcTile = RectMake(startX, startY, width, height);
 	setX(startX);
 	setY(startY);
 	
@@ -40,12 +41,16 @@ void TileObject::render()
 
 void TileObject::renderSketch()
 {
-	if (feature == TILEFEATURE::SQUARE)
+	if (feature == TILEFEATURE::FEATULRE_SQUARE || feature == TILEFEATURE::FEATULRE_UNKNOWN)
 	{
 		Image::drawRect();
 	}
-	if (feature == TILEFEATURE::ISOMETRIC)
+	else if (feature == TILEFEATURE::FEATULRE_ISOMETRIC)
 	{
 		Image::drawIsometric();
+	}
+	else if (feature == TILEFEATURE::FEATULRE_CIRCLE)
+	{
+		Image::drawCircle();
 	}
 }

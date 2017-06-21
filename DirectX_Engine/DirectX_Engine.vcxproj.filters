@@ -184,9 +184,6 @@
     <Filter Include="GameCode\Scenes\MapToolScene">
       <UniqueIdentifier>{ddd146b9-9825-4d55-bfb1-d00b028c286a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Maptool\Data">
-      <UniqueIdentifier>{cabb43e7-0dfe-4179-bc70-26a25513fd4c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SystemCode\Engine\SystemWindow\SystemInterface\SystemTable">
       <UniqueIdentifier>{b96d34c0-1e4f-4061-97de-a815299b03f0}</UniqueIdentifier>
     </Filter>
@@ -207,6 +204,15 @@
     </Filter>
     <Filter Include="SystemCode\Engine\SystemDebug">
       <UniqueIdentifier>{f21684a3-d322-4a56-9fc1-bcd6353ec571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer">
+      <UniqueIdentifier>{cabb43e7-0dfe-4179-bc70-26a25513fd4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\TileViewer">
+      <UniqueIdentifier>{b58c2ec8-7c01-4c73-86cf-4d9925a08816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\ResourceTreeViewer">
+      <UniqueIdentifier>{29332b23-7d30-4266-8fd3-48ba638934d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -393,17 +399,23 @@
     <ClCompile Include="engineINISetting.cpp">
       <Filter>SystemCode\Engine\SystemBoot</Filter>
     </ClCompile>
-    <ClCompile Include="resourceTreeViewer.cpp">
-      <Filter>GameCode\Maptool\Data</Filter>
-    </ClCompile>
     <ClCompile Include="scene_Lobby.cpp">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="engineDebugView.cpp">
+    <ClCompile Include="systemUIWindow.cpp">
       <Filter>SystemCode\Engine\SystemDebug</Filter>
     </ClCompile>
     <ClCompile Include="resourceTreeContent.cpp">
-      <Filter>GameCode\Maptool\Data</Filter>
+      <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceTreeViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTileViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTileData.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -608,17 +620,23 @@
     <ClInclude Include="engineINISetting.h">
       <Filter>SystemCode\Engine\SystemBoot</Filter>
     </ClInclude>
-    <ClInclude Include="resourceTreeViewer.h">
-      <Filter>GameCode\Maptool\Data</Filter>
-    </ClInclude>
     <ClInclude Include="scene_Lobby.h">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="engineDebugView.h">
+    <ClInclude Include="systemUIWindow.h">
       <Filter>SystemCode\Engine\SystemDebug</Filter>
     </ClInclude>
     <ClInclude Include="resourceTreeContent.h">
-      <Filter>GameCode\Maptool\Data</Filter>
+      <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceTreeViewer.h">
+      <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTileViewer.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTileData.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

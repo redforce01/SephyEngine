@@ -3,21 +3,21 @@
 
 class ResourceTreeViewer;
 
-#include <map>
-#include "graphics.h"
+#include <vector>
+#include "systemUIWindow.h"
 #include "resourceTreeContent.h"
 
 constexpr int viewerChildWidth = 100;
 constexpr int viewerChildHeight = 20;
 constexpr int viewerChildMargin = 2;
-constexpr int viewerChildTab = 10;
+constexpr int viewerChildTab = 5;
 
 
 namespace treeViewerNS
 {
-	const UINT WIDTH = 200;             // width of treeViewer
-	const UINT HEIGHT = 500;            // height of treeViewer
-	const UINT X = WINSIZEX - 250;      // treeViewer location
+	const UINT WIDTH = 300;             // width of treeViewer
+	const UINT HEIGHT = 800;            // height of treeViewer
+	const UINT X = WINSIZEX - 400;      // treeViewer location
 	const UINT Y = 5;
 	const UINT MARGIN = 4;              // text margin from treeViewer edge
 	const char FONT[] = "Courier New";  // treeViewer font
@@ -25,42 +25,42 @@ namespace treeViewerNS
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 97, 97, 97);    // backdrop color
 	const int MAX_LINES = 256;          // maximun number of lines in text buffer
+	const std::string CUT_LINE = "---------------";
 }
 
 
 class ResourceTreeContent;
-class ResourceTreeViewer
+class ResourceTreeViewer : public SystemUIWindow
 {
 	typedef ResourceTreeContent File;
-	typedef std::map<std::string, File*> MAP_FILES;
+	typedef std::vector<File*> TREE_FILES;
 private:
-	MAP_FILES resFiles;
-	
+	TREE_FILES resFiles;
+	int nSelectFile;
+	File* pSelectFile;
 
-private:
-	Graphics* pGraphics;
-	Input* pInput;
-
-	float x, y;
-	float width, height;
-	TextDX dxFont;
-	VertexC vtx[4];
-	LP_VERTEXBUFFER vertexBuffer;
-
-	COLOR_ARGB  fontColor;              // font color (a,r,g,b)
-	COLOR_ARGB  backColor;              // background color (a,r,g,b)
-
-	bool initialized;
-	bool visible;
 public:
 	ResourceTreeViewer();
 	~ResourceTreeViewer();
 
 	bool initialize(Graphics* g, Input* i);
-	void update(float frameTime);
-	void render();
+	virtual void update(float frameTime) override;
+	virtual void render() override;
 
 	bool addTreeRes(File* pChild);
+
+	bool checkTreeClicked();
+	bool checkMapClicked();
+
+	bool setSelectFile();
+
+	inline std::string getSelectFile()
+	{
+		if (pSelectFile == nullptr)
+			return nullptr;
+		
+		return pSelectFile->getMessage();
+	}
 };
 
 #endif // !_RESOURCETREEVIEWER_H

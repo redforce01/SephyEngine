@@ -12,7 +12,7 @@ namespace MapSystemNS
 	const UINT mapSizeX = 64;
 	const UINT mapSizeY = 64;
 	const UINT tileBasicWidth = 128;
-	const UINT tileBasicHeight = 128;
+	const UINT tileBasicHeight = 64;
 }
 
 enum class MAPTYPE
@@ -43,7 +43,6 @@ public:
 	void moveY(float distance);
 	void scaleUp();
 	void scaleDown();
-
 
 	std::vector<TileObject*> getAllTiles() { return arrTiles; }
 
