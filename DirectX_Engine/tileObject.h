@@ -57,13 +57,13 @@ public:
 		return rcTile;
 	}
 	
-	inline void moveRectWidth(float distance)
+	inline void moveRectWidth(int distance)
 	{
 		rcTile.left += distance;
 		rcTile.right += distance;
 	}
 
-	inline void moveRectHeight(float distance)
+	inline void moveRectHeight(int distance)
 	{
 		rcTile.top += distance;
 		rcTile.bottom += distance;

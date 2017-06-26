@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CameraSystem.h"
 #include "mapSystem.h"
+#include "minimapViewer.h"
 
 CameraSystem::CameraSystem()
 {
@@ -9,71 +10,92 @@ CameraSystem::CameraSystem()
 	cameraAngle = 0;
 	cameraZoomRate = 0;
 	cameraZoomSpeed = 0;
+	m_pInput = nullptr;
+	m_pMapSystem = nullptr;
+	m_pMinimap = nullptr;
 }
 
 CameraSystem::~CameraSystem()
 {
 }
 
-bool CameraSystem::initialize()
+bool CameraSystem::initialize(Game* gamePtr)
 {
-	cameraSpeed = 10.f;
-	cameraZoomSpeed = 0.1f;
+	bool success = false;
+	try
+	{
+		cameraSpeed = 10.f;
+		cameraZoomSpeed = 0.1f;
+		pInput = gamePtr->getInput();
+		success = true;
+	}
+	catch (...)
+	{
+		
+	}
 
-	return true;
+	return success;
 }
 
-void CameraSystem::update(Input* input)
+void CameraSystem::update(float frameTime)
 {
-	if (input->isKeyDown(CameraSystemNS::CAMERA_MOVE_LEFT_KEY))
+	if (pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_LEFT_KEY))
 	{
 		moveLeft();
 	}
-	if (input->isKeyDown(CameraSystemNS::CAMERA_MOVE_RIGHT_KEY))
+	if (pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_RIGHT_KEY))
 	{
 		moveRight();
 	}
-	if (input->isKeyDown(CameraSystemNS::CAMERA_MOVE_UP_KEY))
+	if (pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_UP_KEY))
 	{
 		moveUp();
 	}
-	if (input->isKeyDown(CameraSystemNS::CAMERA_MOVE_DOWN_KEY))
+	if (pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_DOWN_KEY))
 	{
 		moveDown();
 	}
 
-	if (input->isMouseWheelUp() || input->isKeyDown(CameraSystemNS::CAMERA_ZOOM_IN_KEY))
-	{
-		zoomIn();
-	}
-	if (input->isMouseWheelDown() || input->isKeyDown(CameraSystemNS::CAMERA_ZOOM_OUT_KEY))
-	{
-		zoomOut();
-	}
+	//if (pInput->isMouseWheelUp() || pInput->isKeyDown(CameraSystemNS::CAMERA_ZOOM_IN_KEY))
+	//{
+	//	zoomIn();
+	//}
+	//if (pInput->isMouseWheelDown() || pInput->isKeyDown(CameraSystemNS::CAMERA_ZOOM_OUT_KEY))
+	//{
+	//	zoomOut();
+	//}
+}
+
+void CameraSystem::render()
+{
 }
 
 void CameraSystem::moveLeft()
 {
 	cameraX -= cameraSpeed;
-	pMapSystem->moveX(cameraSpeed);
+	m_pMapSystem->moveX(cameraSpeed);
+	m_pMinimap->setUpCam(cameraX, cameraY);
 }
 
 void CameraSystem::moveRight()
 {
 	cameraX += cameraSpeed;
-	pMapSystem->moveX(-cameraSpeed);
+	m_pMapSystem->moveX(-cameraSpeed);
+	m_pMinimap->setUpCam(cameraX, cameraY);
 }
 
 void CameraSystem::moveUp()
 {
 	cameraY -= cameraSpeed;
-	pMapSystem->moveY(cameraSpeed);
+	m_pMapSystem->moveY(cameraSpeed);
+	m_pMinimap->setUpCam(cameraX, cameraY);
 }
 
 void CameraSystem::moveDown()
 {
 	cameraY += cameraSpeed;
-	pMapSystem->moveY(-cameraSpeed);
+	m_pMapSystem->moveY(-cameraSpeed);
+	m_pMinimap->setUpCam(cameraX, cameraY);
 }
 
 void CameraSystem::zoomIn()
@@ -81,7 +103,7 @@ void CameraSystem::zoomIn()
 	if (cameraZoomRate < 1.0f)
 	{
 		cameraZoomRate += cameraZoomSpeed;
-		pMapSystem->scaleUp();
+		m_pMapSystem->scaleUp();
 	}
 }
 
@@ -90,6 +112,16 @@ void CameraSystem::zoomOut()
 	if (cameraZoomRate > 0)
 	{
 		cameraZoomRate -= cameraZoomSpeed;
-		pMapSystem->scaleDown();
+		m_pMapSystem->scaleDown();
 	}
+}
+
+void CameraSystem::setCameraPos(float x, float y)
+{
+	int oldX, oldY;
+	oldX = cameraX, oldY = cameraY;
+	m_pMapSystem->moveX(oldX - x);
+	m_pMapSystem->moveY(oldY - y);
+	cameraX = x, cameraY = y;
+	m_pMinimap->setUpCam(cameraX, cameraY);
 }

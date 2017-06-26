@@ -1,0 +1,136 @@
+#include "stdafx.h"
+#include "minimapViewer.h"
+#include "CameraSystem.h"
+
+MinimapViewer::MinimapViewer()
+{
+	m_Width = minimapViewerNS::WIDTH;
+	m_Height = minimapViewerNS::HEIGHT;
+	m_MapWidth = m_MapHeight = 0;	
+	m_CamWidth = m_CamHeight = 0;
+	m_rcMinimap = RectMake(0, 0, 0, 0);
+	m_rcCamera = RectMake(0, 0, 0, 0);
+	m_bInitialized = false;
+	m_bIsometric = false;
+	m_pCameraSystem = nullptr;
+}
+
+
+MinimapViewer::~MinimapViewer()
+{
+}
+
+bool MinimapViewer::initialize(Graphics * g, Input * i)
+{
+	bool success = false;
+
+	try
+	{
+		m_rcMinimap = RectMake(minimapViewerNS::X, minimapViewerNS::Y, minimapViewerNS::WIDTH, minimapViewerNS::HEIGHT);
+		m_rcCamera = RectMake(minimapViewerNS::X, minimapViewerNS::Y, m_CamWidth, m_CamHeight);
+		m_bInitialized = true;
+		success = SystemUIDialog::initialize(g, i, minimapViewerNS::X, minimapViewerNS::Y, minimapViewerNS::WIDTH, minimapViewerNS::HEIGHT, minimapViewerNS::MARGIN);
+	}
+	catch (...)
+	{
+		MessageBox(g_hWndEngine, "Minimap Viewer Initialized Failed", "Error", MB_OK);
+	}
+
+	return success;
+}
+
+void MinimapViewer::update(float frameTime)
+{
+	SystemUIDialog::update(frameTime);
+
+	if (pInput->getMouseLButton())
+	{
+		if (getMouseOver())
+		{
+			clickMinimap();
+		}
+	}
+}
+
+void MinimapViewer::render()
+{
+	SystemUIDialog::render();	
+	pGraphics->drawRect(m_rcCamera, 1.0, graphicsNS::RED);
+}
+
+void MinimapViewer::clickMinimap()
+{
+	float mouseX = pInput->getMouseX();
+	float mouseY = pInput->getMouseY();
+	float clickedX = abs(mouseX - m_rcMinimap.left);
+	float clickedY = abs(mouseY - m_rcMinimap.top);
+	
+	//	x : m_MapWidth = posX : minimapViewerNS::WIDTH 
+	// -> x = (posX / 400) * m_MapWidth
+	//	y : m_MapHeight = posY : minimapViewerNS::HEIGHT
+	// -> y = (posY / 300) * m_MapHeight	
+	float targetX = (clickedX / minimapViewerNS::WIDTH) * m_MapWidth;
+	float targetY = (clickedY / minimapViewerNS::HEIGHT) * m_MapHeight;
+	if (m_bIsometric)
+	{
+		targetY = targetY / 2;
+	}
+	m_pCameraSystem->setCameraPos(targetX, targetY);
+}
+
+void MinimapViewer::checkMinimapCamRect()
+{
+	if (m_rcCamera.left < minimapViewerNS::X)
+	{
+		m_rcCamera.left = minimapViewerNS::X;
+	}
+	if (m_rcCamera.top < minimapViewerNS::Y)
+	{
+		m_rcCamera.top = minimapViewerNS::Y;
+	}
+	if (m_rcCamera.right > minimapViewerNS::X + minimapViewerNS::WIDTH)
+	{
+		m_rcCamera.right = minimapViewerNS::X + minimapViewerNS::WIDTH;
+	}
+	if (m_rcCamera.bottom > minimapViewerNS::Y + minimapViewerNS::HEIGHT)
+	{
+		m_rcCamera.bottom = minimapViewerNS::Y + minimapViewerNS::HEIGHT;
+	}
+}
+
+void MinimapViewer::setUpCam()
+{
+	if (m_bInitialized == false)
+		return;
+	
+	float camX, camY;
+	camX = 0;
+	camY = 0;
+	m_CamWidth = minimapViewerNS::WIDTH / (m_MapWidth / WINSIZEX);
+	m_CamHeight = minimapViewerNS::HEIGHT / (m_MapHeight / WINSIZEY);
+
+	if (m_bIsometric)
+		m_CamHeight = m_CamHeight * 2;	
+
+	m_rcCamera = RectMake(minimapViewerNS::X + camX, minimapViewerNS::Y + camY, m_CamWidth, m_CamHeight);
+	checkMinimapCamRect();
+}
+
+void MinimapViewer::setUpCam(float startMapX, float startMapY)
+{
+	if (m_bInitialized == false)
+		return;
+	
+	float camX, camY;
+	m_CamWidth = minimapViewerNS::WIDTH / (m_MapWidth / WINSIZEX);
+	m_CamHeight = minimapViewerNS::HEIGHT / (m_MapHeight / WINSIZEY);
+	camX = minimapViewerNS::WIDTH * (startMapX / m_MapWidth);
+	camY = minimapViewerNS::HEIGHT * (startMapY / m_MapHeight);
+	if (m_bIsometric)
+	{
+		m_CamHeight = m_CamHeight * 2;
+		camY = camY * 2;
+	}	
+	m_rcCamera = RectMake(minimapViewerNS::X + camX, minimapViewerNS::Y + camY, m_CamWidth, m_CamHeight);
+	checkMinimapCamRect();
+}

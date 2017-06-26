@@ -163,9 +163,6 @@
     <Filter Include="GameCode\Maptool">
       <UniqueIdentifier>{12e709a9-ba2c-4746-aa31-9c5d3335e505}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Maptool\Control">
-      <UniqueIdentifier>{adff7443-0cfc-4a91-af07-207493fb3268}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Maptool\Map">
       <UniqueIdentifier>{d99d8089-27cc-4951-a7de-daab097759da}</UniqueIdentifier>
     </Filter>
@@ -202,9 +199,6 @@
     <Filter Include="SystemCode\Engine\SystemBoot">
       <UniqueIdentifier>{e34d6f7a-ea94-4802-b302-f352bff62a20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SystemCode\Engine\SystemDebug">
-      <UniqueIdentifier>{f21684a3-d322-4a56-9fc1-bcd6353ec571}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Maptool\Viewer">
       <UniqueIdentifier>{cabb43e7-0dfe-4179-bc70-26a25513fd4c}</UniqueIdentifier>
     </Filter>
@@ -213,6 +207,21 @@
     </Filter>
     <Filter Include="GameCode\Maptool\Viewer\ResourceTreeViewer">
       <UniqueIdentifier>{29332b23-7d30-4266-8fd3-48ba638934d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SystemCode\Engine\SystemDebugUI">
+      <UniqueIdentifier>{f21684a3-d322-4a56-9fc1-bcd6353ec571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\GameSystem">
+      <UniqueIdentifier>{57766a28-45a0-4655-aff0-cd1d5a58c49f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\MinimapViewer">
+      <UniqueIdentifier>{ab85eb13-8e22-417e-a9bc-384189757911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Control">
+      <UniqueIdentifier>{36eca9f6-b964-4230-ad2f-8a6ae8128729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Map\Object">
+      <UniqueIdentifier>{c4403ca4-314a-4b11-a803-1b66af0730c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -363,9 +372,6 @@
     <ClCompile Include="mapSystem.cpp">
       <Filter>GameCode\Maptool\Map</Filter>
     </ClCompile>
-    <ClCompile Include="tileObject.cpp">
-      <Filter>GameCode\Maptool\Map</Filter>
-    </ClCompile>
     <ClCompile Include="CameraSystem.cpp">
       <Filter>GameCode\Maptool\Camera</Filter>
     </ClCompile>
@@ -402,20 +408,41 @@
     <ClCompile Include="scene_Lobby.cpp">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="systemUIWindow.cpp">
-      <Filter>SystemCode\Engine\SystemDebug</Filter>
-    </ClCompile>
     <ClCompile Include="resourceTreeContent.cpp">
       <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
     </ClCompile>
     <ClCompile Include="resourceTreeViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
     </ClCompile>
+    <ClCompile Include="systemUIControl.cpp">
+      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+    </ClCompile>
+    <ClCompile Include="systemUIDialog.cpp">
+      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+    </ClCompile>
+    <ClCompile Include="viewerSystem.cpp">
+      <Filter>GameCode\Maptool\Viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="minimapViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\MinimapViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="toolUISystem.cpp">
+      <Filter>GameCode\Maptool\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="systemBase.cpp">
+      <Filter>GameCode\GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="tileObject.cpp">
+      <Filter>GameCode\Maptool\Map\Object</Filter>
+    </ClCompile>
     <ClCompile Include="mapTileViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClCompile>
     <ClCompile Include="mapTileData.cpp">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="systemUIButton.cpp">
+      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -584,9 +611,6 @@
     <ClInclude Include="mapSystem.h">
       <Filter>GameCode\Maptool\Map</Filter>
     </ClInclude>
-    <ClInclude Include="tileObject.h">
-      <Filter>GameCode\Maptool\Map</Filter>
-    </ClInclude>
     <ClInclude Include="CameraSystem.h">
       <Filter>GameCode\Maptool\Camera</Filter>
     </ClInclude>
@@ -623,20 +647,41 @@
     <ClInclude Include="scene_Lobby.h">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="systemUIWindow.h">
-      <Filter>SystemCode\Engine\SystemDebug</Filter>
-    </ClInclude>
     <ClInclude Include="resourceTreeContent.h">
       <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
     </ClInclude>
     <ClInclude Include="resourceTreeViewer.h">
       <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
     </ClInclude>
+    <ClInclude Include="systemUIControl.h">
+      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+    </ClInclude>
+    <ClInclude Include="systemUIDialog.h">
+      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+    </ClInclude>
+    <ClInclude Include="viewerSystem.h">
+      <Filter>GameCode\Maptool\Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="minimapViewer.h">
+      <Filter>GameCode\Maptool\Viewer\MinimapViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="toolUISystem.h">
+      <Filter>GameCode\Maptool\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="systemBase.h">
+      <Filter>GameCode\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="tileObject.h">
+      <Filter>GameCode\Maptool\Map\Object</Filter>
+    </ClInclude>
     <ClInclude Include="mapTileViewer.h">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
     <ClInclude Include="mapTileData.h">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="systemUIButton.h">
+      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

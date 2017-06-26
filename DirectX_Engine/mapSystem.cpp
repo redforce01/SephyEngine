@@ -31,6 +31,9 @@ bool MapSystem::initialize(Game* gamePtr)
 	if (gamePtr == nullptr)
 		return false;
 
+	pGraphics = gamePtr->getGraphics();
+	pInput = gamePtr->getInput();
+
 	for (UINT row = 0; row < MapSystemNS::mapSizeX; row++)
 	{
 		for (UINT col = 0; col < MapSystemNS::mapSizeY; col++)
@@ -57,26 +60,30 @@ void MapSystem::update(float frameTime)
 {
 	for (auto iter : arrTiles)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY))
-		{
-			iter->update(frameTime);
-		}
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+			continue;
+
+		iter->update(frameTime);
 	}
 }
 
 void MapSystem::render()
 {
+	pGraphics->spriteBegin();
+
 	for (auto iter : arrTiles)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY))
-		{
-			iter->renderSketch();			
-			iter->render();
-		}
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+			continue;
+
+		iter->renderSketch();			
+		iter->render();
 	}
+
+	pGraphics->spriteEnd();
 }
 
-void MapSystem::moveX(float distance)
+void MapSystem::moveX(int distance)
 {
 	for (auto iter : arrTiles)
 	{
@@ -85,7 +92,7 @@ void MapSystem::moveX(float distance)
 	}
 }
 
-void MapSystem::moveY(float distance)
+void MapSystem::moveY(int distance)
 {
 	for (auto iter : arrTiles)
 	{

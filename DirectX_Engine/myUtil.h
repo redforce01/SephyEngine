@@ -20,19 +20,20 @@
 
 namespace MyUtil
 {
-	//거리 구하는 함수
+	// 거리 구하는 함수
 	float getDistance(float startX, float startY, float endX, float endY);
 
-	//각도 구하는 함수
+	// 각도 구하는 함수
 	float getAngle(float startX, float startY, float endX, float endY);
 
-	//Object in Screen? Function. return bool
-	bool getScreenIn(float objX, float objY, float screenSizeW, float screenSizeH);
+	// Object in Screen? Function. return bool
+	bool getScreenIn(int objX, int objY, int screenSizeW, int screenSizeH);
 
-	//Object in Screen(with Object Width/Height)? Function. return bool
-	bool getScreenIn(float objX, float objY, float objWidth, float objHeight, float screenSizeW, float screenSizeH);
+	// Object in Screen(with Object Width/Height)? Function. return bool
+	bool getScreenIn(int objX, int objY, int objWidth, int objHeight, int screenSizeW, int screenSizeH);
 		
-	bool getObjectIn(float objX, float objY, float objWidth, float objHeight, float targetX, float targetY);
+	// Not Implementated
+	bool getObjectIn(int objX, int objY, int objWidth, int objHeight, int targetX, int targetY);
 
 }
 

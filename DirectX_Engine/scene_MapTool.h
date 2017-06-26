@@ -6,7 +6,7 @@ class Scene_Maptool;
 #include "game.h"
 #include "mapSystem.h"
 #include "CameraSystem.h"
-#include "resourceTreeViewer.h"
+#include "viewerSystem.h"
 
 namespace MapToolNS
 {
@@ -19,8 +19,8 @@ class Scene_MapTool : public Game
 private:
 	MapSystem* mapSystem;
 	CameraSystem* cameraSystem;
-	ResourceTreeViewer* resourceTreeViewer;
-	
+	ViewerSystem* viewerSystem;
+
 public:
 	Scene_MapTool();
 	~Scene_MapTool();

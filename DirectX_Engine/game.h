@@ -130,11 +130,20 @@ public:
     //   draw non-sprites
     virtual void render() = 0;
 
-	float getTimeDelta() { return this->frameTime; }
+	float getTimeDelta() const 
+	{
+		return this->frameTime;
+	}
+	bool getInitializd() const
+	{
+		return this->initialized;
+	}
 
-	void setInitialized(bool b) { this->initialized = b; }
+	void setInitialized(bool b) 
+	{
+		this->initialized = b;
+	}
 
-	bool getInitializd() { return this->initialized; }
 };
 
 #endif

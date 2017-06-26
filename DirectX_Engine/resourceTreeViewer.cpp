@@ -2,7 +2,7 @@
 #include "ResourceTreeViewer.h"
 
 
-ResourceTreeViewer::ResourceTreeViewer() : SystemUIWindow()
+ResourceTreeViewer::ResourceTreeViewer() : SystemUIDialog()
 {
 	nSelectFile = 0;
 	pSelectFile = nullptr;
@@ -28,7 +28,7 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 
 	try
 	{
-		success = SystemUIWindow::initialize(g, i, treeViewerNS::X, treeViewerNS::Y, treeViewerNS::WIDTH, treeViewerNS::HEIGHT, treeViewerNS::MARGIN);
+		success = SystemUIDialog::initialize(g, i, treeViewerNS::X, treeViewerNS::Y, treeViewerNS::WIDTH, treeViewerNS::HEIGHT, treeViewerNS::MARGIN);
 
 		// initialize DirectX font
 		if (dxFont.initialize(pGraphics, treeViewerNS::FONT_HEIGHT, false,
@@ -37,12 +37,12 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 		dxFont.setFontColor(fontColor);
 		
 		int resX, resY;
-		resX = x + margin;
-		resY = y + margin;
+		resX = m_x + m_margin;
+		resY = m_y + m_margin;
 		auto total = FILEMANAGER->getAllFile();
 		for (auto iter : total)
 		{
-			resX = x + margin;
+			resX = m_x + m_margin;
 			File* folder = new File();
 			folder->initialize(g, i, &dxFont, CONTENTSTYPE::CONTENTS_FOLDER, iter.first, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
 			addTreeRes(folder);
@@ -57,14 +57,14 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 				resY += viewerChildHeight;
 			}
 
-			resX = x;
+			resX = m_x;
 			File* cutline = new File();
 			cutline->initialize(g, i, &dxFont, CONTENTSTYPE::CONTENTS_UNKNOWN, treeViewerNS::CUT_LINE, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
 			addTreeRes(cutline);
 			resY += viewerChildHeight;
 		}
 
-		success = initialized = true;
+		success = true;
 	}
 	catch (...)
 	{
@@ -76,23 +76,27 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 
 void ResourceTreeViewer::update(float frameTime)
 {
+	SystemUIDialog::update(frameTime);
+
+
 }
 
 void ResourceTreeViewer::render()
 {
-	pGraphics->drawQuad(vertexBuffer);
+	SystemUIDialog::render();
+
+	pGraphics->spriteBegin();
 
 	if (resFiles.size() <= 0)
 		return;
-	
-	pGraphics->spriteBegin();
 	for (auto iter : resFiles)
 	{
-		if (iter->getContentRect().bottom > height)
+		if (iter->getContentRect().bottom > m_height)
 			break;
 
 		iter->draw();
 	}
+
 	pGraphics->spriteEnd();
 }
 

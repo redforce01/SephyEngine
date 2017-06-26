@@ -169,6 +169,8 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="gameObjectManager.cpp" />
+    <ClCompile Include="mapTileData.cpp" />
+    <ClCompile Include="systemBase.cpp" />
     <ClCompile Include="gocMessage.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="image.cpp" />
@@ -180,12 +182,12 @@
     <ClCompile Include="layerManager.cpp" />
     <ClCompile Include="mainNode.cpp" />
     <ClCompile Include="mapSystem.cpp" />
-    <ClCompile Include="mapTileData.cpp" />
     <ClCompile Include="mapTileViewer.cpp" />
     <ClCompile Include="messageDialog.cpp" />
     <ClCompile Include="gocMessageManager.cpp" />
     <ClCompile Include="metaBuilderMain.cpp" />
     <ClCompile Include="metaBuilderUI.cpp" />
+    <ClCompile Include="minimapViewer.cpp" />
     <ClCompile Include="myUtil.cpp" />
     <ClCompile Include="render2DComponent.cpp" />
     <ClCompile Include="renderComponent.cpp" />
@@ -199,17 +201,21 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="systemUIWindow.cpp" />
+    <ClCompile Include="systemUIButton.cpp" />
+    <ClCompile Include="systemUIControl.cpp" />
+    <ClCompile Include="systemUIDialog.cpp" />
     <ClCompile Include="tabContent_A.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="tileObject.cpp" />
     <ClCompile Include="timeManager.cpp" />
+    <ClCompile Include="toolUISystem.cpp" />
     <ClCompile Include="uiButton.cpp" />
     <ClCompile Include="uiFrame.cpp" />
     <ClCompile Include="uiParent.cpp" />
     <ClCompile Include="uiProgressBar.cpp" />
     <ClCompile Include="uiTab.cpp" />
+    <ClCompile Include="viewerSystem.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +250,8 @@
     <ClInclude Include="gameError.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="gameObjectManager.h" />
+    <ClInclude Include="mapTileData.h" />
+    <ClInclude Include="systemBase.h" />
     <ClInclude Include="gocMessage.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="image.h" />
@@ -255,12 +263,12 @@
     <ClInclude Include="layerManager.h" />
     <ClInclude Include="mainNode.h" />
     <ClInclude Include="mapSystem.h" />
-    <ClInclude Include="mapTileData.h" />
     <ClInclude Include="mapTileViewer.h" />
     <ClInclude Include="messageDialog.h" />
     <ClInclude Include="gocMessageManager.h" />
     <ClInclude Include="metaBuilderMain.h" />
     <ClInclude Include="metaBuilderUI.h" />
+    <ClInclude Include="minimapViewer.h" />
     <ClInclude Include="myUtil.h" />
     <ClInclude Include="render2DComponent.h" />
     <ClInclude Include="renderComponent.h" />
@@ -274,18 +282,22 @@
     <ClInclude Include="scene_MapTool.h" />
     <ClInclude Include="scene_Test.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="systemUIWindow.h" />
+    <ClInclude Include="systemUIButton.h" />
+    <ClInclude Include="systemUIControl.h" />
+    <ClInclude Include="systemUIDialog.h" />
     <ClInclude Include="tabContent_A.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
     <ClInclude Include="tileObject.h" />
     <ClInclude Include="timeManager.h" />
+    <ClInclude Include="toolUISystem.h" />
     <ClInclude Include="uiButton.h" />
     <ClInclude Include="uiFrame.h" />
     <ClInclude Include="uiParent.h" />
     <ClInclude Include="uiProgressBar.h" />
     <ClInclude Include="uiTab.h" />
+    <ClInclude Include="viewerSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

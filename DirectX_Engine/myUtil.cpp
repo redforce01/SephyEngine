@@ -26,7 +26,7 @@ namespace MyUtil
 		return angle;
 	}
 
-	bool getScreenIn(float objX, float objY, float screenSizeW, float screenSizeH)
+	bool getScreenIn(int objX, int objY, int screenSizeW, int screenSizeH)
 	{
 		if (objX > 0 && objX < screenSizeW)
 		{
@@ -39,7 +39,7 @@ namespace MyUtil
 		return false;
 	}
 
-	bool getScreenIn(float objX, float objY, float objWidth, float objHeight, float screenSizeW, float screenSizeH)
+	bool getScreenIn(int  objX, int objY, int objWidth, int objHeight, int screenSizeW, int screenSizeH)
 	{
 		if (objX > -objWidth && objX < screenSizeW + objWidth)
 		{

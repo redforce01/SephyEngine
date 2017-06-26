@@ -4,7 +4,7 @@
 class ResourceTreeViewer;
 
 #include <vector>
-#include "systemUIWindow.h"
+#include "systemUIDialog.h"
 #include "resourceTreeContent.h"
 
 constexpr int viewerChildWidth = 100;
@@ -15,12 +15,12 @@ constexpr int viewerChildTab = 5;
 
 namespace treeViewerNS
 {
-	const UINT WIDTH = 300;             // width of treeViewer
-	const UINT HEIGHT = 800;            // height of treeViewer
-	const UINT X = WINSIZEX - 400;      // treeViewer location
-	const UINT Y = 5;
-	const UINT MARGIN = 4;              // text margin from treeViewer edge
-	const char FONT[] = "Courier New";  // treeViewer font
+	const UINT WIDTH = 400;				// width of treeViewer
+	const UINT HEIGHT = WINSIZEY - 400;	// height of treeViewer
+	const UINT X = WINSIZEX - WIDTH;	// Viewer location X
+	const UINT Y = 400;					// Viewer location Y
+	const UINT MARGIN = 4;              // text margin from Viewer edge
+	const char FONT[] = "Courier New";  // Viewer font
 	const int FONT_HEIGHT = 14;         // height of the font in pixels
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 97, 97, 97);    // backdrop color
@@ -30,7 +30,7 @@ namespace treeViewerNS
 
 
 class ResourceTreeContent;
-class ResourceTreeViewer : public SystemUIWindow
+class ResourceTreeViewer : public SystemUIDialog
 {
 	typedef ResourceTreeContent File;
 	typedef std::vector<File*> TREE_FILES;
@@ -43,7 +43,7 @@ public:
 	ResourceTreeViewer();
 	~ResourceTreeViewer();
 
-	bool initialize(Graphics* g, Input* i);
+	virtual bool initialize(Graphics* g, Input* i) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
 

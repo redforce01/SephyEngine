@@ -19,33 +19,41 @@ void Scene_MapTool::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
 
+	// object new & initialize + Setup link
 	mapSystem = new MapSystem;
 	mapSystem->initialize(this);
 	cameraSystem = new CameraSystem;
-	cameraSystem->initialize();
-	resourceTreeViewer = new ResourceTreeViewer;
-	resourceTreeViewer->initialize(this->graphics, this->input);
-	
+	cameraSystem->initialize(this);	
 	cameraSystem->setMemoryLinkMapSystem(mapSystem);
 	mapSystem->setMemoryLinkCameraSystem(cameraSystem);
+	viewerSystem = new ViewerSystem;
+	viewerSystem->initialize(this);
+	cameraSystem->setMemoryLinkMinimap(viewerSystem->getMinimapViewer());
+	viewerSystem->setMemoryLinkCameraSystem(cameraSystem);
+	
+	// etc initialize settings
+	cameraSystem->setCameraPos(100, 100);
 }
 
 void Scene_MapTool::update()
 {	
 	mapSystem->update(frameTime);
-	cameraSystem->update(this->getInput());
-	resourceTreeViewer->update(frameTime);
+	cameraSystem->update(frameTime);
+	viewerSystem->update(frameTime);
 
-	std::string str = "isoBasicB";
-	if (input->getMouseLButton())
+	if (viewerSystem->getUIMouseOver() == false)
 	{
-		auto arr = mapSystem->getAllTiles();
-		for (auto iter : arr)
+		std::string str = "isoBasicB";
+		if (input->getMouseLButton())
 		{
-			if (PtInRect(&iter->getTileRect(), PointMake(input->getMouseX(), input->getMouseY())))
+			auto arr = mapSystem->getAllTiles();
+			for (auto iter : arr)
 			{
-				iter->changeTile(IMAGEMANAGER->getTexture(str));
-				break;
+				if (PtInRect(&iter->getTileRect(), PointMake(input->getMouseX(), input->getMouseY())))
+				{
+					iter->changeTile(IMAGEMANAGER->getTexture(str));
+					break;
+				}
 			}
 		}
 	}
@@ -70,9 +78,11 @@ void Scene_MapTool::collisions()
 
 void Scene_MapTool::render()
 {
-	graphics->spriteBegin();
-
 	mapSystem->render();
+	viewerSystem->render();
+
+
+	graphics->spriteBegin();
 
 	// Scene View Information Render
 	static float worldSec;
@@ -87,9 +97,6 @@ void Scene_MapTool::render()
 	dxFont.print(std::string("SceneView"), 10, 50);
 
 	graphics->spriteEnd();
-
-
-	resourceTreeViewer->render();
 }
 
 void Scene_MapTool::releaseAll()

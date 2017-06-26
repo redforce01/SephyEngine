@@ -3,6 +3,8 @@
 
 class CameraSystem;
 
+#include "systemBase.h"
+
 namespace CameraSystemNS
 {
 	const UCHAR CAMERA_MOVE_LEFT_KEY = 'A';
@@ -14,8 +16,9 @@ namespace CameraSystemNS
 	const UCHAR CAMERA_ZOOM_OUT_KEY = VK_NEXT;
 }
 
+class MinimapViewer;
 class MapSystem;
-class CameraSystem
+class CameraSystem : public SystemBase
 {
 private:
 	float cameraX, cameraY;
@@ -24,14 +27,16 @@ private:
 	float cameraZoomRate;		// 0 ~ 1 [Wheel zDelta 10.0f = scale 0.1f] 
 	float cameraZoomSpeed;
 
-	MapSystem* pMapSystem;
-
+	MapSystem* m_pMapSystem;
+	MinimapViewer* m_pMinimap;
+	Input* m_pInput;
 public:
 	CameraSystem();
 	~CameraSystem();
 
-	bool initialize();
-	void update(Input* input);
+	virtual bool initialize(Game* gamePtr) override;
+	virtual void update(float frameTime) override;
+	virtual void render() override;
 
 	void moveLeft();
 	void moveRight();
@@ -40,8 +45,8 @@ public:
 	void zoomIn();
 	void zoomOut();
 
-	void setCameraSpeed(float speed) { cameraSpeed = speed; }
-	void setCameraPos(float x, float y) { cameraX = x, cameraY = y; }
+	void setCameraSpeed(float speed){ cameraSpeed = speed; }
+	void setCameraPos(float x, float y);
 	void setcameraAngle(float angle) { cameraAngle = angle; }
 	
 	float getCameraX() { return cameraX; }
@@ -51,7 +56,8 @@ public:
 	float getCameraZoomRate() { return cameraZoomRate; }
 	float getCameraZoomSpeed() { return cameraZoomSpeed; }
 
-	void setMemoryLinkMapSystem(MapSystem* pMapSys) { pMapSystem = pMapSys; }
+	void setMemoryLinkMapSystem(MapSystem* pMapSys) { m_pMapSystem = pMapSys; }
+	void setMemoryLinkMinimap(MinimapViewer* pMinimap) { m_pMinimap = pMinimap; }
 };
 
 #endif // !_CAMERASYSTEM_H

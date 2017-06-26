@@ -6,6 +6,7 @@ class MapSystem;
 #include <vector>
 #include <memory>
 #include "tileObject.h"
+#include "systemBase.h"
 
 namespace MapSystemNS
 {
@@ -24,7 +25,7 @@ enum class MAPTYPE
 };
 
 class CameraSystem;
-class MapSystem
+class MapSystem : public SystemBase
 {
 private:
 	std::vector<TileObject*> arrTiles;
@@ -35,12 +36,12 @@ public:
 	MapSystem();
 	~MapSystem();
 
-	bool initialize(Game* gamePtr);
-	void update(float frameTime);
-	void render();
+	virtual bool initialize(Game* gamePtr) override;
+	virtual void update(float frameTime) override;
+	virtual void render() override;
 
-	void moveX(float distance);
-	void moveY(float distance);
+	void moveX(int distance);
+	void moveY(int distance);
 	void scaleUp();
 	void scaleDown();
 

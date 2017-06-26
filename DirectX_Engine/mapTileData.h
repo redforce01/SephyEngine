@@ -9,18 +9,22 @@ class MapTileData;
 class MapTileData : public Image
 {
 private:
-	std::string strName;
-	float x, y;
+	std::string m_strName;
+	float		m_x, m_y;
 
+	Graphics*	m_pGraphics;
+	Input*		m_pInput;
+	RECT		m_rcImage;
 public:
 	MapTileData();
 	~MapTileData();
 
 	bool initialize(Graphics* g, Input* i, std::string name, float startX, float startY);
-	
+	void draw();
+
 	inline std::string getTileName() const
 	{
-		return strName;
+		return m_strName;
 	}
 };
 

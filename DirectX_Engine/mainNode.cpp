@@ -46,7 +46,7 @@ void MainNode::release()
 
 void MainNode::update()
 {
-	TIMEMANAGER->UpdateTime(mainNodeNS::maxFrameLimit);
+	//TIMEMANAGER->UpdateTime(mainNodeNS::maxFrameLimit);
 	SCENEMANAGER->update();
 }
 
