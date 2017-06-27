@@ -13,7 +13,7 @@ protected:
 
 public:
 	SystemBase();
-	~SystemBase();
+	virtual ~SystemBase();
 
 	virtual bool initialize(Game* gamePtr) PURE;
 	virtual void update(float frameTime) PURE;

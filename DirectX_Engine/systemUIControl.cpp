@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "systemUIControl.h"
+#include "systemUIDialog.h"
 
 SystemUIControl::SystemUIControl()
 {
@@ -11,11 +12,10 @@ SystemUIControl::SystemUIControl()
 	m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_NORMAL;
 	m_bInitialized = false;
 	m_bVisible = false;
-	m_bHasFocus = false;
 	m_bMouseOver = false;
 	m_bEnabled = false;
-	m_bHasIcon = false;
-	m_pIcon = nullptr;
+	m_bHasFocus = false;
+	m_bHasParent = false;
 	m_pInput = nullptr;
 	m_pGraphics = nullptr;
 }
@@ -25,12 +25,11 @@ SystemUIControl::~SystemUIControl()
 {
 }
 
-bool SystemUIControl::initialize(int controlID, SYSTEM_UI_TYPES type,
-	int x, int y, int w, int h, int m)
+bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, int x, int y, int w, int h, int m)
 {
 	bool success = false;
 	try
-	{	
+	{
 		m_nControlID = controlID;
 		m_Type = type;
 		m_x = x;
@@ -38,54 +37,60 @@ bool SystemUIControl::initialize(int controlID, SYSTEM_UI_TYPES type,
 		m_width = w;
 		m_height = h;
 		m_margin = m;
-		m_rcBoundingBox = RectMake(x, y, w, h);
-		m_bInitialized = success = vertexSetUp(x, y, w, h);
+		m_rcBoundingBox = RectMake(m_x, m_y, m_width, m_height);
+		m_bInitialized = success = vertexSetUp(m_x, m_y, m_width, m_height);
 	}
 	catch (...)
 	{
 		MessageBox(g_hWndEngine, "SystemUIControl Initialize Failed", "Error", MB_OK);
 	}
-	
+
 	return success;
 }
 
-bool SystemUIControl::initialize(int controlID, SYSTEM_UI_TYPES type, int x, int y, int w, int h, int m)
+bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, SystemUIDialog * pParent, int x, int y, int w, int h, int m)
 {
-	return false;
+	bool success = false;
+	try
+	{
+		m_pDialog = pParent;
+		m_nControlID = controlID;
+		m_Type = type;
+		m_x = x + pParent->getDialogPos().x + pParent->getDialogMargin();
+		m_y = y + pParent->getDialogPos().y + pParent->getDialogMargin();
+		m_width = w;
+		m_height = h;
+		m_margin = m;
+		m_rcBoundingBox = RectMake(m_x, m_y, m_width, m_height);
+		m_bHasParent = true;
+		m_bInitialized = success = vertexSetUp(m_x, m_y, m_width, m_height);
+	}
+	catch (...)
+	{
+		MessageBox(g_hWndEngine, "SystemUIControl Initialize Failed", "Error", MB_OK);
+	}
+
+	return success;
 }
 
 void SystemUIControl::update(float frameTime)
 {
-	//*************
-	// Button CONTROL STATE CASE 처리작성중...
-	// 내일 일어나면 STATE CASE 처리 및 Bool 변수값들에 대한 처리를 구현해야 됨.
-	// 음니ㅏ어 니아퍼미ㅏ퍼밍 ㅏㄹ핌ㄴ알픔이 ;라ㅢㄴㅇㅁ ㄹ프
-	//*************
+	if (m_State == SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_HIDDEN ||
+		m_State == SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_DISABLED)
+		return;
 
-
-	if (ContainsPoint(PointMake(m_pInput->getMouseX(), m_pInput->getMouseY())))
-		m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_MOUSEOVER;
+	if (ContainsPoint(m_pInput->getMousePt()))
+		if (m_pInput->getMouseLButton())
+			m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_PRESSED;
+		else
+			m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_MOUSEOVER;
 	else
 		m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_NORMAL;
-
-	if (m_Object)
-	{
-		m_CallbackFunctionParameter(m_Object);
-
-	}
-	else
-		m_CallbackFunction();
 }
 
 void SystemUIControl::render()
 {
 	m_pGraphics->drawQuad(vertexBuffer);
-	if (m_bHasIcon)
-	{
-		m_pGraphics->spriteBegin();
-		m_pIcon->draw();
-		m_pGraphics->spriteEnd();
-	}
 }
 
 bool SystemUIControl::vertexSetUp(int x, int y, int w, int h)

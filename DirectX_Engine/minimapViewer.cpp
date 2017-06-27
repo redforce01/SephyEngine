@@ -13,6 +13,8 @@ MinimapViewer::MinimapViewer()
 	m_bInitialized = false;
 	m_bIsometric = false;
 	m_pCameraSystem = nullptr;
+	fontColor = minimapViewerNS::FONT_COLOR;
+	backColor = minimapViewerNS::BACK_COLOR;
 }
 
 

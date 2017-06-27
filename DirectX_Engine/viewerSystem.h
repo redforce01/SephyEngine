@@ -1,4 +1,3 @@
-#pragma once
 #ifndef _VIEWERSYSTEM_H
 #define _VIEWERSYSTEM_H
 
@@ -8,6 +7,7 @@ class ViewerSystem;
 #include "resourceTreeViewer.h"
 #include "mapTileViewer.h"
 #include "minimapViewer.h"
+#include "controlViewer.h"
 
 class CameraSystem;
 class ViewerSystem : public SystemBase
@@ -18,6 +18,7 @@ private:
 	ResourceTreeViewer* pResTreeViewer;
 	MapTileViewer* pMapTileViewer;
 	MinimapViewer* pMinimapViewer;
+	ControlViewer* pControlViewer;
 public:
 	ViewerSystem();
 	~ViewerSystem();
@@ -26,7 +27,15 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render();
 
-	void setMemoryLinkCameraSystem(CameraSystem* pCameraSystem) { pMinimapViewer->setMemoryLinkCameraSystem(pCameraSystem); }
+
+	//=========================================
+	// Set Momory Linker Connect Functions
+	//=========================================
+	void setMemoryLinkCameraSystem(CameraSystem* pCameraSystem)
+	{ pMinimapViewer->setMemoryLinkCameraSystem(pCameraSystem); }
+	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
+	{ pControlViewer->setMemoryLinkMapSystem(pMapSystem); }
+
 	//=========================================
 	// Getter Functions
 	//=========================================

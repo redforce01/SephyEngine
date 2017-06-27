@@ -15,7 +15,7 @@ namespace minimapViewerNS
 	const char FONT[] = "Courier New";  // Viewer font
 	const int FONT_HEIGHT = 14;         // height of the font in pixels
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
-	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 97, 97, 97);    // backdrop color
+	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);    // backdrop color
 }
 
 class CameraSystem;

@@ -19,9 +19,9 @@ protected:
 	Input* pInput;
 	TextDX dxFont;
 
-	int m_x, m_y;
-	int m_width, m_height;
-	int m_margin;
+	float m_x, m_y;
+	float m_width, m_height;
+	float m_margin;
 
 	RECT m_rc;
 
@@ -34,7 +34,7 @@ private:
 	bool m_bMouseOver;
 public:
 	SystemUIDialog();
-	~SystemUIDialog();
+	virtual ~SystemUIDialog();
 
 	virtual bool initialize(Graphics* g, Input* i) PURE;
 	virtual void update(float frameTime);
@@ -49,54 +49,54 @@ public:
 	//=====================================
 	// Setter Functions
 	//=====================================	
-	inline void setDialogPos(int startX, int startY)
+	void setDialogPos(int startX, int startY)
 	{
 		m_x = startX, m_y = startY;
 	}
-
-	inline void setDialogSize(int w, int h)
+	void setDialogSize(int w, int h)
 	{
 		m_width = w, m_height = h;
 	}
-
-	inline void setDialogMargin(int m)
+	void setDialogMargin(int m)
 	{
 		m_margin = m;
 	}
-
-	inline void setDialogBackColor(COLOR_ARGB color)
+	void setDialogBackColor(COLOR_ARGB color)
 	{
 		backColor = color;
 	}
-
-	inline void setDialogFontColor(COLOR_ARGB color)
+	void setDialogFontColor(COLOR_ARGB color)
 	{
 		fontColor = color;
 	}
 	//=====================================
 	// Getter Functions
 	//=====================================
-	inline POINT getDialogPos() const
+	POINT getDialogPos() const
 	{
 		return PointMake(m_x, m_y);
 	}
-
-	inline int getDialogWidth() const
+	float getDialogX() const
+	{
+		return m_x;
+	}
+	float getDialogY() const
+	{
+		return m_y;
+	}
+	float getDialogWidth() const
 	{
 		return m_width;
 	}
-
-	inline int getDialogHeight() const
+	float getDialogHeight() const
 	{
 		return m_height;
 	}
-
-	inline int getDialogMargin() const
+	float getDialogMargin() const
 	{
 		return m_margin;
 	}
-
-	inline bool getMouseOver() const
+	bool getMouseOver() const
 	{
 		return m_bMouseOver;
 	}

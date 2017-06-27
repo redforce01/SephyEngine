@@ -25,7 +25,7 @@ private:
 
 public:
 	Layer(enLayerList layerState);
-	~Layer();
+	virtual ~Layer();
 
 	//Set layer Function(enLayerList layerState) 
 	//This Functions Catch Only <enum enLayerList>

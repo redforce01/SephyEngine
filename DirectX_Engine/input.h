@@ -168,6 +168,9 @@ public:
     // Return mouse Y position
     int  getMouseY()        const { return mouseY; }
 
+	// Return mouse POINT(X, Y) position
+	POINT getMousePt()		const { return PointMake(getMouseX(), getMouseY()); }
+
     // Return raw mouse X movement. Left is <0, Right is >0
     // Compatible with high-definition mouse.
     int  getMouseRawX()     const { return mouseRawX; }

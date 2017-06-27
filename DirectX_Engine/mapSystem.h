@@ -10,8 +10,8 @@ class MapSystem;
 
 namespace MapSystemNS
 {
-	const UINT mapSizeX = 64;
-	const UINT mapSizeY = 64;
+	const UINT mapSizeX = 128;
+	const UINT mapSizeY = 128;
 	const UINT tileBasicWidth = 128;
 	const UINT tileBasicHeight = 64;
 }

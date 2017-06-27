@@ -11,7 +11,8 @@ Scene_MapTool::~Scene_MapTool()
 {
 	SAFE_DELETE(mapSystem);
 	SAFE_DELETE(cameraSystem);
-
+	SAFE_DELETE(viewerSystem);
+	
 	releaseAll();
 }
 
@@ -24,13 +25,16 @@ void Scene_MapTool::initialize(HWND hwnd)
 	mapSystem->initialize(this);
 	cameraSystem = new CameraSystem;
 	cameraSystem->initialize(this);	
-	cameraSystem->setMemoryLinkMapSystem(mapSystem);
-	mapSystem->setMemoryLinkCameraSystem(cameraSystem);
 	viewerSystem = new ViewerSystem;
 	viewerSystem->initialize(this);
+
+	// Each System Memory Link Connect
+	cameraSystem->setMemoryLinkMapSystem(mapSystem);
+	mapSystem->setMemoryLinkCameraSystem(cameraSystem);
 	cameraSystem->setMemoryLinkMinimap(viewerSystem->getMinimapViewer());
 	viewerSystem->setMemoryLinkCameraSystem(cameraSystem);
-	
+	viewerSystem->setMemoryLinkMapSystem(mapSystem);
+
 	// etc initialize settings
 	cameraSystem->setCameraPos(100, 100);
 }

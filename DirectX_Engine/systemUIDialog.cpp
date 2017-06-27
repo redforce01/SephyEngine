@@ -29,6 +29,11 @@ bool SystemUIDialog::initialize(Graphics * g, Input * i, int x, int y, int w, in
 		if (g == nullptr || i == nullptr)
 			return false;
 		
+		m_x = x;
+		m_y = y;
+		m_width = w;
+		m_height = h;
+		m_margin = m;
 		pGraphics = g;
 		pInput = i;
 		m_rc = RectMake(x, y, w, h);			

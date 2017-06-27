@@ -10,6 +10,11 @@ ViewerSystem::ViewerSystem()
 
 ViewerSystem::~ViewerSystem()
 {
+	SAFE_DELETE(pResTreeViewer);
+	SAFE_DELETE(pMapTileViewer);
+	SAFE_DELETE(pMinimapViewer);
+	SAFE_DELETE(pControlViewer);
+
 }
 
 bool ViewerSystem::initialize(Game * gamePtr)
@@ -24,15 +29,16 @@ bool ViewerSystem::initialize(Game * gamePtr)
 		pMapTileViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		pMinimapViewer = new MinimapViewer;
 		pMinimapViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
-		pMinimapViewer->setMapWidth(128 * 64);
-		pMinimapViewer->setMapHeight(64 * 64);
-		
+		pMinimapViewer->setMapWidth(128 * 100);
+		pMinimapViewer->setMapHeight(64 * 100);
 		pMinimapViewer->setIsoMetric(true);
+		pControlViewer = new ControlViewer;
+		pControlViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		success = true;
 	}
 	catch (...)
 	{
-
+		MessageBox(g_hWndEngine, "Tool Viewer Initialize Failed", "Error", MB_OK);
 	}
 	
 
@@ -44,6 +50,7 @@ void ViewerSystem::update(float frameTime)
 	pResTreeViewer->update(frameTime);
 	pMapTileViewer->update(frameTime);
 	pMinimapViewer->update(frameTime);
+	pControlViewer->update(frameTime);
 
 	if (pResTreeViewer->getMouseOver() || pMapTileViewer->getMouseOver()
 		|| pMinimapViewer->getMouseOver())
@@ -59,4 +66,5 @@ void ViewerSystem::render()
 	pResTreeViewer->render();
 	pMapTileViewer->render();
 	pMinimapViewer->render();
+	pControlViewer->render();
 }

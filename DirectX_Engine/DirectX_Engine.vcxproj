@@ -145,6 +145,7 @@
     <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="componentBase.cpp" />
     <ClCompile Include="console.cpp" />
+    <ClCompile Include="control_SaveButton.cpp" />
     <ClCompile Include="cSingletonBase.cpp" />
     <ClCompile Include="dashboard.cpp" />
     <ClCompile Include="engineBoot.cpp" />
@@ -209,7 +210,7 @@
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="tileObject.cpp" />
     <ClCompile Include="timeManager.cpp" />
-    <ClCompile Include="toolUISystem.cpp" />
+    <ClCompile Include="controlViewer.cpp" />
     <ClCompile Include="uiButton.cpp" />
     <ClCompile Include="uiFrame.cpp" />
     <ClCompile Include="uiParent.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="componentBase.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="control_SaveButton.h" />
     <ClInclude Include="cSingletonBase.h" />
     <ClInclude Include="dashboard.h" />
     <ClInclude Include="engineBoot.h" />
@@ -291,7 +293,7 @@
     <ClInclude Include="textureManager.h" />
     <ClInclude Include="tileObject.h" />
     <ClInclude Include="timeManager.h" />
-    <ClInclude Include="toolUISystem.h" />
+    <ClInclude Include="controlViewer.h" />
     <ClInclude Include="uiButton.h" />
     <ClInclude Include="uiFrame.h" />
     <ClInclude Include="uiParent.h" />

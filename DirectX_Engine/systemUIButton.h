@@ -5,15 +5,45 @@ class SystemUIButton;
 
 #include "systemUIControl.h"
 
-
 class SystemUIButton : public SystemUIControl
 {
+private:
+	bool m_bHasIcon;
+	bool m_bHasMessage;
+	Image* m_pIcon;
+	std::string m_strMessage;
+
+//====================================
+// Function Pointer
+//====================================
+protected:
+	void* m_pObject;
+	typedef void(*CALLBACK_FUNCTION_)(void);
+	typedef void(*CALLBACK_FUNCTION_PARAMETER)(void*);
+	CALLBACK_FUNCTION_			m_CallbackFunction;
+	CALLBACK_FUNCTION_PARAMETER m_CallbackFunctionParameter;
 public:
 	SystemUIButton();
-	~SystemUIButton();
+	virtual ~SystemUIButton();
 
-	bool initialize();
+	virtual bool initButton(Graphics* g, Input* i, int controlID, CALLBACK_FUNCTION_ cbFunction,
+		int x, int y, int w, int h, int m);
+	virtual bool initButton(Graphics* g, Input* i, int controlID, CALLBACK_FUNCTION_ cbFunction, SystemUIDialog* pParent,
+		int x, int y, int w, int h, int m);
+	virtual bool initButton(Graphics* g, Input* i, int controlID, CALLBACK_FUNCTION_PARAMETER cbfParam, void* obj,
+		int x, int y, int w, int h, int m);
+	virtual bool initButton(Graphics* g, Input* i, int controlID, CALLBACK_FUNCTION_PARAMETER cbfParam, void* obj, SystemUIDialog* pParent,
+		int x, int y, int w, int h, int m);
+	virtual void update(float frameTime);
+	virtual void render();
 
+public:
+	void SetMessage(std::string message)
+	{
+		m_strMessage = message;
+		m_bHasMessage = true;
+	}
+	void SetIcon(Image* icon);
 };
 
 #endif // !_SYSTEMUIBUTTON_H

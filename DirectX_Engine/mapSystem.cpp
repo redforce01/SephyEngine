@@ -13,11 +13,8 @@ MapSystem::~MapSystem()
 {
 	for (auto iter : arrTiles)
 	{
-		if(iter != nullptr)
-			SAFE_DELETE(iter);
-		iter = nullptr;
+		SAFE_DELETE(iter);
 	}
-	arrTiles.clear();
 }
 
 bool MapSystem::initialize(Game* gamePtr)
@@ -40,7 +37,7 @@ bool MapSystem::initialize(Game* gamePtr)
 		{
 			TileObject* temp = new TileObject;
 			temp->initialize(UIDCount, mapX, mapY,
-				gamePtr->getGraphics(), MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight, 0, IMAGEMANAGER->getTexture("isoBasicA"));
+				gamePtr->getGraphics(), MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight, 0, IMAGEMANAGER->getTexture("isoBasicC"));
 			arrTiles.emplace_back(temp);
 			
 			mapX += MapSystemNS::tileBasicWidth;
@@ -69,18 +66,24 @@ void MapSystem::update(float frameTime)
 
 void MapSystem::render()
 {
+
 	pGraphics->spriteBegin();
+	for (auto iter : arrTiles)
+	{
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+			continue;
+		
+		iter->render();
+	}
+	pGraphics->spriteEnd();
 
 	for (auto iter : arrTiles)
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
 			continue;
 
-		iter->renderSketch();			
-		iter->render();
+		iter->renderSketch();
 	}
-
-	pGraphics->spriteEnd();
 }
 
 void MapSystem::moveX(int distance)

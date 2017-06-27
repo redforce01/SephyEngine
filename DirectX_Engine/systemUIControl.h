@@ -43,11 +43,8 @@ private:
 	bool m_bVisible;
 	bool m_bMouseOver;
 	bool m_bHasFocus;
-	bool m_bHasIcon;
-	SystemUIDialog* m_pDialog;
-	VertexC vtx[4];
-	LP_VERTEXBUFFER vertexBuffer;
-	COLOR_ARGB  backColor;
+	bool m_bHasParent;
+	int m_nControlID;
 //====================================
 // Protected Variables
 //====================================
@@ -56,38 +53,41 @@ protected:
 	{
 		m_rcBoundingBox = RectMake(m_x, m_y, m_width, m_height);
 	}
+	SystemUIDialog* m_pDialog;
 	Graphics* m_pGraphics;
 	Input* m_pInput;
-	Image* m_pIcon;
-	TextDX dxFont;
-	int m_nControlID;
+	TextDX m_dxFont;
 	RECT m_rcBoundingBox;
 	UINT m_nHotkey;
 	bool m_bEnabled;
 	SYSTEM_UI_TYPES m_Type;
 	SYSTEM_UI_CONTROL_STATE m_State;
-	void* m_Object;
-//====================================
-// Function Pointer
-//====================================
-protected:
-	typedef void(*CALLBACK_FUNCTION_)(void);
-	typedef void(*CALLBACK_FUNCTION_PARAMETER)(void*);
-	CALLBACK_FUNCTION_			m_CallbackFunction;
-	CALLBACK_FUNCTION_PARAMETER m_CallbackFunctionParameter;
+	VertexC vtx[4];
+	LP_VERTEXBUFFER vertexBuffer;
+	COLOR_ARGB  backColor;
+
+
 public:
 	SystemUIControl();
-	~SystemUIControl();
+	virtual ~SystemUIControl();
 
-	virtual bool initialize(int controlID, SYSTEM_UI_TYPES type,
+	virtual bool initControl(int controlID, SYSTEM_UI_TYPES type,
+		int x, int y, int w, int h, int m);
+	virtual bool initControl(int controlID, SYSTEM_UI_TYPES type, SystemUIDialog* pParent,
 		int x, int y, int w, int h, int m);
 	virtual void update(float frameTime);
 	virtual void render();
 
-	// =================================================================
-	// Member Functions
-	// =================================================================
+	// Vertex Setup Function
 	bool vertexSetUp(int x, int y, int w, int h);
+	
+	// =================================================================
+	// Setter Functions
+	// =================================================================
+	void SetState(SYSTEM_UI_CONTROL_STATE state)
+	{
+		m_State = state;
+	}
 	void SetHidden()
 	{
 		m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_HIDDEN;
@@ -99,6 +99,33 @@ public:
 	void SetID(int ID)
 	{
 		m_nControlID = ID;
+	}
+	void SetDxFont(TextDX font)
+	{
+		m_dxFont = font;
+	}
+	// =================================================================
+	// Getter Functions
+	// =================================================================
+	bool ContainsParent() const
+	{
+		return m_bHasParent;
+	}
+	float GetControlPosX() const
+	{
+		return m_x;
+	}
+	float GetControlPosY() const
+	{
+		return m_y;
+	}
+	POINT GetControlPt() const
+	{
+		return PointMake(m_x, m_y);
+	}
+	float GetControlMargin() const
+	{
+		return m_margin;
 	}
 	int GetID() const
 	{
@@ -120,7 +147,6 @@ public:
 	{
 		return m_nHotkey;
 	}
-
 	// =================================================================
 	// Virtual Functions
 	// =================================================================

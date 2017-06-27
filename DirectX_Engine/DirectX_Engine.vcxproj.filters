@@ -208,20 +208,20 @@
     <Filter Include="GameCode\Maptool\Viewer\ResourceTreeViewer">
       <UniqueIdentifier>{29332b23-7d30-4266-8fd3-48ba638934d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SystemCode\Engine\SystemDebugUI">
-      <UniqueIdentifier>{f21684a3-d322-4a56-9fc1-bcd6353ec571}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\GameSystem">
       <UniqueIdentifier>{57766a28-45a0-4655-aff0-cd1d5a58c49f}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameCode\Maptool\Viewer\MinimapViewer">
       <UniqueIdentifier>{ab85eb13-8e22-417e-a9bc-384189757911}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Maptool\Control">
-      <UniqueIdentifier>{36eca9f6-b964-4230-ad2f-8a6ae8128729}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Maptool\Map\Object">
       <UniqueIdentifier>{c4403ca4-314a-4b11-a803-1b66af0730c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\ToolControlViewer">
+      <UniqueIdentifier>{cfe02d16-89f6-40e7-8e88-0eacc061eb2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SystemCode\Engine\SystemEngineUI">
+      <UniqueIdentifier>{f21684a3-d322-4a56-9fc1-bcd6353ec571}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -415,19 +415,16 @@
       <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
     </ClCompile>
     <ClCompile Include="systemUIControl.cpp">
-      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
     </ClCompile>
     <ClCompile Include="systemUIDialog.cpp">
-      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
     </ClCompile>
     <ClCompile Include="viewerSystem.cpp">
       <Filter>GameCode\Maptool\Viewer</Filter>
     </ClCompile>
     <ClCompile Include="minimapViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\MinimapViewer</Filter>
-    </ClCompile>
-    <ClCompile Include="toolUISystem.cpp">
-      <Filter>GameCode\Maptool\Control</Filter>
     </ClCompile>
     <ClCompile Include="systemBase.cpp">
       <Filter>GameCode\GameSystem</Filter>
@@ -442,7 +439,13 @@
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClCompile>
     <ClCompile Include="systemUIButton.cpp">
-      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
+    </ClCompile>
+    <ClCompile Include="control_SaveButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="controlViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -654,19 +657,16 @@
       <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
     </ClInclude>
     <ClInclude Include="systemUIControl.h">
-      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
     </ClInclude>
     <ClInclude Include="systemUIDialog.h">
-      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
     </ClInclude>
     <ClInclude Include="viewerSystem.h">
       <Filter>GameCode\Maptool\Viewer</Filter>
     </ClInclude>
     <ClInclude Include="minimapViewer.h">
       <Filter>GameCode\Maptool\Viewer\MinimapViewer</Filter>
-    </ClInclude>
-    <ClInclude Include="toolUISystem.h">
-      <Filter>GameCode\Maptool\Control</Filter>
     </ClInclude>
     <ClInclude Include="systemBase.h">
       <Filter>GameCode\GameSystem</Filter>
@@ -681,7 +681,13 @@
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
     <ClInclude Include="systemUIButton.h">
-      <Filter>SystemCode\Engine\SystemDebugUI</Filter>
+      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
+    </ClInclude>
+    <ClInclude Include="control_SaveButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="controlViewer.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
