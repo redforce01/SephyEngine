@@ -16,6 +16,7 @@ SystemUIControl::SystemUIControl()
 	m_bEnabled = false;
 	m_bHasFocus = false;
 	m_bHasParent = false;
+	m_bUseBackground = false;
 	m_pInput = nullptr;
 	m_pGraphics = nullptr;
 }
@@ -25,7 +26,8 @@ SystemUIControl::~SystemUIControl()
 {
 }
 
-bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, int x, int y, int w, int h, int m)
+bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, bool bUseBack,
+	int x, int y, int w, int h, int m)
 {
 	bool success = false;
 	try
@@ -37,6 +39,7 @@ bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, int x, in
 		m_width = w;
 		m_height = h;
 		m_margin = m;
+		m_bUseBackground = bUseBack;
 		m_rcBoundingBox = RectMake(m_x, m_y, m_width, m_height);
 		m_bInitialized = success = vertexSetUp(m_x, m_y, m_width, m_height);
 	}
@@ -48,7 +51,8 @@ bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, int x, in
 	return success;
 }
 
-bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, SystemUIDialog * pParent, int x, int y, int w, int h, int m)
+bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, SystemUIDialog * pParent, bool bUseBack,
+	int x, int y, int w, int h, int m)
 {
 	bool success = false;
 	try
@@ -58,10 +62,11 @@ bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, SystemUID
 		m_Type = type;
 		m_x = x + pParent->getDialogPos().x + pParent->getDialogMargin();
 		m_y = y + pParent->getDialogPos().y + pParent->getDialogMargin();
-		m_width = w;
-		m_height = h;
+		m_width = w - pParent->getDialogMargin();
+		m_height = h - pParent->getDialogMargin();
 		m_margin = m;
-		m_rcBoundingBox = RectMake(m_x, m_y, m_width, m_height);
+		m_bUseBackground = bUseBack;
+		m_rcBoundingBox = RectMake(m_x, m_y + m_margin, m_width, m_height);
 		m_bHasParent = true;
 		m_bInitialized = success = vertexSetUp(m_x, m_y, m_width, m_height);
 	}
@@ -90,7 +95,8 @@ void SystemUIControl::update(float frameTime)
 
 void SystemUIControl::render()
 {
-	m_pGraphics->drawQuad(vertexBuffer);
+	if(m_bUseBackground)
+		m_pGraphics->drawQuad(vertexBuffer);
 }
 
 bool SystemUIControl::vertexSetUp(int x, int y, int w, int h)

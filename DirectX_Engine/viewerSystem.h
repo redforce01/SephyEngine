@@ -8,6 +8,7 @@ class ViewerSystem;
 #include "mapTileViewer.h"
 #include "minimapViewer.h"
 #include "controlViewer.h"
+#include "statsViewer.h"
 
 class CameraSystem;
 class ViewerSystem : public SystemBase
@@ -15,10 +16,11 @@ class ViewerSystem : public SystemBase
 private:
 	bool bUIMouseOver;
 
-	ResourceTreeViewer* pResTreeViewer;
-	MapTileViewer* pMapTileViewer;
-	MinimapViewer* pMinimapViewer;
-	ControlViewer* pControlViewer;
+	ResourceTreeViewer* m_pResTreeViewer;
+	MapTileViewer*		m_pMapTileViewer;
+	MinimapViewer*		m_pMinimapViewer;
+	ControlViewer*		m_pControlViewer;
+	StatsViewer*		m_pStatsViewer;
 public:
 	ViewerSystem();
 	~ViewerSystem();
@@ -27,15 +29,18 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render();
 
-
+	bool checkMouseOver();
 	//=========================================
 	// Set Momory Linker Connect Functions
 	//=========================================
 	void setMemoryLinkCameraSystem(CameraSystem* pCameraSystem)
-	{ pMinimapViewer->setMemoryLinkCameraSystem(pCameraSystem); }
+	{
+		m_pMinimapViewer->setMemoryLinkCameraSystem(pCameraSystem);
+	}
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
-	{ pControlViewer->setMemoryLinkMapSystem(pMapSystem); }
-
+	{
+		m_pControlViewer->setMemoryLinkMapSystem(pMapSystem);
+	}
 	//=========================================
 	// Getter Functions
 	//=========================================
@@ -45,15 +50,15 @@ public:
 	}
 	inline ResourceTreeViewer* getResTreeViewer() const
 	{
-		return pResTreeViewer;
+		return m_pResTreeViewer;
 	}
 	inline MapTileViewer* getMapTileViewer() const
 	{
-		return pMapTileViewer;
+		return m_pMapTileViewer;
 	}
 	inline MinimapViewer* getMinimapViewer() const
 	{
-		return pMinimapViewer;
+		return m_pMinimapViewer;
 	}
 };
 

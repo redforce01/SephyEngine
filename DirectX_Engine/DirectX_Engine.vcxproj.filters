@@ -94,9 +94,6 @@
     <Filter Include="SystemCode\Engine\SystemWindow\SystemInterface">
       <UniqueIdentifier>{dd6a1993-3143-42ce-85ed-9825becc2d50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SystemCode\Engine\SystemWindow\SystemInterface\SystemMenu">
-      <UniqueIdentifier>{e0d39552-a10e-468e-83d4-48dbbfdbabd8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SystemCode\Engine\SystemWindow\SystemInterface\SystemButton">
       <UniqueIdentifier>{4272520e-6156-4598-8fec-097337017de5}</UniqueIdentifier>
     </Filter>
@@ -196,9 +193,6 @@
     <Filter Include="SystemCode\Engine\SystemImage">
       <UniqueIdentifier>{11e0bfac-14ae-49ac-b5cb-e08a13fdfd7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SystemCode\Engine\SystemBoot">
-      <UniqueIdentifier>{e34d6f7a-ea94-4802-b302-f352bff62a20}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Maptool\Viewer">
       <UniqueIdentifier>{cabb43e7-0dfe-4179-bc70-26a25513fd4c}</UniqueIdentifier>
     </Filter>
@@ -222,6 +216,24 @@
     </Filter>
     <Filter Include="SystemCode\Engine\SystemEngineUI">
       <UniqueIdentifier>{f21684a3-d322-4a56-9fc1-bcd6353ec571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SystemCode\Engine\SystemMenu">
+      <UniqueIdentifier>{e0d39552-a10e-468e-83d4-48dbbfdbabd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SystemCode\Engine\SystemEngineBoot">
+      <UniqueIdentifier>{e34d6f7a-ea94-4802-b302-f352bff62a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\ToolControlViewer\Button">
+      <UniqueIdentifier>{ffc7cb22-c5b1-4c0c-aa9d-3b6468086276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\StatsViewer">
+      <UniqueIdentifier>{78f6f17f-6c3f-4fe9-af11-7f2d4419b937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SystemCode\Engine\SystemEngineUI\Dialog">
+      <UniqueIdentifier>{f96f48b6-9686-4665-b46b-f898bdd691bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SystemCode\Engine\SystemEngineUI\Control">
+      <UniqueIdentifier>{9af1481a-e375-4e02-be20-58742a12d1bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -325,7 +337,7 @@
       <Filter>SystemCode\Engine\SystemInput</Filter>
     </ClCompile>
     <ClCompile Include="engineMenebar.cpp">
-      <Filter>SystemCode\Engine\SystemWindow\SystemInterface\SystemMenu</Filter>
+      <Filter>SystemCode\Engine\SystemMenu</Filter>
     </ClCompile>
     <ClCompile Include="engineButton.cpp">
       <Filter>SystemCode\Engine\SystemWindow\SystemInterface\SystemButton</Filter>
@@ -399,12 +411,6 @@
     <ClCompile Include="engineImage.cpp">
       <Filter>SystemCode\Engine\SystemImage</Filter>
     </ClCompile>
-    <ClCompile Include="engineBoot.cpp">
-      <Filter>SystemCode\Engine\SystemBoot</Filter>
-    </ClCompile>
-    <ClCompile Include="engineINISetting.cpp">
-      <Filter>SystemCode\Engine\SystemBoot</Filter>
-    </ClCompile>
     <ClCompile Include="scene_Lobby.cpp">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClCompile>
@@ -413,12 +419,6 @@
     </ClCompile>
     <ClCompile Include="resourceTreeViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
-    </ClCompile>
-    <ClCompile Include="systemUIControl.cpp">
-      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
-    </ClCompile>
-    <ClCompile Include="systemUIDialog.cpp">
-      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
     </ClCompile>
     <ClCompile Include="viewerSystem.cpp">
       <Filter>GameCode\Maptool\Viewer</Filter>
@@ -438,14 +438,44 @@
     <ClCompile Include="mapTileData.cpp">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClCompile>
-    <ClCompile Include="systemUIButton.cpp">
-      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
-    </ClCompile>
-    <ClCompile Include="control_SaveButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
-    </ClCompile>
     <ClCompile Include="controlViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="engineBootSystem.cpp">
+      <Filter>SystemCode\Engine\SystemEngineBoot</Filter>
+    </ClCompile>
+    <ClCompile Include="control_LoadButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="control_SaveButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="control_ResetButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="control_DebugButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="control_PerformButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="systemDebugStats.cpp">
+      <Filter>GameCode\GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="statsViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\StatsViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="systemUIDialog.cpp">
+      <Filter>SystemCode\Engine\SystemEngineUI\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="systemUIButton.cpp">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="systemUIControl.cpp">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="systemUIScroll.cpp">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -564,7 +594,7 @@
       <Filter>SystemCode\Engine\SystemCore</Filter>
     </ClInclude>
     <ClInclude Include="engineMenebar.h">
-      <Filter>SystemCode\Engine\SystemWindow\SystemInterface\SystemMenu</Filter>
+      <Filter>SystemCode\Engine\SystemMenu</Filter>
     </ClInclude>
     <ClInclude Include="engineButton.h">
       <Filter>SystemCode\Engine\SystemWindow\SystemInterface\SystemButton</Filter>
@@ -641,12 +671,6 @@
     <ClInclude Include="engineImage.h">
       <Filter>SystemCode\Engine\SystemImage</Filter>
     </ClInclude>
-    <ClInclude Include="engineBoot.h">
-      <Filter>SystemCode\Engine\SystemBoot</Filter>
-    </ClInclude>
-    <ClInclude Include="engineINISetting.h">
-      <Filter>SystemCode\Engine\SystemBoot</Filter>
-    </ClInclude>
     <ClInclude Include="scene_Lobby.h">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClInclude>
@@ -655,12 +679,6 @@
     </ClInclude>
     <ClInclude Include="resourceTreeViewer.h">
       <Filter>GameCode\Maptool\Viewer\ResourceTreeViewer</Filter>
-    </ClInclude>
-    <ClInclude Include="systemUIControl.h">
-      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
-    </ClInclude>
-    <ClInclude Include="systemUIDialog.h">
-      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
     </ClInclude>
     <ClInclude Include="viewerSystem.h">
       <Filter>GameCode\Maptool\Viewer</Filter>
@@ -680,17 +698,47 @@
     <ClInclude Include="mapTileData.h">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
-    <ClInclude Include="systemUIButton.h">
-      <Filter>SystemCode\Engine\SystemEngineUI</Filter>
-    </ClInclude>
-    <ClInclude Include="control_SaveButton.h">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
-    </ClInclude>
     <ClInclude Include="controlViewer.h">
       <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <ClInclude Include="engineBootSystem.h">
+      <Filter>SystemCode\Engine\SystemEngineBoot</Filter>
+    </ClInclude>
+    <ClInclude Include="control_ButtonInfo.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="control_LoadButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="control_SaveButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="control_ResetButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="control_DebugButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="control_PerformButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="systemDebugStats.h">
+      <Filter>GameCode\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="statsViewer.h">
+      <Filter>GameCode\Maptool\Viewer\StatsViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="systemUIDialog.h">
+      <Filter>SystemCode\Engine\SystemEngineUI\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="systemUIButton.h">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="systemUIControl.h">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="systemUIScroll.h">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

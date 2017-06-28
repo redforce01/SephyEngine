@@ -145,15 +145,18 @@
     <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="componentBase.cpp" />
     <ClCompile Include="console.cpp" />
+    <ClCompile Include="control_DebugButton.cpp" />
+    <ClCompile Include="control_LoadButton.cpp" />
+    <ClCompile Include="control_PerformButton.cpp" />
+    <ClCompile Include="control_ResetButton.cpp" />
     <ClCompile Include="control_SaveButton.cpp" />
     <ClCompile Include="cSingletonBase.cpp" />
     <ClCompile Include="dashboard.cpp" />
-    <ClCompile Include="engineBoot.cpp" />
+    <ClCompile Include="engineBootSystem.cpp" />
     <ClCompile Include="engineButton.cpp" />
     <ClCompile Include="engineCore.cpp" />
     <ClCompile Include="engineEditControl.cpp" />
     <ClCompile Include="engineImage.cpp" />
-    <ClCompile Include="engineINISetting.cpp" />
     <ClCompile Include="engineInput.cpp" />
     <ClCompile Include="engineResourceView.cpp" />
     <ClCompile Include="engineInspectorView.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="gameObjectManager.cpp" />
     <ClCompile Include="mapTileData.cpp" />
+    <ClCompile Include="statsViewer.cpp" />
     <ClCompile Include="systemBase.cpp" />
     <ClCompile Include="gocMessage.cpp" />
     <ClCompile Include="graphics.cpp" />
@@ -202,9 +206,11 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="systemDebugStats.cpp" />
     <ClCompile Include="systemUIButton.cpp" />
     <ClCompile Include="systemUIControl.cpp" />
     <ClCompile Include="systemUIDialog.cpp" />
+    <ClCompile Include="systemUIScroll.cpp" />
     <ClCompile Include="tabContent_A.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
@@ -220,21 +226,25 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="control_ButtonInfo.h" />
     <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="componentBase.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="control_DebugButton.h" />
+    <ClInclude Include="control_LoadButton.h" />
+    <ClInclude Include="control_PerformButton.h" />
+    <ClInclude Include="control_ResetButton.h" />
     <ClInclude Include="control_SaveButton.h" />
     <ClInclude Include="cSingletonBase.h" />
     <ClInclude Include="dashboard.h" />
-    <ClInclude Include="engineBoot.h" />
+    <ClInclude Include="engineBootSystem.h" />
     <ClInclude Include="engineButton.h" />
     <ClInclude Include="engineCore.h" />
     <ClInclude Include="engineEditControl.h" />
     <ClInclude Include="engineError.h" />
     <ClInclude Include="engineImage.h" />
-    <ClInclude Include="engineINISetting.h" />
     <ClInclude Include="engineInput.h" />
     <ClInclude Include="engineResourceView.h" />
     <ClInclude Include="engineInspectorView.h" />
@@ -253,6 +263,7 @@
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="gameObjectManager.h" />
     <ClInclude Include="mapTileData.h" />
+    <ClInclude Include="statsViewer.h" />
     <ClInclude Include="systemBase.h" />
     <ClInclude Include="gocMessage.h" />
     <ClInclude Include="graphics.h" />
@@ -284,9 +295,11 @@
     <ClInclude Include="scene_MapTool.h" />
     <ClInclude Include="scene_Test.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="systemDebugStats.h" />
     <ClInclude Include="systemUIButton.h" />
     <ClInclude Include="systemUIControl.h" />
     <ClInclude Include="systemUIDialog.h" />
+    <ClInclude Include="systemUIScroll.h" />
     <ClInclude Include="tabContent_A.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="textDX.h" />
@@ -300,9 +313,6 @@
     <ClInclude Include="uiProgressBar.h" />
     <ClInclude Include="uiTab.h" />
     <ClInclude Include="viewerSystem.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

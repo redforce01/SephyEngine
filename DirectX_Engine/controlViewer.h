@@ -4,7 +4,12 @@
 class ControlViewer;
 
 #include "systemUIDialog.h"
+#include "control_ButtonInfo.h"
 #include "control_SaveButton.h"
+#include "control_LoadButton.h"
+#include "control_ResetButton.h"
+#include "control_DebugButton.h"
+#include "control_PerformButton.h"
 
 namespace toolControlViewerNS
 {
@@ -17,15 +22,16 @@ namespace toolControlViewerNS
 	const int FONT_HEIGHT = 14;					// height of the font in pixels
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);    // backdrop color
-
-	const int controlIDSave = 1;
-	const int controlIDLoad = 2;
 }
 
 class ControlViewer : public SystemUIDialog
 {
 private:
 	Control_SaveButton* m_pSaveButton;
+	Control_LoadButton* m_pLoadButton;
+	Control_ResetButton* m_pResetButton;
+	Control_DebugButton* m_pDebugButton;
+	Control_PerformButton* m_pPerformButton;
 
 public:
 	ControlViewer();
@@ -34,10 +40,18 @@ public:
 	virtual bool initialize(Graphics* g, Input* i) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
-	
 
+	void setMemoryLinkStatsViewer(StatsViewer* pStatsViewer)
+	{
+		m_pPerformButton->setMemoryLinkStatsViewer(pStatsViewer);
+	}
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
-	{ m_pSaveButton->setMemoryLinkMapSystem(pMapSystem); }
+	{
+		m_pSaveButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pLoadButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pDebugButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pResetButton->setMemoryLinkMapSystem(pMapSystem);
+	}
 };
 
 #endif // !_CONTROLVIEWER_H

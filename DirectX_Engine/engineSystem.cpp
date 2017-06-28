@@ -14,7 +14,6 @@ static LRESULT CALLBACK EngineProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lP
 
 EngineSystem::EngineSystem()
 {
-
 }
 
 EngineSystem::~EngineSystem()
@@ -24,6 +23,7 @@ EngineSystem::~EngineSystem()
 	SAFE_DELETE(engineInspectorView);
 	SAFE_DELETE(g_Graphics);
 	SAFE_DELETE(g_MainNode);
+	SAFE_DELETE(pEngineInput);
 }
 
 //=============================================================================
@@ -33,7 +33,6 @@ EngineSystem::~EngineSystem()
 bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 {
 	FILEMANAGER->initialize();
-
 	bool success = false;
 
 	// pEngine->Set This Point. 
@@ -42,7 +41,7 @@ bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 
 	try
 	{
-		engineInput = new EngineInput;
+		pEngineInput = new EngineInput;
 
 		// Create Engine-Main Window
 		if (CreateMainWindow(g_hWndEngine, hInstance, nCmdShow) == false)

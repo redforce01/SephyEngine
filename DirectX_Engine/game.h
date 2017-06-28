@@ -138,12 +138,15 @@ public:
 	{
 		return this->initialized;
 	}
-
 	void setInitialized(bool b) 
 	{
 		this->initialized = b;
 	}
 
+	float getFPS() const
+	{
+		return fps;
+	}
 };
 
 #endif

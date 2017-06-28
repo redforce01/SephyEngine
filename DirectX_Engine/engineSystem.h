@@ -20,7 +20,7 @@ class EngineSystem;
 class EngineSystem : public EngineCore
 {
 private:	
-	EngineInput* engineInput;			// Engine Input
+	EngineInput* pEngineInput;			// Engine Input
 	EngineMenuBar engineMenubar;		// Engine MainWindow Menubar
 
 	// Engine System Interface List

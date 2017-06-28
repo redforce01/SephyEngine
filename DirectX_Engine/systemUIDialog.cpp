@@ -9,10 +9,11 @@ SystemUIDialog::SystemUIDialog()
 	m_x = m_y = 0;
 	m_width = m_height = 0;
 	m_margin = 0;
-	m_rc = RectMake(0, 0, 0, 0);
+	m_rcBoundingBox = RectMake(0, 0, 0, 0);
 	fontColor = systemUIDialogNS::basicFontColor;
 	backColor = systemUIDialogNS::basicBackColor;
 	m_bMouseOver = false;
+	m_bVisible = true;
 }
 
 
@@ -36,8 +37,8 @@ bool SystemUIDialog::initialize(Graphics * g, Input * i, int x, int y, int w, in
 		m_margin = m;
 		pGraphics = g;
 		pInput = i;
-		m_rc = RectMake(x, y, w, h);			
-		success = vertexSetup(x, y, w, h);		
+		m_rcBoundingBox = RectMake(x, y, w, h);
+		success = vertexSetup(x, y, w, h);
 	}
 	catch (...)
 	{
@@ -51,7 +52,7 @@ void SystemUIDialog::update(float frameTime)
 {
 	if (pInput->getMouseLButton())
 	{
-		if (PtInRect(&m_rc, PointMake(pInput->getMouseX(), pInput->getMouseY())))
+		if (PtInRect(&m_rcBoundingBox, PointMake(pInput->getMouseX(), pInput->getMouseY())))
 		{
 			m_bMouseOver = true;
 		}

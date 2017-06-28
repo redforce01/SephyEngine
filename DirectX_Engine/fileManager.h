@@ -108,32 +108,45 @@ public:
 	inline std::vector<stFile*>::iterator			getAllEtcIter() { return iterEtc; }
 	
 // Get Size Function
-	inline UINT					getAllFileSize() { return arrFile.size(); }
-	inline UINT					getAllImageSize() { return arrImage.size(); }
-	inline UINT					getAllDataSize() { return arrData.size(); }
-	inline UINT					getAllEtcSize() { return arrEtc.size(); }
+	inline UINT					getAllFileSize() const
+	{ return arrFile.size(); }
 
-	inline arrFileList*			getFileListInFolder(std::string keyFolder) { return arrFile.find(keyFolder.c_str())->second; }
-	inline stFile*				getFile(std::string keyFolder, int index) { return arrFile.find(keyFolder.c_str())->second->at(index); }
+	inline UINT					getAllImageSize() const
+	{ return arrImage.size(); }
+
+	inline UINT					getAllDataSize() const
+	{ return arrData.size(); }
+
+	inline UINT					getAllEtcSize() const
+	{ return arrEtc.size(); }
+
+	inline arrFileList*			getFileListInFolder(std::string keyFolder) const
+	{ return arrFile.find(keyFolder.c_str())->second; }
+
+	inline stFile*				getFile(std::string keyFolder, int index) const
+	{ return arrFile.find(keyFolder.c_str())->second->at(index); }
+
 	inline stFile*				getFile(std::string keyFolder, std::string fileName);
-
 	inline std::vector<std::string>	getFolderList();
 	inline std::vector<stFile*>		getFileList();
 
 	// GET IMAGE FILE - use std::string
-	inline stFile* getImageFile(std::string fileName)
+	inline stFile* getImageFile(std::string fileName) const
 	{
 		for (auto iter : arrImage)
 		{
 			if (iter->fileName.compare(fileName) == 0)
 				return iter;
 		}
+
+		return nullptr;
 	}
 	// GET IMAGE FILE - use Index
-	inline stFile* getImageFile(int fileNum)	{ return arrImage[fileNum]; }
+	inline stFile* getImageFile(int fileNum) const
+	{ return arrImage[fileNum]; }
 
 	// GET DATA FILE - use std::string
-	inline stFile* getDataFile(std::string fileName)
+	inline stFile* getDataFile(std::string fileName) const
 	{
 		for (auto iter : arrData)
 		{
@@ -142,10 +155,11 @@ public:
 		}
 	}
 	// GET DATA FILE - use Index
-	inline stFile* getDataFile(int fileNum) { return arrData[fileNum]; }
+	inline stFile* getDataFile(int fileNum) const
+	{ return arrData[fileNum]; }
 
 	// GET ETC FILE - use std::string
-	inline stFile* getEtcFile(std::string fileName)
+	inline stFile* getEtcFile(std::string fileName) const
 	{
 		for (auto iter : arrEtc)
 		{
@@ -154,10 +168,12 @@ public:
 		}
 	}
 	// GET ETC FILE - use index
-	inline stFile* getEtcFile(int fileNum) { return arrEtc[fileNum]; }
+	inline stFile* getEtcFile(int fileNum) const
+	{ return arrEtc[fileNum]; }
 
 	// GET FILE MANAGER INITIALIZED FLAG
-	inline bool getInitialized() { return initialized; }
+	inline bool getInitialized() const
+	{ return initialized; }
 };
 
 #define FILEMANAGER FileManager::GetInstance()

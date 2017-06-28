@@ -84,23 +84,6 @@ void Scene_MapTool::render()
 {
 	mapSystem->render();
 	viewerSystem->render();
-
-
-	graphics->spriteBegin();
-
-	// Scene View Information Render
-	static float worldSec;
-	worldSec += this->getTimeDelta();
-	std::string deltaTime = "deltaTime : " + std::to_string(worldSec);
-	std::string worldTime = "worldTime : " + std::to_string(this->getTimeDelta());
-	std::string frame = "fps : " + std::to_string(this->fps);
-
-	dxFont.print(deltaTime, 10, 10);
-	dxFont.print(worldTime, 10, 30);
-	dxFont.print(frame, 10, 70);
-	dxFont.print(std::string("SceneView"), 10, 50);
-
-	graphics->spriteEnd();
 }
 
 void Scene_MapTool::releaseAll()

@@ -18,18 +18,17 @@ protected:
 	Graphics* pGraphics;
 	Input* pInput;
 	TextDX dxFont;
-
+	
 	float m_x, m_y;
 	float m_width, m_height;
 	float m_margin;
-
-	RECT m_rc;
-
+	RECT m_rcBoundingBox;
+	bool m_bVisible;
+	// Vertex & Background
 	VertexC vtx[4];
 	LP_VERTEXBUFFER vertexBuffer;
 	COLOR_ARGB  fontColor;              // font color (a,r,g,b)
 	COLOR_ARGB  backColor;              // background color (a,r,g,b)
-
 private:
 	bool m_bMouseOver;
 public:
@@ -40,12 +39,12 @@ public:
 	virtual void update(float frameTime);
 	virtual void render();
 
-	//=====================================
-	// Member Functions
-	//=====================================	
+// protected Member Functions
+protected:
 	bool initialize(Graphics* g, Input* i, int x, int y, int w, int h, int m);
 	bool vertexSetup(int x, int y, int w, int h);
 
+public:
 	//=====================================
 	// Setter Functions
 	//=====================================	
@@ -68,6 +67,14 @@ public:
 	void setDialogFontColor(COLOR_ARGB color)
 	{
 		fontColor = color;
+	}
+	void setVisible(bool v)
+	{
+		m_bVisible = v;
+	}
+	void setShowHide()
+	{
+		m_bVisible = !m_bVisible;
 	}
 	//=====================================
 	// Getter Functions
@@ -99,6 +106,10 @@ public:
 	bool getMouseOver() const
 	{
 		return m_bMouseOver;
+	}
+	bool getVisible() const
+	{
+		return m_bVisible;
 	}
 };
 

@@ -13,6 +13,7 @@ SystemUIButton::SystemUIButton()
 
 SystemUIButton::~SystemUIButton()
 {
+	SAFE_DELETE(m_pIcon);
 }
 
 bool SystemUIButton::initButton(Graphics * g, Input * i, int controlID, CALLBACK_FUNCTION_ cbFunction,
@@ -21,7 +22,7 @@ bool SystemUIButton::initButton(Graphics * g, Input * i, int controlID, CALLBACK
 	m_pGraphics = g;
 	m_pInput = i;
 	m_CallbackFunction = cbFunction;
-	return SystemUIControl::initControl(controlID, SYSTEM_UI_TYPES::UI_TYPE_BUTTON, x, y, w, h, m);
+	return SystemUIControl::initControl(controlID, SYSTEM_UI_TYPES::UI_TYPE_BUTTON, false, x, y, w, h, m);
 }
 
 bool SystemUIButton::initButton(Graphics * g, Input * i, int controlID, CALLBACK_FUNCTION_ cbFunction, SystemUIDialog * pParent, int x, int y, int w, int h, int m)
@@ -29,7 +30,7 @@ bool SystemUIButton::initButton(Graphics * g, Input * i, int controlID, CALLBACK
 	m_pGraphics = g;
 	m_pInput = i;
 	m_CallbackFunction = cbFunction;
-	return SystemUIControl::initControl(controlID, SYSTEM_UI_TYPES::UI_TYPE_BUTTON, pParent, x, y, w, h, m);
+	return SystemUIControl::initControl(controlID, SYSTEM_UI_TYPES::UI_TYPE_BUTTON, pParent, false, x, y, w, h, m);
 }
 
 bool SystemUIButton::initButton(Graphics * g, Input * i, int controlID, CALLBACK_FUNCTION_PARAMETER cbfParam, void * obj,
@@ -39,7 +40,7 @@ bool SystemUIButton::initButton(Graphics * g, Input * i, int controlID, CALLBACK
 	m_pInput = i;
 	m_CallbackFunctionParameter = cbfParam;
 	m_pObject = obj;
-	return SystemUIControl::initControl(controlID, SYSTEM_UI_TYPES::UI_TYPE_BUTTON, x, y, w, h, m);
+	return SystemUIControl::initControl(controlID, SYSTEM_UI_TYPES::UI_TYPE_BUTTON, false, x, y, w, h, m);
 }
 
 bool SystemUIButton::initButton(Graphics * g, Input * i, int controlID, CALLBACK_FUNCTION_PARAMETER cbfParam, void * obj, SystemUIDialog * pParent, int x, int y, int w, int h, int m)
@@ -48,7 +49,7 @@ bool SystemUIButton::initButton(Graphics * g, Input * i, int controlID, CALLBACK
 	m_pInput = i;
 	m_CallbackFunctionParameter = cbfParam;
 	m_pObject = obj;
-	return SystemUIControl::initControl(controlID, SYSTEM_UI_TYPES::UI_TYPE_BUTTON, pParent, x, y, w, h, m);
+	return SystemUIControl::initControl(controlID, SYSTEM_UI_TYPES::UI_TYPE_BUTTON, pParent, false, x, y, w, h, m);
 }
 
 void SystemUIButton::update(float frameTime)
@@ -99,11 +100,12 @@ void SystemUIButton::SetIcon(Image * icon)
 		{
 			int dialogX = m_pDialog->getDialogX();
 			int dialogY = m_pDialog->getDialogY();
+			int dialogMargin = m_pDialog->getDialogMargin();
 			
-			m_pIcon->setX(dialogX + margin);
-			m_pIcon->setY(dialogY + margin);
+			m_pIcon->setX(dialogX + margin + dialogMargin + (controlX - dialogX));
+			m_pIcon->setY(dialogY + margin + dialogMargin);
 		}
-		else
+ 		else
 		{
 			m_pIcon->setX(controlX + margin);
 			m_pIcon->setY(controlY + margin);

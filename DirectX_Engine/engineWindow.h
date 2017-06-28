@@ -22,8 +22,7 @@ struct WindowStruct
 	int						basicY;
 	DWORD					dwstyle;
 	HWND					hParent;
-	HMENU					hMenu;
-	
+	HMENU					hMenu;	
 };
 
 class EngineWindow
@@ -39,7 +38,7 @@ protected:
 	WindowStruct engineViewWS;		// Engine View WindowStruct about View Information
 public:
 	EngineWindow();
-	~EngineWindow();
+	virtual ~EngineWindow();
 	
 	// virtual function. PURE( mean : = 0 )
 	virtual bool initialize(EngineInput * input, HWND hParent, HMENU hMenu, int startX, int startY, int width, int height) PURE;
@@ -63,7 +62,8 @@ public:
 		engineViewWS = ws;
 
 		return createNewWindow(
-			engineViewWS.titleName, engineViewWS.propName,
+			engineViewWS.titleName,
+			engineViewWS.propName,
 			engineViewWS.dwstyle,
 			engineViewWS.startX, engineViewWS.startY,
 			engineViewWS.width, engineViewWS.height,
@@ -92,27 +92,38 @@ public:
 	////////////////////////////////////////
 
 	// Get This->hWndThis (HWND)
-	HWND getHwnd() { return hWndThis; }
+	HWND getHwnd() 
+	{ return hWndThis; }
 
-	RECT getRect() { return rcThis; }
+	RECT getRect() 
+	{ return rcThis; }
 
-	const char* getViewName() { return engineViewWS.viewName; }
+	const char* getViewName() const
+	{ return engineViewWS.viewName; }
 
-	int getStartX() { return engineViewWS.startX; }
+	int getStartX() const
+	{ return engineViewWS.startX; }
 
-	int getStartY() { return engineViewWS.startY; }
+	int getStartY() const
+	{ return engineViewWS.startY; }
 
-	int getWidth() { return engineViewWS.width; }
+	int getWidth() const
+	{ return engineViewWS.width; }
 
-	int getHeight() { return engineViewWS.height; }
+	int getHeight() const
+	{ return engineViewWS.height; }
 
-	int getBasicX() { return engineViewWS.basicX; }
+	int getBasicX() const
+	{ return engineViewWS.basicX; }
 
-	int getBasicY() { return engineViewWS.basicY; }
+	int getBasicY() const
+	{ return engineViewWS.basicY; }
 
-	WindowStruct getWindowEx() { return engineViewWS; }
+	WindowStruct getWindowEx() const
+	{ return engineViewWS; }
 
-	EngineInput* getEngineInput() { return pEngineInput; }
+	EngineInput* getEngineInput() const
+	{ return pEngineInput; }
 
 	////////////////////////////////////////
 	//           Set functions            //

@@ -4,6 +4,8 @@
 
 class SystemUIControl;
 
+#include "graphics.h"
+#include "input.h"
 
 enum class SYSTEM_UI_TYPES
 {
@@ -44,6 +46,7 @@ private:
 	bool m_bMouseOver;
 	bool m_bHasFocus;
 	bool m_bHasParent;
+	bool m_bUseBackground;
 	int m_nControlID;
 //====================================
 // Protected Variables
@@ -65,15 +68,13 @@ protected:
 	VertexC vtx[4];
 	LP_VERTEXBUFFER vertexBuffer;
 	COLOR_ARGB  backColor;
-
-
 public:
 	SystemUIControl();
 	virtual ~SystemUIControl();
 
-	virtual bool initControl(int controlID, SYSTEM_UI_TYPES type,
+	virtual bool initControl(int controlID, SYSTEM_UI_TYPES type, bool bUseBack,
 		int x, int y, int w, int h, int m);
-	virtual bool initControl(int controlID, SYSTEM_UI_TYPES type, SystemUIDialog* pParent,
+	virtual bool initControl(int controlID, SYSTEM_UI_TYPES type, SystemUIDialog* pParent, bool bUseBack,
 		int x, int y, int w, int h, int m);
 	virtual void update(float frameTime);
 	virtual void render();

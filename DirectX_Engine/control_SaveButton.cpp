@@ -10,7 +10,6 @@ Control_SaveButton::Control_SaveButton()
 
 Control_SaveButton::~Control_SaveButton()
 {
-	SAFE_DELETE(m_pIcon);
 }
 
 bool Control_SaveButton::initialize(Graphics * g, Input * i, int controlID, SystemUIDialog* pDialog, int x, int y, int w, int h, int m)
@@ -21,12 +20,11 @@ bool Control_SaveButton::initialize(Graphics * g, Input * i, int controlID, Syst
 		success = SystemUIButton::initButton(g, i, controlID, functionSave, this, pDialog, x, y, w, h, m);
 
 		m_pIcon = new Image;
-		m_pIcon->initialize(g, 26, 28, 0, IMAGEMANAGER->getTexture("SaveButton"));
+		m_pIcon->initialize(g, saveButtonNS::IMAGE_WIDTH, saveButtonNS::IMAGE_HEIGHT, 0, IMAGEMANAGER->getTexture(saveButtonNS::FILENAME));
 		m_dxFont.initialize(g, saveButtonNS::FONT_HEIGHT, false, false, saveButtonNS::FONT);
 		m_dxFont.setFontColor(saveButtonNS::FONT_COLOR);
 		SetIcon(m_pIcon);
-		SetMessage(saveButtonNS::name);
-
+		SetMessage(saveButtonNS::NAME);
 	}
 	catch (...)
 	{
@@ -39,15 +37,11 @@ bool Control_SaveButton::initialize(Graphics * g, Input * i, int controlID, Syst
 void Control_SaveButton::update(float frameTime)
 {
 	SystemUIButton::update(frameTime);
-
-
 }
 
 void Control_SaveButton::render()
 {
 	SystemUIButton::render();
-
-
 }
 
 void Control_SaveButton::functionSave(void * obj)

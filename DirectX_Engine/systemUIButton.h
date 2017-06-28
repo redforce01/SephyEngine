@@ -10,18 +10,19 @@ class SystemUIButton : public SystemUIControl
 private:
 	bool m_bHasIcon;
 	bool m_bHasMessage;
-	Image* m_pIcon;
 	std::string m_strMessage;
 
-//====================================
-// Function Pointer
-//====================================
+protected:
+	Image* m_pIcon;
+
+// CALLBACK Function & void Pointer
 protected:
 	void* m_pObject;
 	typedef void(*CALLBACK_FUNCTION_)(void);
 	typedef void(*CALLBACK_FUNCTION_PARAMETER)(void*);
 	CALLBACK_FUNCTION_			m_CallbackFunction;
 	CALLBACK_FUNCTION_PARAMETER m_CallbackFunctionParameter;
+
 public:
 	SystemUIButton();
 	virtual ~SystemUIButton();
