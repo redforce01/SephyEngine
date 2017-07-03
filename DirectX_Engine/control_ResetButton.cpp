@@ -28,7 +28,7 @@ bool Control_ResetButton::initialize(Graphics * g, Input * i, int controlID, Sys
 	}
 	catch (...)
 	{
-		MessageBox(g_hWndEngine, "SAVE Button Initialize Failed", "Error", MB_OK);
+		MessageBox(g_hWndEngine, "Reset Button Initialize Failed", "Error", MB_OK);
 	}
 
 	return success;
@@ -46,5 +46,8 @@ void Control_ResetButton::render()
 
 void Control_ResetButton::functionReset(void * obj)
 {
+	Control_ResetButton* pThis = (Control_ResetButton*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	MessageBox(g_hWndEngine, "ResetFunction Called", "Test", MB_OK);
 }

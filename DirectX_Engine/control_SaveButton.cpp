@@ -46,5 +46,8 @@ void Control_SaveButton::render()
 
 void Control_SaveButton::functionSave(void * obj)
 {
+	Control_SaveButton* pThis = (Control_SaveButton*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	MessageBox(g_hWndEngine, "TestFunction", "Test", MB_OK);
 }

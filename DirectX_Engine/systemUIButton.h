@@ -22,7 +22,6 @@ protected:
 	typedef void(*CALLBACK_FUNCTION_PARAMETER)(void*);
 	CALLBACK_FUNCTION_			m_CallbackFunction;
 	CALLBACK_FUNCTION_PARAMETER m_CallbackFunctionParameter;
-
 public:
 	SystemUIButton();
 	virtual ~SystemUIButton();

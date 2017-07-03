@@ -4,8 +4,8 @@
 
 SystemBase::SystemBase()
 {
-	pGraphics = nullptr;
-	pInput = nullptr;
+	m_pGraphics = nullptr;
+	m_pInput = nullptr;
 }
 
 

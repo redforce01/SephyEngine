@@ -45,5 +45,8 @@ void StatsViewer::update(float frameTime)
 
 void StatsViewer::render()
 {
+	if (m_bVisible == false)
+		return;
+
 	SystemDebugStats::render();
 }

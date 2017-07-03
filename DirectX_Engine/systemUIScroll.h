@@ -4,12 +4,19 @@
 class SystemUIScroll;
 
 #include "systemUIControl.h"
+#include "image.h"
 
 enum class SCROLL_TYPE
 {
 	SCROLL_TYPE_HORIZONTAL,
 	SCROLL_TYPE_VERTICAL
 };
+
+namespace systemUIScrollNS
+{
+	const float SCROLL_BUTTON_RATE = (1 / 20);
+	const COLOR_ARGB TRACK_COLOR = SETCOLOR_ARGB(192, 91, 91, 91);
+}
 
 class SystemUIScroll : public SystemUIControl
 {
@@ -32,10 +39,15 @@ protected:
 	RECT m_rcTrack;			// rect scoll
 	RECT m_rcThumb;			// Thumb rect in scroll
 	int m_nPosition;		// Position of the first displayed item
+	int m_nPageSize;		// Display Scroll Page Size In Displayed View
 	int m_nStart;			// First item
 	int m_nEnd;				// The index after the last item
 	POINT m_LastMouse;		// Last mouse position
 	ARROWSTATE m_Arrow;		// State of the arrows
+
+	Image* m_UpButton;
+	Image* m_DownButton;
+	Image* m_Thumb;
 public:
 	SystemUIScroll();
 	virtual ~SystemUIScroll();
@@ -44,7 +56,9 @@ public:
 		int scrollX, int scrollY, int scrollWidth, int scrollHeight);
 	virtual void update(float frameTime) override;
 	virtual void render() override;
-	
+
+	void capture();
+	void updateThumb();
 	// =========================================
 	// Getter Functions
 	// =========================================

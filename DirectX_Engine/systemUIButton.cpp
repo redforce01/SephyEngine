@@ -78,7 +78,7 @@ void SystemUIButton::render()
 	m_pGraphics->spriteBegin();
 
 	if (m_bHasIcon)
-		m_pIcon->draw();
+		m_pIcon->draw(graphicsNS::WHITE);
 
 	if (m_bHasMessage)
 		m_dxFont.print(m_strMessage, m_rcBoundingBox, DT_CENTER | DT_BOTTOM);
@@ -94,7 +94,7 @@ void SystemUIButton::SetIcon(Image * icon)
 
 		int controlX = GetControlPosX();
 		int controlY = GetControlPosY();
-		int margin = GetControlMargin();
+		int controlMargin = GetControlMargin();
 
 		if (ContainsParent())
 		{
@@ -102,13 +102,13 @@ void SystemUIButton::SetIcon(Image * icon)
 			int dialogY = m_pDialog->getDialogY();
 			int dialogMargin = m_pDialog->getDialogMargin();
 			
-			m_pIcon->setX(dialogX + margin + dialogMargin + (controlX - dialogX));
-			m_pIcon->setY(dialogY + margin + dialogMargin);
+			m_pIcon->setX(dialogX + controlMargin + dialogMargin + (controlX - dialogX));
+			m_pIcon->setY(dialogY + controlMargin + dialogMargin + (controlY - dialogY));
 		}
  		else
 		{
-			m_pIcon->setX(controlX + margin);
-			m_pIcon->setY(controlY + margin);
+			m_pIcon->setX(controlX + controlMargin);
+			m_pIcon->setY(controlY + controlMargin);
 		}
 		m_bHasIcon = true;
 	}

@@ -45,23 +45,6 @@ void Scene_MapTool::update()
 	cameraSystem->update(frameTime);
 	viewerSystem->update(frameTime);
 
-	if (viewerSystem->getUIMouseOver() == false)
-	{
-		std::string str = "isoBasicB";
-		if (input->getMouseLButton())
-		{
-			auto arr = mapSystem->getAllTiles();
-			for (auto iter : arr)
-			{
-				if (PtInRect(&iter->getTileRect(), PointMake(input->getMouseX(), input->getMouseY())))
-				{
-					iter->changeTile(IMAGEMANAGER->getTexture(str));
-					break;
-				}
-			}
-		}
-	}
-
 	if (input->isKeyDown(MapToolNS::ESCAPE_KEY))
 	{
 		PostQuitMessage(0);

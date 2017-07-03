@@ -39,6 +39,7 @@ public:
 	}
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
 	{
+		m_pMapTileViewer->setMemoryLinkMapSystem(pMapSystem);
 		m_pControlViewer->setMemoryLinkMapSystem(pMapSystem);
 	}
 	//=========================================

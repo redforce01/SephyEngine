@@ -35,6 +35,11 @@
 //-----------------------------------------
 #define WINSIZEX 1900
 #define WINSIZEY 1000
+//#define STARTX 1921
+//#define STARTY 0
+#define STARTX 0
+#define STARTY 0
+
 
 //-----------------------------------------
 //전역 함수로 활용 되는 Manager

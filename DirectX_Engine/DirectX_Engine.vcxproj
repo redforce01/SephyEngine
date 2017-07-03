@@ -146,6 +146,7 @@
     <ClCompile Include="componentBase.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="control_DebugButton.cpp" />
+    <ClCompile Include="control_ExitButton.cpp" />
     <ClCompile Include="control_LoadButton.cpp" />
     <ClCompile Include="control_PerformButton.cpp" />
     <ClCompile Include="control_ResetButton.cpp" />
@@ -174,6 +175,8 @@
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="gameObjectManager.cpp" />
     <ClCompile Include="mapTileData.cpp" />
+    <ClCompile Include="mapTilePageLeftButton.cpp" />
+    <ClCompile Include="mapTilePageRightButton.cpp" />
     <ClCompile Include="statsViewer.cpp" />
     <ClCompile Include="systemBase.cpp" />
     <ClCompile Include="gocMessage.cpp" />
@@ -211,6 +214,7 @@
     <ClCompile Include="systemUIControl.cpp" />
     <ClCompile Include="systemUIDialog.cpp" />
     <ClCompile Include="systemUIScroll.cpp" />
+    <ClCompile Include="systemUITitlebar.cpp" />
     <ClCompile Include="tabContent_A.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
@@ -233,6 +237,7 @@
     <ClInclude Include="console.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="control_DebugButton.h" />
+    <ClInclude Include="control_ExitButton.h" />
     <ClInclude Include="control_LoadButton.h" />
     <ClInclude Include="control_PerformButton.h" />
     <ClInclude Include="control_ResetButton.h" />
@@ -263,6 +268,8 @@
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="gameObjectManager.h" />
     <ClInclude Include="mapTileData.h" />
+    <ClInclude Include="mapTilePageLeftButton.h" />
+    <ClInclude Include="mapTilePageRightButton.h" />
     <ClInclude Include="statsViewer.h" />
     <ClInclude Include="systemBase.h" />
     <ClInclude Include="gocMessage.h" />
@@ -300,6 +307,7 @@
     <ClInclude Include="systemUIControl.h" />
     <ClInclude Include="systemUIDialog.h" />
     <ClInclude Include="systemUIScroll.h" />
+    <ClInclude Include="systemUITitlebar.h" />
     <ClInclude Include="tabContent_A.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="textDX.h" />

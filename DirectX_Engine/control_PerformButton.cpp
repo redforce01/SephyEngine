@@ -27,7 +27,7 @@ bool Control_PerformButton::initialize(Graphics * g, Input * i, int controlID, S
 	}
 	catch (...)
 	{
-		MessageBox(g_hWndEngine, "SAVE Button Initialize Failed", "Error", MB_OK);
+		MessageBox(g_hWndEngine, "Performance Button Initialize Failed", "Error", MB_OK);
 	}
 
 	return success;
@@ -45,6 +45,8 @@ void Control_PerformButton::render()
 
 void Control_PerformButton::functionPerform(void * obj)
 {
-	Control_PerformButton* pThis = (Control_PerformButton*)obj;	
+	Control_PerformButton* pThis = (Control_PerformButton*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_pStatsViewer->setShowHide();
 }

@@ -35,6 +35,17 @@ namespace MyUtil
 	// Not Implementated
 	bool getObjectIn(int objX, int objY, int objWidth, int objHeight, int targetX, int targetY);
 
+	// Get Horizon Center Value(float) In Rect
+	float getCenterHorizonInRect(RECT &rc);
+
+	// Get Vertical Center Value(float) In Rect
+	float getCenterVerticalInRect(RECT &rc);
+
+	// Get Isometric In Bool used (RECT, POINT)
+	bool getIsometricIn(RECT &rc, POINT pt);
+
+	// Get Isometric In Bool used (RECT, float x,y)
+	bool getIsometricIn(RECT &rc, float x, float y);
 }
 
 #endif

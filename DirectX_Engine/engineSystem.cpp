@@ -195,8 +195,8 @@ bool EngineSystem::CreateMainWindow(HWND &hWnd, HINSTANCE hInstance, int nCmdSho
 		RECT clientRect;
 		GetClientRect(hWnd, &clientRect);   // get size of client area of window
 		MoveWindow(hWnd,
-			0,                                           // Left
-			0,                                           // Top
+			STARTX,                                      // Left
+			STARTY,                                      // Top
 			WINSIZEX + (WINSIZEX - clientRect.right),    // Right
 			WINSIZEY + (WINSIZEY - clientRect.bottom),	 // Bottom
 			TRUE);                                       // Repaint the window

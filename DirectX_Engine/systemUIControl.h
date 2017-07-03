@@ -105,6 +105,18 @@ public:
 	{
 		m_dxFont = font;
 	}
+	void SetLocation(int x, int y)
+	{
+		m_x = x; m_y = y; UpdateRects();
+	}
+	void SetSize(int width, int height)
+	{
+		m_width = width; m_height = height; UpdateRects();
+	}
+	void SetHotKey(UINT nHotKey)
+	{
+		m_nHotkey = nHotKey;
+	}
 	// =================================================================
 	// Getter Functions
 	// =================================================================
@@ -131,18 +143,6 @@ public:
 	int GetID() const
 	{
 		return m_nControlID;
-	}
-	void SetLocation(int x, int y)
-	{
-		m_x = x; m_y = y; UpdateRects();
-	}
-	void SetSize(int width, int height)
-	{
-		m_width = width; m_height = height; UpdateRects();
-	}
-	void SetHotKey(UINT nHotKey)
-	{
-		m_nHotkey = nHotKey;
 	}
 	UINT GetHotKey()
 	{

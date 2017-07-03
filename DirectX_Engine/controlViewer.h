@@ -10,6 +10,7 @@ class ControlViewer;
 #include "control_ResetButton.h"
 #include "control_DebugButton.h"
 #include "control_PerformButton.h"
+#include "control_ExitButton.h"
 
 namespace toolControlViewerNS
 {
@@ -32,6 +33,7 @@ private:
 	Control_ResetButton* m_pResetButton;
 	Control_DebugButton* m_pDebugButton;
 	Control_PerformButton* m_pPerformButton;
+	Control_ExitButton* m_pExitButton;
 
 public:
 	ControlViewer();

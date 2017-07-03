@@ -5,8 +5,9 @@
 MapTileData::MapTileData()
 {
 	m_pGraphics = nullptr;
-	m_pInput = nullptr;
 	m_x = m_y = 0;
+	m_rcImage = { 0, };
+	m_bSelected = false;
 }
 
 
@@ -14,19 +15,20 @@ MapTileData::~MapTileData()
 {
 }
 
-bool MapTileData::initialize(Graphics * g, Input * i, std::string name, float startX, float startY)
+bool MapTileData::initialize(Graphics * g, std::string name, float startX, float startY)
 {
 	bool success = false;
 
 	try
 	{
 		m_pGraphics = g;
-		m_pInput = i;
 		m_strName = name;
 		m_x = startX;
 		m_y = startY;
-
-		success = Image::initialize(g, m_x, m_y, 0, IMAGEMANAGER->getTexture(m_strName));
+		m_rcImage = RectMake(m_x, m_y, mapTileDataNS::WIDTH, mapTileDataNS::HEIGHT);
+		success = Image::initialize(g, 0, 0, 0, IMAGEMANAGER->getTexture(m_strName));
+		this->setX(m_x);
+		this->setY(m_y);
 	}
 	catch (...)
 	{
@@ -41,9 +43,10 @@ bool MapTileData::initialize(Graphics * g, Input * i, std::string name, float st
 
 void MapTileData::draw()
 {
+	if (m_bSelected)
+		m_pGraphics->drawRect(m_rcImage);
+
 	m_pGraphics->spriteBegin();
-
 	Image::draw();
-
 	m_pGraphics->spriteEnd();
 }

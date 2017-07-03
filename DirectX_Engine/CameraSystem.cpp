@@ -26,7 +26,7 @@ bool CameraSystem::initialize(Game* gamePtr)
 	{
 		cameraSpeed = 10.f;
 		cameraZoomSpeed = 0.1f;
-		pInput = gamePtr->getInput();
+		m_pInput = gamePtr->getInput();
 		success = true;
 	}
 	catch (...)
@@ -39,19 +39,19 @@ bool CameraSystem::initialize(Game* gamePtr)
 
 void CameraSystem::update(float frameTime)
 {
-	if (pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_LEFT_KEY))
+	if (m_pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_LEFT_KEY))
 	{
 		moveLeft();
 	}
-	if (pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_RIGHT_KEY))
+	if (m_pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_RIGHT_KEY))
 	{
 		moveRight();
 	}
-	if (pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_UP_KEY))
+	if (m_pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_UP_KEY))
 	{
 		moveUp();
 	}
-	if (pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_DOWN_KEY))
+	if (m_pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_DOWN_KEY))
 	{
 		moveDown();
 	}

@@ -24,6 +24,7 @@ enum class MAPTYPE
 	NONE,
 };
 
+class MapTileData;
 class CameraSystem;
 class MapSystem : public SystemBase
 {
@@ -31,7 +32,8 @@ private:
 	std::vector<TileObject*> arrTiles;
 	MAPTYPE mapType;
 
-	CameraSystem* pCameraSystem;
+	CameraSystem* m_pCameraSystem;
+	MapTileData* m_pMapTileData;
 public:
 	MapSystem();
 	~MapSystem();
@@ -46,9 +48,14 @@ public:
 	void scaleDown();
 
 	std::vector<TileObject*> getAllTiles() { return arrTiles; }
-
 	TileObject* selectTile(int number);
-	void setMemoryLinkCameraSystem(CameraSystem* pCamSys) { pCameraSystem = pCamSys; }
+
+	void setMapTileData(MapTileData* pMapTileData)
+	{
+		m_pMapTileData = pMapTileData;
+	}
+
+	void setMemoryLinkCameraSystem(CameraSystem* pCamSys) { m_pCameraSystem = pCamSys; }
 };
 
 #endif // !_MAPSYSTEM_H

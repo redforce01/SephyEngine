@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "mapSystem.h"
 #include "CameraSystem.h"
+#include "mapTileData.h"
 
 MapSystem::MapSystem()
 {
-	mapType = MAPTYPE::SQUARE;
-	pCameraSystem = nullptr;
+	mapType = MAPTYPE::DIAMOND;
+	m_pCameraSystem = nullptr;
+	m_pMapTileData = nullptr;
 }
 
 
@@ -28,8 +30,8 @@ bool MapSystem::initialize(Game* gamePtr)
 	if (gamePtr == nullptr)
 		return false;
 
-	pGraphics = gamePtr->getGraphics();
-	pInput = gamePtr->getInput();
+	m_pGraphics = gamePtr->getGraphics();
+	m_pInput = gamePtr->getInput();
 
 	for (UINT row = 0; row < MapSystemNS::mapSizeX; row++)
 	{
@@ -55,6 +57,33 @@ bool MapSystem::initialize(Game* gamePtr)
 
 void MapSystem::update(float frameTime)
 {
+	if (m_pInput->getMouseLButton())
+	{
+		std::string name;
+		if (m_pMapTileData == nullptr)
+			return;
+
+		name = m_pMapTileData->getTileName();
+		for (auto iter : arrTiles)
+		{
+			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+				continue;
+
+			if (MyUtil::getIsometricIn(iter->getTileRect(), m_pInput->getMousePt()))
+			{
+				iter->setTextureManager(IMAGEMANAGER->getTexture(name));
+			}
+
+			//if(PtInRect(&iter->getTileRect(), m_pInput->getMousePt()))
+			//{
+			//	iter->setTextureManager(IMAGEMANAGER->getTexture(name));
+			//}
+
+			// RECT & ISOMETRIC 충돌 처리 작성중...
+			// MyUtil 에서 처리할 것...
+		}
+	}
+
 	for (auto iter : arrTiles)
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
@@ -67,7 +96,7 @@ void MapSystem::update(float frameTime)
 void MapSystem::render()
 {
 
-	pGraphics->spriteBegin();
+	m_pGraphics->spriteBegin();
 	for (auto iter : arrTiles)
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
@@ -75,7 +104,7 @@ void MapSystem::render()
 		
 		iter->render();
 	}
-	pGraphics->spriteEnd();
+	m_pGraphics->spriteEnd();
 
 	for (auto iter : arrTiles)
 	{

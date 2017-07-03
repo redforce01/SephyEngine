@@ -18,7 +18,7 @@ bool SystemDebugStats::initialize(Graphics * g, Input * i)
 	bool success = false;
 	try
 	{
-		success = SystemUIDialog::initialize(g, i, debugStatsNS::X, debugStatsNS::Y, debugStatsNS::WIDTH, debugStatsNS::HEIGHT, debugStatsNS::MARGIN);
+		success = SystemUIDialog::initializeDialog(g, i, debugStatsNS::X, debugStatsNS::Y, debugStatsNS::WIDTH, debugStatsNS::HEIGHT, debugStatsNS::MARGIN);
 
 		m_rcText = RectMake(
 			debugStatsNS::X + debugStatsNS::MARGIN,
@@ -49,7 +49,7 @@ void SystemDebugStats::render()
 
 	SystemUIDialog::render();
 
-	pGraphics->spriteBegin();
+	m_pGraphics->spriteBegin();
 	m_rcText.left = debugStatsNS::X + debugStatsNS::MARGIN;
 	m_rcText.top = debugStatsNS::Y + debugStatsNS::MARGIN;
 	m_rcText.right = m_rcText.left + debugStatsNS::WIDTH;
@@ -61,5 +61,5 @@ void SystemDebugStats::render()
 		m_rcText.top += debugStatsNS::TEXT_HEIGHT;
 		m_rcText.bottom += debugStatsNS::TEXT_HEIGHT;
 	}
-	pGraphics->spriteEnd();
+	m_pGraphics->spriteEnd();
 }

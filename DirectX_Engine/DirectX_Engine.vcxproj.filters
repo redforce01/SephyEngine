@@ -477,6 +477,18 @@
     <ClCompile Include="systemUIScroll.cpp">
       <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
     </ClCompile>
+    <ClCompile Include="systemUITitlebar.cpp">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="control_ExitButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTilePageLeftButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTilePageRightButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -739,6 +751,18 @@
     </ClInclude>
     <ClInclude Include="systemUIScroll.h">
       <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="systemUITitlebar.h">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="control_ExitButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTilePageLeftButton.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTilePageRightButton.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

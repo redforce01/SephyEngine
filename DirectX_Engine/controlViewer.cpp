@@ -24,7 +24,7 @@ bool ControlViewer::initialize(Graphics * g, Input * i)
 
 	try
 	{
-		success = SystemUIDialog::initialize(g, i, toolControlViewerNS::X, toolControlViewerNS::Y, toolControlViewerNS::WIDTH, toolControlViewerNS::HEIGHT, toolControlViewerNS::MARGIN);
+		success = SystemUIDialog::initializeDialog(g, i, toolControlViewerNS::X, toolControlViewerNS::Y, toolControlViewerNS::WIDTH, toolControlViewerNS::HEIGHT, toolControlViewerNS::MARGIN);
 
 
 		m_pSaveButton = new Control_SaveButton;
@@ -66,6 +66,14 @@ bool ControlViewer::initialize(Graphics * g, Input * i)
 			controlButtonNS::BUTTON_WIDTH,
 			controlButtonNS::BUTTON_HEIGHT,
 			controlButtonNS::BUTTON_MARGIN);
+
+		m_pExitButton = new Control_ExitButton;
+		m_pExitButton->initialize(g, i, controlButtonNS::BUTTON_EXIT_ID, this,
+			controlButtonNS::BUTTON_EXIT_POS_X,
+			controlButtonNS::BUTTON_BASIC_Y,
+			controlButtonNS::BUTTON_WIDTH,
+			controlButtonNS::BUTTON_HEIGHT,
+			controlButtonNS::BUTTON_MARGIN);
 	}
 	catch (...)
 	{
@@ -79,15 +87,22 @@ void ControlViewer::update(float frameTime)
 {
 	SystemUIDialog::update(frameTime);
 
+	if (m_bVisible == false)
+		return;
+
 	m_pSaveButton->update(frameTime);
 	m_pLoadButton->update(frameTime);
 	m_pResetButton->update(frameTime);
 	m_pDebugButton->update(frameTime);
 	m_pPerformButton->update(frameTime);
+	m_pExitButton->update(frameTime);
 }
 
 void ControlViewer::render()
 {
+	if (m_bVisible == false)
+		return;
+
 	SystemUIDialog::render();
 
 	m_pSaveButton->render();
@@ -95,4 +110,5 @@ void ControlViewer::render()
 	m_pResetButton->render();
 	m_pDebugButton->render();
 	m_pPerformButton->render();
+	m_pExitButton->render();
 }

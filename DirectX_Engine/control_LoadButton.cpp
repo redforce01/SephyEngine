@@ -28,7 +28,7 @@ bool Control_LoadButton::initialize(Graphics * g, Input * i, int controlID, Syst
 	}
 	catch (...)
 	{
-		MessageBox(g_hWndEngine, "SAVE Button Initialize Failed", "Error", MB_OK);
+		MessageBox(g_hWndEngine, "LOAD Button Initialize Failed", "Error", MB_OK);
 	}
 
 	return success;
@@ -46,5 +46,8 @@ void Control_LoadButton::render()
 
 void Control_LoadButton::functionLoad(void * obj)
 {
+	Control_LoadButton* pThis = (Control_LoadButton*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	MessageBox(g_hWndEngine, "Function Load Called", "Test", MB_OK);
 }

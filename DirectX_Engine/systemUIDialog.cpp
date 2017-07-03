@@ -4,8 +4,8 @@
 
 SystemUIDialog::SystemUIDialog()
 {
-	pGraphics = nullptr;
-	pInput = nullptr;
+	m_pGraphics = nullptr;
+	m_pInput = nullptr;
 	m_x = m_y = 0;
 	m_width = m_height = 0;
 	m_margin = 0;
@@ -21,7 +21,7 @@ SystemUIDialog::~SystemUIDialog()
 {
 }
 
-bool SystemUIDialog::initialize(Graphics * g, Input * i, int x, int y, int w, int h, int m)
+bool SystemUIDialog::initializeDialog(Graphics * g, Input * i, int x, int y, int w, int h, int m)
 {
 	bool success = false;
 
@@ -35,8 +35,8 @@ bool SystemUIDialog::initialize(Graphics * g, Input * i, int x, int y, int w, in
 		m_width = w;
 		m_height = h;
 		m_margin = m;
-		pGraphics = g;
-		pInput = i;
+		m_pGraphics = g;
+		m_pInput = i;
 		m_rcBoundingBox = RectMake(x, y, w, h);
 		success = vertexSetup(x, y, w, h);
 	}
@@ -50,9 +50,12 @@ bool SystemUIDialog::initialize(Graphics * g, Input * i, int x, int y, int w, in
 
 void SystemUIDialog::update(float frameTime)
 {
-	if (pInput->getMouseLButton())
+	if (m_bVisible == false)
+		return;
+
+	if (m_pInput->getMouseLButton())
 	{
-		if (PtInRect(&m_rcBoundingBox, PointMake(pInput->getMouseX(), pInput->getMouseY())))
+		if (PtInRect(&m_rcBoundingBox, PointMake(m_pInput->getMouseX(), m_pInput->getMouseY())))
 		{
 			m_bMouseOver = true;
 		}
@@ -63,7 +66,11 @@ void SystemUIDialog::update(float frameTime)
 
 void SystemUIDialog::render()
 {
-	pGraphics->drawQuad(vertexBuffer);
+	if (m_bVisible == false)
+		return;
+
+	m_pGraphics->drawQuad(vertexBuffer);
+	m_pGraphics->drawRect(m_rcBoundingBox);
 }
 
 bool SystemUIDialog::vertexSetup(int x, int y, int w, int h)
@@ -96,7 +103,7 @@ bool SystemUIDialog::vertexSetup(int x, int y, int w, int h)
 	vtx[3].rhw = 1.0f;
 	vtx[3].color = backColor;
 
-	if (pGraphics->createVertexBuffer(vtx, sizeof vtx, vertexBuffer) == S_OK)
+	if (m_pGraphics->createVertexBuffer(vtx, sizeof vtx, vertexBuffer) == S_OK)
 		return true;
 
 	return false;

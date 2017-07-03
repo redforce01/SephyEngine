@@ -89,7 +89,7 @@ void FileManager::funcCheckResource(char * path)
 	while (bResult) {
 		if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
 			if (strcmp(wfd.cFileName, ".") && strcmp(wfd.cFileName, "..")) {
-				arrFileList *temp = new arrFileList;
+				arrFileList* temp = new arrFileList;
 				std::string keyName = wfd.cFileName;
 				arrFile.emplace(keyName, temp);
 				sprintf_s(newpath, "%s%s%s\\*.*", drive, dir, wfd.cFileName);

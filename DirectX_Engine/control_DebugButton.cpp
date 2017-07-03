@@ -28,7 +28,7 @@ bool Control_DebugButton::initialize(Graphics * g, Input * i, int controlID, Sys
 	}
 	catch (...)
 	{
-		MessageBox(g_hWndEngine, "SAVE Button Initialize Failed", "Error", MB_OK);
+		MessageBox(g_hWndEngine, "DEBUG Button Initialize Failed", "Error", MB_OK);
 	}
 
 	return success;
@@ -46,5 +46,8 @@ void Control_DebugButton::render()
 
 void Control_DebugButton::functionDebug(void * obj)
 {
+	Control_DebugButton* pThis = (Control_DebugButton*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	MessageBox(g_hWndEngine, "Debug Button Called", "Test", MB_OK);
 }

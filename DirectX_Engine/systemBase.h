@@ -8,8 +8,8 @@ class SystemBase;
 class SystemBase
 {
 protected:
-	Graphics* pGraphics;
-	Input* pInput;
+	Graphics*	m_pGraphics;
+	Input*		m_pInput;
 
 public:
 	SystemBase();

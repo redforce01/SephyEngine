@@ -5,7 +5,7 @@
 ViewerSystem::ViewerSystem()
 {
 	bUIMouseOver = false;
-	m_pResTreeViewer = nullptr;
+	//m_pResTreeViewer = nullptr;
 	m_pMapTileViewer = nullptr;
 	m_pMinimapViewer = nullptr;
 	m_pControlViewer = nullptr;
@@ -15,7 +15,7 @@ ViewerSystem::ViewerSystem()
 
 ViewerSystem::~ViewerSystem()
 {
-	SAFE_DELETE(m_pResTreeViewer);
+	//SAFE_DELETE(m_pResTreeViewer);
 	SAFE_DELETE(m_pMapTileViewer);
 	SAFE_DELETE(m_pMinimapViewer);
 	SAFE_DELETE(m_pControlViewer);
@@ -29,8 +29,8 @@ bool ViewerSystem::initialize(Game * gamePtr)
 	try
 	{
 		// Viewer Initialize
-		m_pResTreeViewer = new ResourceTreeViewer;
-		m_pResTreeViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
+		//m_pResTreeViewer = new ResourceTreeViewer;
+		//m_pResTreeViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		m_pMapTileViewer = new MapTileViewer;
 		m_pMapTileViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		m_pMinimapViewer = new MinimapViewer;
@@ -59,7 +59,7 @@ bool ViewerSystem::initialize(Game * gamePtr)
 
 void ViewerSystem::update(float frameTime)
 {
-	m_pResTreeViewer->update(frameTime);
+	//m_pResTreeViewer->update(frameTime);
 	m_pMapTileViewer->update(frameTime);
 	m_pMinimapViewer->update(frameTime);
 	m_pControlViewer->update(frameTime);
@@ -73,7 +73,7 @@ void ViewerSystem::update(float frameTime)
 
 void ViewerSystem::render()
 {
-	m_pResTreeViewer->render();
+	//m_pResTreeViewer->render();
 	m_pMapTileViewer->render();
 	m_pMinimapViewer->render();
 	m_pControlViewer->render();
@@ -82,8 +82,8 @@ void ViewerSystem::render()
 
 bool ViewerSystem::checkMouseOver()
 {
-	if (m_pResTreeViewer->getMouseOver() && m_pResTreeViewer->getVisible()
-		|| m_pMapTileViewer->getMouseOver() && m_pMapTileViewer->getVisible()
+	if (/*m_pResTreeViewer->getMouseOver() && m_pResTreeViewer->getVisible()
+		||*/ m_pMapTileViewer->getMouseOver() && m_pMapTileViewer->getVisible()
 		|| m_pMinimapViewer->getMouseOver() && m_pMinimapViewer->getVisible()
 		|| m_pControlViewer->getMouseOver() && m_pControlViewer->getVisible()
 		|| m_pStatsViewer->getMouseOver() && m_pStatsViewer->getVisible())

@@ -28,10 +28,10 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 
 	try
 	{
-		success = SystemUIDialog::initialize(g, i, treeViewerNS::X, treeViewerNS::Y, treeViewerNS::WIDTH, treeViewerNS::HEIGHT, treeViewerNS::MARGIN);
+		success = SystemUIDialog::initializeDialog(g, i, treeViewerNS::X, treeViewerNS::Y, treeViewerNS::WIDTH, treeViewerNS::HEIGHT, treeViewerNS::MARGIN);
 
 		// initialize DirectX font
-		if (dxFont.initialize(pGraphics, treeViewerNS::FONT_HEIGHT, false,
+		if (dxFont.initialize(m_pGraphics, treeViewerNS::FONT_HEIGHT, false,
 			false, treeViewerNS::FONT) == false)
 			return false;      // if failed
 		dxFont.setFontColor(fontColor);
@@ -83,9 +83,12 @@ void ResourceTreeViewer::update(float frameTime)
 
 void ResourceTreeViewer::render()
 {
+	if (m_bVisible == false)
+		return;
+
 	SystemUIDialog::render();
 
-	pGraphics->spriteBegin();
+	m_pGraphics->spriteBegin();
 
 	if (resFiles.size() <= 0)
 		return;
@@ -97,7 +100,7 @@ void ResourceTreeViewer::render()
 		iter->draw();
 	}
 
-	pGraphics->spriteEnd();
+	m_pGraphics->spriteEnd();
 }
 
 bool ResourceTreeViewer::addTreeRes(File * pChild)
@@ -114,7 +117,7 @@ bool ResourceTreeViewer::checkTreeClicked()
 	nSelectFile = 0;
 	for (auto iter : resFiles)
 	{
-		if (PtInRect(&iter->getContentRect(), PointMake(pInput->getMouseX(), pInput->getMouseY())))
+		if (PtInRect(&iter->getContentRect(), PointMake(m_pInput->getMouseX(), m_pInput->getMouseY())))
 			return true;
 		nSelectFile++;
 	}

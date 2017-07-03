@@ -31,7 +31,7 @@ bool MinimapViewer::initialize(Graphics * g, Input * i)
 		m_rcMinimap = RectMake(minimapViewerNS::X, minimapViewerNS::Y, minimapViewerNS::WIDTH, minimapViewerNS::HEIGHT);
 		m_rcCamera = RectMake(minimapViewerNS::X, minimapViewerNS::Y, m_CamWidth, m_CamHeight);
 		m_bInitialized = true;
-		success = SystemUIDialog::initialize(g, i, minimapViewerNS::X, minimapViewerNS::Y, minimapViewerNS::WIDTH, minimapViewerNS::HEIGHT, minimapViewerNS::MARGIN);
+		success = SystemUIDialog::initializeDialog(g, i, minimapViewerNS::X, minimapViewerNS::Y, minimapViewerNS::WIDTH, minimapViewerNS::HEIGHT, minimapViewerNS::MARGIN);
 	}
 	catch (...)
 	{
@@ -45,7 +45,10 @@ void MinimapViewer::update(float frameTime)
 {
 	SystemUIDialog::update(frameTime);
 
-	if (pInput->getMouseLButton())
+	if (m_bVisible == false)
+		return;
+
+	if (m_pInput->getMouseLButton())
 	{
 		if (getMouseOver())
 		{
@@ -56,14 +59,17 @@ void MinimapViewer::update(float frameTime)
 
 void MinimapViewer::render()
 {
+	if (m_bVisible == false)
+		return;
+
 	SystemUIDialog::render();	
-	pGraphics->drawRect(m_rcCamera, 1.0, graphicsNS::RED);
+	m_pGraphics->drawRect(m_rcCamera, 1.0, graphicsNS::RED);
 }
 
 void MinimapViewer::clickMinimap()
 {
-	float mouseX = pInput->getMouseX();
-	float mouseY = pInput->getMouseY();
+	float mouseX = m_pInput->getMouseX();
+	float mouseY = m_pInput->getMouseY();
 	float clickedX = abs(mouseX - m_rcMinimap.left);
 	float clickedY = abs(mouseY - m_rcMinimap.top);
 	

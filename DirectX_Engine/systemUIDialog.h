@@ -15,8 +15,8 @@ namespace systemUIDialogNS
 class SystemUIDialog
 {
 protected:
-	Graphics* pGraphics;
-	Input* pInput;
+	Graphics* m_pGraphics;
+	Input* m_pInput;
 	TextDX dxFont;
 	
 	float m_x, m_y;
@@ -41,7 +41,7 @@ public:
 
 // protected Member Functions
 protected:
-	bool initialize(Graphics* g, Input* i, int x, int y, int w, int h, int m);
+	bool initializeDialog(Graphics* g, Input* i, int x, int y, int w, int h, int m);
 	bool vertexSetup(int x, int y, int w, int h);
 
 public:
@@ -110,6 +110,10 @@ public:
 	bool getVisible() const
 	{
 		return m_bVisible;
+	}
+	RECT getDialogRECT() const
+	{
+		return m_rcBoundingBox;
 	}
 };
 
