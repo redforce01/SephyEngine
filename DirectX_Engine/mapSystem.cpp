@@ -5,7 +5,7 @@
 
 MapSystem::MapSystem()
 {
-	mapType = MAPTYPE::DIAMOND;
+	m_mapType = MAPTYPE::DIAMOND;
 	m_pCameraSystem = nullptr;
 	m_pMapTileData = nullptr;
 }
@@ -13,7 +13,7 @@ MapSystem::MapSystem()
 
 MapSystem::~MapSystem()
 {
-	for (auto iter : arrTiles)
+	for (auto iter : m_arrTiles)
 	{
 		SAFE_DELETE(iter);
 	}
@@ -40,7 +40,7 @@ bool MapSystem::initialize(Game* gamePtr)
 			TileObject* temp = new TileObject;
 			temp->initialize(UIDCount, mapX, mapY,
 				gamePtr->getGraphics(), MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight, 0, IMAGEMANAGER->getTexture("isoBasicC"));
-			arrTiles.emplace_back(temp);
+			m_arrTiles.emplace_back(temp);
 			
 			mapX += MapSystemNS::tileBasicWidth;
 			UIDCount++;
@@ -64,7 +64,7 @@ void MapSystem::update(float frameTime)
 			return;
 
 		name = m_pMapTileData->getTileName();
-		for (auto iter : arrTiles)
+		for (auto iter : m_arrTiles)
 		{
 			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
 				continue;
@@ -73,18 +73,10 @@ void MapSystem::update(float frameTime)
 			{
 				iter->setTextureManager(IMAGEMANAGER->getTexture(name));
 			}
-
-			//if(PtInRect(&iter->getTileRect(), m_pInput->getMousePt()))
-			//{
-			//	iter->setTextureManager(IMAGEMANAGER->getTexture(name));
-			//}
-
-			// RECT & ISOMETRIC 충돌 처리 작성중...
-			// MyUtil 에서 처리할 것...
 		}
 	}
 
-	for (auto iter : arrTiles)
+	for (auto iter : m_arrTiles)
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
 			continue;
@@ -95,9 +87,8 @@ void MapSystem::update(float frameTime)
 
 void MapSystem::render()
 {
-
 	m_pGraphics->spriteBegin();
-	for (auto iter : arrTiles)
+	for (auto iter : m_arrTiles)
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
 			continue;
@@ -106,7 +97,7 @@ void MapSystem::render()
 	}
 	m_pGraphics->spriteEnd();
 
-	for (auto iter : arrTiles)
+	for (auto iter : m_arrTiles)
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
 			continue;
@@ -117,7 +108,7 @@ void MapSystem::render()
 
 void MapSystem::moveX(int distance)
 {
-	for (auto iter : arrTiles)
+	for (auto iter : m_arrTiles)
 	{
 		iter->moveX(distance);
 		iter->moveRectWidth(distance);
@@ -126,7 +117,7 @@ void MapSystem::moveX(int distance)
 
 void MapSystem::moveY(int distance)
 {
-	for (auto iter : arrTiles)
+	for (auto iter : m_arrTiles)
 	{
 		iter->moveY(distance);
 		iter->moveRectHeight(distance);
@@ -135,7 +126,7 @@ void MapSystem::moveY(int distance)
 
 void MapSystem::scaleUp()
 {
-	for (auto iter : arrTiles)
+	for (auto iter : m_arrTiles)
 	{
 		iter->increaseScale();
 	}
@@ -143,7 +134,7 @@ void MapSystem::scaleUp()
 
 void MapSystem::scaleDown()
 {
-	for (auto iter : arrTiles)
+	for (auto iter : m_arrTiles)
 	{
 		iter->decreaseScale();
 	}
@@ -151,8 +142,8 @@ void MapSystem::scaleDown()
 
 TileObject * MapSystem::selectTile(int number)
 {
-	if (arrTiles[number] != nullptr)
-		return arrTiles[number];
+	if (m_arrTiles[number] != nullptr)
+		return m_arrTiles[number];
 	else
 		return nullptr;
 }

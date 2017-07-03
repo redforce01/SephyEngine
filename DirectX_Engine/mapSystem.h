@@ -29,8 +29,8 @@ class CameraSystem;
 class MapSystem : public SystemBase
 {
 private:
-	std::vector<TileObject*> arrTiles;
-	MAPTYPE mapType;
+	std::vector<TileObject*> m_arrTiles;
+	MAPTYPE m_mapType;
 
 	CameraSystem* m_pCameraSystem;
 	MapTileData* m_pMapTileData;
@@ -47,7 +47,7 @@ public:
 	void scaleUp();
 	void scaleDown();
 
-	std::vector<TileObject*> getAllTiles() { return arrTiles; }
+	std::vector<TileObject*> getAllTiles() { return m_arrTiles; }
 	TileObject* selectTile(int number);
 
 	void setMapTileData(MapTileData* pMapTileData)

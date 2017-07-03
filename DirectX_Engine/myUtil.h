@@ -45,7 +45,7 @@ namespace MyUtil
 	bool getIsometricIn(RECT &rc, POINT pt);
 
 	// Get Isometric In Bool used (RECT, float x,y)
-	bool getIsometricIn(RECT &rc, float x, float y);
+	bool getIsometricIn(RECT &rc, float x, float y);	 
 }
 
 #endif

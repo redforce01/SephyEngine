@@ -1,0 +1,746 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Graphics" Collapsed="true">
+    <Position X="34.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFAQQIoWGNINs1CCGSHGwkgASCFQAoCLiEv4gmTYTUE=</HashCode>
+      <FileName>c:\Program Files (x86)\Windows Kits\8.1\Include\um\gdiplusgraphics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Image" Collapsed="true">
+    <Position X="17" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hEAgBIIACA2QAgMACACAAEBAQARAYBME5AJ4gUEAABA=</HashCode>
+      <FileName>c:\Program Files (x86)\Windows Kits\8.1\Include\um\gdiplusheaders.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileManager" Collapsed="true">
+    <Position X="5.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>0PgAGwQEADAqAAiGIAlAiIgAAYSEAAQkCoAABIAABQA=</HashCode>
+      <FileName>fileManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextureManager" Collapsed="true">
+    <Position X="34.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAABAAAgQARIEAAAAABAABQggAAEEAAAAAAEA=</HashCode>
+      <FileName>textureManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImageManager" Collapsed="true">
+    <Position X="12.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAgAQEAABAABwAIAAEAAAAAAAAAAAhAAAAAEAAAAAA=</HashCode>
+      <FileName>imageManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneManager" Collapsed="true">
+    <Position X="14.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAEAYAAADAABEAgIgUABBAAAAQAAAAAAAACAAQUBAQ=</HashCode>
+      <FileName>sceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManager" Collapsed="true">
+    <Position X="1" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAYDAABFABUAQAAEpAkAIAAEICAAAAAAAAAAAAAA=</HashCode>
+      <FileName>timeManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSingletonBase&lt;T&gt;" Collapsed="true">
+    <Position X="7.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAQAAAAAAQAAAAAABAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>cSingletonBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerManager" Collapsed="true">
+    <Position X="3.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAgAEAAABAAAAAABIAUBAAAAAAAAAAAAAAAEQKBAQIA=</HashCode>
+      <FileName>layerManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextDX" Collapsed="true">
+    <Position X="32.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAAAAAAAAJCAAAIEAAiAAAAAAAAmAAAAQQgBCAEA=</HashCode>
+      <FileName>textDX.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Input" Collapsed="true">
+    <Position X="27.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>Q8AQRAABW0CROEOABMEIIEXYHEEAwBBcQFAIgQgDAgA=</HashCode>
+      <FileName>input.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bar" Collapsed="true">
+    <Position X="11.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>dashboard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputDialog" Collapsed="true">
+    <Position X="12.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQQAAAAAAABBAAAAAIAKAQRAAAAAAAAAAAAABAFAFA=</HashCode>
+      <FileName>inputDialog.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MessageDialog" Collapsed="true">
+    <Position X="12.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAgImAABCwFQQAYIMAAAAAgAACgBoJFQFiCAgGAEA=</HashCode>
+      <FileName>messageDialog.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Console" Collapsed="true">
+    <Position X="27.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QCSQAAEAABCAAAAAAJNACBBIAAAAgBgJFEFgCAAAAEA=</HashCode>
+      <FileName>console.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity" Collapsed="true">
+    <Position X="9.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kowNhPiA2QgJhAKAY5HZQQkAAiQBV7BKOERA5EIEzBo=</HashCode>
+      <FileName>entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game" Collapsed="true">
+    <Position X="4" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GCAJEiUQwDABABBgAREBAgQgAAyBABgoIBAAkAgUICA=</HashCode>
+      <FileName>game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameError" Collapsed="true">
+    <Position X="27.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAiAAAAACAAAAAAAAAAAAAAAAAAAAIAAAgACAgACA=</HashCode>
+      <FileName>gameError.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIFrame" Collapsed="true">
+    <Position X="18.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAQAAAAAkAAAEAgAAAAgACgBAIAAEAIAAUABA=</HashCode>
+      <FileName>uiFrame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIButton" Collapsed="true">
+    <Position X="20.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAQAACBQAQAAAAAAAGAAAAAAAAACBAIAAAAAAIUAAA=</HashCode>
+      <FileName>uiButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIProgressBar" Collapsed="true">
+    <Position X="22.75" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAADAAAQAAABCgAAAEAAAAIAAgAAAAKAAAAACAUIAA=</HashCode>
+      <FileName>uiProgressBar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIParent" Collapsed="true">
+    <Position X="19.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAIAEQAAAAAAAAAAAAAAAAAAAAgAIAAAAAAAUAAA=</HashCode>
+      <FileName>uiParent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UITab" Collapsed="true">
+    <Position X="16" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACAAAAAQAKAAAAAAAEBAAAAQAAQABAIAAAAAAAUAgA=</HashCode>
+      <FileName>uiTab.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Layer" Collapsed="true">
+    <Position X="29.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAEAAAiAAAAAAAAAAAAAAAAAEAAAABAABEAA=</HashCode>
+      <FileName>layer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="metaBuilderMain" Collapsed="true">
+    <Position X="32.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAEAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>metaBuilderMain.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="metaBuilderUI" Collapsed="true">
+    <Position X="34.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>metaBuilderUI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineInput" Collapsed="true">
+    <Position X="29.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAABAABAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>engineInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineButton" Collapsed="true">
+    <Position X="31" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAEAAgCAAAAQAAAEAAAAAIAAAAAgCAAAAAAAAAEA=</HashCode>
+      <FileName>engineButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineWindowManager" Collapsed="true">
+    <Position X="7.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIgAAQAAAAAAAAAAAAAAAAAAAIAAAAAAQEAAoAAAAAA=</HashCode>
+      <FileName>engineWindowManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineWindow" Collapsed="true">
+    <Position X="3" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QACKRAAAwCUAAAYAAAEAAMAAAAAAQgAkAADRwAAAAAA=</HashCode>
+      <FileName>engineWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineTable" Collapsed="true">
+    <Position X="32.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAQAAAAAAAAAAAAAAAQQBAAAAAAA=</HashCode>
+      <FileName>engineTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineTableCell" Collapsed="true">
+    <Position X="34.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAhAAAQAAAQAAAAAAAAAIAA=</HashCode>
+      <FileName>EngineTableCell.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineStatic" Collapsed="true">
+    <Position X="31" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAEAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>engineStatic.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineEditControl" Collapsed="true">
+    <Position X="32.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAAAgCAAAAQAAAEACIAAAAAAAAgAAAAAAAggAAA=</HashCode>
+      <FileName>engineEditControl.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GOCMessage" Collapsed="true">
+    <Position X="31" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAIAAAAAAAAAAAYAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>gocMessage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GOCMessageManager" Collapsed="true">
+    <Position X="32.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAABAAAAABAAAAAABAAAAAAAABAIAAQAAAAAAA=</HashCode>
+      <FileName>gocMessageManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="9.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAFAABAAAACAAAAAAAAAAACAAAUAAAAAAAIACAA=</HashCode>
+      <FileName>gameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObjectManager" Collapsed="true">
+    <Position X="29.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAABAAAAAAEAAAAAAAAAAAIAAACAAAAAAAAAAAAwAA=</HashCode>
+      <FileName>gameObjectManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Render2DComponent" Collapsed="true">
+    <Position X="19.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAABBAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>render2DComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RenderComponent" Collapsed="true">
+    <Position X="19.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAA=</HashCode>
+      <FileName>renderComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ComponentBase" Collapsed="true">
+    <Position X="18.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAwBFAAAABAAAgAAAAAAAAAAQCEAgAAAAAICAUAAA=</HashCode>
+      <FileName>componentBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RTTI" Collapsed="true">
+    <Position X="29.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACACAAAAAAAIAgAAAAAAAAAACAAAAAAIQAAMAAABAA=</HashCode>
+      <FileName>RTTI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputComponent" Collapsed="true">
+    <Position X="17.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgABAAAAAAAAgAAABAAAAAAAAABAAAAAAACAEAAA=</HashCode>
+      <FileName>inputComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineResourceView" Collapsed="true">
+    <Position X="0.75" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAEAAAAAACAAECAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>engineResourceView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineInspectorView" Collapsed="true">
+    <Position X="3" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACCAKAAAAAAEIBAAACCAIAgAAAAAAQAAAAAA=</HashCode>
+      <FileName>engineInspectorView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineSceneView" Collapsed="true">
+    <Position X="5.25" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEEAACAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>engineSceneView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineCore" Collapsed="true">
+    <Position X="0.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAEAIAAABAgAAAQAAAAAIAAAAAAEAAAAAAAAgA=</HashCode>
+      <FileName>engineCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineError" Collapsed="true">
+    <Position X="34.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAACAAAAAAAAAAAAAAAAAAAAIAAAgBCAgACA=</HashCode>
+      <FileName>engineError.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineSystem" Collapsed="true">
+    <Position X="0.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gCAAAgAAAAAAAAQAAAAAAAAAAIAAIAgAAAABACAAKAA=</HashCode>
+      <FileName>engineSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineImage" Collapsed="true">
+    <Position X="27.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAAEAAAAgBCAFEUAAAAeBgBAQAACQACgAAABAGAUAAk=</HashCode>
+      <FileName>engineImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemUIDialog" Collapsed="true">
+    <Position X="5.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ADASAggAAACAAQIBhAEADIKAQVBgoASFAAEwAAAUgAg=</HashCode>
+      <FileName>systemUIDialog.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemUIButton" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQAAAAAAAAACAgAAABAIABIBAAACBAAAAAAAAAAUAAA=</HashCode>
+      <FileName>systemUIButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemUIControl" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBIcpkAbCgCpAUEBBAxIgOAAUAAgIEChgIkAACQUgJA=</HashCode>
+      <FileName>systemUIControl.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemUIScroll" Collapsed="true">
+    <Position X="19.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAIIASSIAAAgCAAQgAAEAABAAABEQAAQAAJAAAUIAI=</HashCode>
+      <FileName>systemUIScroll.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemUITitlebar" Collapsed="true">
+    <Position X="31" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAABgAQwIAIAQNBAACIAIAAQAAgAAGAAIAAAAAUAAA=</HashCode>
+      <FileName>systemUITitlebar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineMenuBar" Collapsed="true">
+    <Position X="10" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAEAAAAIAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>engineMenebar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineBootSystem" Collapsed="true">
+    <Position X="29.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAEABAAGAAgAQAAAAQAAAAAkAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>engineBootSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainNode" Collapsed="true">
+    <Position X="31" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAgAAEBAAAAAAIAIAAAAAAAAAAUAAI=</HashCode>
+      <FileName>mainNode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene_Test" Collapsed="true">
+    <Position X="7.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAIACAAQAQBABAAAAFAAQAEQAAAAAAIEAAQAAAUAAA=</HashCode>
+      <FileName>scene_Test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tabContent_A" Collapsed="true">
+    <Position X="18.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAQAAAQAAAAAEAAAAAAAAAAAAKAAAAAAAUAAA=</HashCode>
+      <FileName>tabContent_A.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene_Lobby" Collapsed="true">
+    <Position X="0.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAQAABABAAAAEAAAIAAgAAAAAIAAAAAAAUAAA=</HashCode>
+      <FileName>scene_Lobby.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="scene_Main" Collapsed="true">
+    <Position X="3" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAQAABgBAIAAEAAAAAAAAAAAAIAAAAAAAUAAA=</HashCode>
+      <FileName>scene_Main.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene_MapTool" Collapsed="true">
+    <Position X="5.25" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EEAAAIIAQAABABAAAAEAAAAQAAAABAAIAAAAAAAUAAA=</HashCode>
+      <FileName>scene_MapTool.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapSystem" Collapsed="true">
+    <Position X="10.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gCQAAIAAAAAAAAAAABFEABEAAAAAEAAAAgAAAgEUAAI=</HashCode>
+      <FileName>mapSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TileObject" Collapsed="true">
+    <Position X="13.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIACAAAAAgASAAAAAEAAQAAAAABAAAIAIEBAQAUAAA=</HashCode>
+      <FileName>tileObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CameraSystem" Collapsed="true">
+    <Position X="13" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhQAiBBRAAQCCIAgAAMAWAABAIAAQAAAAAAAiEAcAAA=</HashCode>
+      <FileName>CameraSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ViewerSystem" Collapsed="true">
+    <Position X="15.25" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAwAAQAAAAAEBAAAEABBABIIQAAAAQAAAAAAgUAQA=</HashCode>
+      <FileName>viewerSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapTileData" Collapsed="true">
+    <Position X="25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAgAAAAAAAAAEMAAAABQAAggAAAAAAIAAAAYAA=</HashCode>
+      <FileName>mapTileData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapTilePageLeftButton" Collapsed="true">
+    <Position X="1.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAQAAAAAAAAAAAAAEAAEAAAAAAAAAAAAAQgAAUAAA=</HashCode>
+      <FileName>mapTilePageLeftButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapTilePageRightButton" Collapsed="true">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAgAAAAAAAAAAEAAEAAAAAAAAAgAAAQAAAUAAA=</HashCode>
+      <FileName>mapTilePageRightButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapTileViewer" Collapsed="true">
+    <Position X="0.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAmACQAAAAAIAAAAEEAAAAAAAAAgACABBAAQAUAAA=</HashCode>
+      <FileName>mapTileViewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResourceTreeContent" Collapsed="true">
+    <Position X="27.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAFAAIAYwYAMAAAAAAQgAABAAAAAAwARgACg=</HashCode>
+      <FileName>resourceTreeContent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResourceTreeViewer" Collapsed="true">
+    <Position X="3" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgQCAABAAAgAAAgAEAAAAAAAAAAAAQAABAAAAUAgA=</HashCode>
+      <FileName>resourceTreeViewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MinimapViewer" Collapsed="true">
+    <Position X="7.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAIABAAAAAAABAABAAMEAJAgUEAAQAmIAAAAAAAUAAA=</HashCode>
+      <FileName>minimapViewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControlViewer" Collapsed="true">
+    <Position X="9.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAgEAAAAJAAAAAAAGAAAAgABAAAAACCAAAAAAUAAA=</HashCode>
+      <FileName>controlViewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Control_DebugButton" Collapsed="true">
+    <Position X="12.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAiAAAAAAAACAAAIEAAAAAAAAAAAAAAAAAAAAUAAA=</HashCode>
+      <FileName>control_DebugButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Control_ExitButton" Collapsed="true">
+    <Position X="14.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAEAAAAAAAAAAAAAAAAAAAAUAIQ=</HashCode>
+      <FileName>control_ExitButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Control_LoadButton" Collapsed="true">
+    <Position X="17" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAiAAAIAAAAAAAAAEAAAAAAAAAAAgAAAAAAAAWAAA=</HashCode>
+      <FileName>control_LoadButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Control_PerformButton" Collapsed="true">
+    <Position X="3.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAEAAAAAIBAAAAAAIAAAAAA0AAA=</HashCode>
+      <FileName>control_PerformButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Control_ResetButton" Collapsed="true">
+    <Position X="8" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAiAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAEUAAA=</HashCode>
+      <FileName>control_ResetButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Control_SaveButton" Collapsed="true">
+    <Position X="10.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAiEAAACAAAAAAAAEAAAAAAAAAAAAAAQAAAAAUAAA=</HashCode>
+      <FileName>control_SaveButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StatsViewer" Collapsed="true">
+    <Position X="5.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAIAAIAEAAAAAAAAAAAAAAAAAACAUAAA=</HashCode>
+      <FileName>statsViewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemBase" Collapsed="true">
+    <Position X="13" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAACAAgAAAAAEAAAAAAAAgAAAAAAAAAAAUAAA=</HashCode>
+      <FileName>systemBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemDebugStats" Collapsed="true">
+    <Position X="5.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAgEAIAAEABAAAAAAAAAAAAAUICA=</HashCode>
+      <FileName>systemDebugStats.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="VertexC" Collapsed="true">
+    <Position X="31" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBAABgAQAAAAA=</HashCode>
+      <FileName>graphics.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="SpriteData" Collapsed="true">
+    <Position X="31" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAQAQAAAIAICAAAAAgAAAABgAABAAAA=</HashCode>
+      <FileName>graphics.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="stFile" Collapsed="true">
+    <Position X="32.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAEAAAAgAAgA=</HashCode>
+      <FileName>fileManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="stTextureInfo" Collapsed="true">
+    <Position X="34.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAABAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>imageManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="compare_pair_second&lt;P&lt;&gt;&gt;" Collapsed="true">
+    <Position X="27.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>layerManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ControllerState" Collapsed="true">
+    <Position X="29.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAQAAIAAAAAAAAAAAAAAAEAAAAAAAABAA=</HashCode>
+      <FileName>input.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="UIStruct" Collapsed="true">
+    <Position X="29.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIEAAAAAEAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>uiParent.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TabStruct" Collapsed="true">
+    <Position X="27.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAQAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>uiTab.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="WindowStruct" Collapsed="true">
+    <Position X="32.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAIAAAAgAEAQgQAAAAIAAAQAAAAAAAIAAAAAAEAA=</HashCode>
+      <FileName>engineWindow.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="go_id_type" Collapsed="true">
+    <Position X="27.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>gameObject.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="graphicsNS::DISPLAY_MODE" Collapsed="true">
+    <Position X="31" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAEAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>graphics.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="UIBUTTON_STATE" Collapsed="true">
+    <Position X="27.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAgAAAAAACAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>uiButton.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="UIPROGRESSBAR_TYPE" Collapsed="true">
+    <Position X="29.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>uiProgressBar.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="enLayerList" Collapsed="true">
+    <Position X="34.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAABAAAAAgAAAAAAAAAIAAEAI=</HashCode>
+      <FileName>layer.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="eGOCMessage" Collapsed="true">
+    <Position X="32.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>gocMessage.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SYSTEM_UI_TYPES" Collapsed="true">
+    <Position X="32.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCIAAAAAAAAAAAgAAAkAECAAAAAAQAAAAAAAAAAAACA=</HashCode>
+      <FileName>systemUIControl.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SYSTEM_UI_CONTROL_STATE" Collapsed="true">
+    <Position X="31" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAIAAABAAAAAAAAAAAAAAAAAAAAAAAIAQAAAAg=</HashCode>
+      <FileName>systemUIControl.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SCROLL_TYPE" Collapsed="true">
+    <Position X="29.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>systemUIScroll.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MAPTYPE" Collapsed="true">
+    <Position X="27.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAQAAAIAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>mapSystem.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TILEFEATURE" Collapsed="true">
+    <Position X="34.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAgAAAAAEAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>tileObject.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CONTENTSTYPE" Collapsed="true">
+    <Position X="29.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEEAAAAAA=</HashCode>
+      <FileName>resourceTreeContent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="entityNS::COLLISION_TYPE" Collapsed="true">
+    <Position X="27.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAJAAAAAAQAACAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>entity.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

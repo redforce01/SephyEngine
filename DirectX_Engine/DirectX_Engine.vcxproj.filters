@@ -765,4 +765,7 @@
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>
