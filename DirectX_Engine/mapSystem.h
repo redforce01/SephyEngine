@@ -34,6 +34,8 @@ private:
 
 	CameraSystem* m_pCameraSystem;
 	MapTileData* m_pMapTileData;
+
+	std::vector<RECT> m_arrWorkableRECT;
 public:
 	MapSystem();
 	~MapSystem();
@@ -46,6 +48,11 @@ public:
 	void moveY(int distance);
 	void scaleUp();
 	void scaleDown();
+	
+	void addWorkRECT(RECT rc)
+	{
+		m_arrWorkableRECT.emplace_back(rc);
+	}
 
 	std::vector<TileObject*> getAllTiles() { return m_arrTiles; }
 	TileObject* selectTile(int number);

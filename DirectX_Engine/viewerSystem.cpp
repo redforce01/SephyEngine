@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "viewerSystem.h"
-
+#include "mapSystem.h"
 
 ViewerSystem::ViewerSystem()
 {
@@ -10,6 +10,8 @@ ViewerSystem::ViewerSystem()
 	m_pMinimapViewer = nullptr;
 	m_pControlViewer = nullptr;
 	m_pStatsViewer = nullptr;
+	m_pMapSystem = nullptr;
+	m_bMapSystemWorkableSetup = false;
 }
 
 
@@ -43,7 +45,7 @@ bool ViewerSystem::initialize(Game * gamePtr)
 		m_pStatsViewer = new StatsViewer;
 		m_pStatsViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		m_pStatsViewer->setGamePtr(gamePtr);
-
+		
 		// Memory Link Connections
 		m_pControlViewer->setMemoryLinkStatsViewer(m_pStatsViewer);
 		success = true;
@@ -53,12 +55,20 @@ bool ViewerSystem::initialize(Game * gamePtr)
 		MessageBox(g_hWndEngine, "Tool Viewer Initialize Failed", "Error", MB_OK);
 	}
 	
-
 	return success;
 }
 
 void ViewerSystem::update(float frameTime)
 {
+	if (m_bMapSystemWorkableSetup == false)
+	{
+		m_pMapSystem->addWorkRECT(m_pStatsViewer->getDialogRECT());
+		m_pMapSystem->addWorkRECT(m_pControlViewer->getDialogRECT());
+		m_pMapSystem->addWorkRECT(m_pMapTileViewer->getDialogRECT());
+		m_pMapSystem->addWorkRECT(m_pMinimapViewer->getDialogRECT());
+		m_bMapSystemWorkableSetup = true;
+	}
+
 	//m_pResTreeViewer->update(frameTime);
 	m_pMapTileViewer->update(frameTime);
 	m_pMinimapViewer->update(frameTime);

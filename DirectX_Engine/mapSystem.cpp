@@ -63,6 +63,12 @@ void MapSystem::update(float frameTime)
 		if (m_pMapTileData == nullptr)
 			return;
 
+		for (auto iter : m_arrWorkableRECT)
+		{
+			if (PtInRect(&iter, m_pInput->getMousePt()))
+				return;
+		}
+
 		name = m_pMapTileData->getTileName();
 		for (auto iter : m_arrTiles)
 		{

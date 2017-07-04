@@ -10,6 +10,7 @@ class ViewerSystem;
 #include "controlViewer.h"
 #include "statsViewer.h"
 
+class MapSystem;
 class CameraSystem;
 class ViewerSystem : public SystemBase
 {
@@ -21,6 +22,12 @@ private:
 	MinimapViewer*		m_pMinimapViewer;
 	ControlViewer*		m_pControlViewer;
 	StatsViewer*		m_pStatsViewer;
+
+private:
+	// Other System Pointer
+	MapSystem* m_pMapSystem;
+	bool m_bMapSystemWorkableSetup;
+
 public:
 	ViewerSystem();
 	~ViewerSystem();
@@ -39,6 +46,7 @@ public:
 	}
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
 	{
+		m_pMapSystem = pMapSystem;
 		m_pMapTileViewer->setMemoryLinkMapSystem(pMapSystem);
 		m_pControlViewer->setMemoryLinkMapSystem(pMapSystem);
 	}

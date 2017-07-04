@@ -235,6 +235,9 @@
     <Filter Include="SystemCode\Engine\SystemEngineUI\Control">
       <UniqueIdentifier>{9af1481a-e375-4e02-be20-58742a12d1bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\LogViewer">
+      <UniqueIdentifier>{ab25cfe6-604f-4fbe-81cf-0a844fd27362}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -488,6 +491,9 @@
     </ClCompile>
     <ClCompile Include="mapTilePageRightButton.cpp">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="logViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -763,6 +769,9 @@
     </ClInclude>
     <ClInclude Include="mapTilePageRightButton.h">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="logViewer.h">
+      <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
