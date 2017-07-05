@@ -9,6 +9,7 @@ class ViewerSystem;
 #include "minimapViewer.h"
 #include "controlViewer.h"
 #include "statsViewer.h"
+#include "logViewer.h"
 
 class MapSystem;
 class CameraSystem;
@@ -22,12 +23,11 @@ private:
 	MinimapViewer*		m_pMinimapViewer;
 	ControlViewer*		m_pControlViewer;
 	StatsViewer*		m_pStatsViewer;
-
+	LogViewer*			m_pLogViewer;
 private:
 	// Other System Pointer
 	MapSystem* m_pMapSystem;
 	bool m_bMapSystemWorkableSetup;
-
 public:
 	ViewerSystem();
 	~ViewerSystem();

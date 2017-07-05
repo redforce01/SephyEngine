@@ -11,6 +11,7 @@ ViewerSystem::ViewerSystem()
 	m_pControlViewer = nullptr;
 	m_pStatsViewer = nullptr;
 	m_pMapSystem = nullptr;
+	m_pLogViewer = nullptr;
 	m_bMapSystemWorkableSetup = false;
 }
 
@@ -22,6 +23,7 @@ ViewerSystem::~ViewerSystem()
 	SAFE_DELETE(m_pMinimapViewer);
 	SAFE_DELETE(m_pControlViewer);
 	SAFE_DELETE(m_pStatsViewer);
+	SAFE_DELETE(m_pLogViewer);
 }
 
 bool ViewerSystem::initialize(Game * gamePtr)
@@ -44,10 +46,13 @@ bool ViewerSystem::initialize(Game * gamePtr)
 		m_pControlViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		m_pStatsViewer = new StatsViewer;
 		m_pStatsViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
-		m_pStatsViewer->setGamePtr(gamePtr);
-		
+		m_pStatsViewer->setGamePtr(gamePtr);		
+		m_pLogViewer = new LogViewer;
+		m_pLogViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
+
 		// Memory Link Connections
 		m_pControlViewer->setMemoryLinkStatsViewer(m_pStatsViewer);
+		m_pControlViewer->setMemoryLinkLogViewer(m_pLogViewer);
 		success = true;
 	}
 	catch (...)
@@ -66,14 +71,16 @@ void ViewerSystem::update(float frameTime)
 		m_pMapSystem->addWorkRECT(m_pControlViewer->getDialogRECT());
 		m_pMapSystem->addWorkRECT(m_pMapTileViewer->getDialogRECT());
 		m_pMapSystem->addWorkRECT(m_pMinimapViewer->getDialogRECT());
+		m_pMapSystem->addWorkRECT(m_pLogViewer->getDialogRECT());
 		m_bMapSystemWorkableSetup = true;
 	}
-
+	
 	//m_pResTreeViewer->update(frameTime);
 	m_pMapTileViewer->update(frameTime);
 	m_pMinimapViewer->update(frameTime);
 	m_pControlViewer->update(frameTime);
 	m_pStatsViewer->update(frameTime);
+	m_pLogViewer->update(frameTime);
 
 	if (checkMouseOver())
 		bUIMouseOver = true;
@@ -88,6 +95,7 @@ void ViewerSystem::render()
 	m_pMinimapViewer->render();
 	m_pControlViewer->render();
 	m_pStatsViewer->render();
+	m_pLogViewer->render();
 }
 
 bool ViewerSystem::checkMouseOver()
@@ -96,7 +104,8 @@ bool ViewerSystem::checkMouseOver()
 		||*/ m_pMapTileViewer->getMouseOver() && m_pMapTileViewer->getVisible()
 		|| m_pMinimapViewer->getMouseOver() && m_pMinimapViewer->getVisible()
 		|| m_pControlViewer->getMouseOver() && m_pControlViewer->getVisible()
-		|| m_pStatsViewer->getMouseOver() && m_pStatsViewer->getVisible())
+		|| m_pStatsViewer->getMouseOver() && m_pStatsViewer->getVisible()
+		|| m_pLogViewer->getMouseOver() && m_pLogViewer->getVisible())
 	{
 		return true;
 	}

@@ -31,10 +31,10 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 		success = SystemUIDialog::initializeDialog(g, i, treeViewerNS::X, treeViewerNS::Y, treeViewerNS::WIDTH, treeViewerNS::HEIGHT, treeViewerNS::MARGIN);
 
 		// initialize DirectX font
-		if (dxFont.initialize(m_pGraphics, treeViewerNS::FONT_HEIGHT, false,
+		if (m_dxFont.initialize(m_pGraphics, treeViewerNS::FONT_HEIGHT, false,
 			false, treeViewerNS::FONT) == false)
 			return false;      // if failed
-		dxFont.setFontColor(fontColor);
+		m_dxFont.setFontColor(fontColor);
 		
 		int resX, resY;
 		resX = m_x + m_margin;
@@ -44,7 +44,7 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 		{
 			resX = m_x + m_margin;
 			File* folder = new File();
-			folder->initialize(g, i, &dxFont, CONTENTSTYPE::CONTENTS_FOLDER, iter.first, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
+			folder->initialize(g, i, &m_dxFont, CONTENTSTYPE::CONTENTS_FOLDER, iter.first, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
 			addTreeRes(folder);
 			resX += viewerChildTab;
 			resY += viewerChildHeight;
@@ -52,14 +52,14 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 			for (auto fileIter = iter.second->begin(); fileIter != iter.second->end(); fileIter++)
 			{
 				File* file = new File();
-				file->initialize(g, i, &dxFont, CONTENTSTYPE::CONTENTS_FILE, (*fileIter)->fileName, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
+				file->initialize(g, i, &m_dxFont, CONTENTSTYPE::CONTENTS_FILE, (*fileIter)->fileName, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
 				addTreeRes(file);
 				resY += viewerChildHeight;
 			}
 
 			resX = m_x;
 			File* cutline = new File();
-			cutline->initialize(g, i, &dxFont, CONTENTSTYPE::CONTENTS_UNKNOWN, treeViewerNS::CUT_LINE, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
+			cutline->initialize(g, i, &m_dxFont, CONTENTSTYPE::CONTENTS_UNKNOWN, treeViewerNS::CUT_LINE, resX, resY, viewerChildWidth, viewerChildHeight, viewerChildMargin);
 			addTreeRes(cutline);
 			resY += viewerChildHeight;
 		}

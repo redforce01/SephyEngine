@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "control_DebugButton.h"
-
+#include "mapSystem.h"
+#include "logViewer.h"
 
 Control_DebugButton::Control_DebugButton()
 {
 	m_pMapSystem = nullptr;
+	m_pLogViewer = nullptr;
 }
 
 
@@ -49,5 +51,9 @@ void Control_DebugButton::functionDebug(void * obj)
 	Control_DebugButton* pThis = (Control_DebugButton*)obj;
 	pThis->m_pInput->setMouseLButton(false);
 
-	MessageBox(g_hWndEngine, "Debug Button Called", "Test", MB_OK);
+	pThis->m_pMapSystem->setDebug();
+	if(pThis->m_pMapSystem->getDebug() == true)
+		pThis->m_pLogViewer->addLog("Debug Mode On");
+	else 
+		pThis->m_pLogViewer->addLog("Debug Mode Off");
 }

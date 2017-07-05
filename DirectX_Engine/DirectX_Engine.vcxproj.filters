@@ -241,6 +241,12 @@
     <Filter Include="GameCode\World">
       <UniqueIdentifier>{38b4eac0-5b6c-4ac0-b813-a6fd8b838b0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\SaveLoadViewer">
+      <UniqueIdentifier>{f141cd17-abb3-4f50-a69c-df2b5d89b249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Map\MapData">
+      <UniqueIdentifier>{ce87e124-e7a0-43a3-826a-f27718ca3a0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -435,9 +441,6 @@
     <ClCompile Include="systemBase.cpp">
       <Filter>GameCode\GameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="tileObject.cpp">
-      <Filter>GameCode\Maptool\Map\Object</Filter>
-    </ClCompile>
     <ClCompile Include="mapTileViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClCompile>
@@ -497,6 +500,18 @@
     </ClCompile>
     <ClCompile Include="logViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="saveLoadViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\SaveLoadViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="mapObject.cpp">
+      <Filter>GameCode\Maptool\Map\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTile.cpp">
+      <Filter>GameCode\Maptool\Map\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="mapDataParser.cpp">
+      <Filter>GameCode\Maptool\Map\MapData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -710,9 +725,6 @@
     <ClInclude Include="systemBase.h">
       <Filter>GameCode\GameSystem</Filter>
     </ClInclude>
-    <ClInclude Include="tileObject.h">
-      <Filter>GameCode\Maptool\Map\Object</Filter>
-    </ClInclude>
     <ClInclude Include="mapTileViewer.h">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
@@ -775,6 +787,18 @@
     </ClInclude>
     <ClInclude Include="logViewer.h">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="saveLoadViewer.h">
+      <Filter>GameCode\Maptool\Viewer\SaveLoadViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="mapObject.h">
+      <Filter>GameCode\Maptool\Map\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTile.h">
+      <Filter>GameCode\Maptool\Map\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="mapDataParser.h">
+      <Filter>GameCode\Maptool\Map\MapData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

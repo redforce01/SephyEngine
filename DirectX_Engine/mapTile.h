@@ -1,7 +1,7 @@
-#ifndef _TILEOBJECT_H
-#define _TILEOBJECT_H
+#ifndef _MAPTILE_H
+#define _MAPTILE_H
 
-class TileObject;
+class MapTile;
 
 #include "image.h"
 
@@ -26,20 +26,20 @@ enum class TILEFEATURE : UINT
 	FEATULRE_CIRCLE
 };
 
-class TileObject : public Image
+class MapTile : public Image
 {
 private:
-	UINT number;
-	UINT type;
-	TILEFEATURE feature;
-	RECT rcTile;
-
+	UINT			m_Number;
+	UINT			m_nType;
+	TILEFEATURE		m_Feature;
+	RECT			m_rcTile;
+	std::string		m_strTextureName;
 public:
-	TileObject();
-	~TileObject();
+	MapTile();
+	~MapTile();
 
-	bool initialize(UINT PID, int startX, int startY,
-		Graphics* g, int width, int height, int nCols, TextureManager* texture);
+	bool initialize(Graphics* g, UINT PID, std::string textureName, int startX, int startY,
+		 int width, int height);
 	void update(float frameTime);
 	void render();
 
@@ -47,31 +47,45 @@ public:
 	// ( Square / Isometric / Circle )
 	void renderSketch();
 
-	inline TILEFEATURE getFeature()
+	inline TILEFEATURE getFeature() const
 	{ 
-		return feature;
+		return m_Feature;
 	}
 
-	inline RECT getTileRect()
+	inline RECT getTileRect() const
 	{
-		return rcTile;
+		return m_rcTile;
+	}
+
+	std::string getTextureName() const
+	{
+		return m_strTextureName;
 	}
 	
 	inline void moveRectWidth(int distance)
 	{
-		rcTile.left += distance;
-		rcTile.right += distance;
+		m_rcTile.left += distance;
+		m_rcTile.right += distance;
 	}
 
 	inline void moveRectHeight(int distance)
 	{
-		rcTile.top += distance;
-		rcTile.bottom += distance;
+		m_rcTile.top += distance;
+		m_rcTile.bottom += distance;
 	}
 
 	inline void setFeature(TILEFEATURE f)
 	{
-		feature = f;
+		m_Feature = f;
+	}
+
+	inline bool changeTexture(std::string textureName)
+	{
+		if (IMAGEMANAGER->getTexture(textureName) == nullptr)
+			return false;
+
+		m_strTextureName = textureName;
+		return changeTile(IMAGEMANAGER->getTexture(textureName));
 	}
 
 	inline bool changeTile(TextureManager* texture)
@@ -83,4 +97,4 @@ public:
 	}
 };
 
-#endif // !_TILEOBJECT_H
+#endif // !_MAPTILE_H

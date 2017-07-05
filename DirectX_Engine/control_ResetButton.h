@@ -17,12 +17,13 @@ namespace resetButtonNS
 	const int IMAGE_HEIGHT = 32;
 }
 
+class LogViewer;
 class MapSystem;
 class Control_ResetButton : public SystemUIButton
 {
 private:
 	MapSystem* m_pMapSystem;
-
+	LogViewer* m_pLogViewer;
 public:
 	Control_ResetButton();
 	~Control_ResetButton();
@@ -34,6 +35,9 @@ public:
 	// MapSystem MemoryLink Connect
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
 	{ m_pMapSystem = pMapSystem; }
+
+	void setMemoryLinkLogViewer(LogViewer* pLogViewer)
+	{ m_pLogViewer = pLogViewer; }
 public:
 	// CALLBACK FUNCTION [STATIC]
 	static void functionReset(void * obj);

@@ -30,7 +30,7 @@ HRESULT MainNode::initialize()
 	SCENEMANAGER->addScene("Main", new scene_Main);
 	
 	SCENEMANAGER->initialize();
-	SCENEMANAGER->changeScene("sceneTest");
+	SCENEMANAGER->changeScene("MapTool");
 
 	return S_OK;
 }

@@ -16,12 +16,13 @@ namespace debugButtonNS
 	const int IMAGE_HEIGHT = 32;
 }
 
+class LogViewer;
 class MapSystem;
 class Control_DebugButton : public SystemUIButton
 {
 private:
 	MapSystem* m_pMapSystem;
-
+	LogViewer* m_pLogViewer;
 public:
 	Control_DebugButton();
 	~Control_DebugButton();
@@ -33,6 +34,8 @@ public:
 	// MapSystem MemoryLink Connect
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
 	{ m_pMapSystem = pMapSystem; }
+	void setMemoryLinkLogViewer(LogViewer* pLogViewer)
+	{ m_pLogViewer = pLogViewer; }
 public:
 	// CALLBACK FUNCTION [STATIC]
 	static void functionDebug(void * obj);

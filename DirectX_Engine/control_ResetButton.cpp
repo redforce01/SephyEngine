@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "control_ResetButton.h"
-
+#include "logViewer.h"
 
 Control_ResetButton::Control_ResetButton()
 {
 	m_pMapSystem = nullptr;
+	m_pLogViewer = nullptr;
 }
 
 

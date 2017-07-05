@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "control_LoadButton.h"
-
+#include "logViewer.h"
+#include "mapSystem.h"
 
 Control_LoadButton::Control_LoadButton()
 {
 	m_pMapSystem = nullptr;
+	m_pLogViewer = nullptr;
 }
 
 
@@ -48,6 +50,6 @@ void Control_LoadButton::functionLoad(void * obj)
 {
 	Control_LoadButton* pThis = (Control_LoadButton*)obj;
 	pThis->m_pInput->setMouseLButton(false);
-
-	MessageBox(g_hWndEngine, "Function Load Called", "Test", MB_OK);
+	pThis->m_pMapSystem->loadData();
+	pThis->m_pLogViewer->addLog("Map Load Called");
 }

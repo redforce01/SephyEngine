@@ -16,12 +16,13 @@ namespace loadButtonNS
 	const int IMAGE_HEIGHT = 26;
 }
 
+class LogViewer;
 class MapSystem;
 class Control_LoadButton : public SystemUIButton
 {
 private:
 	MapSystem* m_pMapSystem;
-
+	LogViewer* m_pLogViewer;
 public:
 	Control_LoadButton();
 	~Control_LoadButton();
@@ -33,6 +34,8 @@ public:
 	// MapSystem MemoryLink Connect
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
 	{ m_pMapSystem = pMapSystem; }
+	void setMemoryLinkLogViewer(LogViewer* pLogViewer)
+	{ m_pLogViewer = pLogViewer; }
 public:
 	// CALLBACK FUNCTION [STATIC]
 	static void functionLoad(void * obj);

@@ -17,7 +17,7 @@ class SystemUIDialog
 protected:
 	Graphics* m_pGraphics;
 	Input* m_pInput;
-	TextDX dxFont;
+	TextDX m_dxFont;
 	
 	float m_x, m_y;
 	float m_width, m_height;

@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "control_PerformButton.h"
 #include "statsViewer.h"
+#include "logViewer.h"
 
 Control_PerformButton::Control_PerformButton()
 {
+	m_pStatsViewer = nullptr;
+	m_pLogViewer = nullptr;
 }
 
 
@@ -49,4 +52,8 @@ void Control_PerformButton::functionPerform(void * obj)
 	pThis->m_pInput->setMouseLButton(false);
 
 	pThis->m_pStatsViewer->setShowHide();
+	if(pThis->m_pStatsViewer->getVisible())
+		pThis->m_pLogViewer->addLog("Performance Viewer On");
+	else 
+		pThis->m_pLogViewer->addLog("Performance Viewer Off");
 }

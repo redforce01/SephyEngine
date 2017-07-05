@@ -14,10 +14,10 @@ class ControlViewer;
 
 namespace toolControlViewerNS
 {
+	const UINT X = 305;							// Viewer location X
+	const UINT Y = 5;							// Viewer location Y
 	const UINT WIDTH = 500;						// width of treeViewer
 	const UINT HEIGHT = 50;						// height of treeViewer
-	const UINT X = (WINSIZEX / 2) - WIDTH / 2;	// Viewer location X
-	const UINT Y = WINSIZEY - 200;				// Viewer location Y
 	const UINT MARGIN = 4;						// text margin from Viewer edge
 	const char FONT[] = "Courier New";			// Viewer font
 	const int FONT_HEIGHT = 14;					// height of the font in pixels
@@ -53,6 +53,14 @@ public:
 		m_pLoadButton->setMemoryLinkMapSystem(pMapSystem);
 		m_pDebugButton->setMemoryLinkMapSystem(pMapSystem);
 		m_pResetButton->setMemoryLinkMapSystem(pMapSystem);
+	}
+	void setMemoryLinkLogViewer(LogViewer* pLogViewer)
+	{
+		m_pSaveButton->setMemoryLinkLogViewer(pLogViewer);
+		m_pLoadButton->setMemoryLinkLogViewer(pLogViewer);
+		m_pDebugButton->setMemoryLinkLogViewer(pLogViewer);
+		m_pResetButton->setMemoryLinkLogViewer(pLogViewer);
+		m_pPerformButton->setMemoryLinkLogViewer(pLogViewer);
 	}
 };
 

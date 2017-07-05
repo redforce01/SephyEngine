@@ -16,12 +16,13 @@ namespace performButtonNS
 	const int IMAGE_HEIGHT = 30;
 }
 
+class LogViewer;
 class StatsViewer;
 class Control_PerformButton : public SystemUIButton
 {
 private:
 	StatsViewer* m_pStatsViewer;
-
+	LogViewer* m_pLogViewer;
 public:
 	Control_PerformButton();
 	~Control_PerformButton();
@@ -32,7 +33,8 @@ public:
 	
 	void setMemoryLinkStatsViewer(StatsViewer* pStatsViewer)
 	{ m_pStatsViewer = pStatsViewer; }
-
+	void setMemoryLinkLogViewer(LogViewer* pLogViewer)
+	{ m_pLogViewer = pLogViewer; }
 public:
 	// CALLBACK FUNCTION [STATIC]
 	static void functionPerform(void * obj);

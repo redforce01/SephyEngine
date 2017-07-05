@@ -8,6 +8,7 @@ MapSystem::MapSystem()
 	m_mapType = MAPTYPE::DIAMOND;
 	m_pCameraSystem = nullptr;
 	m_pMapTileData = nullptr;
+	m_bDebug = true;
 }
 
 
@@ -17,11 +18,16 @@ MapSystem::~MapSystem()
 	{
 		SAFE_DELETE(iter);
 	}
+
+	SAFE_DELETE(m_pMapDataParser);
 }
 
 bool MapSystem::initialize(Game* gamePtr)
 {	
 	bool success = false;
+
+	m_pMapDataParser = new MapDataParser;
+
 
 	int UIDCount = 0;
 	int mapX, mapY;
@@ -37,9 +43,8 @@ bool MapSystem::initialize(Game* gamePtr)
 	{
 		for (UINT col = 0; col < MapSystemNS::mapSizeY; col++)
 		{
-			TileObject* temp = new TileObject;
-			temp->initialize(UIDCount, mapX, mapY,
-				gamePtr->getGraphics(), MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight, 0, IMAGEMANAGER->getTexture("isoBasicC"));
+			MapTile* temp = new MapTile;
+			temp->initialize(gamePtr->getGraphics(), UIDCount, "isoBasicC", mapX, mapY, MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight);
 			m_arrTiles.emplace_back(temp);
 			
 			mapX += MapSystemNS::tileBasicWidth;
@@ -51,6 +56,7 @@ bool MapSystem::initialize(Game* gamePtr)
 			mapX = 0;
 		else mapX = MapSystemNS::tileBasicWidth / 2;
 	}
+	
 	
 	return success;
 }
@@ -77,7 +83,8 @@ void MapSystem::update(float frameTime)
 
 			if (MyUtil::getIsometricIn(iter->getTileRect(), m_pInput->getMousePt()))
 			{
-				iter->setTextureManager(IMAGEMANAGER->getTexture(name));
+				iter->changeTexture(name);
+				//iter->setTextureManager(IMAGEMANAGER->getTexture(name));
 			}
 		}
 	}
@@ -103,13 +110,17 @@ void MapSystem::render()
 	}
 	m_pGraphics->spriteEnd();
 
-	for (auto iter : m_arrTiles)
+	if (m_bDebug)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
-			continue;
+		for (auto iter : m_arrTiles)
+		{
+			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+				continue;
 
-		iter->renderSketch();
+			iter->renderSketch();
+		}
 	}
+
 }
 
 void MapSystem::moveX(int distance)
@@ -146,10 +157,22 @@ void MapSystem::scaleDown()
 	}
 }
 
-TileObject * MapSystem::selectTile(int number)
+MapTile * MapSystem::selectTile(int number)
 {
 	if (m_arrTiles[number] != nullptr)
 		return m_arrTiles[number];
 	else
 		return nullptr;
+}
+
+void MapSystem::saveData()
+{
+	m_pMapDataParser->setMapTiles(m_arrTiles);
+	m_pMapDataParser->saveData();
+}
+
+void MapSystem::loadData()
+{
+	m_pMapDataParser->loadData();
+	m_arrTiles = m_pMapDataParser->getMapTiles();
 }

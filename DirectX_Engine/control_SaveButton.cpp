@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "control_SaveButton.h"
 #include "mapSystem.h"
+#include "logViewer.h"
 
 Control_SaveButton::Control_SaveButton()
 {
 	m_pMapSystem = nullptr;
+	m_pLogViewer = nullptr;
 }
 
 
@@ -48,6 +50,6 @@ void Control_SaveButton::functionSave(void * obj)
 {
 	Control_SaveButton* pThis = (Control_SaveButton*)obj;
 	pThis->m_pInput->setMouseLButton(false);
-
-	MessageBox(g_hWndEngine, "TestFunction", "Test", MB_OK);
+	pThis->m_pMapSystem->saveData();
+	pThis->m_pLogViewer->addLog("Map Save Called");
 }

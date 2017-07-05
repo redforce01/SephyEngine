@@ -19,6 +19,8 @@ bool SystemDebugStats::initialize(Graphics * g, Input * i)
 	try
 	{
 		success = SystemUIDialog::initializeDialog(g, i, debugStatsNS::X, debugStatsNS::Y, debugStatsNS::WIDTH, debugStatsNS::HEIGHT, debugStatsNS::MARGIN);
+		if (success == false)
+			throw("SystemDebugStats - SystemUIDialog Initialized Failed");
 
 		m_rcText = RectMake(
 			debugStatsNS::X + debugStatsNS::MARGIN,
@@ -26,8 +28,9 @@ bool SystemDebugStats::initialize(Graphics * g, Input * i)
 			debugStatsNS::WIDTH - debugStatsNS::MARGIN,
 			debugStatsNS::HEIGHT - debugStatsNS::MARGIN);
 
-		dxFont.initialize(g, debugStatsNS::FONT_SIZE, false, false, debugStatsNS::FONT);
-
+		success = m_dxFont.initialize(g, debugStatsNS::FONT_SIZE, false, false, debugStatsNS::FONT);
+		if (success == false)
+			throw("SystemDebugStats Font Initialized Failed");
 	}
 	catch (...)
 	{
@@ -57,7 +60,7 @@ void SystemDebugStats::render()
 
 	for (auto iter : m_mapMessage)
 	{
-		dxFont.print(iter.second, m_rcText, DT_LEFT);
+		m_dxFont.print(iter.second, m_rcText, DT_LEFT);
 		m_rcText.top += debugStatsNS::TEXT_HEIGHT;
 		m_rcText.bottom += debugStatsNS::TEXT_HEIGHT;
 	}

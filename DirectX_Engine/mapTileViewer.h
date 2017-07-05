@@ -21,7 +21,7 @@ namespace mapTileViewerNS
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);    // backdrop color
 
-	const std::string TILE_FOLDER = "03_Tile";
+	const std::string TILE_FOLDER = "22_Tile";
 	const UINT BASIC_TILE_WIDTH = 128;
 	const UINT BASIC_TILE_HEIGHT = 64;
 	const UINT VIEWER_PAGE_ITEM_MAX = 36;
