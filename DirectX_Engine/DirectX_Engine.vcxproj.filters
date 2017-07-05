@@ -238,6 +238,9 @@
     <Filter Include="GameCode\Maptool\Viewer\LogViewer">
       <UniqueIdentifier>{ab25cfe6-604f-4fbe-81cf-0a844fd27362}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\World">
+      <UniqueIdentifier>{38b4eac0-5b6c-4ac0-b813-a6fd8b838b0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -494,6 +497,9 @@
     </ClCompile>
     <ClCompile Include="logViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="scene_TestScene.cpp">
+      <Filter>GameCode\Scenes\GameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -772,6 +778,9 @@
     </ClInclude>
     <ClInclude Include="logViewer.h">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="scene_TestScene.h">
+      <Filter>GameCode\Scenes\GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

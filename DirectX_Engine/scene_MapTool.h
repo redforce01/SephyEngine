@@ -14,7 +14,7 @@ namespace MapToolNS
 	const UCHAR SCENE_CHANGE_KEY = VK_SPACE;
 }
 
-class Scene_MapTool : public Game
+class Scene_MapTool : public Game	// Scene
 {
 private:
 	MapSystem* mapSystem;

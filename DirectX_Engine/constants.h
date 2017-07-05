@@ -10,7 +10,7 @@
 // window
 const char CLASS_NAME[] = "DirectX_Engine";
 const char GAME_TITLE[] = "DirectX_Engine";
-const bool FULLSCREEN = false;              // windowed or fullscreen
+const bool FULLSCREEN = false;					// windowed or fullscreen
 const UINT GAME_WIDTH = WINSIZEX;				// width of game in pixels
 const UINT GAME_HEIGHT = WINSIZEY;				// height of game in pixels
  
