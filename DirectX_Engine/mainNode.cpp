@@ -3,7 +3,6 @@
 #include "scene_Main.h"
 #include "scene_Test.h"
 #include "scene_MapTool.h"
-#include "scene_TestScene.h"
 
 MainNode::MainNode() : initializedMgr(FALSE)
 {
@@ -29,9 +28,7 @@ HRESULT MainNode::initialize()
 	SCENEMANAGER->addScene("MapTool", new Scene_MapTool);
 	SCENEMANAGER->addScene("Test", new Scene_Test);
 	SCENEMANAGER->addScene("Main", new scene_Main);
-	SCENEMANAGER->addScene("sceneTest", new Scene_TestScene);
-
-
+	
 	SCENEMANAGER->initialize();
 	SCENEMANAGER->changeScene("sceneTest");
 

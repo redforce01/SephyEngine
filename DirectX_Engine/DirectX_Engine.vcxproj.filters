@@ -498,9 +498,6 @@
     <ClCompile Include="logViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
     </ClCompile>
-    <ClCompile Include="scene_TestScene.cpp">
-      <Filter>GameCode\Scenes\GameScene</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -778,9 +775,6 @@
     </ClInclude>
     <ClInclude Include="logViewer.h">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
-    </ClInclude>
-    <ClInclude Include="scene_TestScene.h">
-      <Filter>GameCode\Scenes\GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

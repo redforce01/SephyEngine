@@ -178,7 +178,6 @@
     <ClCompile Include="mapTileData.cpp" />
     <ClCompile Include="mapTilePageLeftButton.cpp" />
     <ClCompile Include="mapTilePageRightButton.cpp" />
-    <ClCompile Include="scene_TestScene.cpp" />
     <ClCompile Include="statsViewer.cpp" />
     <ClCompile Include="systemBase.cpp" />
     <ClCompile Include="gocMessage.cpp" />
@@ -273,7 +272,6 @@
     <ClInclude Include="mapTileData.h" />
     <ClInclude Include="mapTilePageLeftButton.h" />
     <ClInclude Include="mapTilePageRightButton.h" />
-    <ClInclude Include="scene_TestScene.h" />
     <ClInclude Include="statsViewer.h" />
     <ClInclude Include="systemBase.h" />
     <ClInclude Include="gocMessage.h" />

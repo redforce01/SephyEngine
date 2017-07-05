@@ -35,9 +35,7 @@
 //-----------------------------------------
 #define WINSIZEX 1900
 #define WINSIZEY 1000
-//#define STARTX 1921
-//#define STARTY 0
-#define STARTX 0
+#define STARTX 1921
 #define STARTY 0
 
 
