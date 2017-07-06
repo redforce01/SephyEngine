@@ -8,7 +8,6 @@ class MapSystem;
 #include "systemBase.h"
 #include "mapDataParser.h"
 #include "mapTile.h"
-#include "mapObject.h"
 
 namespace MapSystemNS
 {
@@ -16,6 +15,8 @@ namespace MapSystemNS
 	const UINT mapSizeY = 128;
 	const UINT tileBasicWidth = 128;
 	const UINT tileBasicHeight = 64;
+
+	const std::string BASIC_TILE = "isoBasicC";
 }
 
 enum class MAPTYPE
@@ -32,9 +33,8 @@ class CameraSystem;
 class MapSystem : public SystemBase
 {
 private:
-	typedef std::vector<MapTile*> MAP_TILES;
-	typedef std::vector<MapObject*> MAP_OBJECTS;
-
+	typedef std::vector<MapTile*>			MAP_TILES;
+	typedef std::vector<MapTile*>::iterator	MAP_TILES_ITER;
 private:
 	MAP_TILES m_arrTiles;
 	std::vector<RECT> m_arrWorkableRECT;
@@ -62,6 +62,14 @@ public:
 	void moveY(int distance);
 	void scaleUp();
 	void scaleDown();
+
+	void resetMap()
+	{
+		for (auto iter : m_arrTiles)
+		{
+			iter->changeTexture(MapSystemNS::BASIC_TILE);
+		}
+	}
 	
 	void addWorkRECT(RECT rc)
 	{

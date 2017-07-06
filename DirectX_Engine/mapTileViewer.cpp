@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "mapTileViewer.h"
 #include "mapSystem.h"
+#include "objectControlViewer.h"
 
 
 MapTileViewer::MapTileViewer()
@@ -11,6 +12,7 @@ MapTileViewer::MapTileViewer()
 	m_nMaxPage = 0;
 	m_pSelectData = nullptr;
 	m_pMapSystem = nullptr;
+	m_pObjectControlViewer = nullptr;
 }
 
 
@@ -34,6 +36,13 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 		success = SystemUIDialog::initializeDialog(g, i, mapTileViewerNS::X, mapTileViewerNS::Y, mapTileViewerNS::WIDTH, mapTileViewerNS::HEIGHT, mapTileViewerNS::MARGIN);
 		if (success == false)
 			throw("SystemUIDialog initialized Failed");
+
+		success = m_dxFont.initialize(g, mapTileViewerNS::FONT_HEIGHT, false, false, mapTileViewerNS::FONT);
+		if (success == false)
+			throw("MapTileViewer DxFont initialized Failed");
+		m_rcPageTextBox = RectMake(mapTileViewerNS::X + mapTileViewerNS::PAGE_TEXT_BOX_POS_X, mapTileViewerNS::HEIGHT - mapTileViewerNS::PAGE_TEXT_BOX_POS_Y,
+			mapTileViewerNS::WIDTH - (mapTileViewerNS::MARGIN * 2), mapTileViewerNS::FONT_HEIGHT);
+		
 
 		auto arrImages = FILEMANAGER->getFileListInFolder(mapTileViewerNS::TILE_FOLDER);
 
@@ -73,10 +82,12 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 		}
 
 		int halfWidth = this->getDialogWidth() / 2;
+		int dialogBottom = this->getDialogRECT().bottom;
+
 		m_pLeftButton = new MapTilePageLeftButton;
 		m_pLeftButton->initialize(g, i, mapTileViewerNS::LEFT_BUTTON_ID, this,
-			halfWidth - mapTileViewerNS::PAGE_BUTTON_SIZE,
-			WINSIZEY - 200,
+			halfWidth - (mapTileViewerNS::PAGE_BUTTON_SIZE * 2),
+			dialogBottom - mapTileViewerNS::PAGE_BUTTON_HEIGHT_POS,
 			mapTileViewerNS::PAGE_BUTTON_SIZE, mapTileViewerNS::PAGE_BUTTON_SIZE,
 			mapTileViewerNS::MARGIN);
 		m_pLeftButton->setMemoryLinkMapTileViewer(this);
@@ -84,7 +95,7 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 		m_pRightButton = new MapTilePageRightButton;
 		m_pRightButton->initialize(g, i, mapTileViewerNS::RIGHT_BUTTON_ID, this,
 			halfWidth + mapTileViewerNS::PAGE_BUTTON_SIZE,
-			WINSIZEY - 200,
+			dialogBottom - mapTileViewerNS::PAGE_BUTTON_HEIGHT_POS,
 			mapTileViewerNS::PAGE_BUTTON_SIZE, mapTileViewerNS::PAGE_BUTTON_SIZE,
 			mapTileViewerNS::MARGIN);
 		m_pRightButton->setMemoryLinkMapTileViewer(this);
@@ -120,6 +131,7 @@ void MapTileViewer::update(float frameTime)
 					iter->setSelected(true);
 					m_pSelectData = iter;
 					m_pMapSystem->setMapTileData(m_pSelectData);
+					m_pObjectControlViewer->setSelectObjectData(m_pSelectData);
 					m_pInput->setMouseLButton(false);
 				}
 				else
@@ -151,6 +163,19 @@ void MapTileViewer::render()
 		arrCount++;
 	}
 
+	// Button Render
 	m_pLeftButton->render();
 	m_pRightButton->render();
+	
+	// Page Number Draw
+	m_pGraphics->spriteBegin();
+	
+	std::string strPage = mapTileViewerNS::PAGE_NUMBER;
+	strPage += std::to_string(m_nViewPage);
+	strPage += " /";
+	strPage += std::to_string(m_nMaxPage);
+	m_dxFont.print(strPage, m_rcPageTextBox, DT_LEFT);
+
+	m_pGraphics->spriteEnd();
+
 }

@@ -3,7 +3,10 @@
 
 class MapTile;
 
+#include <string>
+#include <vector>
 #include "image.h"
+#include "mapObject.h"
 
 namespace TileNS
 {
@@ -34,6 +37,10 @@ private:
 	TILEFEATURE		m_Feature;
 	RECT			m_rcTile;
 	std::string		m_strTextureName;
+
+private:
+	std::vector<MapObject*> m_vObject;
+	
 public:
 	MapTile();
 	~MapTile();
@@ -43,42 +50,39 @@ public:
 	void update(float frameTime);
 	void render();
 
+	// ================================================
+	// Memeber Functions
+	// ================================================
+	void addObject(MapObject* pNewObject)
+	{
+		m_vObject.emplace_back(pNewObject);
+	}
+	void addObject(MapObject* pNewObject, int num)
+	{
+		if (m_vObject.size() < num)
+		{
+			m_vObject.reserve(num);
+		}
+		m_vObject.emplace_back(pNewObject);
+	}
 	// Draw This Tile Object's Border
 	// ( Square / Isometric / Circle )
 	void renderSketch();
 
-	inline TILEFEATURE getFeature() const
-	{ 
-		return m_Feature;
-	}
-
-	inline RECT getTileRect() const
-	{
-		return m_rcTile;
-	}
-
-	std::string getTextureName() const
-	{
-		return m_strTextureName;
-	}
-	
+	// Move Tile & Object RECT with Camera Move Horizontal
 	inline void moveRectWidth(int distance)
 	{
 		m_rcTile.left += distance;
 		m_rcTile.right += distance;
 	}
-
+	// Move Tile & Object RECT with Camera Move Vertical
 	inline void moveRectHeight(int distance)
 	{
 		m_rcTile.top += distance;
 		m_rcTile.bottom += distance;
 	}
-
-	inline void setFeature(TILEFEATURE f)
-	{
-		m_Feature = f;
-	}
-
+	
+	// Tile Change Texture Function
 	inline bool changeTexture(std::string textureName)
 	{
 		if (m_strTextureName.compare(textureName) == 0)
@@ -91,6 +95,31 @@ public:
 		setTextureManager(IMAGEMANAGER->getTexture(m_strTextureName));
 		return true;
 	}
+
+	// ================================================
+	// Getter Functions
+	// ================================================
+	inline TILEFEATURE getFeature() const
+	{ 
+		return m_Feature;
+	}
+	inline RECT getTileRect() const
+	{
+		return m_rcTile;
+	}
+	std::string getTextureName() const
+	{
+		return m_strTextureName;
+	}
+	// ================================================
+	// Setter Functions
+	// ================================================
+	inline void setFeature(TILEFEATURE f)
+	{
+		m_Feature = f;
+	}
+
+
 };
 
 #endif // !_MAPTILE_H

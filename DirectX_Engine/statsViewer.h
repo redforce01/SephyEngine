@@ -13,13 +13,15 @@ namespace statsViewerNS
 	const std::string KEY_MOUSE = "mouse";
 	const std::string KEY_CPU = "cpu";
 	const std::string KEY_SCENE = "scene";
+	const std::string KEY_CAMERA = "camera";
 }
 
+class CameraSystem;
 class StatsViewer : public SystemDebugStats
 {
 private:
-	Game* pGame;
-
+	Game* m_pGame;
+	CameraSystem* m_pCameraSystem;
 public:
 	StatsViewer();
 	~StatsViewer();
@@ -30,7 +32,11 @@ public:
 
 	// Set Game Pointer For Stats Information
 	void setGamePtr(Game* gamePtr)
-	{ pGame = gamePtr; }
+	{ m_pGame = gamePtr; }	
+	// Set CameraSystem Pointer For CameraPos Information
+	void setMemoryLinkCameraSystem(CameraSystem* pCameraSystem)
+	{ m_pCameraSystem = pCameraSystem; }
+
 };
 
 #endif // !_STATSVIEWER_H

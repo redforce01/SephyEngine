@@ -39,7 +39,7 @@ public:
 	// ===========================================
 	// Getter Functions 
 	// ===========================================
-	std::string getTileName() const
+	std::string getTextureName() const
 	{
 		return m_strName;
 	}

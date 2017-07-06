@@ -25,13 +25,13 @@ void MapDataParser::saveData()
 	std::vector<std::string> vArray;
 	vArray.emplace_back(mapDataParserNS::FILE_TITLE);
 	vArray.emplace_back("\r\n");
-	//int count = 0;
+	int count = 0;
 	for (auto iter : m_arrMapTile)
 	{
 		// TILE NUMBER COMBINE
 		std::string strNumber = "+";
-		//strNumber += std::to_string(count);
-		//count++;
+		strNumber += std::to_string(count);
+		count++;
 		vArray.emplace_back(strNumber);
 		vArray.emplace_back("\r\n");
 		// TILE TILE_NAME COMBINE
@@ -94,7 +94,7 @@ std::vector<std::string> MapDataParser::arraySeperation(char message[])
 	std::vector<std::string> vArray;
 
 	char* temp;
-	char* seperator = { "\t\r\n+-" };
+	char* seperator = { "\t\r\n" };
 	char* token;
 
 	token = strtok_s(message, seperator, &temp);

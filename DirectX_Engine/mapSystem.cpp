@@ -47,7 +47,7 @@ bool MapSystem::initialize(Game* gamePtr)
 		for (UINT col = 0; col < MapSystemNS::mapSizeY; col++)
 		{
 			MapTile* temp = new MapTile;
-			temp->initialize(gamePtr->getGraphics(), UIDCount, "isoBasicC", mapX, mapY, MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight);
+			temp->initialize(gamePtr->getGraphics(), UIDCount, MapSystemNS::BASIC_TILE, mapX, mapY, MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight);
 			m_arrTiles.emplace_back(temp);
 			
 			mapX += MapSystemNS::tileBasicWidth;
@@ -79,7 +79,7 @@ void MapSystem::update(float frameTime)
 		}
 
 		int count = 0;
-		name = m_pMapTileData->getTileName();
+		name = m_pMapTileData->getTextureName();
 		for (auto iter : m_arrTiles)
 		{
 			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)

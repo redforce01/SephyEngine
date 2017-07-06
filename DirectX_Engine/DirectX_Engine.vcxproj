@@ -180,6 +180,7 @@
     <ClCompile Include="mapTileData.cpp" />
     <ClCompile Include="mapTilePageLeftButton.cpp" />
     <ClCompile Include="mapTilePageRightButton.cpp" />
+    <ClCompile Include="objectControlViewer.cpp" />
     <ClCompile Include="saveLoadViewer.cpp" />
     <ClCompile Include="statsViewer.cpp" />
     <ClCompile Include="systemBase.cpp" />
@@ -277,6 +278,7 @@
     <ClInclude Include="mapTileData.h" />
     <ClInclude Include="mapTilePageLeftButton.h" />
     <ClInclude Include="mapTilePageRightButton.h" />
+    <ClInclude Include="objectControlViewer.h" />
     <ClInclude Include="saveLoadViewer.h" />
     <ClInclude Include="statsViewer.h" />
     <ClInclude Include="systemBase.h" />

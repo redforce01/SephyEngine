@@ -10,6 +10,7 @@ class ViewerSystem;
 #include "controlViewer.h"
 #include "statsViewer.h"
 #include "logViewer.h"
+#include "objectControlViewer.h"
 
 class MapSystem;
 class CameraSystem;
@@ -18,12 +19,13 @@ class ViewerSystem : public SystemBase
 private:
 	bool bUIMouseOver;
 
-	ResourceTreeViewer* m_pResTreeViewer;
-	MapTileViewer*		m_pMapTileViewer;
-	MinimapViewer*		m_pMinimapViewer;
-	ControlViewer*		m_pControlViewer;
-	StatsViewer*		m_pStatsViewer;
-	LogViewer*			m_pLogViewer;
+	ResourceTreeViewer*		m_pResTreeViewer;
+	MapTileViewer*			m_pMapTileViewer;
+	MinimapViewer*			m_pMinimapViewer;
+	ControlViewer*			m_pControlViewer;
+	StatsViewer*			m_pStatsViewer;
+	LogViewer*				m_pLogViewer;
+	ObjectControlViewer*	m_pObjectControlViewer;
 private:
 	// Other System Pointer
 	MapSystem* m_pMapSystem;
@@ -43,6 +45,7 @@ public:
 	void setMemoryLinkCameraSystem(CameraSystem* pCameraSystem)
 	{
 		m_pMinimapViewer->setMemoryLinkCameraSystem(pCameraSystem);
+		m_pStatsViewer->setMemoryLinkCameraSystem(pCameraSystem);
 	}
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
 	{

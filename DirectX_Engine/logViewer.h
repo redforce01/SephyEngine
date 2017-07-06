@@ -7,7 +7,7 @@ class LogViewer;
 
 namespace logViewerNS
 {
-	const UINT WIDTH = 400;					// width of treeViewer
+	const UINT WIDTH = 500;					// width of treeViewer
 	const UINT HEIGHT = 250;				// height of treeViewer
 	const UINT X = 405;						// Viewer location X
 	const UINT Y = WINSIZEY - HEIGHT - 5;	// Viewer location Y
@@ -27,6 +27,7 @@ private:
 	std::deque<std::string> m_arrLog;
 	RECT m_rcLogBox;
 	RECT m_rcTitle;
+
 public:
 	LogViewer();
 	~LogViewer();

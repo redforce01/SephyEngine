@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "control_ResetButton.h"
 #include "logViewer.h"
+#include "mapSystem.h"
 
 Control_ResetButton::Control_ResetButton()
 {
@@ -49,6 +50,5 @@ void Control_ResetButton::functionReset(void * obj)
 {
 	Control_ResetButton* pThis = (Control_ResetButton*)obj;
 	pThis->m_pInput->setMouseLButton(false);
-
-	MessageBox(g_hWndEngine, "ResetFunction Called", "Test", MB_OK);
+	pThis->m_pMapSystem->resetMap();
 }

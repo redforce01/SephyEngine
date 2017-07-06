@@ -48,7 +48,7 @@ void Control_SaveButton::render()
 
 void Control_SaveButton::functionSave(void * obj)
 {
-	Control_SaveButton* pThis = (Control_SaveButton*)obj;
+	Control_SaveButton* pThis = (Control_SaveButton*)obj;	
 	pThis->m_pInput->setMouseLButton(false);
 	pThis->m_pMapSystem->saveData();
 	pThis->m_pLogViewer->addLog("Map Save Called");

@@ -5,7 +5,7 @@
 LogViewer::LogViewer()
 {
 	m_rcLogBox = { 0, };
-
+	m_rcTitle = { 0, };
 }
 
 

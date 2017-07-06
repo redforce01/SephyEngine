@@ -247,6 +247,9 @@
     <Filter Include="GameCode\Maptool\Map\MapData">
       <UniqueIdentifier>{ce87e124-e7a0-43a3-826a-f27718ca3a0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\ObjectControlViewer">
+      <UniqueIdentifier>{f9ea07d1-89a0-4d0c-b800-0d2353c46742}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -512,6 +515,9 @@
     </ClCompile>
     <ClCompile Include="mapDataParser.cpp">
       <Filter>GameCode\Maptool\Map\MapData</Filter>
+    </ClCompile>
+    <ClCompile Include="objectControlViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -799,6 +805,9 @@
     </ClInclude>
     <ClInclude Include="mapDataParser.h">
       <Filter>GameCode\Maptool\Map\MapData</Filter>
+    </ClInclude>
+    <ClInclude Include="objectControlViewer.h">
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

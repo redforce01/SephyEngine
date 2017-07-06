@@ -34,11 +34,27 @@ bool MapTile::initialize(Graphics* g, UINT PID, std::string textureName, int sta
 void MapTile::update(float frameTime)
 {
 	Image::update(frameTime);
+
+	for (auto iter : m_vObject)
+	{
+		if (iter == nullptr)
+			continue;
+
+		iter->update(frameTime);
+	}
 }
 
 void MapTile::render()
 {
 	Image::draw();
+
+	for (auto iter : m_vObject)
+	{
+		if (iter == nullptr)
+			continue;
+
+		iter->render();
+	}
 }
 
 void MapTile::renderSketch()
