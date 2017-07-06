@@ -29,8 +29,9 @@ void Scene_MapTool::initialize(HWND hwnd)
 	viewerSystem->initialize(this);
 
 	// Each System Memory Link Connect
-	cameraSystem->setMemoryLinkMapSystem(mapSystem);
 	mapSystem->setMemoryLinkCameraSystem(cameraSystem);
+	mapSystem->setMemoryLinkLogViewer(viewerSystem->getLogViewer());
+	cameraSystem->setMemoryLinkMapSystem(mapSystem);
 	cameraSystem->setMemoryLinkMinimap(viewerSystem->getMinimapViewer());
 	viewerSystem->setMemoryLinkCameraSystem(cameraSystem);
 	viewerSystem->setMemoryLinkMapSystem(mapSystem);

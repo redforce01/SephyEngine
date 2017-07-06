@@ -69,6 +69,10 @@ public:
 	{
 		return m_pMinimapViewer;
 	}
+	inline LogViewer* getLogViewer() const
+	{
+		return m_pLogViewer;
+	}
 };
 
 #endif // !_VIEWERSYSTEM_H

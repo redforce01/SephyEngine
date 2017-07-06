@@ -10,10 +10,11 @@ class MapDataParser;
 
 namespace mapDataParserNS
 {
+	const std::string FILE_TITLE = "# Battle Map File Data";
 	const std::string LOAD_FILE_NAME = "battleMap.txt";
 	const std::string SAVE_FILE_NAME = "battleMap.txt";
-	const std::string MAP_TILE_IP = "MAP TILE NAME : ";
-	const std::string MAP_OBJECT_IP = "MAP OBJECT NAME : ";	
+	const std::string MAP_TILE_IP = "MAP TILE NAME :";
+	const std::string MAP_OBJECT_IP = "MAP OBJECT NAME :";	
 }
 
 class MapSystem;
@@ -35,10 +36,13 @@ private:
 public:
 	MapDataParser();
 	~MapDataParser();
+
+	// Set MapSystem Memory Link Function
+	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
+	{ m_pMapSystem = pMapSystem; }
 	// ===================================================
 	// Member Functions
 	// ===================================================
-	void recognizeData(std::vector<std::string> vArray);
 
 	// Save Functions
 	void saveData();											// Save Function
@@ -46,10 +50,11 @@ public:
 	static void SaveThreadFunc();								// For Save Thread Functions
 	
 	// Load Functions
-	std::vector<std::string> loadData();						// Load Function
-	static void LoadThreadFunc();								// For Load Thread Functions
+	void loadData();											// Load Function
 	std::vector<std::string> arraySeperation(char message[]);	// Array Seperator
-
+	void recognizeData(std::vector<std::string> vArray);		// Recognize Array Function
+	void mapSetup(std::vector<std::string> vData);				// Setup MapSystem MapTiles (using Recognized Data)
+	static void LoadThreadFunc();								// For Load Thread Functions
 
 	// ===================================================
 	// Setter Functions

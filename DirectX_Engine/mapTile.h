@@ -81,18 +81,14 @@ public:
 
 	inline bool changeTexture(std::string textureName)
 	{
+		if (m_strTextureName.compare(textureName) == 0)
+			return false;
+
 		if (IMAGEMANAGER->getTexture(textureName) == nullptr)
 			return false;
 
 		m_strTextureName = textureName;
-		return changeTile(IMAGEMANAGER->getTexture(textureName));
-	}
-
-	inline bool changeTile(TextureManager* texture)
-	{
-		if (texture == nullptr)
-			return false;
-		setTextureManager(texture);
+		setTextureManager(IMAGEMANAGER->getTexture(m_strTextureName));
 		return true;
 	}
 };

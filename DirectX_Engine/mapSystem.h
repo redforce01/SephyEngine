@@ -5,9 +5,10 @@ class MapSystem;
 
 #include <vector>
 #include <memory>
-#include "mapTile.h"
 #include "systemBase.h"
 #include "mapDataParser.h"
+#include "mapTile.h"
+#include "mapObject.h"
 
 namespace MapSystemNS
 {
@@ -25,19 +26,27 @@ enum class MAPTYPE
 	NONE,
 };
 
+class LogViewer;
 class MapTileData;
 class CameraSystem;
 class MapSystem : public SystemBase
 {
 private:
-	std::vector<MapTile*> m_arrTiles;
+	typedef std::vector<MapTile*> MAP_TILES;
+	typedef std::vector<MapObject*> MAP_OBJECTS;
+
+private:
+	MAP_TILES m_arrTiles;
 	std::vector<RECT> m_arrWorkableRECT;
 	MAPTYPE m_mapType;
 	bool m_bDebug;
 
-	CameraSystem* m_pCameraSystem;
 	MapTileData* m_pMapTileData;
 	MapDataParser* m_pMapDataParser;
+
+	// Forward Pointer
+	CameraSystem* m_pCameraSystem;
+	LogViewer* m_pLogViewer;
 public:
 	MapSystem();
 	~MapSystem();
@@ -81,14 +90,20 @@ public:
 	{
 		return m_bDebug;
 	}
-	std::vector<MapTile*> getAllTiles()
+	std::vector<MapTile*> getAllTiles() const
 	{
 		return m_arrTiles;
+	}
+	MapTile* getTile(int num) const
+	{
+		return m_arrTiles[num];
 	}
 	
 	// MemoryLink Functions
 	void setMemoryLinkCameraSystem(CameraSystem* pCamSys)
 	{ m_pCameraSystem = pCamSys; }
+	void setMemoryLinkLogViewer(LogViewer* pLogViewer)
+	{ m_pLogViewer = pLogViewer; }
 };
 
 #endif // !_MAPSYSTEM_H

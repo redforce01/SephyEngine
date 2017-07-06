@@ -10,6 +10,7 @@ MapDataParser::MapDataParser()
 
 	m_bLoading = false;
 	m_bCallFunction = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -17,58 +18,51 @@ MapDataParser::~MapDataParser()
 {
 }
 
-void MapDataParser::recognizeData(std::vector<std::string> vArray)
-{
-	for (auto iter : vArray)
-	{
-
-	}
-}
-
 void MapDataParser::saveData()
 {
 	m_bCallFunction = true;
 
 	std::vector<std::string> vArray;
-	int count = 0;
+	vArray.emplace_back(mapDataParserNS::FILE_TITLE);
+	vArray.emplace_back("\r\n");
+	//int count = 0;
 	for (auto iter : m_arrMapTile)
 	{
 		// TILE NUMBER COMBINE
 		std::string strNumber = "+";
-		strNumber += std::to_string(count);
-		count++;
+		//strNumber += std::to_string(count);
+		//count++;
 		vArray.emplace_back(strNumber);
-
+		vArray.emplace_back("\r\n");
 		// TILE TILE_NAME COMBINE
 		std::string strTile = "- ";
 		strTile += mapDataParserNS::MAP_TILE_IP;
 		std::string str = iter->getTextureName();
 		strTile += str;
 		vArray.emplace_back(strTile);
-
+		vArray.emplace_back("\r\n");
+		vArray.emplace_back("\r\n");
 		// TILE OBJECT_NAME COMBINE 
 		// Not Using....
 	}
 
-	HANDLE file;
-	char str[65536];
-	strncpy_s(str, arrayCombine(vArray).c_str(), 65536);
+	HANDLE file;	
+	std::string result;
+	result = arrayCombine(vArray);
+
 	DWORD write;
 	file = CreateFile(mapDataParserNS::SAVE_FILE_NAME.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	WriteFile(file, str, 65536, &write, NULL);
+	WriteFile(file, result.c_str(), result.size(), &write, NULL);
 	CloseHandle(file);
 }
 
 std::string MapDataParser::arrayCombine(std::vector<std::string> vArray)
 {
-	char str[65536];
-	ZeroMemory(str, sizeof(str));
-
+	std::string result;
 	for (auto iter : vArray)
 	{
-		strncat_s(str, 128, iter.c_str(), 126);
+		result += iter;
 	}
-	std::string result = str;
 	return result;
 }
 
@@ -78,26 +72,21 @@ void MapDataParser::SaveThreadFunc()
 	pMapDataParser->m_bLoading = false;
 }
 
-std::vector<std::string> MapDataParser::loadData()
+void MapDataParser::loadData()
 {
 	m_bCallFunction = true;
 	
 	const char* fileName = mapDataParserNS::LOAD_FILE_NAME.c_str();
 	HANDLE file;
-	char str[65536];
 	DWORD read;
+
+	char str[65536];
 	memset(str, 0, sizeof(str));
 	file = CreateFile(fileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	ReadFile(file, str, 65536, &read, NULL);
 	CloseHandle(file);
-
-	return arraySeperation(str);
-}
-
-void MapDataParser::LoadThreadFunc()
-{
-	pMapDataParser->m_bLoading = true;
-	pMapDataParser->m_bLoading = false;
+		
+	recognizeData(arraySeperation(str));
 }
 
 std::vector<std::string> MapDataParser::arraySeperation(char message[])
@@ -105,15 +94,48 @@ std::vector<std::string> MapDataParser::arraySeperation(char message[])
 	std::vector<std::string> vArray;
 
 	char* temp;
-	char* seperator = { "# \t\n\r+-" };
+	char* seperator = { "\t\r\n+-" };
 	char* token;
 
 	token = strtok_s(message, seperator, &temp);
 	vArray.emplace_back(token);
-	while (nullptr != (token = strtok_s(message, seperator, &temp)))
+	while (nullptr != (token = strtok_s(NULL, seperator, &temp)))
 	{
 		vArray.emplace_back(token);
 	}
 
 	return vArray;
+}
+
+void MapDataParser::recognizeData(std::vector<std::string> vArray)
+{
+	std::vector<std::string> vMapTiles;
+	for (auto iter : vArray)
+	{
+		if (iter.find(":") != std::string::npos)
+		{
+			int pos = iter.find(":");
+			vMapTiles.emplace_back(iter.substr(pos + 1));
+		}
+	}
+	
+	mapSetup(vMapTiles);
+}
+
+void MapDataParser::mapSetup(std::vector<std::string> vData)
+{
+	int count = 0;
+	auto vMapTiles = m_pMapSystem->getAllTiles();
+
+	for (auto iter : vData)
+	{
+		vMapTiles[count]->changeTexture(iter);
+		count++;
+	}
+}
+
+void MapDataParser::LoadThreadFunc()
+{
+	pMapDataParser->m_bLoading = true;
+	pMapDataParser->m_bLoading = false;
 }

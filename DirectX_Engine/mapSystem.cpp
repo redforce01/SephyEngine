@@ -2,13 +2,16 @@
 #include "mapSystem.h"
 #include "CameraSystem.h"
 #include "mapTileData.h"
+#include "logViewer.h"
 
 MapSystem::MapSystem()
 {
 	m_mapType = MAPTYPE::DIAMOND;
-	m_pCameraSystem = nullptr;
-	m_pMapTileData = nullptr;
 	m_bDebug = true;
+	m_pMapTileData = nullptr;
+	m_pMapDataParser = nullptr;
+	m_pCameraSystem = nullptr;
+	m_pLogViewer = nullptr;
 }
 
 
@@ -27,7 +30,7 @@ bool MapSystem::initialize(Game* gamePtr)
 	bool success = false;
 
 	m_pMapDataParser = new MapDataParser;
-
+	m_pMapDataParser->setMemoryLinkMapSystem(this);
 
 	int UIDCount = 0;
 	int mapX, mapY;
@@ -75,17 +78,27 @@ void MapSystem::update(float frameTime)
 				return;
 		}
 
+		int count = 0;
 		name = m_pMapTileData->getTileName();
 		for (auto iter : m_arrTiles)
 		{
 			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+			{
+				count++;
 				continue;
+			}
 
 			if (MyUtil::getIsometricIn(iter->getTileRect(), m_pInput->getMousePt()))
 			{
-				iter->changeTexture(name);
-				//iter->setTextureManager(IMAGEMANAGER->getTexture(name));
+				if (iter->changeTexture(name))
+				{
+					std::string log;
+					log = "Tile[" + std::to_string(count) + "] Texture Changed : " + name;
+					m_pLogViewer->addLog(log);
+				}
 			}
+
+			count++;
 		}
 	}
 
@@ -174,5 +187,4 @@ void MapSystem::saveData()
 void MapSystem::loadData()
 {
 	m_pMapDataParser->loadData();
-	m_arrTiles = m_pMapDataParser->getMapTiles();
 }
