@@ -24,6 +24,7 @@ protected:
 	float m_margin;
 	RECT m_rcBoundingBox;
 	bool m_bVisible;
+
 	// Vertex & Background
 	VertexC vtx[4];
 	LP_VERTEXBUFFER vertexBuffer;
@@ -31,6 +32,8 @@ protected:
 	COLOR_ARGB  backColor;              // background color (a,r,g,b)
 private:
 	bool m_bMouseOver;
+	bool m_bHasFocus;
+
 public:
 	SystemUIDialog();
 	virtual ~SystemUIDialog();
@@ -76,6 +79,10 @@ public:
 	{
 		m_bVisible = !m_bVisible;
 	}
+	void setOnFocus(bool b)
+	{
+		m_bHasFocus = b;
+	}
 	//=====================================
 	// Getter Functions
 	//=====================================
@@ -114,6 +121,10 @@ public:
 	RECT getDialogRECT() const
 	{
 		return m_rcBoundingBox;
+	}
+	bool getOnFocus() const
+	{
+		return m_bHasFocus;
 	}
 };
 

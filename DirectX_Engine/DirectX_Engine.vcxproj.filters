@@ -244,11 +244,14 @@
     <Filter Include="GameCode\Maptool\Viewer\SaveLoadViewer">
       <UniqueIdentifier>{f141cd17-abb3-4f50-a69c-df2b5d89b249}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Maptool\Map\MapData">
-      <UniqueIdentifier>{ce87e124-e7a0-43a3-826a-f27718ca3a0b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Maptool\Viewer\ObjectControlViewer">
       <UniqueIdentifier>{f9ea07d1-89a0-4d0c-b800-0d2353c46742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle">
+      <UniqueIdentifier>{efdbc383-af28-48a7-9546-050118df59e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Map\MapDataParser">
+      <UniqueIdentifier>{ce87e124-e7a0-43a3-826a-f27718ca3a0b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -514,9 +517,24 @@
       <Filter>GameCode\Maptool\Map\Object</Filter>
     </ClCompile>
     <ClCompile Include="mapDataParser.cpp">
-      <Filter>GameCode\Maptool\Map\MapData</Filter>
+      <Filter>GameCode\Maptool\Map\MapDataParser</Filter>
     </ClCompile>
     <ClCompile Include="objectControlViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="systemUIEdit.cpp">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="tileViewButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="objectViewButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="freePositionButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="makeObjectButton.cpp">
       <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -804,13 +822,25 @@
       <Filter>GameCode\Maptool\Map\Object</Filter>
     </ClInclude>
     <ClInclude Include="mapDataParser.h">
-      <Filter>GameCode\Maptool\Map\MapData</Filter>
+      <Filter>GameCode\Maptool\Map\MapDataParser</Filter>
     </ClInclude>
     <ClInclude Include="objectControlViewer.h">
       <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <ClInclude Include="systemUIEdit.h">
+      <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="tileViewButton.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="objectViewButton.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="freePositionButton.h">
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="makeObjectButton.h">
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

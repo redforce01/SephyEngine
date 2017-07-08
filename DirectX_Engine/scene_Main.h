@@ -17,6 +17,12 @@ namespace mainNS
 
 class scene_Main : public Game
 {
+private:
+
+	Image* m_pTestShipTop;
+	Image* m_pTestShipBody;
+	Image* m_pTestShipBottom;
+
 public:
 	scene_Main();
 	~scene_Main();

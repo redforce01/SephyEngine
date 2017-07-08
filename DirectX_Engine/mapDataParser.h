@@ -3,6 +3,7 @@
 
 class MapDataParser;
 
+#include <fstream>
 #include <thread>
 #include "mapSystem.h"
 #include "mapTile.h"

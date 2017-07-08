@@ -8,16 +8,25 @@ MapTileViewer::MapTileViewer()
 {
 	fontColor = mapTileViewerNS::FONT_COLOR;
 	backColor = mapTileViewerNS::BACK_COLOR;
-	m_nViewPage = 0;
-	m_nMaxPage = 0;
-	m_pSelectData = nullptr;
-	m_pMapSystem = nullptr;
-	m_pObjectControlViewer = nullptr;
+
+	m_nTileViewPage			= 0;
+	m_nTileViewMaxPage		= 0;
+	m_nObjectViewPage		= 0;
+	m_nObjectViewMaxPage	= 0;
+	m_pSelectData			= nullptr;
+	m_pMapSystem			= nullptr;
+	m_pObjectControlViewer	= nullptr;
+	m_viewType = MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE;
 }
 
 
 MapTileViewer::~MapTileViewer()
 {
+	for (auto iter : m_arrTiles)
+	{
+		SAFE_DELETE(iter);
+	}
+	m_arrTiles.clear();
 	for (auto iter : m_arrObjects)
 	{
 		SAFE_DELETE(iter);
@@ -26,6 +35,8 @@ MapTileViewer::~MapTileViewer()
 
 	SAFE_DELETE(m_pLeftButton);
 	SAFE_DELETE(m_pRightButton);
+	SAFE_DELETE(m_pObjectViewButton);
+	SAFE_DELETE(m_pTileViewButton);
 }
 
 bool MapTileViewer::initialize(Graphics * g, Input * i)
@@ -43,8 +54,9 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 		m_rcPageTextBox = RectMake(mapTileViewerNS::X + mapTileViewerNS::PAGE_TEXT_BOX_POS_X, mapTileViewerNS::HEIGHT - mapTileViewerNS::PAGE_TEXT_BOX_POS_Y,
 			mapTileViewerNS::WIDTH - (mapTileViewerNS::MARGIN * 2), mapTileViewerNS::FONT_HEIGHT);
 		
-
-		auto arrImages = FILEMANAGER->getFileListInFolder(mapTileViewerNS::TILE_FOLDER);
+		// ===========================================
+		// Initialize TILE Images For Tile View - Start
+		auto arrTileImages = FILEMANAGER->getFileListInFolder(mapTileViewerNS::TILE_FOLDER);
 
 		int startX, startY;
 		startX = startY = 0;
@@ -53,10 +65,49 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 		startY = this->getDialogY() + this->getDialogMargin();
 
 		int arrCount = 0;
-		for (auto iter : *arrImages)
+		for (auto iter : *arrTileImages)
 		{
 			MapTileData* newData = new MapTileData;
 			newData->initialize(g, iter->fileName, startX, startY);
+			startX += mapTileViewerNS::BASIC_TILE_WIDTH;
+			if (arrCount % 3 == 0 && arrCount != 0)
+			{
+				startX = this->getDialogX() + this->getDialogMargin();
+				startY += mapTileViewerNS::BASIC_TILE_HEIGHT;
+			}
+
+			arrCount++;
+			m_arrTiles.emplace_back(newData);
+
+			if (arrCount % mapTileViewerNS::VIEWER_PAGE_ITEM_MAX == 0 && arrCount != 0)
+			{
+				startX = this->getDialogX() + this->getDialogMargin();
+				startY = this->getDialogY() + this->getDialogMargin();
+			}
+
+			if (arrCount >= mapTileViewerNS::VIEWER_PAGE_ITEM_MAX)
+			{
+				m_nTileViewMaxPage++;
+				arrCount = 0;
+			}
+		}
+		// Initialize Images For Tile View - End
+		// ===========================================
+
+		// ===========================================
+		// Initialize OBJECT Images For Tile View - Start
+		auto arrObjectImages = FILEMANAGER->getFileListInFolder(mapTileViewerNS::OBJECT_FOLDER);
+		startX = startY = 0;
+
+		startX = this->getDialogX() + this->getDialogMargin();
+		startY = this->getDialogY() + this->getDialogMargin();
+
+		arrCount = 0;
+		for (auto iter : *arrObjectImages)
+		{
+			MapTileData* newData = new MapTileData;
+			newData->initialize(g, iter->fileName, startX, startY);
+			newData->setObjectable(true);
 			startX += mapTileViewerNS::BASIC_TILE_WIDTH;
 			if (arrCount % 3 == 0 && arrCount != 0)
 			{
@@ -75,14 +126,16 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 
 			if (arrCount >= mapTileViewerNS::VIEWER_PAGE_ITEM_MAX)
 			{
-				m_nMaxPage++;
+				m_nObjectViewMaxPage++;
 				arrCount = 0;
 			}
-
 		}
+		// Initialize Images For OBJECT View - End
+		// ===========================================
 
 		int halfWidth = this->getDialogWidth() / 2;
 		int dialogBottom = this->getDialogRECT().bottom;
+		int dialogRight = this->getDialogRECT().right;
 
 		m_pLeftButton = new MapTilePageLeftButton;
 		m_pLeftButton->initialize(g, i, mapTileViewerNS::LEFT_BUTTON_ID, this,
@@ -100,6 +153,21 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 			mapTileViewerNS::MARGIN);
 		m_pRightButton->setMemoryLinkMapTileViewer(this);
 
+		m_pObjectViewButton = new ObjectViewButton;
+		m_pObjectViewButton->initialize(g, i, mapTileViewerNS::OBJECT_VIEW_BUTTON_ID, this,
+			mapTileViewerNS::OBJECT_VIEW_BUTTON_X,
+			mapTileViewerNS::OBJECT_VIEW_BUTTON_Y,
+			mapTileViewerNS::VIEW_BUTTON_WIDTH, mapTileViewerNS::VIEW_BUTTON_HEIGHT,
+			mapTileViewerNS::VIEW_BUTTON_MARGIN);
+		m_pObjectViewButton->setMemoryLinkMapTileViewer(this);
+
+		m_pTileViewButton = new TileViewButton;
+		m_pTileViewButton->initialize(g, i, mapTileViewerNS::TILE_VIEW_BUTTON_ID, this,
+			mapTileViewerNS::TILE_VIEW_BUTTON_X,
+			mapTileViewerNS::TILE_VIEW_BUTTON_Y,
+			mapTileViewerNS::VIEW_BUTTON_WIDTH, mapTileViewerNS::VIEW_BUTTON_HEIGHT,
+			mapTileViewerNS::VIEW_BUTTON_MARGIN);
+		m_pTileViewButton->setMemoryLinkMapTileViewer(this);
 	}
 	catch (...)
 	{
@@ -118,31 +186,62 @@ void MapTileViewer::update(float frameTime)
 
 	if (m_pInput->getMouseLButton())
 	{
-		int arrCount = 0;
-		int pageItemStart = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * m_nViewPage;
-		int pageItemEnd = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * (m_nViewPage + 1);
-
-		for (auto iter : m_arrObjects)
+		if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE)
 		{
-			if (arrCount >= pageItemStart && arrCount < pageItemEnd)
+			int arrCount = 0;
+			int pageItemStart = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * m_nTileViewPage;
+			int pageItemEnd = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * (m_nTileViewPage + 1);
+
+			for (auto iter : m_arrTiles)
 			{
-				if (PtInRect(&iter->getTileDataRECT(), m_pInput->getMousePt()))
+				if (arrCount >= pageItemStart && arrCount < pageItemEnd)
 				{
-					iter->setSelected(true);
-					m_pSelectData = iter;
-					m_pMapSystem->setMapTileData(m_pSelectData);
-					m_pObjectControlViewer->setSelectObjectData(m_pSelectData);
-					m_pInput->setMouseLButton(false);
+					if (PtInRect(&iter->getTileDataRECT(), m_pInput->getMousePt()))
+					{
+						iter->setSelected(true);
+						m_pSelectData = iter;
+						m_pSelectData->setObjectable(false);
+						m_pMapSystem->setMapTileData(m_pSelectData);
+						m_pObjectControlViewer->setSelectObjectData(m_pSelectData);
+						m_pInput->setMouseLButton(false);
+					}
+					else
+						iter->setSelected(false);
 				}
-				else
-					iter->setSelected(false);
+				arrCount++;
 			}
-			arrCount++;
+		}
+		else if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_OBJECT)
+		{
+			int arrCount = 0;
+			int pageItemStart = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * m_nObjectViewPage;
+			int pageItemEnd = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * (m_nObjectViewPage + 1);
+
+			for (auto iter : m_arrObjects)
+			{
+				if (arrCount >= pageItemStart && arrCount < pageItemEnd)
+				{
+					if (PtInRect(&iter->getTileDataRECT(), m_pInput->getMousePt()))
+					{
+						iter->setSelected(true);
+						m_pSelectData = iter;
+						m_pSelectData->setObjectable(true);
+						m_pMapSystem->setMapTileData(m_pSelectData);
+						m_pObjectControlViewer->setSelectObjectData(m_pSelectData);
+						m_pInput->setMouseLButton(false);
+					}
+					else
+						iter->setSelected(false);
+				}
+				arrCount++;
+			}
 		}
 	}
 	
 	m_pLeftButton->update(frameTime);
 	m_pRightButton->update(frameTime);
+	m_pObjectViewButton->update(frameTime);
+	m_pTileViewButton->update(frameTime);
 }
 
 void MapTileViewer::render()
@@ -152,30 +251,60 @@ void MapTileViewer::render()
 
 	SystemUIDialog::render();
 	
-	int arrCount = 0;
-	int pageItemStart = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * m_nViewPage;
-	int pageItemEnd = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * (m_nViewPage + 1);
 	
-	for (auto iter : m_arrObjects)
+	if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE)
 	{
-		if(arrCount >= pageItemStart && arrCount < pageItemEnd)
-			iter->draw();
-		arrCount++;
+		int arrCount = 0;
+		int pageItemStart = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * m_nTileViewPage;
+		int pageItemEnd = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * (m_nTileViewPage + 1);
+
+		for (auto iter : m_arrTiles)
+		{
+			if(arrCount >= pageItemStart && arrCount < pageItemEnd)
+				iter->draw();
+			arrCount++;
+		}
+	}
+	else if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_OBJECT)
+	{
+		int arrCount = 0;
+		int pageItemStart = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * m_nObjectViewPage;
+		int pageItemEnd = mapTileViewerNS::VIEWER_PAGE_ITEM_MAX * (m_nObjectViewPage + 1);
+
+		for (auto iter : m_arrObjects)
+		{
+			if (arrCount >= pageItemStart && arrCount < pageItemEnd)
+				iter->draw();
+			arrCount++;
+		}
 	}
 
 	// Button Render
 	m_pLeftButton->render();
 	m_pRightButton->render();
-	
+	m_pObjectViewButton->render();
+	m_pTileViewButton->render();
+
 	// Page Number Draw
 	m_pGraphics->spriteBegin();
-	
-	std::string strPage = mapTileViewerNS::PAGE_NUMBER;
-	strPage += std::to_string(m_nViewPage);
-	strPage += " /";
-	strPage += std::to_string(m_nMaxPage);
-	m_dxFont.print(strPage, m_rcPageTextBox, DT_LEFT);
 
+	if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE)
+	{
+		std::string strPage = mapTileViewerNS::PAGE_NUMBER;
+		strPage += std::to_string(m_nTileViewPage);
+		strPage += " /";
+		strPage += std::to_string(m_nTileViewMaxPage);
+		m_dxFont.print(strPage, m_rcPageTextBox, DT_LEFT);
+	}
+	else if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_OBJECT)
+	{
+		std::string strPage = mapTileViewerNS::PAGE_NUMBER;
+		strPage += std::to_string(m_nObjectViewPage);
+		strPage += " /";
+		strPage += std::to_string(m_nObjectViewMaxPage);
+		m_dxFont.print(strPage, m_rcPageTextBox, DT_LEFT);
+	}
+	
 	m_pGraphics->spriteEnd();
 
 }

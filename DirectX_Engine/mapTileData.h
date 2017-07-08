@@ -8,8 +8,8 @@ class MapTileData;
 
 namespace mapTileDataNS
 {
-	const UINT WIDTH = 128;
-	const UINT HEIGHT = 64;
+	const UINT TILE_WIDTH = 128;
+	const UINT TILE_HEIGHT = 64;
 }
 
 class MapTileData : public Image
@@ -18,9 +18,10 @@ private:
 	Graphics*	m_pGraphics;
 	std::string m_strName;
 	float		m_x, m_y;
+	float		m_width, m_height;
 	RECT		m_rcImage;
-
 	bool		m_bSelected;
+	bool		m_bObjectable;
 public:
 	MapTileData();
 	~MapTileData();
@@ -35,6 +36,10 @@ public:
 	{
 		m_bSelected = b;
 	}
+	void setObjectable(bool b)
+	{
+		m_bObjectable = b;
+	}
 
 	// ===========================================
 	// Getter Functions 
@@ -46,6 +51,10 @@ public:
 	RECT getTileDataRECT() const
 	{
 		return m_rcImage;
+	}
+	bool getObjectable() const
+	{
+		return m_bObjectable;
 	}
 };
 

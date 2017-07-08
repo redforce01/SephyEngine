@@ -33,7 +33,7 @@
 //-----------------------------------------
 // 전처리용 #define 문
 //-----------------------------------------
-#define WINSIZEX 1900
+#define WINSIZEX 1920
 #define WINSIZEY 1000
 #define STARTX 1921
 #define STARTY 0

@@ -17,8 +17,11 @@ class CameraSystem;
 class ViewerSystem : public SystemBase
 {
 private:
-	bool bUIMouseOver;
+	bool m_bUIMouseOver;
+	bool m_bUIHasFocus;
 
+	// Each Viewer Pointer
+private:
 	ResourceTreeViewer*		m_pResTreeViewer;
 	MapTileViewer*			m_pMapTileViewer;
 	MinimapViewer*			m_pMinimapViewer;
@@ -39,9 +42,10 @@ public:
 	virtual void render();
 
 	bool checkMouseOver();
-	//=========================================
+	bool checkViewerFocus();
+	// =========================================
 	// Set Momory Linker Connect Functions
-	//=========================================
+	// =========================================
 	void setMemoryLinkCameraSystem(CameraSystem* pCameraSystem)
 	{
 		m_pMinimapViewer->setMemoryLinkCameraSystem(pCameraSystem);
@@ -53,13 +57,21 @@ public:
 		m_pMapTileViewer->setMemoryLinkMapSystem(pMapSystem);
 		m_pControlViewer->setMemoryLinkMapSystem(pMapSystem);
 	}
-	//=========================================
+	// =========================================
 	// Getter Functions
-	//=========================================
+	// =========================================
 	inline bool getUIMouseOver() const
 	{
-		return bUIMouseOver;
+		return m_bUIMouseOver;
 	}
+	inline bool getUIHasFocus() const
+	{
+		return m_bUIHasFocus;
+	}
+
+	// =========================================
+	// Getter : Each Viewer Pointer
+	// =========================================
 	inline ResourceTreeViewer* getResTreeViewer() const
 	{
 		return m_pResTreeViewer;

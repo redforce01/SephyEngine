@@ -34,8 +34,10 @@ public:
 		int x, int y, int w, int h, int m);
 	virtual bool initButton(Graphics* g, Input* i, int controlID, CALLBACK_FUNCTION_PARAMETER cbfParam, void* obj, SystemUIDialog* pParent,
 		int x, int y, int w, int h, int m);
-	virtual void update(float frameTime);
-	virtual void render();
+
+	virtual bool initialize(Graphics* g, Input* i, int controlID, SystemUIDialog* pDialog, int x, int y, int w, int h, int m) PURE;
+	virtual void update(float frameTime) override;
+	virtual void render() override;
 
 public:
 	void SetMessage(std::string message)
@@ -44,6 +46,11 @@ public:
 		m_bHasMessage = true;
 	}
 	void SetIcon(Image* icon);
+
+	Image* GetIcon() const
+	{
+		return m_pIcon;
+	}
 };
 
 #endif // !_SYSTEMUIBUTTON_H

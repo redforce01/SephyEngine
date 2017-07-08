@@ -117,6 +117,10 @@ public:
 	{
 		m_nHotkey = nHotKey;
 	}
+	void SetFocus(bool b)
+	{
+		m_bHasFocus = b;
+	}
 	// =================================================================
 	// Getter Functions
 	// =================================================================
@@ -144,9 +148,17 @@ public:
 	{
 		return m_nControlID;
 	}
-	UINT GetHotKey()
+	UINT GetHotKey() const
 	{
 		return m_nHotkey;
+	}
+	bool GetFocus() const
+	{
+		return m_bHasFocus;
+	}
+	RECT GetControlRECT() const
+	{
+		return m_rcBoundingBox;
 	}
 	// =================================================================
 	// Virtual Functions
@@ -172,19 +184,27 @@ public:
 	{
 		return PtInRect(&m_rcBoundingBox, pt);
 	}
+
+	// =================================================================
+	// Virtual Setter Functions
+	// =================================================================
 	virtual void SetEnabled(bool bEnabled)
 	{
 		m_bEnabled = bEnabled;
-	}
-	virtual bool GetEnabled()
-	{
-		return m_bEnabled;
 	}
 	virtual void SetVisible(bool bVisible)
 	{
 		m_bVisible = bVisible;
 	}
-	virtual bool GetVisible()
+
+	// =================================================================
+	// Virtual Getter Functions
+	// =================================================================
+	virtual bool GetEnabled() const
+	{
+		return m_bEnabled;
+	}
+	virtual bool GetVisible() const
 	{
 		return m_bVisible;
 	}

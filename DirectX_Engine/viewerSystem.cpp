@@ -4,7 +4,9 @@
 
 ViewerSystem::ViewerSystem()
 {
-	bUIMouseOver = false;
+	m_bUIMouseOver = false;
+	m_bUIHasFocus = false;
+
 	//m_pResTreeViewer = nullptr;
 	m_pMapTileViewer = nullptr;
 	m_pMinimapViewer = nullptr;
@@ -40,10 +42,7 @@ bool ViewerSystem::initialize(Game * gamePtr)
 		m_pMapTileViewer = new MapTileViewer;
 		m_pMapTileViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		m_pMinimapViewer = new MinimapViewer;
-		m_pMinimapViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
-		m_pMinimapViewer->setMapWidth(128 * 128);
-		m_pMinimapViewer->setMapHeight(64 * 128);
-		m_pMinimapViewer->setIsoMetric(true);
+		m_pMinimapViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());		
 		m_pControlViewer = new ControlViewer;
 		m_pControlViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		m_pStatsViewer = new StatsViewer;
@@ -59,6 +58,7 @@ bool ViewerSystem::initialize(Game * gamePtr)
 		m_pControlViewer->setMemoryLinkStatsViewer(m_pStatsViewer);
 		m_pControlViewer->setMemoryLinkLogViewer(m_pLogViewer);
 		m_pMapTileViewer->setMemoryLinkObjectControlViewer(m_pObjectControlViewer);
+		m_pObjectControlViewer->setMemoryLinkMapTileViewer(m_pMapTileViewer);
 		success = true;
 	}
 	catch (...)
@@ -91,9 +91,14 @@ void ViewerSystem::update(float frameTime)
 	m_pObjectControlViewer->update(frameTime);
 
 	if (checkMouseOver())
-		bUIMouseOver = true;
+		m_bUIMouseOver = true;
 	else
-		bUIMouseOver = false;
+		m_bUIMouseOver = false;
+
+	if (checkViewerFocus())
+		m_bUIHasFocus = true;
+	else
+		m_bUIHasFocus = false;
 }
 
 void ViewerSystem::render()
@@ -120,5 +125,20 @@ bool ViewerSystem::checkMouseOver()
 		return true;
 	}
 	
+	return false;
+}
+
+bool ViewerSystem::checkViewerFocus()
+{
+	if (m_pMapTileViewer->getOnFocus()
+		|| m_pMinimapViewer->getOnFocus()
+		|| m_pControlViewer->getOnFocus()
+		|| m_pStatsViewer->getOnFocus()
+		|| m_pLogViewer->getOnFocus()
+		|| m_pObjectControlViewer->getOnFocus())
+	{
+		return true;
+	}
+
 	return false;
 }

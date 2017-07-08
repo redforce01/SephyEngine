@@ -167,7 +167,7 @@ bool EngineSystem::CreateMainWindow(HWND &hWnd, HINSTANCE hInstance, int nCmdSho
 	//set up the screen in windowed or fullscreen mode?
 	DWORD style;
 	if (FULLSCREEN)
-		style = WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP;
+		style = WS_EX_TOPMOST | WS_POPUP;
 	else
 		style = WS_OVERLAPPEDWINDOW;
 	

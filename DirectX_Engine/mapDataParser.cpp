@@ -42,8 +42,10 @@ void MapDataParser::saveData()
 		vArray.emplace_back(strTile);
 		vArray.emplace_back("\r\n");
 		vArray.emplace_back("\r\n");
+
 		// TILE OBJECT_NAME COMBINE 
 		// Not Using....
+		// To do...
 	}
 
 	HANDLE file;	
@@ -54,6 +56,18 @@ void MapDataParser::saveData()
 	file = CreateFile(mapDataParserNS::SAVE_FILE_NAME.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	WriteFile(file, result.c_str(), result.size(), &write, NULL);
 	CloseHandle(file);
+
+
+	//// =====================================
+	//// Not Using...Mkaing..
+	//std::string filePath = mapDataParserNS::SAVE_FILE_NAME;
+	//std::ofstream writeFile(filePath.data());
+	//if (writeFile.is_open())
+	//{
+	//	writeFile << result;
+	//	writeFile.close();
+	//}
+	//// =====================================
 }
 
 std::string MapDataParser::arrayCombine(std::vector<std::string> vArray)
@@ -79,12 +93,27 @@ void MapDataParser::loadData()
 	const char* fileName = mapDataParserNS::LOAD_FILE_NAME.c_str();
 	HANDLE file;
 	DWORD read;
-
 	char str[65536];
 	memset(str, 0, sizeof(str));
 	file = CreateFile(fileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	ReadFile(file, str, 65536, &read, NULL);
 	CloseHandle(file);
+
+	//// =====================================
+	//// Not Using....Making..
+	//std::vector<std::string> vArray;
+	//std::string filePath = mapDataParserNS::LOAD_FILE_NAME;
+	//std::ifstream openFile(filePath.data());
+	//if (openFile.is_open())
+	//{
+	//	std::string line;
+	//	while (std::getline(openFile, line))
+	//	{
+	//		vArray.emplace_back(line);
+	//	}
+	//	openFile.close();
+	//}
+	//// =====================================
 		
 	recognizeData(arraySeperation(str));
 }

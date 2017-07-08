@@ -67,7 +67,7 @@ public:
 	}
 	// Draw This Tile Object's Border
 	// ( Square / Isometric / Circle )
-	void renderSketch();
+	void renderSketch(COLOR_ARGB color = graphicsNS::WHITE);
 
 	// Move Tile & Object RECT with Camera Move Horizontal
 	inline void moveRectWidth(int distance)
@@ -110,6 +110,10 @@ public:
 	std::string getTextureName() const
 	{
 		return m_strTextureName;
+	}
+	int getPID() const
+	{
+		return m_Number;
 	}
 	// ================================================
 	// Setter Functions

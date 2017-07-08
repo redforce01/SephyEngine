@@ -57,18 +57,18 @@ void MapTile::render()
 	}
 }
 
-void MapTile::renderSketch()
+void MapTile::renderSketch(COLOR_ARGB color)
 {
 	if (m_Feature == TILEFEATURE::FEATULRE_SQUARE || m_Feature == TILEFEATURE::FEATULRE_UNKNOWN)
 	{
-		Image::drawRect();
+		Image::drawRect(color);
 	}
 	else if (m_Feature == TILEFEATURE::FEATULRE_ISOMETRIC)
 	{
-		Image::drawIsometric();
+		Image::drawIsometric(color);
 	}
 	else if (m_Feature == TILEFEATURE::FEATULRE_CIRCLE)
 	{
-		Image::drawCircle();
+		Image::drawCircle(color);
 	}
 }

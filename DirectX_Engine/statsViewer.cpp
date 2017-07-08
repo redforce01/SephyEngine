@@ -32,8 +32,8 @@ void StatsViewer::update(float frameTime)
 		
 	static float worldSec;
 	worldSec += frameTime;
-	std::string deltaTime = "deltaTime : " + std::to_string(worldSec);
-	std::string worldTime = "worldTime : " + std::to_string(frameTime);
+	std::string deltaTime = "deltaTime : " + std::to_string(frameTime);
+	std::string worldTime = "worldTime : " + std::to_string(worldSec);
 	std::string fps = "fps : " + std::to_string(m_pGame->getFPS());
 
 	int mouseX = m_pGame->getInput()->getMouseX();

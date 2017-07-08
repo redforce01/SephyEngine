@@ -83,14 +83,20 @@ void SystemUIControl::update(float frameTime)
 	if (m_State == SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_HIDDEN ||
 		m_State == SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_DISABLED)
 		return;
-
+	
 	if (ContainsPoint(m_pInput->getMousePt()))
 		if (m_pInput->getMouseLButton())
+		{
 			m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_PRESSED;
+		}
 		else
+		{
 			m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_MOUSEOVER;
+		}
 	else
+	{
 		m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_NORMAL;
+	}
 }
 
 void SystemUIControl::render()

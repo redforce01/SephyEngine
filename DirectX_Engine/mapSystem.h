@@ -9,14 +9,16 @@ class MapSystem;
 #include "mapDataParser.h"
 #include "mapTile.h"
 
-namespace MapSystemNS
+namespace mapSystemNS
 {
 	const UINT mapSizeX = 128;
 	const UINT mapSizeY = 128;
 	const UINT tileBasicWidth = 128;
 	const UINT tileBasicHeight = 64;
 
-	const std::string BASIC_TILE = "isoBasicC";
+	const std::string BASIC_TILE_A = "A_isoBasicA";
+	const std::string BASIC_TILE_B = "A_isoBasicB";
+	const std::string BASIC_TILE_C = "A_isoBasicC";
 }
 
 enum class MAPTYPE
@@ -63,21 +65,28 @@ public:
 	void scaleUp();
 	void scaleDown();
 
+	// All Tile Reset to Basic Tiles
 	void resetMap()
 	{
 		for (auto iter : m_arrTiles)
 		{
-			iter->changeTexture(MapSystemNS::BASIC_TILE);
+			iter->changeTexture(mapSystemNS::BASIC_TILE_A);
 		}
 	}
-	
+
+	void changeClickedTile();
+	void changeClickedObject();
+
+	// Add UI Dialog Viewer RECT For Blocking Mouse Click on Dialog
 	void addWorkRECT(RECT rc)
 	{
 		m_arrWorkableRECT.emplace_back(rc);
 	}
-	MapTile* selectTile(int number);
 
+	// All Tile Data Save Function
 	void saveData();
+
+	// All Tile Data Load Function
 	void loadData();
 	// ============================================
 	// Setter Functions
@@ -98,6 +107,7 @@ public:
 	{
 		return m_bDebug;
 	}
+	MapTile* getTile(int number);
 	std::vector<MapTile*> getAllTiles() const
 	{
 		return m_arrTiles;

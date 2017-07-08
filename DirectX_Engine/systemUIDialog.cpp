@@ -4,16 +4,19 @@
 
 SystemUIDialog::SystemUIDialog()
 {
+	fontColor = systemUIDialogNS::basicFontColor;
+	backColor = systemUIDialogNS::basicBackColor;
+
 	m_pGraphics = nullptr;
 	m_pInput = nullptr;
 	m_x = m_y = 0;
 	m_width = m_height = 0;
 	m_margin = 0;
 	m_rcBoundingBox = RectMake(0, 0, 0, 0);
-	fontColor = systemUIDialogNS::basicFontColor;
-	backColor = systemUIDialogNS::basicBackColor;
-	m_bMouseOver = false;
 	m_bVisible = true;
+
+	m_bMouseOver = false;
+	m_bHasFocus = false;
 }
 
 
@@ -53,14 +56,17 @@ void SystemUIDialog::update(float frameTime)
 	if (m_bVisible == false)
 		return;
 
-	if (m_pInput->getMouseLButton())
+	if (PtInRect(&m_rcBoundingBox, m_pInput->getMousePt()))
+		m_bMouseOver = true;
+	else
+		m_bMouseOver = false;
+
+	if (m_pInput->getMouseLButton() || m_pInput->getMouseRButton())
 	{
-		if (PtInRect(&m_rcBoundingBox, PointMake(m_pInput->getMouseX(), m_pInput->getMouseY())))
-		{
-			m_bMouseOver = true;
-		}
+		if (PtInRect(&m_rcBoundingBox, m_pInput->getMousePt()))
+			m_bHasFocus = true;
 		else
-			m_bMouseOver = false;
+			m_bHasFocus = false;
 	}
 }
 

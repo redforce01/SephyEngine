@@ -8,6 +8,8 @@ class MapTileViewer;
 #include "mapTileData.h"
 #include "mapTilePageLeftButton.h"
 #include "mapTilePageRightButton.h"
+#include "objectViewButton.h"
+#include "tileViewButton.h"
 
 namespace mapTileViewerNS
 {
@@ -22,44 +24,81 @@ namespace mapTileViewerNS
 	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);    // backdrop color
 
 	const std::string TILE_FOLDER = "22_Tile";
+	const std::string OBJECT_FOLDER = "23_Object";
 	const UINT BASIC_TILE_WIDTH = 128;
 	const UINT BASIC_TILE_HEIGHT = 64;
 	const UINT VIEWER_PAGE_ITEM_MAX = 31;
 
+	// Each Buttons Would be set Using reverse Pos (Standard Height)
+	// ex) PAGE_BUTTON_HEIGHT_POS = 50 : mean -> Dialog.Bottom - 50  (vertical)
+	// ex2) PAGE_BUTTON_X = 10 : mean -> Dialog.centerX +- 10 (horizontal) by programmer
+	// =====================================
+	// PAGE BUTTON NAMESPACE - Start
 	const int LEFT_BUTTON_ID = 100;
 	const UINT LEFT_BUTTON_X = 10;
-	const UINT LEFT_BUTTON_Y = 10;
-
+	const UINT LEFT_BUTTON_Y = 10;			// Not Using Y Pos
 	const int RIGHT_BUTTON_ID = 101;
 	const UINT RIGHT_BUTTON_X = 20;
-	const UINT RIGHT_BUTTON_Y = 20;
+	const UINT RIGHT_BUTTON_Y = 20;			// Not Using Y Pos
 	const UINT PAGE_BUTTON_SIZE = 30;
 	const UINT PAGE_BUTTON_MARGIN = 0;
 	const UINT PAGE_BUTTON_HEIGHT_POS = 50;
+	// PAGE BUTTON NAMESPACE - End
+	// =====================================
 
+	// Print Page Count
 	const std::string PAGE_NUMBER = "Page:";
 	const UINT PAGE_TEXT_BOX_POS_X = 20;
 	const UINT PAGE_TEXT_BOX_POS_Y = 40;
+
+	// =====================================
+	// VIEW BUTTON NAMESPACE - Start
+	const UINT VIEW_BUTTON_WIDTH = 40;
+	const UINT VIEW_BUTTON_HEIGHT = 40;
+	const UINT VIEW_BUTTON_MARGIN = 5;
+	const UINT OBJECT_VIEW_BUTTON_ID = 102;
+	const UINT OBJECT_VIEW_BUTTON_X = WIDTH - 70;
+	const UINT OBJECT_VIEW_BUTTON_Y = HEIGHT - 55;
+	const UINT TILE_VIEW_BUTTON_ID = 103;
+	const UINT TILE_VIEW_BUTTON_X = WIDTH - 110;
+	const UINT TILE_VIEW_BUTTON_Y = HEIGHT - 55;
+	// VIEW BUTTON NAMESPACE - End
+	// =====================================
 }
+
+enum class MAPTILEVIEWER_VIEW_TYPE
+{
+	VIEW_MAP_TILE, VIEW_MAP_OBJECT
+};
+
 
 class ObjectControlViewer;
 class MapSystem;
 class MapTileViewer : public SystemUIDialog
 {
 private:
-	int m_nViewPage;
-	int m_nMaxPage;
+	int m_nTileViewPage;
+	int m_nTileViewMaxPage;
+	int m_nObjectViewPage;
+	int m_nObjectViewMaxPage;
+
+	std::vector<MapTileData*> m_arrTiles;
 	std::vector<MapTileData*> m_arrObjects;
 	MapTileData* m_pSelectData;
 	RECT m_rcPageTextBox;
+	MAPTILEVIEWER_VIEW_TYPE m_viewType;
 
 	// MapSystem Forward Pointer 
 	MapSystem* m_pMapSystem;
-	ObjectControlViewer* m_pObjectControlViewer;
+	ObjectControlViewer* m_pObjectControlViewer;		
 private:
 	// PageButton
 	MapTilePageLeftButton* m_pLeftButton;
 	MapTilePageRightButton* m_pRightButton;
+
+	// ViewButton
+	ObjectViewButton* m_pObjectViewButton;
+	TileViewButton* m_pTileViewButton;
 
 public:
 	MapTileViewer();
@@ -74,15 +113,33 @@ public:
 	// ===================================================
 	void increasePage()
 	{
-		m_nViewPage++;
-		if (m_nViewPage > m_nMaxPage)
-			m_nViewPage = m_nMaxPage;
+		if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE)
+		{
+			m_nTileViewPage++;
+			if (m_nTileViewPage > m_nTileViewMaxPage)
+				m_nTileViewPage = m_nTileViewMaxPage;
+		}
+		else if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_OBJECT)
+		{
+			m_nObjectViewPage++;
+			if (m_nObjectViewPage > m_nObjectViewMaxPage)
+				m_nObjectViewPage = m_nObjectViewMaxPage;
+		}
 	}
 	void decreasePage()
 	{
-		m_nViewPage--;
-		if (m_nViewPage < 0)
-			m_nViewPage = 0;
+		if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE)
+		{
+			m_nTileViewPage--;
+			if (m_nTileViewPage < 0)
+				m_nTileViewPage = 0;
+		}
+		else if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_OBJECT)
+		{
+			m_nObjectViewPage--;
+			if (m_nObjectViewPage < 0)
+				m_nObjectViewPage = 0;
+		}
 	}
 
 	// ===================================================
@@ -92,6 +149,15 @@ public:
 	{
 		return m_pSelectData;
 	}
+
+	// ===================================================
+	// Setter Functions
+	// ===================================================
+	void setViewType(MAPTILEVIEWER_VIEW_TYPE type)
+	{
+		m_viewType = type;
+	}
+
 	
 	// MemoryLink Functions For Forward Pointer
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)

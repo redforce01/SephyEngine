@@ -36,15 +36,28 @@ void Scene_MapTool::initialize(HWND hwnd)
 	viewerSystem->setMemoryLinkCameraSystem(cameraSystem);
 	viewerSystem->setMemoryLinkMapSystem(mapSystem);
 
-	// etc initialize settings
+	// Start Camera Pos Setting
 	cameraSystem->setCameraPos(100, 100);
+
+	// Minimap InGame Size Setting
+	int tileSizeX = mapSystemNS::mapSizeX;
+	int tileSizeY = mapSystemNS::mapSizeY;
+	int tileWidth = mapSystemNS::tileBasicWidth;
+	int tileHeight = mapSystemNS::tileBasicHeight;
+	viewerSystem->getMinimapViewer()->setMapWidth(tileWidth * tileSizeX);
+	viewerSystem->getMinimapViewer()->setMapHeight(tileHeight * tileSizeY);
+	viewerSystem->getMinimapViewer()->setIsoMetric(true);
 }
 
 void Scene_MapTool::update()
 {	
 	mapSystem->update(frameTime);
-	cameraSystem->update(frameTime);
+
+	if(viewerSystem->getUIHasFocus() == false)
+		cameraSystem->update(frameTime);
+
 	viewerSystem->update(frameTime);
+
 
 	if (input->isKeyDown(MapToolNS::ESCAPE_KEY))
 	{

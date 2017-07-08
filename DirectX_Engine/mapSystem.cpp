@@ -42,22 +42,23 @@ bool MapSystem::initialize(Game* gamePtr)
 	m_pGraphics = gamePtr->getGraphics();
 	m_pInput = gamePtr->getInput();
 
-	for (UINT row = 0; row < MapSystemNS::mapSizeX; row++)
+	for (UINT row = 0; row < mapSystemNS::mapSizeX; row++)
 	{
-		for (UINT col = 0; col < MapSystemNS::mapSizeY; col++)
+		for (UINT col = 0; col < mapSystemNS::mapSizeY; col++)
 		{
 			MapTile* temp = new MapTile;
-			temp->initialize(gamePtr->getGraphics(), UIDCount, MapSystemNS::BASIC_TILE, mapX, mapY, MapSystemNS::tileBasicWidth, MapSystemNS::tileBasicHeight);
+			temp->initialize(gamePtr->getGraphics(), UIDCount, mapSystemNS::BASIC_TILE_C,
+				mapX, mapY, mapSystemNS::tileBasicWidth, mapSystemNS::tileBasicHeight);
 			m_arrTiles.emplace_back(temp);
 			
-			mapX += MapSystemNS::tileBasicWidth;
+			mapX += mapSystemNS::tileBasicWidth;
 			UIDCount++;
 		}
-		mapY += MapSystemNS::tileBasicHeight / 2;
+		mapY += mapSystemNS::tileBasicHeight / 2;
 		
 		if (row % 2)
 			mapX = 0;
-		else mapX = MapSystemNS::tileBasicWidth / 2;
+		else mapX = mapSystemNS::tileBasicWidth / 2;
 	}
 	
 	
@@ -68,39 +69,16 @@ void MapSystem::update(float frameTime)
 {
 	if (m_pInput->getMouseLButton())
 	{
-		std::string name;
-		if (m_pMapTileData == nullptr)
-			return;
-
 		for (auto iter : m_arrWorkableRECT)
 		{
 			if (PtInRect(&iter, m_pInput->getMousePt()))
 				return;
 		}
 
-		int count = 0;
-		name = m_pMapTileData->getTextureName();
-		for (auto iter : m_arrTiles)
-		{
-			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
-			{
-				count++;
-				continue;
-			}
-
-			if (MyUtil::getIsometricIn(iter->getTileRect(), m_pInput->getMousePt()))
-			{
-				if (iter->changeTexture(name))
-				{
-					std::string log;
-					log = "Tile[" + std::to_string(count) + "] Texture Changed : " + name;
-					m_pLogViewer->addLog(log);
-				}
-			}
-
-			count++;
-		}
+		changeClickedTile();
+		changeClickedObject();
 	}
+
 
 	for (auto iter : m_arrTiles)
 	{
@@ -133,7 +111,6 @@ void MapSystem::render()
 			iter->renderSketch();
 		}
 	}
-
 }
 
 void MapSystem::moveX(int distance)
@@ -170,7 +147,41 @@ void MapSystem::scaleDown()
 	}
 }
 
-MapTile * MapSystem::selectTile(int number)
+void MapSystem::changeClickedTile()
+{
+	if (m_pMapTileData == nullptr)
+		return;
+
+	std::string name;
+	int count = 0;
+	name = m_pMapTileData->getTextureName();
+	for (auto iter : m_arrTiles)
+	{
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+		{
+			count++;
+			continue;
+		}
+
+		if (MyUtil::getIsometricIn(iter->getTileRect(), m_pInput->getMousePt()))
+		{
+			if (iter->changeTexture(name))
+			{
+				std::string log;
+				log = "Tile[" + std::to_string(count) + "] Texture Changed : " + name;
+				m_pLogViewer->addLog(log);
+			}
+		}
+
+		count++;
+	}
+}
+
+void MapSystem::changeClickedObject()
+{
+}
+
+MapTile * MapSystem::getTile(int number)
 {
 	if (m_arrTiles[number] != nullptr)
 		return m_arrTiles[number];
