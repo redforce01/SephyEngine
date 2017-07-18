@@ -51,7 +51,7 @@ void FreePositionButton::functionFreePosition(void * obj)
 	bool flag = pThis->m_pObjectControlViewer->getFreePoisitionMode();
 	pThis->m_pObjectControlViewer->setFreePositionMode(!flag);
 
-	if (flag == false)
+	if (flag)
 	{
 		pThis->m_pIcon->setTextureManager(IMAGEMANAGER->getTexture(freePositionButtonNS::FILENAME_OFF));
 		pThis->m_pIcon->setWidth(freePositionButtonNS::OFF_IMAGE_WIDTH);

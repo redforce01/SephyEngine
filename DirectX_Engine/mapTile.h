@@ -6,7 +6,6 @@ class MapTile;
 #include <string>
 #include <vector>
 #include "image.h"
-#include "mapObject.h"
 
 namespace TileNS
 {
@@ -37,9 +36,6 @@ private:
 	TILEFEATURE		m_Feature;
 	RECT			m_rcTile;
 	std::string		m_strTextureName;
-
-private:
-	std::vector<MapObject*> m_vObject;
 	
 public:
 	MapTile();
@@ -53,18 +49,7 @@ public:
 	// ================================================
 	// Memeber Functions
 	// ================================================
-	void addObject(MapObject* pNewObject)
-	{
-		m_vObject.emplace_back(pNewObject);
-	}
-	void addObject(MapObject* pNewObject, int num)
-	{
-		if (m_vObject.size() < num)
-		{
-			m_vObject.reserve(num);
-		}
-		m_vObject.emplace_back(pNewObject);
-	}
+
 	// Draw This Tile Object's Border
 	// ( Square / Isometric / Circle )
 	void renderSketch(COLOR_ARGB color = graphicsNS::WHITE);

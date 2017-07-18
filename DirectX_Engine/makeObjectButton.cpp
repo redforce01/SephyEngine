@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "makeObjectButton.h"
 #include "objectControlViewer.h"
+#include "mapSystem.h"
 
 MakeObjectButton::MakeObjectButton()
 {
 	m_pObjectControlViewer = nullptr;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -24,6 +26,7 @@ bool MakeObjectButton::initialize(Graphics * g, Input * i, int controlID, System
 		m_dxFont.initialize(g, makeObjectButtonNS::FONT_HEIGHT, false, false, makeObjectButtonNS::FONT);
 		m_dxFont.setFontColor(makeObjectButtonNS::FONT_COLOR);
 		SetIcon(m_pIcon);
+		m_pIcon->setScale(0.75);
 	}
 	catch (...)
 	{
@@ -46,5 +49,7 @@ void MakeObjectButton::render()
 void MakeObjectButton::functionMakeObject(void * obj)
 {
 	MakeObjectButton* pThis = (MakeObjectButton*)obj;
-	pThis->m_pObjectControlViewer;
+	pThis->m_pObjectControlViewer->makeObject();
+	pThis->m_pMapSystem->setMakeObjectMode(true);
+	pThis->m_pInput->setMouseLButton(false);
 }

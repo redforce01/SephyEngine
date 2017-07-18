@@ -16,6 +16,7 @@ MapTileViewer::MapTileViewer()
 	m_pSelectData			= nullptr;
 	m_pMapSystem			= nullptr;
 	m_pObjectControlViewer	= nullptr;
+	m_pMapObjectParser		= nullptr;
 	m_viewType = MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE;
 }
 
@@ -37,6 +38,8 @@ MapTileViewer::~MapTileViewer()
 	SAFE_DELETE(m_pRightButton);
 	SAFE_DELETE(m_pObjectViewButton);
 	SAFE_DELETE(m_pTileViewButton);
+	SAFE_DELETE(m_pMapObjectParser);
+	SAFE_DELETE(m_pSelectData);
 }
 
 bool MapTileViewer::initialize(Graphics * g, Input * i)
@@ -95,6 +98,11 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 		// ===========================================
 
 		// ===========================================
+		// MAP OBJECT PARSER - LOAD OBJECT DATA
+		m_pMapObjectParser = new MapObjectParser;
+		auto vObjectData = m_pMapObjectParser->loadObjectData();
+
+		// ===========================================
 		// Initialize OBJECT Images For Tile View - Start
 		auto arrObjectImages = FILEMANAGER->getFileListInFolder(mapTileViewerNS::OBJECT_FOLDER);
 		startX = startY = 0;
@@ -108,6 +116,7 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 			MapTileData* newData = new MapTileData;
 			newData->initialize(g, iter->fileName, startX, startY);
 			newData->setObjectable(true);
+			newData->setScale(0.5);
 			startX += mapTileViewerNS::BASIC_TILE_WIDTH;
 			if (arrCount % 3 == 0 && arrCount != 0)
 			{
@@ -224,8 +233,18 @@ void MapTileViewer::update(float frameTime)
 					if (PtInRect(&iter->getTileDataRECT(), m_pInput->getMousePt()))
 					{
 						iter->setSelected(true);
-						m_pSelectData = iter;
+						//m_pSelectData = iter;
+
+						if (m_pSelectData)
+						{
+							ZeroMemory(&m_pSelectData, sizeof(m_pSelectData));
+							SAFE_DELETE(m_pSelectData);
+						}
+						
+						m_pSelectData = new MapTileData;
+						m_pSelectData->initialize(m_pGraphics, iter->getTextureName(), 0, 0);
 						m_pSelectData->setObjectable(true);
+
 						m_pMapSystem->setMapTileData(m_pSelectData);
 						m_pObjectControlViewer->setSelectObjectData(m_pSelectData);
 						m_pInput->setMouseLButton(false);
@@ -307,4 +326,8 @@ void MapTileViewer::render()
 	
 	m_pGraphics->spriteEnd();
 
+}
+
+void MapTileViewer::recogObjectData()
+{
 }

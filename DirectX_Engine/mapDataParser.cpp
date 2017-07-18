@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "mapDataParser.h"
 #include "mapSystem.h"
+#include "CameraSystem.h"
 
 // For Thread This Pointer
 MapDataParser* pMapDataParser = nullptr;
@@ -10,7 +11,23 @@ MapDataParser::MapDataParser()
 
 	m_bLoading = false;
 	m_bCallFunction = false;
+
 	m_pMapSystem = nullptr;
+	m_pCameraSystem = nullptr;
+
+	ZeroMemory(&m_MapDataInfo, sizeof(m_MapDataInfo));
+
+	m_MapDataInfo.MadeTime = "0";
+	m_MapDataInfo.Version = "0";
+	m_MapDataInfo.RandomSeed = 0;
+	m_MapDataInfo.OriginX = 0;
+	m_MapDataInfo.OriginY = 0;
+	m_MapDataInfo.CellsX = 128;
+	m_MapDataInfo.CellsY = 128;
+	m_MapDataInfo.Width = 128;
+	m_MapDataInfo.Height = 64;
+	m_MapDataInfo.ObjectSize = 0;
+	m_MapDataInfo.CollisionBoxSize = 0;
 }
 
 
@@ -18,148 +35,268 @@ MapDataParser::~MapDataParser()
 {
 }
 
-void MapDataParser::saveData()
+
+bool MapDataParser::saveData()
 {
 	m_bCallFunction = true;
+	
+	// =====================================
+	// Make vData<std::string> For Saving Data
+	m_vData.clear();
 
-	std::vector<std::string> vArray;
-	vArray.emplace_back(mapDataParserNS::FILE_TITLE);
-	vArray.emplace_back("\r\n");
-	int count = 0;
-	for (auto iter : m_arrMapTile)
+	std::string filePath = mapDataParserNS::SAVE_FILE_NAME;
+	std::ofstream writeFile(filePath.data());
+	if (writeFile.is_open())
 	{
-		// TILE NUMBER COMBINE
-		std::string strNumber = "+";
-		strNumber += std::to_string(count);
-		count++;
-		vArray.emplace_back(strNumber);
-		vArray.emplace_back("\r\n");
-		// TILE TILE_NAME COMBINE
-		std::string strTile = "- ";
-		strTile += mapDataParserNS::MAP_TILE_IP;
-		std::string str = iter->getTextureName();
-		strTile += str;
-		vArray.emplace_back(strTile);
-		vArray.emplace_back("\r\n");
-		vArray.emplace_back("\r\n");
+		//=======================================================================
+		// SAVE - TILE
+		// MapData Information Title Data Emplace to vData ( std::vector<std::string> ) - Start
+		m_vData.emplace_back(mapDataMessageNS::VERSION + mapDataParserNS::TAB_THREE + m_MapDataInfo.Version + "\n");
+		m_vData.emplace_back(mapDataMessageNS::CELL_X + mapDataParserNS::TAB_TWO + std::to_string(m_MapDataInfo.CellsX) + "\n");
+		m_vData.emplace_back(mapDataMessageNS::CELL_Y + mapDataParserNS::TAB_TWO + std::to_string(m_MapDataInfo.CellsY) + "\n");
+		m_vData.emplace_back(mapDataMessageNS::ORIGIN_X + mapDataParserNS::TAB_THREE + std::to_string(m_MapDataInfo.OriginX) + "\n");
+		m_vData.emplace_back(mapDataMessageNS::ORIGIN_Y + mapDataParserNS::TAB_THREE + std::to_string(m_MapDataInfo.OriginY) + "\n");
+		m_vData.emplace_back(mapDataMessageNS::ORIGIN_W + mapDataParserNS::TAB_THREE + std::to_string(m_MapDataInfo.Width) + "\n");
+		m_vData.emplace_back(mapDataMessageNS::ORIGIN_H + mapDataParserNS::TAB_THREE + std::to_string(m_MapDataInfo.Height) + "\n");
+		m_vData.emplace_back(mapDataMessageNS::MADE_TIME + mapDataParserNS::TAB_TWO + m_MapDataInfo.MadeTime + "\n");
+		m_vData.emplace_back(mapDataMessageNS::RANDOM_SEED + mapDataParserNS::TAB_TWO + std::to_string(m_MapDataInfo.RandomSeed) + "\n");
+		m_vData.emplace_back(mapDataMessageNS::OBJECT_SIZE + mapDataParserNS::TAB_TWO + std::to_string(m_MapDataInfo.ObjectSize) + "\n");
+		m_vData.emplace_back(mapDataMessageNS::COLLISION_SIZE + mapDataParserNS::TAB_ONE + std::to_string(m_MapDataInfo.CollisionBoxSize) + "\n");
+		// MapData Information Title Data Emplace to vData ( std::vector<std::string> ) - End
+		//=======================================================================
+		// Tile(Cell) Data Emplace to vData( std::vector<std::string> ) - Start
+		m_vData.emplace_back(mapDataMessageNS::DATA_START_KEY + " " + mapDataMessageNS::CELL_START_MESSAGE + "\n");
+		int count = 0;
+		std::string strCellData;
+		std::string strTextureNameTab = mapDataParserNS::TAB_THREE;
+		for (auto iter : m_arrMapTile)
+		{
+			if (count > 9)
+				strTextureNameTab = mapDataParserNS::TAB_TWO;
 
-		// TILE OBJECT_NAME COMBINE 
-		// Not Using....
-		// To do...
+			strCellData = mapDataParserNS::TAB_ONE + mapDataMessageNS::DATA_START_KEY + " " + std::to_string(count) +
+				strTextureNameTab + iter->getTextureName() + " " + mapDataMessageNS::DATA_END_KEY + "\n";
+			m_vData.emplace_back(strCellData);
+			count++;
+		}
+		m_vData.emplace_back(mapDataMessageNS::CELL_START_MESSAGE + " " + mapDataMessageNS::DATA_END_KEY + "\n");
+		// Tile(Cell) Data Emplace - End
+		//=======================================================================
+
+		//=======================================================================
+		// SAVE - OBJECT
+		// Object Data Emplace to vData( std::vector<std::string> ) - Start
+		m_vData.emplace_back(mapDataMessageNS::DATA_START_KEY + " " + mapDataMessageNS::OBJECT_START_MESSAGE + "\n");
+		count = 0;
+		std::string strObjectData;
+		strTextureNameTab = mapDataParserNS::TAB_THREE;
+		for (auto iter : m_arrMapObject)
+		{
+			if (count > 9)
+				strTextureNameTab = mapDataParserNS::TAB_TWO;
+
+			strObjectData = mapDataParserNS::TAB_ONE + mapDataMessageNS::DATA_START_KEY + " " +
+				std::to_string(count) +	" " +					// Object Number
+				std::to_string((int)iter->getX() + m_pCameraSystem->getCameraX()) + " " +			// Object PosX
+				std::to_string((int)iter->getY() + m_pCameraSystem->getCameraY()) + " " +			// Object PosY
+				std::to_string((int)iter->getWidth()) + " " +		// Object Width
+				std::to_string((int)iter->getHeight()) + " " + 		// Object Height
+				iter->getTextureName() +						// Object Texture
+				" " + mapDataMessageNS::DATA_END_KEY + "\n";
+			m_vData.emplace_back(strObjectData);
+			count++;
+		}
+		m_vData.emplace_back(mapDataMessageNS::OBJECT_START_MESSAGE + " " + mapDataMessageNS::DATA_END_KEY + "\n");
+		// Object Data Emplace to vData( std::vector<std::string> ) - End
+		//=======================================================================
+
+		for (auto iter : m_vData)
+		{
+			writeFile << iter;
+		}
+		writeFile.close();
+	}
+	else
+	{
+		return false;
 	}
 
-	HANDLE file;	
-	std::string result;
-	result = arrayCombine(vArray);
-
-	DWORD write;
-	file = CreateFile(mapDataParserNS::SAVE_FILE_NAME.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	WriteFile(file, result.c_str(), result.size(), &write, NULL);
-	CloseHandle(file);
-
-
-	//// =====================================
-	//// Not Using...Mkaing..
-	//std::string filePath = mapDataParserNS::SAVE_FILE_NAME;
-	//std::ofstream writeFile(filePath.data());
-	//if (writeFile.is_open())
-	//{
-	//	writeFile << result;
-	//	writeFile.close();
-	//}
-	//// =====================================
+	return true;
 }
 
-std::string MapDataParser::arrayCombine(std::vector<std::string> vArray)
-{
-	std::string result;
-	for (auto iter : vArray)
-	{
-		result += iter;
-	}
-	return result;
-}
-
+//==============================================================
+// This Function isn't used Now.
+// SaveThreadFunc() = Loading Thread Func
+// Not Using Method....
+//==============================================================
 void MapDataParser::SaveThreadFunc()
 {
 	pMapDataParser->m_bLoading = true;	
 	pMapDataParser->m_bLoading = false;
 }
 
-void MapDataParser::loadData()
+bool MapDataParser::loadData()
 {
 	m_bCallFunction = true;
 	
-	const char* fileName = mapDataParserNS::LOAD_FILE_NAME.c_str();
-	HANDLE file;
-	DWORD read;
-	char str[65536];
-	memset(str, 0, sizeof(str));
-	file = CreateFile(fileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	ReadFile(file, str, 65536, &read, NULL);
-	CloseHandle(file);
-
-	//// =====================================
-	//// Not Using....Making..
-	//std::vector<std::string> vArray;
-	//std::string filePath = mapDataParserNS::LOAD_FILE_NAME;
-	//std::ifstream openFile(filePath.data());
-	//if (openFile.is_open())
-	//{
-	//	std::string line;
-	//	while (std::getline(openFile, line))
-	//	{
-	//		vArray.emplace_back(line);
-	//	}
-	//	openFile.close();
-	//}
-	//// =====================================
-		
-	recognizeData(arraySeperation(str));
-}
-
-std::vector<std::string> MapDataParser::arraySeperation(char message[])
-{
-	std::vector<std::string> vArray;
-
-	char* temp;
-	char* seperator = { "\t\r\n" };
-	char* token;
-
-	token = strtok_s(message, seperator, &temp);
-	vArray.emplace_back(token);
-	while (nullptr != (token = strtok_s(NULL, seperator, &temp)))
+	//=======================================================================
+	// Open BattleMap Data File (*.txt)
+	// Load All Data Emplace to vData ( std::vector<std::string> ) - Start
+	m_vData.clear();
+	std::string filePath = mapDataParserNS::LOAD_FILE_NAME;
+	std::ifstream openFile(filePath.data());
+	if (openFile.is_open())
 	{
-		vArray.emplace_back(token);
+		std::string line;
+		while (std::getline(openFile, line))
+		{
+			m_vData.emplace_back(line);
+		}
+		openFile.close();
 	}
 
-	return vArray;
+	arrayRecognize(m_vData);
+	//=======================================================================
+	return true;
 }
 
-void MapDataParser::recognizeData(std::vector<std::string> vArray)
+void MapDataParser::arrayRecognize(std::vector<std::string> vArray)
 {
-	std::vector<std::string> vMapTiles;
+	if (vArray.size() <= 0)
+		return;
+
+	int recogCount = 0;
+
+	m_MapDataInfo.Version = vArray[recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE));
+	m_MapDataInfo.CellsX = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
+	m_MapDataInfo.CellsY = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
+	m_MapDataInfo.OriginX = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
+	m_MapDataInfo.OriginY = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
+	m_MapDataInfo.Width = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
+	m_MapDataInfo.Height = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
+	m_MapDataInfo.MadeTime = vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE) + 1);					// This Code Has Some Errors
+	m_MapDataInfo.RandomSeed = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));			// This Code Has Some Errors
+	m_MapDataInfo.ObjectSize = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));			// This Code Has Some Errors
+	m_MapDataInfo.CollisionBoxSize = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));	// This Code Has Some Errors
+		
+	std::vector<std::string> vMapCells;
+	std::vector<std::string> vMapObject;
+		
+	bool bRecogCells = false;
+	bool bRecogObjects = false;
 	for (auto iter : vArray)
 	{
-		if (iter.find(":") != std::string::npos)
+		if (iter.compare(mapDataMessageNS::DATA_START_KEY + " " + mapDataMessageNS::CELL_START_MESSAGE) == false)
 		{
-			int pos = iter.find(":");
-			vMapTiles.emplace_back(iter.substr(pos + 1));
+			bRecogCells = true;
+			continue;
+		}
+		else if (iter.compare(mapDataMessageNS::CELL_START_MESSAGE + " " + mapDataMessageNS::DATA_END_KEY) == false)
+		{
+			bRecogCells = false;
+			continue;
+		}
+		
+		if (bRecogCells)
+		{
+			vMapCells.emplace_back(iter);
+			continue;
+		}
+
+		if (iter.compare(mapDataMessageNS::DATA_START_KEY + " " + mapDataMessageNS::OBJECT_START_MESSAGE) == false)
+		{
+			bRecogObjects = true;
+			continue;
+		}
+		else if (iter.compare(mapDataMessageNS::OBJECT_START_MESSAGE + " " + mapDataMessageNS::DATA_END_KEY) == false)
+		{
+			bRecogObjects = false;
+			continue;
+		}
+
+		if (bRecogObjects)
+		{
+			vMapObject.emplace_back(iter);
+			continue;
 		}
 	}
-	
-	mapSetup(vMapTiles);
+
+	mapCellSetup(vMapCells);
+	mapObjectSetup(vMapObject);
 }
 
-void MapDataParser::mapSetup(std::vector<std::string> vData)
+void MapDataParser::mapCellSetup(std::vector<std::string> vMapCells)
 {
-	int count = 0;
-	auto vMapTiles = m_pMapSystem->getAllTiles();
+	if (vMapCells.size() <= 0)
+		return;
 
-	for (auto iter : vData)
+	m_pMapSystem->resetTiles();
+
+	int cellNumber = 0;
+	std::string texture;
+
+	auto arrTiles = m_pMapSystem->getAllTiles();
+	for (auto iter : vMapCells)
 	{
-		vMapTiles[count]->changeTexture(iter);
-		count++;
+		//int startKeyPos = iter.find(mapDataMessageNS::DATA_START_KEY);
+		//startKeyPos += mapDataMessageNS::DATA_START_KEY.length();
+		//iter = iter.substr(startKeyPos);
+		//int textureKeyPos = iter.find_last_of("\t");				// Find Texture Key Position
+		//iter = iter.substr(textureKeyPos + 1);		//		
+		//int endKeyPos = iter.find(mapDataMessageNS::DATA_END_KEY);
+		//texture = iter.substr(textureKeyPos);						// string replace from texture key start
+
+		int startKeyPos = iter.rfind("\t");
+		int endKeyPos = iter.rfind(" ");
+		texture = iter.substr(startKeyPos + 1, endKeyPos - 1 - startKeyPos);
+
+		arrTiles[cellNumber]->changeTexture(texture);				// Change MapSystem CellTexture
+		cellNumber++;
+	}
+}
+
+void MapDataParser::mapObjectSetup(std::vector<std::string> vObjectCells)
+{
+	if (vObjectCells.size() <= 0)
+		return;
+
+	int objectNumber;
+	int objectX, objectY;
+	int objectWidth, objectHeight;
+	std::string objectTexture;	
+
+	m_pMapSystem->resetObjects();
+		
+	for (auto iter : vObjectCells)
+	{
+		int recogPos = 1;
+		std::vector<std::string> vData;
+		std::istringstream iss(iter);
+		std::string token;
+		while (std::getline(iss, token, ' '))
+		{
+			vData.emplace_back(token);
+		}
+		
+		objectNumber = std::stoi(vData[recogPos]); recogPos++;
+		objectX = std::stoi(vData[recogPos]); recogPos++;
+		objectY = std::stoi(vData[recogPos]); recogPos++;
+		objectWidth = std::stoi(vData[recogPos]); recogPos++;
+		objectHeight = std::stoi(vData[recogPos]); recogPos++;
+		objectTexture = vData[recogPos];
+
+		MapObject* newObject = new MapObject;
+		newObject->initialize(m_pMapSystem->getGraphics(),
+			m_pMapSystem->getAllObjects().size() + 1,
+			objectTexture,
+			OBJECT_COLLISION_TYPE::COLLISION_BOX,
+			0,
+			objectX - m_pCameraSystem->getCameraX(),
+			objectY - m_pCameraSystem->getCameraY(),
+			objectWidth,
+			objectHeight);
+
+		m_pMapSystem->addObject(newObject);
 	}
 }
 

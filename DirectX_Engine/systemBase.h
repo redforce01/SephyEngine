@@ -18,6 +18,16 @@ public:
 	virtual bool initialize(Game* gamePtr) PURE;
 	virtual void update(float frameTime) PURE;
 	virtual void render() PURE;
+
+	Graphics* getGraphics() const
+	{
+		return m_pGraphics;
+	}
+
+	Input* getInput() const
+	{
+		return m_pInput;
+	}
 };
 
 #endif // !_VIWERSYSTEMBASE_H

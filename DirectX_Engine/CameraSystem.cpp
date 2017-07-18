@@ -6,10 +6,10 @@
 CameraSystem::CameraSystem()
 {
 	cameraX = cameraY = 0;
-	cameraSpeed = 0;
+	cameraSpeed = CameraSystemNS::CAMERA_SPEED;
 	cameraAngle = 0;
 	cameraZoomRate = 0;
-	cameraZoomSpeed = 0;
+	cameraZoomSpeed = CameraSystemNS::CAMERA_ZOOM_RATE;
 	m_pInput = nullptr;
 	m_pMapSystem = nullptr;
 	m_pMinimap = nullptr;
@@ -24,8 +24,6 @@ bool CameraSystem::initialize(Game* gamePtr)
 	bool success = false;
 	try
 	{
-		cameraSpeed = 10.f;
-		cameraZoomSpeed = 0.1f;
 		m_pInput = gamePtr->getInput();
 		success = true;
 	}
@@ -105,7 +103,6 @@ void CameraSystem::zoomIn()
 	if (cameraZoomRate < 1.0f)
 	{
 		cameraZoomRate += cameraZoomSpeed;
-		m_pMapSystem->scaleUp();
 	}
 }
 
@@ -114,7 +111,6 @@ void CameraSystem::zoomOut()
 	if (cameraZoomRate > 0)
 	{
 		cameraZoomRate -= cameraZoomSpeed;
-		m_pMapSystem->scaleDown();
 	}
 }
 

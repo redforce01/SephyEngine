@@ -253,6 +253,15 @@
     <Filter Include="GameCode\Maptool\Map\MapDataParser">
       <UniqueIdentifier>{ce87e124-e7a0-43a3-826a-f27718ca3a0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\TileViewer\ObjectData">
+      <UniqueIdentifier>{318e908d-2335-4943-b99b-36a98e6c5da1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\TileViewer\Button">
+      <UniqueIdentifier>{7060e6cd-5d2e-44a7-8943-119ad405aebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\ObjectControlViewer\Button">
+      <UniqueIdentifier>{a515048c-be8d-4171-8b3d-b133b83998ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -402,9 +411,6 @@
     <ClCompile Include="mapSystem.cpp">
       <Filter>GameCode\Maptool\Map</Filter>
     </ClCompile>
-    <ClCompile Include="CameraSystem.cpp">
-      <Filter>GameCode\Maptool\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="scene_Main.cpp">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClCompile>
@@ -448,9 +454,6 @@
       <Filter>GameCode\GameSystem</Filter>
     </ClCompile>
     <ClCompile Include="mapTileViewer.cpp">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
-    </ClCompile>
-    <ClCompile Include="mapTileData.cpp">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClCompile>
     <ClCompile Include="controlViewer.cpp">
@@ -498,12 +501,6 @@
     <ClCompile Include="control_ExitButton.cpp">
       <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
     </ClCompile>
-    <ClCompile Include="mapTilePageLeftButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
-    </ClCompile>
-    <ClCompile Include="mapTilePageRightButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
-    </ClCompile>
     <ClCompile Include="logViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
     </ClCompile>
@@ -525,17 +522,41 @@
     <ClCompile Include="systemUIEdit.cpp">
       <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
     </ClCompile>
-    <ClCompile Include="tileViewButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    <ClCompile Include="mapTileData.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer\ObjectData</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTilePageLeftButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTilePageRightButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer\Button</Filter>
     </ClCompile>
     <ClCompile Include="objectViewButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+      <Filter>GameCode\Maptool\Viewer\TileViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="tileViewButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer\Button</Filter>
     </ClCompile>
     <ClCompile Include="freePositionButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer\Button</Filter>
     </ClCompile>
     <ClCompile Include="makeObjectButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="txtDataParser.cpp">
+      <Filter>GameCode\GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="cameraSystem.cpp">
+      <Filter>GameCode\Maptool\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="control_DebugObject.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="mapObjectParser.cpp">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="testingUI.cpp">
+      <Filter>GameCode\Scenes\TestScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -704,9 +725,6 @@
     <ClInclude Include="mapSystem.h">
       <Filter>GameCode\Maptool\Map</Filter>
     </ClInclude>
-    <ClInclude Include="CameraSystem.h">
-      <Filter>GameCode\Maptool\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="scene_Main.h">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClInclude>
@@ -750,9 +768,6 @@
       <Filter>GameCode\GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="mapTileViewer.h">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
-    </ClInclude>
-    <ClInclude Include="mapTileData.h">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
     <ClInclude Include="controlViewer.h">
@@ -803,12 +818,6 @@
     <ClInclude Include="control_ExitButton.h">
       <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
     </ClInclude>
-    <ClInclude Include="mapTilePageLeftButton.h">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
-    </ClInclude>
-    <ClInclude Include="mapTilePageRightButton.h">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
-    </ClInclude>
     <ClInclude Include="logViewer.h">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
     </ClInclude>
@@ -830,17 +839,41 @@
     <ClInclude Include="systemUIEdit.h">
       <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
     </ClInclude>
-    <ClInclude Include="tileViewButton.h">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    <ClInclude Include="mapTileData.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer\ObjectData</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTilePageLeftButton.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTilePageRightButton.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer\Button</Filter>
     </ClInclude>
     <ClInclude Include="objectViewButton.h">
-      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+      <Filter>GameCode\Maptool\Viewer\TileViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="tileViewButton.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer\Button</Filter>
     </ClInclude>
     <ClInclude Include="freePositionButton.h">
-      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer\Button</Filter>
     </ClInclude>
     <ClInclude Include="makeObjectButton.h">
-      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer</Filter>
+      <Filter>GameCode\Maptool\Viewer\ObjectControlViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="txtDataParser.h">
+      <Filter>GameCode\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="cameraSystem.h">
+      <Filter>GameCode\Maptool\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="control_DebugObject.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="mapObjectParser.h">
+      <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="testingUI.h">
+      <Filter>GameCode\Scenes\TestScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -165,8 +165,8 @@ void Image::draw(COLOR_ARGB color, UINT textureN)
 void Image::draw(SpriteData sd, COLOR_ARGB color, UINT textureN)
 {
 	/* LayerManager Logic Rendering Function ===== Need Fixing */
-	//if (this->layer->getLayerState() < LAYERMANAGER->getCurrentLayerState())
-	//	return;
+	/*if (this->layer->getLayerState() < LAYERMANAGER->getCurrentLayerState())
+		return;*/
 
 	if (this->layer->getSwitch() == FALSE)
 		return;

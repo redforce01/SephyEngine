@@ -59,6 +59,7 @@ bool ViewerSystem::initialize(Game * gamePtr)
 		m_pControlViewer->setMemoryLinkLogViewer(m_pLogViewer);
 		m_pMapTileViewer->setMemoryLinkObjectControlViewer(m_pObjectControlViewer);
 		m_pObjectControlViewer->setMemoryLinkMapTileViewer(m_pMapTileViewer);
+		m_pObjectControlViewer->setMemoryLinkLogViewer(m_pLogViewer);
 		success = true;
 	}
 	catch (...)

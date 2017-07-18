@@ -8,6 +8,7 @@ class scene_Main;
 #include <string>
 
 #include "render2DComponent.h"
+#include "testingUI.h"
 
 namespace mainNS
 {
@@ -15,13 +16,22 @@ namespace mainNS
 	const UCHAR SCENE_CHANGE_KEY = VK_SPACE;
 }
 
+class CWorldUISystem;
 class scene_Main : public Game
 {
 private:
+	testingUI* m_pTesting;
+
 
 	Image* m_pTestShipTop;
 	Image* m_pTestShipBody;
 	Image* m_pTestShipBottom;
+
+	Image* m_pWorld;
+
+	RECT m_rc;
+	RECT m_collision;
+	bool m_flag = false;
 
 public:
 	scene_Main();

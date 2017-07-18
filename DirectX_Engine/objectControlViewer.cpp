@@ -1,14 +1,18 @@
 #include "stdafx.h"
 #include "objectControlViewer.h"
 #include "mapTileViewer.h"
+#include "logViewer.h"
+#include "mapSystem.h"
 
 ObjectControlViewer::ObjectControlViewer()
 {
 	fontColor = objectControlViewerNS::FONT_COLOR;
 	backColor = objectControlViewerNS::BACK_COLOR;
 
-	m_SelectObjectData = nullptr;
+	m_pSelectObjectData = nullptr;	
 	m_pMapTileViewer = nullptr;
+	m_pLogViewer = nullptr;
+	m_pMapSystem = nullptr;
 
 	m_layer = 0;
 	m_bFreePosition = false;
@@ -28,6 +32,8 @@ ObjectControlViewer::~ObjectControlViewer()
 	SAFE_DELETE(m_pWidthEdit);
 	SAFE_DELETE(m_pHeightEdit);
 	SAFE_DELETE(m_pCollisionEdit);
+	SAFE_DELETE(m_pFreePositionButton);
+	SAFE_DELETE(m_pMakeObjectButton);
 }
 
 bool ObjectControlViewer::initialize(Graphics * g, Input * i)
@@ -55,7 +61,7 @@ bool ObjectControlViewer::initialize(Graphics * g, Input * i)
 		if (success == false)
 			throw("Object Control Viewer SystemUIDialog initialized Failed");
 
-#pragma region OBJECT_CONTROL_BUTTON_INITIALIZE
+#pragma region OBJECT_CONTROL_VIEWER_EDIT_CONTROL_INITIALIZE
 		
 		m_pTextureEdit = new SystemUIEdit;
 		m_pTextureEdit->initEdit(g, i, objectControlNS::EDIT_CONTROL_TEXTURE_ID, true, "TextureName...", objectControlNS::OBJECT_CONTROL_TEXTURE, false, this,
@@ -119,6 +125,8 @@ bool ObjectControlViewer::initialize(Graphics * g, Input * i)
 
 #pragma endregion
 
+#pragma region OBJECT_CONTROL_VIEWER_BUTTON_INITIALIZE
+
 		m_pFreePositionButton = new FreePositionButton;
 		m_pFreePositionButton->initialize(g, i, objectControlNS::FREEPOSITION_BUTTON_ID, this,
 			objectControlNS::FREEPOSITION_BUTTON_POS_X, objectControlNS::FREEPOSITION_BUTTON_POS_Y,
@@ -127,13 +135,26 @@ bool ObjectControlViewer::initialize(Graphics * g, Input * i)
 		m_pFreePositionButton->setMemoryLinkObjectControlViewer(this);
 
 		int left = m_pFreePositionButton->GetControlRECT().left - objectControlNS::FREEPOSITION_TEXT_RECT_WIDTH;
-		int top = m_pFreePositionButton->GetControlRECT().top + 10;
+		int top = m_pFreePositionButton->GetControlRECT().top + objectControlNS::FREEPOSITION_TEXT_RECT_HEIGHT;
 		m_rcFreeText = RectMake(left, top,
 			objectControlNS::FREEPOSITION_TEXT_RECT_WIDTH,
 			objectControlNS::FREEPOSITION_TEXT_RECT_HEIGHT);
 
+		m_pMakeObjectButton = new MakeObjectButton;
+		m_pMakeObjectButton->initialize(g, i, objectControlNS::MAKE_OBJECT_BUTTON_ID, this,
+			objectControlNS::MAKE_OBJECT_BUTTON_POS_X, objectControlNS::MAKE_OBJECT_BUTTON_POS_Y,
+			objectControlNS::MAKE_OBJECT_BUTTON_WIDTH, objectControlNS::MAKE_OBJECT_BUTTON_HEIGHT,
+			objectControlNS::MAKE_OBJECT_BUTTON_MARGIN);
+		m_pMakeObjectButton->setMemoryLinkObjectControlViewer(this);
 
+		left = m_pMakeObjectButton->GetControlRECT().left - objectControlNS::MAKE_OBJECT_TEXT_RECT_WIDTH;
+		top = m_pMakeObjectButton->GetControlRECT().top + objectControlNS::MAKE_OBJECT_TEXT_RECT_HEIGHT;
+		m_rcMakeText = RectMake(left, top,
+			objectControlNS::MAKE_OBJECT_TEXT_RECT_WIDTH,
+			objectControlNS::MAKE_OBJECT_TEXT_RECT_HEIGHT);
+		m_strMakeButtonTitle = objectControlNS::MAKE_OBJECT_TEXT;
 
+#pragma endregion
 	}
 	catch (...)
 	{
@@ -150,11 +171,16 @@ void ObjectControlViewer::update(float frameTime)
 
 	SystemUIDialog::update(frameTime);
 
-	if (m_SelectObjectData)
+	if (m_pSelectObjectData)
 	{
-		m_pTextureEdit->setEditText(m_SelectObjectData->getTextureName());
+		m_pTextureEdit->setEditText(m_pSelectObjectData->getTextureName());
+		m_textureName = m_pSelectObjectData->getTextureName();
 	}
 	
+	if (m_bFreePosition)
+		m_strFreeButtonTitle = objectControlNS::FREEPOSITION_STATE_ON;
+	else
+		m_strFreeButtonTitle = objectControlNS::FREEPOSITION_STATE_OFF;
 
 
 	m_pTextureEdit->update(frameTime);
@@ -166,8 +192,8 @@ void ObjectControlViewer::update(float frameTime)
 	m_pHeightEdit->update(frameTime);
 	m_pCollisionEdit->update(frameTime);
 
-
 	m_pFreePositionButton->update(frameTime);
+	m_pMakeObjectButton->update(frameTime);
 }
 
 void ObjectControlViewer::render()
@@ -177,6 +203,8 @@ void ObjectControlViewer::render()
 
 	SystemUIDialog::render();
 
+	// =========================================
+	// EditControls Render
 	m_pTextureEdit->render();
 	m_pTextureEdit->render();
 	m_pLayerEdit->render();
@@ -186,9 +214,18 @@ void ObjectControlViewer::render()
 	m_pWidthEdit->render();
 	m_pHeightEdit->render();
 	m_pCollisionEdit->render();
-	m_pFreePositionButton->render();
-	
+	// =========================================
 
+
+	// =========================================
+	// Button Control Render
+	m_pFreePositionButton->render();
+	m_pMakeObjectButton->render();
+	// =========================================
+
+
+	// =========================================
+	// Sprite Begin
 	m_pGraphics->spriteBegin();
 
 	// Print Object Control Title
@@ -210,17 +247,14 @@ void ObjectControlViewer::render()
 	m_dxFont.print(collisionHintB, m_rcCollisionHint, DT_LEFT | DT_VCENTER);
 	m_rcCollisionHint.top += objectControlNS::OBJECT_CONTROL_BOX_HEIGHT;
 	m_rcCollisionHint.bottom += objectControlNS::OBJECT_CONTROL_BOX_HEIGHT;
-
-	std::string freeButtonTitle;
-	if(m_bFreePosition)
-		freeButtonTitle = objectControlNS::FREEPOSITION_STATE_ON;
-	else
-		freeButtonTitle = objectControlNS::FREEPOSITION_STATE_OFF;
-
-	m_dxFont.print(freeButtonTitle, m_rcFreeText, DT_LEFT | DT_VCENTER);
+	
+	m_dxFont.print(m_strFreeButtonTitle, m_rcFreeText, DT_LEFT | DT_VCENTER);	
+	m_dxFont.print(m_strMakeButtonTitle, m_rcMakeText, DT_LEFT | DT_VCENTER);
 
 	m_pGraphics->spriteEnd();
-	
+	// Sprite End
+	// =========================================
+
 #pragma region NOT USING CODE
 
 	//m_rcControl = RectMake(
@@ -309,19 +343,47 @@ void ObjectControlViewer::render()
 
 }
 
-void ObjectControlViewer::makeObject()
-{	
-	m_layer = (m_pLayerEdit->getEditText().size() != 0 ?
-		std::stoi(m_pLayerEdit->getEditText()) : 0);
-	m_posX = (m_pPosXEdit->getEditText().size() != 0 ?
-		std::stoi(m_pPosXEdit->getEditText()) : 0);		
-	m_posY = (m_pPosYEdit->getEditText().size() != 0 ?
-		std::stoi(m_pPosYEdit->getEditText()) : 0);	
-	m_width = (m_pWidthEdit->getEditText().size() != 0 ?
-		std::stoi(m_pWidthEdit->getEditText()) : 0);		
-	m_height = (m_pHeightEdit->getEditText().size() != 0 ?
-		std::stoi(m_pHeightEdit->getEditText()) : 0);
-	m_collisionType = checkCollisionType();
+bool ObjectControlViewer::makeObject()
+{
+	bool success = false;
+	try
+	{
+		if (m_pSelectObjectData == nullptr)
+			return false;
+
+		m_layer = (m_pLayerEdit->getEditText().size() != 0 ?
+			std::stoi(m_pLayerEdit->getEditText()) : 0);
+		m_posX = (m_pPosXEdit->getEditText().size() != 0 ?
+			std::stoi(m_pPosXEdit->getEditText()) : 0);		
+		m_posY = (m_pPosYEdit->getEditText().size() != 0 ?
+			std::stoi(m_pPosYEdit->getEditText()) : 0);	
+		m_width = (m_pWidthEdit->getEditText().size() != 0 ?
+			std::stoi(m_pWidthEdit->getEditText()) : 0);		
+		m_height = (m_pHeightEdit->getEditText().size() != 0 ?
+			std::stoi(m_pHeightEdit->getEditText()) : 0);
+		m_collisionType = checkCollisionType();
+		
+		m_pSelectObjectData->setPosition(m_posX, m_posY);
+		m_pSelectObjectData->setWidth(m_width);
+		m_pSelectObjectData->setHeight(m_height);		
+		m_pSelectObjectData->setLayer(m_layer);
+		m_pSelectObjectData->setObjectable(true);
+		m_pSelectObjectData->setTextureName(m_textureName);
+		m_pSelectObjectData->setCollisionType(m_collisionType);
+
+		if (m_bFreePosition)
+			m_pSelectObjectData->setFreePosition(true);
+		else
+			m_pSelectObjectData->setFreePosition(false);
+
+		m_pLogViewer->addLog(objectControlNS::MAKE_OBJECT_RESULT_LOG_SUCCESS);
+		return true;
+	}
+	catch (...)
+	{
+		m_pLogViewer->addLog(objectControlNS::MAKE_OBJECT_RESULT_LOG_FAIL);
+		return false;
+	}
 }
 
 OBJECT_COLLISION_TYPE ObjectControlViewer::checkCollisionType()

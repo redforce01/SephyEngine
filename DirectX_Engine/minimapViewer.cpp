@@ -118,7 +118,9 @@ void MinimapViewer::setUpCam()
 	m_CamHeight = minimapViewerNS::HEIGHT / (m_MapHeight / WINSIZEY);
 
 	if (m_bIsometric)
-		m_CamHeight = m_CamHeight * 2;	
+	{
+		m_CamHeight = m_CamHeight * 2;
+	}
 
 	m_rcCamera = RectMake(minimapViewerNS::X + camX, minimapViewerNS::Y + camY, m_CamWidth, m_CamHeight);
 	checkMinimapCamRect();

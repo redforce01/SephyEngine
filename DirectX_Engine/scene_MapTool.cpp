@@ -40,10 +40,10 @@ void Scene_MapTool::initialize(HWND hwnd)
 	cameraSystem->setCameraPos(100, 100);
 
 	// Minimap InGame Size Setting
-	int tileSizeX = mapSystemNS::mapSizeX;
-	int tileSizeY = mapSystemNS::mapSizeY;
-	int tileWidth = mapSystemNS::tileBasicWidth;
-	int tileHeight = mapSystemNS::tileBasicHeight;
+	int tileSizeX = mapSystemNS::MAP_SIZE_X;
+	int tileSizeY = mapSystemNS::MAP_SIZE_Y;
+	int tileWidth = mapSystemNS::TILE_BASIC_WIDTH;
+	int tileHeight = mapSystemNS::TILE_BASIC_HEIGHT;
 	viewerSystem->getMinimapViewer()->setMapWidth(tileWidth * tileSizeX);
 	viewerSystem->getMinimapViewer()->setMapHeight(tileHeight * tileSizeY);
 	viewerSystem->getMinimapViewer()->setIsoMetric(true);

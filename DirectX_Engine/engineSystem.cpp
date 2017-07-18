@@ -55,7 +55,7 @@ bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 		int height = (rc.bottom - rc.top) / 2;
 
 		//engineSceneView = new EngineSceneView;
-		//engineSceneView->initialize(new EngineInput, g_hWndEngine, (HMENU)1, 0, 0, 1920, 1080);
+		//engineSceneView->initialize(new EngineInput, g_hWndEngine, (HMENU)1, 0, 0, 1280, 720);
 		//engineResourceView = new EngineResourceView;
 		//engineResourceView->initialize(new EngineInput, g_hWndEngine, (HMENU)2, engineSceneView->getRect().right, 0, 250, rc.bottom - rc.top / 2);
 		//engineInspectorView = new EngineInspectorView;

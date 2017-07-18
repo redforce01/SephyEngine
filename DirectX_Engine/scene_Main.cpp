@@ -25,15 +25,63 @@ void scene_Main::initialize(HWND hwnd)
 	m_pTestShipTop->setScale(0.75);
 	m_pTestShipBody->setScale(0.75);
 	m_pTestShipBottom->setScale(0.75);
+
+	m_pWorld = new Image;
+	m_pWorld->initialize(this->getGraphics(), 4261, 2067, 0, IMAGEMANAGER->getTexture("wmap"));
+	m_pWorld->setX(0);
+	m_pWorld->setY(0);
+
+	m_pTesting = new testingUI;
+	m_pTesting->initialize(this);
+
+	//m_pWorld->setLayer(LAYERMANAGER->getLayer(enLayerList::LAYER_BACKGROUND));
+
+	auto file = FILEMANAGER->getDataFile("Ship Information");	
+	//auto data = TXTPARSER->getTxtFile("Ship Information", "Unit Type");
+	// return std::string
+
+	//// + Unit Type BattleCruiser
+	//// data = std::vector<std::string>
+	//// "#" 주석문을 제외한 내용
+
+	std::vector<std::string> vData;
+	std::string filePath = file->path;
+	std::ifstream openFile(filePath.data());
+	if (openFile.is_open())
+	{
+		std::string line;
+		while (std::getline(openFile, line))
+		{
+			vData.emplace_back(line);
+		}
+		openFile.close();
+	}
+
+
+
+	m_rc = RectMake(1741 - (162 / 2), 861 - 50, 162, 100);
+	m_collision = RectMake(1741 - (150 / 2), 861 - 40, 150, 80);
 }
 
 void scene_Main::update()
 {
+	m_pTesting->update(this->getTimeDelta());
+	
+	if (m_pTesting->ContainFocus())
+	{
+		m_flag = true;
+	}
+	else
+		m_flag = false;
+
+
+
+
 	static float worldTime = 0.f;
 	worldTime += this->getTimeDelta();
 
 	static int count = 0;
-	if (worldTime > 1.0f)
+	if (worldTime > 0.1f)
 	{
 		count++;
 		worldTime = 0.f;
@@ -59,6 +107,54 @@ void scene_Main::update()
 	m_pTestShipBody->setTextureManager(IMAGEMANAGER->getTexture(resultBody));
 	m_pTestShipBottom->setTextureManager(IMAGEMANAGER->getTexture(resultBottom));
 
+	if (input->isKeyDown('A'))
+	{
+		m_pWorld->moveX(5);
+		m_rc.left += 5;
+		m_rc.right += 5;
+		m_collision.left += 5;
+		m_collision.right += 5;
+	}
+	if (input->isKeyDown('D') || input->isKeyDown(VK_RIGHT))
+	{
+		m_pWorld->moveX(-5);
+
+		m_rc.left += -5;
+		m_rc.right += -5;
+		m_collision.left += -5;
+		m_collision.right += -5;		
+	}
+	if (input->isKeyDown('S'))
+	{
+		m_pWorld->moveY(-5);
+
+		m_rc.top += -5;
+		m_rc.bottom += -5;
+		m_collision.top += -5;
+		m_collision.bottom += -5;
+	}
+	if (input->isKeyDown('W'))
+	{
+		m_pWorld->moveY(5);
+
+		m_rc.top += 5;
+		m_rc.bottom += 5;
+		m_collision.top += 5;
+		m_collision.bottom += 5;
+	}
+
+	//if (input->getMouseLButton())
+	//{
+	//	if (PtInRect(&m_rc, input->getMousePt()))
+	//	{
+	//		m_flag = true;
+	//	}
+	//	else
+	//	{
+	//		m_flag = false;
+	//	}
+	//}
+	
 
 
 
@@ -96,19 +192,29 @@ void scene_Main::collisions()
 
 void scene_Main::render()
 {	
-	graphics->spriteBegin();
 
-	m_pTestShipTop->draw();
+	graphics->spriteBegin();
+	
+	m_pWorld->draw();
+	m_pTestShipTop->draw();	
 	m_pTestShipBody->draw();
 	m_pTestShipBottom->draw();
-
-
-	char buffer[128];
-	int BUF_SIZE = 32;
-	_snprintf_s(buffer, BUF_SIZE, "SceneName : Scene_Main");
-	dxFont.print(buffer, GAME_WIDTH - 200, GAME_HEIGHT - 60);
+	
+	
+	//char buffer[128];
+	//int BUF_SIZE = 32;
+	//_snprintf_s(buffer, BUF_SIZE, "SceneName : Scene_Main");
+	//dxFont.print(buffer, GAME_WIDTH - 200, GAME_HEIGHT - 60);
 
 	graphics->spriteEnd();
+
+	graphics->drawRect(m_rc, 1.0f, graphicsNS::BLUE);
+	
+	if(m_flag)
+		graphics->drawRect(m_collision, 1.0f, graphicsNS::GREEN);
+
+	m_pTesting->render();
+	m_pTestShipBottom->drawRect(graphicsNS::RED);
 }
 
 void scene_Main::releaseAll()

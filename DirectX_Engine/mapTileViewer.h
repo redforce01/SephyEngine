@@ -10,6 +10,7 @@ class MapTileViewer;
 #include "mapTilePageRightButton.h"
 #include "objectViewButton.h"
 #include "tileViewButton.h"
+#include "mapObjectParser.h"
 
 namespace mapTileViewerNS
 {
@@ -88,10 +89,14 @@ private:
 	RECT m_rcPageTextBox;
 	MAPTILEVIEWER_VIEW_TYPE m_viewType;
 
+private:	// OBJECT DATA PARSER
+	MapObjectParser* m_pMapObjectParser;
+
+private:	// Forward Pointer
 	// MapSystem Forward Pointer 
 	MapSystem* m_pMapSystem;
-	ObjectControlViewer* m_pObjectControlViewer;		
-private:
+	ObjectControlViewer* m_pObjectControlViewer;
+private:	// BUTTON
 	// PageButton
 	MapTilePageLeftButton* m_pLeftButton;
 	MapTilePageRightButton* m_pRightButton;
@@ -99,7 +104,6 @@ private:
 	// ViewButton
 	ObjectViewButton* m_pObjectViewButton;
 	TileViewButton* m_pTileViewButton;
-
 public:
 	MapTileViewer();
 	~MapTileViewer();
@@ -111,6 +115,7 @@ public:
 	// ===================================================
 	// Member Functions
 	// ===================================================
+	void recogObjectData();
 	void increasePage()
 	{
 		if (m_viewType == MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE)
@@ -157,8 +162,7 @@ public:
 	{
 		m_viewType = type;
 	}
-
-	
+		
 	// MemoryLink Functions For Forward Pointer
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
 	{ m_pMapSystem = pMapSystem; }

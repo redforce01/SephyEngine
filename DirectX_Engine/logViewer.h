@@ -24,7 +24,12 @@ namespace logViewerNS
 class LogViewer : public SystemUIDialog
 {
 private:
+	// Queue Log Container 
 	std::deque<std::string> m_arrLog;
+
+	// Map Log Container
+	std::map<std::string, std::string> m_arrStaticLog;
+
 	RECT m_rcLogBox;
 	RECT m_rcTitle;
 
@@ -39,6 +44,10 @@ public:
 	void addLog(std::string message)
 	{
 		m_arrLog.emplace_front(message);
+	}
+	void addStaticLog(std::string key, std::string message)
+	{
+		m_arrStaticLog.emplace(key, message);
 	}
 };
 

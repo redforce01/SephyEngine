@@ -142,10 +142,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CameraSystem.cpp" />
+    <ClCompile Include="cameraSystem.cpp" />
     <ClCompile Include="componentBase.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="control_DebugButton.cpp" />
+    <ClCompile Include="control_DebugObject.cpp" />
     <ClCompile Include="control_ExitButton.cpp" />
     <ClCompile Include="control_LoadButton.cpp" />
     <ClCompile Include="control_PerformButton.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="makeObjectButton.cpp" />
     <ClCompile Include="mapDataParser.cpp" />
     <ClCompile Include="mapObject.cpp" />
+    <ClCompile Include="mapObjectParser.cpp" />
     <ClCompile Include="mapTileData.cpp" />
     <ClCompile Include="mapTilePageLeftButton.cpp" />
     <ClCompile Include="mapTilePageRightButton.cpp" />
@@ -225,12 +227,14 @@
     <ClCompile Include="systemUIScroll.cpp" />
     <ClCompile Include="systemUITitlebar.cpp" />
     <ClCompile Include="tabContent_A.cpp" />
+    <ClCompile Include="testingUI.cpp" />
     <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="mapTile.cpp" />
     <ClCompile Include="tileViewButton.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="controlViewer.cpp" />
+    <ClCompile Include="txtDataParser.cpp" />
     <ClCompile Include="uiButton.cpp" />
     <ClCompile Include="uiFrame.cpp" />
     <ClCompile Include="uiParent.cpp" />
@@ -241,12 +245,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="control_ButtonInfo.h" />
-    <ClInclude Include="CameraSystem.h" />
+    <ClInclude Include="cameraSystem.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="componentBase.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="control_DebugButton.h" />
+    <ClInclude Include="control_DebugObject.h" />
     <ClInclude Include="control_ExitButton.h" />
     <ClInclude Include="control_LoadButton.h" />
     <ClInclude Include="control_PerformButton.h" />
@@ -282,6 +287,7 @@
     <ClInclude Include="makeObjectButton.h" />
     <ClInclude Include="mapDataParser.h" />
     <ClInclude Include="mapObject.h" />
+    <ClInclude Include="mapObjectParser.h" />
     <ClInclude Include="mapTileData.h" />
     <ClInclude Include="mapTilePageLeftButton.h" />
     <ClInclude Include="mapTilePageRightButton.h" />
@@ -329,12 +335,14 @@
     <ClInclude Include="systemUITitlebar.h" />
     <ClInclude Include="tabContent_A.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="testingUI.h" />
     <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
     <ClInclude Include="mapTile.h" />
     <ClInclude Include="tileViewButton.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="controlViewer.h" />
+    <ClInclude Include="txtDataParser.h" />
     <ClInclude Include="uiButton.h" />
     <ClInclude Include="uiFrame.h" />
     <ClInclude Include="uiParent.h" />

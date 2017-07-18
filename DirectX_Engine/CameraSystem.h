@@ -14,6 +14,10 @@ namespace CameraSystemNS
 
 	const UCHAR CAMERA_ZOOM_IN_KEY = VK_PRIOR;
 	const UCHAR CAMERA_ZOOM_OUT_KEY = VK_NEXT;
+
+	const UINT CAMERA_SPEED = 10.f;
+	const float CAMERA_ZOOM_RATE = 0.1f;
+	const UINT CAMERA_MOVE_LIMIT = 100;
 }
 
 class MinimapViewer;

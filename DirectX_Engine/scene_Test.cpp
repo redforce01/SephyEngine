@@ -45,8 +45,11 @@ void Scene_Test::initialize(HWND hwnd)
 	testButton = new UIButton;
 	testButton->initialize(	
 		g_Graphics, input, LAYERMANAGER->getLayer(enLayerList::LAYER_UI),
-		false, graphicsNS::FILTER, "button_test", 300, 300, 49, 16, 3);
+		false, graphicsNS::FILTER, "button_test", 300, 300, 49, 16, 1);
 	testButton->regiFunction(std::bind(&Scene_Test::testFunction));
+
+
+
 
 	testProgressBar = new UIProgressBar;
 	testProgressBar->initialize(

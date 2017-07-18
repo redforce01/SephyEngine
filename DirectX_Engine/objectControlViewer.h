@@ -6,7 +6,9 @@ class ObjectControlViewer;
 #include "systemUIDialog.h"
 #include "systemUIEdit.h"
 #include "mapTileData.h"
+#include "mapObject.h"
 #include "freePositionButton.h"
+#include "makeObjectButton.h"
 
 namespace objectControlViewerNS
 {
@@ -21,10 +23,6 @@ namespace objectControlViewerNS
 	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);    // backdrop color
 
 }
-enum class OBJECT_COLLISION_TYPE
-{
-	COLLISION_BOX, COLLISION_CIRCLE, COLLISION_ISOMETRIC, COLLISION_PIXEL
-};
 
 namespace objectControlNS
 {
@@ -70,7 +68,7 @@ namespace objectControlNS
 	const std::string COLLISION_KEY_PIXEL = "Pixel";
 
 	const std::string FREEPOSITION_STATE_ON = "FREE MODE ON";
-	const std::string FREEPOSITION_STATE_OFF = "FREE MODE ON";
+	const std::string FREEPOSITION_STATE_OFF = "FREE MODE OFF";
 	const UINT FREEPOSITION_BUTTON_ID = 53;
 	const UINT FREEPOSITION_BUTTON_POS_X = objectControlViewerNS::WIDTH - 50;
 	const UINT FREEPOSITION_BUTTON_POS_Y = 0;
@@ -79,9 +77,25 @@ namespace objectControlNS
 	const UINT FREEPOSITION_BUTTON_MARGIN = 0;
 	const UINT FREEPOSITION_TEXT_RECT_WIDTH = 100;
 	const UINT FREEPOSITION_TEXT_RECT_HEIGHT = 10;
+
+	const std::string MAKE_OBJECT_TEXT = "MAKE";
+	const UINT MAKE_OBJECT_BUTTON_ID = 54;
+	const UINT MAKE_OBJECT_BUTTON_POS_X = objectControlViewerNS::WIDTH - 200;
+	const UINT MAKE_OBJECT_BUTTON_POS_Y = 0;
+	const UINT MAKE_OBJECT_BUTTON_WIDTH = 30;
+	const UINT MAKE_OBJECT_BUTTON_HEIGHT = 30;
+	const UINT MAKE_OBJECT_BUTTON_MARGIN = 0;
+	const UINT MAKE_OBJECT_TEXT_RECT_WIDTH = 30;
+	const UINT MAKE_OBJECT_TEXT_RECT_HEIGHT = 10;
+
+	const std::string MAKE_OBJECT_RESULT_LOG_SUCCESS = "MAKE OBJECT SUCCESS";
+	const std::string MAKE_OBJECT_RESULT_LOG_FAIL = "MAKE OBJECT FAILED";
+
 }
 
+class LogViewer;
 class MapTileViewer;
+class MapSystem;
 class ObjectControlViewer : public SystemUIDialog
 {
 private:
@@ -98,12 +112,21 @@ private:
 	OBJECT_COLLISION_TYPE m_collisionType;
 
 private: // MapData
-	MapTileData* m_SelectObjectData;
+	MapTileData* m_pSelectObjectData;	// Map Tile Data
+
+private: // Forward Pointer
 	MapTileViewer* m_pMapTileViewer;
+	LogViewer* m_pLogViewer;
+	MapSystem* m_pMapSystem;
 
 private: // Button
 	FreePositionButton* m_pFreePositionButton;
 	RECT m_rcFreeText;
+	std::string m_strFreeButtonTitle;
+
+	MakeObjectButton* m_pMakeObjectButton;
+	RECT m_rcMakeText;
+	std::string m_strMakeButtonTitle;
 
 private: //Edit Controls
 	SystemUIEdit* m_pTextureEdit;
@@ -113,7 +136,7 @@ private: //Edit Controls
 	SystemUIEdit* m_pPosYEdit;
 	SystemUIEdit* m_pWidthEdit;
 	SystemUIEdit* m_pHeightEdit;
-	SystemUIEdit* m_pCollisionEdit;	
+	SystemUIEdit* m_pCollisionEdit;
 public:
 	ObjectControlViewer();
 	~ObjectControlViewer();
@@ -125,7 +148,7 @@ public:
 	// ======================================================
 	// Memeber Functions
 	// ======================================================
-	void makeObject();
+	bool makeObject();
 
 	// Check Collision Type
 	OBJECT_COLLISION_TYPE checkCollisionType();
@@ -134,7 +157,7 @@ public:
 	// Setter Functions
 	// ======================================================
 	void setSelectObjectData(MapTileData* pSelectObject)
-	{ m_SelectObjectData = pSelectObject; }
+	{ m_pSelectObjectData = pSelectObject; }
 
 	void setFreePositionMode(bool b)
 	{
@@ -149,12 +172,16 @@ public:
 		return m_bFreePosition;
 	}
 
-	
-
-
 	// Memory Link Function For Forward Pointer
 	void setMemoryLinkMapTileViewer(MapTileViewer* pMapTileViewer)
 	{ m_pMapTileViewer = pMapTileViewer; }
+	void setMemoryLinkLogViewer(LogViewer* pLogViewer)
+	{ m_pLogViewer = pLogViewer; }
+	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
+	{ 
+		m_pMapSystem = pMapSystem;
+		m_pMakeObjectButton->setMemoryLinkMapSystem(pMapSystem);
+	}
 };
 
 #endif // !_OBJECTCONTROLVIEWER_H

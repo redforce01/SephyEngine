@@ -56,6 +56,7 @@ public:
 		m_pMapSystem = pMapSystem;
 		m_pMapTileViewer->setMemoryLinkMapSystem(pMapSystem);
 		m_pControlViewer->setMemoryLinkMapSystem(pMapSystem);
+		m_pObjectControlViewer->setMemoryLinkMapSystem(pMapSystem);
 	}
 	// =========================================
 	// Getter Functions
