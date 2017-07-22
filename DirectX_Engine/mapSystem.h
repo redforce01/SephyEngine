@@ -9,6 +9,7 @@ class MapSystem;
 #include "mapDataParser.h"
 #include "mapObject.h"
 #include "mapTile.h"
+#include "mapEventObject.h"
 
 namespace mapSystemNS
 {
@@ -36,24 +37,29 @@ class CameraSystem;
 class MapSystem : public SystemBase
 {
 private:
-	typedef std::vector<MapTile*>			MAP_TILES;
-	typedef std::vector<MapTile*>::iterator	MAP_TILES_ITER;
-
-	typedef std::vector<MapObject*>				MAP_OBJECTS;
-	typedef std::vector<MapObject*>::iterator	MAP_OBJECTS_ITER;
-
+	typedef std::vector<MapTile*>					MAP_TILES;
+	typedef std::vector<MapTile*>::iterator			MAP_TILES_ITER;
+	typedef std::vector<MapObject*>					MAP_OBJECTS;
+	typedef std::vector<MapObject*>::iterator		MAP_OBJECTS_ITER;
+	typedef std::vector<MapEventObject*>			MAP_EVENT_OBJECT;
+	typedef std::vector<MapEventObject*>::iterator	MAP_EVENT_OBJECT_ITER;
 private:
-	MAP_TILES	m_arrTiles;
-	MAP_OBJECTS m_arrObjects;
-
-private:
+	MAP_TILES	m_arrTiles;					// Map Cells(TILE)
+	MAP_OBJECTS m_arrObjects;				// Map Object
+	MAP_EVENT_OBJECT m_arrEventObjects;		// Map EventObject
+private:	// For UI Work Variables
 	std::vector<RECT> m_arrWorkableRECT;
 	MAPTYPE m_mapType;
+
+private: // bool Variables For Debug
+	bool m_bDebugTiles;
+	bool m_bDebugObject;
+	bool m_bDebugEventObject;
 	bool m_bDebug;
 private: // Map Tile & Object Data Pointer
 	MapTileData* m_pMapTileData;		// MapData For Setup Tiles
-	bool m_bMakeObject;
-
+	bool m_bMakeObject;	// Flag For Make Object (This Flag Not Meaning EventObject)
+	bool m_bEventObjectMode;
 private: // MapData Parser
 	MapDataParser* m_pMapDataParser;	// MapData Parser For Save / Load
 
@@ -77,17 +83,12 @@ public:
 	// All Tile Reset to Basic Tiles
 	void resetMap()
 	{
-		for (auto iter : m_arrTiles)
-		{
-			iter->changeTexture(mapSystemNS::BASIC_TILE_C);
-		}
-
-		for (auto iter : m_arrObjects)
-		{
-			SAFE_DELETE(iter);
-		}
-		m_arrObjects.clear();
+		resetTiles();
+		resetObjects();
+		resetEventObject();
 	}
+
+	// Reset All Tiles Texture Function
 	void resetTiles()
 	{
 		for (auto iter : m_arrTiles)
@@ -95,6 +96,8 @@ public:
 			iter->changeTexture(mapSystemNS::BASIC_TILE_C);
 		}
 	}
+
+	// Reset Objects Function
 	void resetObjects()
 	{
 		for (auto iter : m_arrObjects)
@@ -104,6 +107,16 @@ public:
 		m_arrObjects.clear();
 	}
 
+	// Reset EventObjects Function
+	void resetEventObject()
+	{
+		for (auto iter : m_arrEventObjects)
+		{
+			SAFE_DELETE(iter);
+		}
+		m_arrEventObjects.clear();
+	}
+
 	void changeClickedTile();
 	void setOnTileObject();
 
@@ -111,6 +124,11 @@ public:
 	void addObject(MapObject* pObject)
 	{
 		m_arrObjects.emplace_back(pObject);
+	}
+
+	void addEventObject(MapEventObject* pEventObject)
+	{
+		m_arrEventObjects.emplace_back(pEventObject);
 	}
 
 	// Add UI Dialog Viewer RECT For Blocking Mouse Click on Dialog

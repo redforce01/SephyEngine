@@ -262,6 +262,21 @@
     <Filter Include="GameCode\Maptool\Viewer\ObjectControlViewer\Button">
       <UniqueIdentifier>{a515048c-be8d-4171-8b3d-b133b83998ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\Battle\BattleMapSystem">
+      <UniqueIdentifier>{eabf1cca-7bea-4f5a-a576-05f8766763c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\Unit">
+      <UniqueIdentifier>{c34af8c1-1a89-44e8-b6cf-df0506c116c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleSystem">
+      <UniqueIdentifier>{d9545dbb-5df4-47ee-b359-0c544991076f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\EventViewer">
+      <UniqueIdentifier>{d13d4da9-d7cd-4edb-9e35-1531e6eb68e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\EventViewer\Button">
+      <UniqueIdentifier>{926211cb-ab50-4ad5-a427-5fe8374f343e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -414,9 +429,6 @@
     <ClCompile Include="scene_Main.cpp">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="scene_MapTool.cpp">
-      <Filter>GameCode\Scenes\MapToolScene</Filter>
-    </ClCompile>
     <ClCompile Include="engineEditControl.cpp">
       <Filter>SystemCode\Engine\SystemWindow\SystemInterface\SystemEditControl</Filter>
     </ClCompile>
@@ -557,6 +569,54 @@
     </ClCompile>
     <ClCompile Include="testingUI.cpp">
       <Filter>GameCode\Scenes\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapSystem.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MainSystem.cpp">
+      <Filter>GameCode\Battle\BattleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="eventViewer.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="mapEventObject.cpp">
+      <Filter>GameCode\Maptool\Map\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionBox_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionCircle_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionRotatedBox_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="buildingRepair_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="buildingObserver_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="buildingRefuel_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="weatherRain_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="weatherFog_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="gameRespawn_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="gameStarting_Button.cpp">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="scene_Battle.cpp">
+      <Filter>GameCode\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="scene_MapTool.cpp">
+      <Filter>GameCode\Maptool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -728,9 +788,6 @@
     <ClInclude Include="scene_Main.h">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="scene_MapTool.h">
-      <Filter>GameCode\Scenes\MapToolScene</Filter>
-    </ClInclude>
     <ClInclude Include="engineEditControl.h">
       <Filter>SystemCode\Engine\SystemWindow\SystemInterface\SystemEditControl</Filter>
     </ClInclude>
@@ -874,6 +931,54 @@
     </ClInclude>
     <ClInclude Include="testingUI.h">
       <Filter>GameCode\Scenes\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapSystem.h">
+      <Filter>GameCode\Battle\BattleMapSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MainSystem.h">
+      <Filter>GameCode\Battle\BattleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="eventViewer.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="mapEventObject.h">
+      <Filter>GameCode\Maptool\Map\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionBox_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionCircle_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionRotatedBox_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="buildingRepair_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="buildingObserver_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="buildingRefuel_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="weatherRain_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="weatherFog_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="gameRespawn_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="gameStarting_Button.h">
+      <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="scene_Battle.h">
+      <Filter>GameCode\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="scene_MapTool.h">
+      <Filter>GameCode\Maptool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -66,23 +66,40 @@ void SystemUIButton::update(float frameTime)
 			m_CallbackFunction();
 
 		m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_NORMAL;
-	}
+	}	
 }
 
 void SystemUIButton::render()
 {
+	if (m_pGraphics == nullptr)
+		return;
+
 	if (m_State == SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_HIDDEN)
 		return;
 
 	SystemUIControl::render();
-	m_pGraphics->spriteBegin();
 
+	if (m_bHasIcon == false)
+	{
+		m_pGraphics->drawRect(m_rcBoundingBox);
+	}
+
+
+	RECT rcMessage = m_rcBoundingBox;	
+	rcMessage.left = rcMessage.left + 3;
+	rcMessage.right = rcMessage.right + 3;
+
+	m_pGraphics->spriteBegin();
 	if (m_bHasIcon)
 		m_pIcon->draw(graphicsNS::WHITE);
 
 	if (m_bHasMessage)
-		m_dxFont.print(m_strMessage, m_rcBoundingBox, DT_CENTER | DT_BOTTOM);
-
+	{
+		if(m_bHasIcon)
+			m_dxFont.print(m_strMessage, rcMessage, DT_CENTER | DT_BOTTOM);
+		else
+			m_dxFont.print(m_strMessage, rcMessage, DT_LEFT);
+	}
 	m_pGraphics->spriteEnd();
 }
 

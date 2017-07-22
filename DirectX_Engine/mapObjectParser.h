@@ -21,6 +21,9 @@ public:
 	~MapObjectParser();
 
 	std::vector<std::string> loadObjectData();
+
+	void recogData(std::vector<std::string> vData);
+
 	void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
 };
 

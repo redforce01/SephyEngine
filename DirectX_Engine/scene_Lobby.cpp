@@ -37,8 +37,12 @@ void Scene_Lobby::render()
 
 void Scene_Lobby::releaseAll()
 {
+	Game::releaseAll();
+	return;
 }
 
 void Scene_Lobby::resetAll()
 {
+	Game::resetAll();
+	return;
 }

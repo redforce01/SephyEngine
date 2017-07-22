@@ -7,12 +7,15 @@
 MapSystem::MapSystem()
 {
 	m_mapType = MAPTYPE::DIAMOND;
-	m_bDebug = true;
 	m_pMapTileData = nullptr;
-	m_pMapDataParser = nullptr;
 	m_pCameraSystem = nullptr;
+	m_pMapDataParser = nullptr;
 	m_pLogViewer = nullptr;
+	m_bDebug = true;
 	m_bMakeObject = false;
+	m_bDebugTiles = false;
+	m_bDebugObject = false;
+	m_bDebugEventObject = false;
 }
 
 
@@ -22,6 +25,19 @@ MapSystem::~MapSystem()
 	{
 		SAFE_DELETE(iter);
 	}
+	m_arrTiles.clear();
+
+	for (auto iter : m_arrObjects)
+	{
+		SAFE_DELETE(iter);
+	}
+	m_arrObjects.clear();
+
+	for (auto iter : m_arrEventObjects)
+	{
+		SAFE_DELETE(iter);
+	}
+	m_arrEventObjects.clear();
 
 	SAFE_DELETE(m_pMapDataParser);
 }
@@ -71,8 +87,7 @@ bool MapSystem::initialize(Game* gamePtr)
 	}
 	// Tile Map Initialize - End
 	// ==========================================================
-		
-
+	
 	return success;
 }
 
@@ -143,6 +158,15 @@ void MapSystem::update(float frameTime)
 
 		iter->update(frameTime);
 	}
+
+	// Update All EventObject
+	for (auto iter : m_arrEventObjects)
+	{
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+			continue;
+
+		iter->update(frameTime);
+	}
 }
 
 void MapSystem::render()
@@ -160,6 +184,14 @@ void MapSystem::render()
 
 	// Draw All Objects
 	for (auto iter : m_arrObjects)
+	{
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+			continue;
+
+		iter->render();
+	}
+
+	for (auto iter : m_arrEventObjects)
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
 			continue;
@@ -199,6 +231,14 @@ void MapSystem::render()
 
 			iter->renderSketch();
 		}
+
+		for (auto iter : m_arrEventObjects)
+		{
+			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+				continue;
+
+			iter->renderSketch();
+		}
 	}
 }
 
@@ -215,6 +255,11 @@ void MapSystem::moveX(int distance)
 		iter->moveX(distance);
 		iter->moveRectWidth(distance);
 	}
+	for (auto iter : m_arrEventObjects)
+	{
+		iter->moveX(distance);
+		iter->moveRectWidth(distance);
+	}
 }
 
 void MapSystem::moveY(int distance)
@@ -226,6 +271,11 @@ void MapSystem::moveY(int distance)
 	}
 
 	for (auto iter : m_arrObjects)
+	{
+		iter->moveY(distance);
+		iter->moveRectHeight(distance);
+	}
+	for (auto iter : m_arrEventObjects)
 	{
 		iter->moveY(distance);
 		iter->moveRectHeight(distance);
@@ -347,6 +397,7 @@ void MapSystem::saveData()
 {
 	m_pMapDataParser->setMapTiles(m_arrTiles);
 	m_pMapDataParser->setMapObjects(m_arrObjects);
+	m_pMapDataParser->setMapEventObject(m_arrEventObjects);
 	m_pMapDataParser->saveData();
 }
 

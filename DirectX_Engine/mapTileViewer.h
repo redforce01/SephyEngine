@@ -83,12 +83,15 @@ private:
 	int m_nObjectViewPage;
 	int m_nObjectViewMaxPage;
 
-	std::vector<MapTileData*> m_arrTiles;
-	std::vector<MapTileData*> m_arrObjects;
 	MapTileData* m_pSelectData;
 	RECT m_rcPageTextBox;
 	MAPTILEVIEWER_VIEW_TYPE m_viewType;
 
+	bool m_bActive;
+
+	// TILE VIEWER TEXTURE IMAGES
+	std::vector<MapTileData*> m_arrTiles;
+	std::vector<MapTileData*> m_arrObjects;
 private:	// OBJECT DATA PARSER
 	MapObjectParser* m_pMapObjectParser;
 

@@ -24,7 +24,7 @@ bool TileViewButton::initialize(Graphics * g, Input * i, int controlID, SystemUI
 		m_dxFont.initialize(g, tileViewButtonNS::FONT_HEIGHT, false, false, tileViewButtonNS::FONT);
 		m_dxFont.setFontColor(tileViewButtonNS::FONT_COLOR);
 		SetIcon(m_pIcon);
-		//SetMessage(tileViewButtonNS::NAME);
+		SetMessage(tileViewButtonNS::NAME);
 	}
 	catch (...)
 	{

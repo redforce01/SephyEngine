@@ -30,7 +30,14 @@ std::vector<std::string> MapObjectParser::loadObjectData()
 		}
 	}
 
+	recogData(vRecogData);
+	
 	return vRecogData;
+}
+
+void MapObjectParser::recogData(std::vector<std::string> vData)
+{
+
 }
 
 void MapObjectParser::ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace)

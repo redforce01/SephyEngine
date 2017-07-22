@@ -3,6 +3,7 @@
 #include "scene_Main.h"
 #include "scene_Test.h"
 #include "scene_MapTool.h"
+#include "scene_Battle.h"
 
 MainNode::MainNode() : initializedMgr(FALSE)
 {
@@ -22,15 +23,16 @@ HRESULT MainNode::initialize()
 
 	//Need Hwnd Managers initialize
 	IMAGEMANAGER->initialize(g_Graphics);
-
+	
 	// Create the game, sets up message handler
 	//game = new scene_Main;	
 	SCENEMANAGER->addScene("MapTool", new Scene_MapTool);
 	SCENEMANAGER->addScene("Test", new Scene_Test);
 	SCENEMANAGER->addScene("Main", new scene_Main);
+	SCENEMANAGER->addScene("Battle", new Scene_Battle);
 	
 	SCENEMANAGER->initialize();
-	SCENEMANAGER->changeScene("MapTool");
+	SCENEMANAGER->changeScene("Battle");
 
 	return S_OK;
 }

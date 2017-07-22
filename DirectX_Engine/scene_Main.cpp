@@ -34,6 +34,18 @@ void scene_Main::initialize(HWND hwnd)
 	m_pTesting = new testingUI;
 	m_pTesting->initialize(this);
 
+	m_pCloud = new Image;
+	m_pCloud->initialize(this->getGraphics(), 0, 0, 0, IMAGEMANAGER->getTexture("cld-01"));
+	m_pCloud->setX(500);
+	m_pCloud->setY(300);
+	//m_pCloud->setColorFilter(SETCOLOR_ARGB(192, 255, 255, 255));
+	m_pCloudSh = new Image;
+	m_pCloudSh->initialize(this->getGraphics(), 0, 0, 0, IMAGEMANAGER->getTexture("cld-01s"));
+	m_pCloudSh->setX(500);
+	m_pCloudSh->setY(300);
+	m_pCloudSh->setColorFilter(SETCOLOR_ARGB(192, 0, 0, 0));
+	
+	
 	//m_pWorld->setLayer(LAYERMANAGER->getLayer(enLayerList::LAYER_BACKGROUND));
 
 	auto file = FILEMANAGER->getDataFile("Ship Information");	
@@ -192,7 +204,6 @@ void scene_Main::collisions()
 
 void scene_Main::render()
 {	
-
 	graphics->spriteBegin();
 	
 	m_pWorld->draw();
@@ -200,7 +211,9 @@ void scene_Main::render()
 	m_pTestShipBody->draw();
 	m_pTestShipBottom->draw();
 	
-	
+	m_pCloudSh->draw();
+	m_pCloud->draw();
+
 	//char buffer[128];
 	//int BUF_SIZE = 32;
 	//_snprintf_s(buffer, BUF_SIZE, "SceneName : Scene_Main");
@@ -215,6 +228,12 @@ void scene_Main::render()
 
 	m_pTesting->render();
 	m_pTestShipBottom->drawRect(graphicsNS::RED);
+
+
+	for (int i = 0; i < 50; i++)
+	{
+		graphics->drawCircle(1200, 500, 100, 2.0f, SETCOLOR_ARGB(128, 200, 30, 0));
+	}
 }
 
 void scene_Main::releaseAll()

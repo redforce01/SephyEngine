@@ -17,6 +17,7 @@ MapTileViewer::MapTileViewer()
 	m_pMapSystem			= nullptr;
 	m_pObjectControlViewer	= nullptr;
 	m_pMapObjectParser		= nullptr;
+	m_bActive				= false;
 	m_viewType = MAPTILEVIEWER_VIEW_TYPE::VIEW_MAP_TILE;
 }
 
@@ -192,6 +193,9 @@ void MapTileViewer::update(float frameTime)
 
 	if (getMouseOver() == false)
 		return;
+
+	
+
 
 	if (m_pInput->getMouseLButton())
 	{

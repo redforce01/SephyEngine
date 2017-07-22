@@ -371,7 +371,7 @@ class Entity : public Image
     //=============================================================================
     virtual void moveX(float frameTime)
     {
-        spriteData.x += frameTime * velocity.x;     // move X 
+        spriteData.x += frameTime * velocity.x;     // move X
     }
 
     //=============================================================================

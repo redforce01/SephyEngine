@@ -142,7 +142,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Battle_MainSystem.cpp" />
+    <ClCompile Include="Battle_MapSystem.cpp" />
+    <ClCompile Include="buildingObserver_Button.cpp" />
+    <ClCompile Include="buildingRefuel_Button.cpp" />
+    <ClCompile Include="buildingRepair_Button.cpp" />
     <ClCompile Include="cameraSystem.cpp" />
+    <ClCompile Include="collisionBox_Button.cpp" />
+    <ClCompile Include="collisionCircle_Button.cpp" />
+    <ClCompile Include="collisionRotatedBox_Button.cpp" />
     <ClCompile Include="componentBase.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="control_DebugButton.cpp" />
@@ -171,14 +179,18 @@
     <ClCompile Include="engineWindowManager.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="engineWindow.cpp" />
+    <ClCompile Include="eventViewer.cpp" />
     <ClCompile Include="fileManager.cpp" />
     <ClCompile Include="freePositionButton.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="gameObjectManager.cpp" />
+    <ClCompile Include="gameRespawn_Button.cpp" />
+    <ClCompile Include="gameStarting_Button.cpp" />
     <ClCompile Include="logViewer.cpp" />
     <ClCompile Include="makeObjectButton.cpp" />
     <ClCompile Include="mapDataParser.cpp" />
+    <ClCompile Include="mapEventObject.cpp" />
     <ClCompile Include="mapObject.cpp" />
     <ClCompile Include="mapObjectParser.cpp" />
     <ClCompile Include="mapTileData.cpp" />
@@ -187,6 +199,7 @@
     <ClCompile Include="objectControlViewer.cpp" />
     <ClCompile Include="objectViewButton.cpp" />
     <ClCompile Include="saveLoadViewer.cpp" />
+    <ClCompile Include="scene_Battle.cpp" />
     <ClCompile Include="statsViewer.cpp" />
     <ClCompile Include="systemBase.cpp" />
     <ClCompile Include="gocMessage.cpp" />
@@ -241,9 +254,19 @@
     <ClCompile Include="uiProgressBar.cpp" />
     <ClCompile Include="uiTab.cpp" />
     <ClCompile Include="viewerSystem.cpp" />
+    <ClCompile Include="weatherFog_Button.cpp" />
+    <ClCompile Include="weatherRain_Button.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Battle_MainSystem.h" />
+    <ClInclude Include="Battle_MapSystem.h" />
+    <ClInclude Include="buildingObserver_Button.h" />
+    <ClInclude Include="buildingRefuel_Button.h" />
+    <ClInclude Include="buildingRepair_Button.h" />
+    <ClInclude Include="collisionBox_Button.h" />
+    <ClInclude Include="collisionCircle_Button.h" />
+    <ClInclude Include="collisionRotatedBox_Button.h" />
     <ClInclude Include="control_ButtonInfo.h" />
     <ClInclude Include="cameraSystem.h" />
     <ClInclude Include="commonMacroFunction.h" />
@@ -277,15 +300,19 @@
     <ClInclude Include="engineWindowManager.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="engineWindow.h" />
+    <ClInclude Include="eventViewer.h" />
     <ClInclude Include="fileManager.h" />
     <ClInclude Include="freePositionButton.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="gameObjectManager.h" />
+    <ClInclude Include="gameRespawn_Button.h" />
+    <ClInclude Include="gameStarting_Button.h" />
     <ClInclude Include="logViewer.h" />
     <ClInclude Include="makeObjectButton.h" />
     <ClInclude Include="mapDataParser.h" />
+    <ClInclude Include="mapEventObject.h" />
     <ClInclude Include="mapObject.h" />
     <ClInclude Include="mapObjectParser.h" />
     <ClInclude Include="mapTileData.h" />
@@ -294,6 +321,7 @@
     <ClInclude Include="objectControlViewer.h" />
     <ClInclude Include="objectViewButton.h" />
     <ClInclude Include="saveLoadViewer.h" />
+    <ClInclude Include="scene_Battle.h" />
     <ClInclude Include="statsViewer.h" />
     <ClInclude Include="systemBase.h" />
     <ClInclude Include="gocMessage.h" />
@@ -349,6 +377,8 @@
     <ClInclude Include="uiProgressBar.h" />
     <ClInclude Include="uiTab.h" />
     <ClInclude Include="viewerSystem.h" />
+    <ClInclude Include="weatherFog_Button.h" />
+    <ClInclude Include="weatherRain_Button.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

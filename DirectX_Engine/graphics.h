@@ -32,6 +32,8 @@ class Graphics;
 #define COLOR_ARGB DWORD
 #define SETCOLOR_ARGB(a,r,g,b) \
     ((COLOR_ARGB)((((a)&0xff)<<24)|(((r)&0xff)<<16)|(((g)&0xff)<<8)|((b)&0xff)))
+#define SETGRAY_ARGB(a,r,g,b) \
+    ((COLOR_ARGB)((((a)&0xff)<<8)|(((r)&0xff)<<6)|(((g)&0xff)<<4)|((b)&0xff)<<2))
 
 namespace graphicsNS
 {
@@ -308,6 +310,9 @@ public:
 	//=============================================================================
 	void drawRect(RECT& rc, float width = 1.0f, COLOR_ARGB color = graphicsNS::WHITE);
 	
+
+	void drawCircle(float centerX, float centerY, float rad, float width = 1.0f, COLOR_ARGB color = graphicsNS::WHITE);
+
     //=============================================================================
     // Clear backbuffer and BeginScene()
     //=============================================================================

@@ -32,6 +32,9 @@ std::vector<std::string> TxtDataParser::loadDataToArray(std::string fileName)
 			if (line.find("#") != std::string::npos)
 				continue;
 
+			if (line.compare("") == false)
+				continue;
+
 			vData.emplace_back(line);
 		}
 		openFile.close();

@@ -257,29 +257,15 @@ void Image::drawIsometric(COLOR_ARGB color)
 // Draw Circle
 // centerPos = (spriteData.x + width / 2, spriteData.y + height / 2)
 // This Code based drawLine Function for DrawCircle
-//
-// ************************** Not Work ssibal T^T... **************************
 //=============================================================================
 void Image::drawCircle(COLOR_ARGB color)
 {
-	//float pi = 3.14159f;
-	//float radius = 1.0f;
-	//float smoothness = 0.05f;
-
-	//float centerX = spriteData.x + (spriteData.width / 2);
-	//float centerY = spriteData.y + (spriteData.height / 2);
-
-	//float oldX = centerX + (spriteData.width / 2);
-	//float oldY = centerY + (spriteData.height / 2);
-
-	//for (float angle = 0.0f; angle <= (2.0f * pi); angle += smoothness)
-	//{
-	//	float x = centerX + (radius * (float)sin(angle));
-	//	float y = centerY + (radius * (float)cos(angle));
-
-	//	graphics->drawLine(oldX, oldY, x, y);
-	//	x = oldX, y = oldY;
-	//}
+	graphics->drawCircle(
+		spriteData.x + (spriteData.width / 2),
+		spriteData.y + (spriteData.height / 2),
+		(spriteData.width / 2),
+		1.0f, 
+		color);
 }
 
 //=============================================================================

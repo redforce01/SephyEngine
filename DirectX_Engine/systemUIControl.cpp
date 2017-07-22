@@ -11,7 +11,7 @@ SystemUIControl::SystemUIControl()
 	m_Type = SYSTEM_UI_TYPES::UI_TYPE_BUTTON;
 	m_State = SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_NORMAL;
 	m_bInitialized = false;
-	m_bVisible = false;
+	m_bVisible = true;
 	m_bMouseOver = false;
 	m_bEnabled = false;
 	m_bHasFocus = false;
@@ -80,6 +80,9 @@ bool SystemUIControl::initControl(int controlID, SYSTEM_UI_TYPES type, SystemUID
 
 void SystemUIControl::update(float frameTime)
 {
+	if (m_bVisible == false || m_bInitialized == false)
+		return;
+
 	if (m_State == SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_HIDDEN ||
 		m_State == SYSTEM_UI_CONTROL_STATE::UI_CONTROL_STATE_DISABLED)
 		return;
@@ -101,6 +104,12 @@ void SystemUIControl::update(float frameTime)
 
 void SystemUIControl::render()
 {
+	if (m_bVisible == false || m_bInitialized == false)
+		return;
+
+	if (m_pGraphics == nullptr)
+		return;
+
 	if(m_bUseBackground)
 		m_pGraphics->drawQuad(vertexBuffer);
 }

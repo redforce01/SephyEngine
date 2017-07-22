@@ -16,12 +16,13 @@ namespace mainNS
 	const UCHAR SCENE_CHANGE_KEY = VK_SPACE;
 }
 
-class CWorldUISystem;
 class scene_Main : public Game
 {
 private:
 	testingUI* m_pTesting;
-
+	
+	Image* m_pCloud;
+	Image* m_pCloudSh;
 
 	Image* m_pTestShipTop;
 	Image* m_pTestShipBody;

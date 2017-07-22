@@ -11,6 +11,7 @@ class ViewerSystem;
 #include "statsViewer.h"
 #include "logViewer.h"
 #include "objectControlViewer.h"
+#include "eventViewer.h"
 
 class MapSystem;
 class CameraSystem;
@@ -29,6 +30,7 @@ private:
 	StatsViewer*			m_pStatsViewer;
 	LogViewer*				m_pLogViewer;
 	ObjectControlViewer*	m_pObjectControlViewer;
+	EventViewer*			m_pEventViewer;
 private:
 	// Other System Pointer
 	MapSystem* m_pMapSystem;
@@ -57,6 +59,7 @@ public:
 		m_pMapTileViewer->setMemoryLinkMapSystem(pMapSystem);
 		m_pControlViewer->setMemoryLinkMapSystem(pMapSystem);
 		m_pObjectControlViewer->setMemoryLinkMapSystem(pMapSystem);
+		m_pEventViewer->setMemoryLinkMapSystem(pMapSystem);
 	}
 	// =========================================
 	// Getter Functions

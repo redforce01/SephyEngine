@@ -15,6 +15,7 @@ ViewerSystem::ViewerSystem()
 	m_pMapSystem = nullptr;
 	m_pLogViewer = nullptr;
 	m_pObjectControlViewer = nullptr;
+	m_pEventViewer = nullptr;
 	m_bMapSystemWorkableSetup = false;
 }
 
@@ -28,6 +29,7 @@ ViewerSystem::~ViewerSystem()
 	SAFE_DELETE(m_pStatsViewer);
 	SAFE_DELETE(m_pLogViewer);
 	SAFE_DELETE(m_pObjectControlViewer);
+	SAFE_DELETE(m_pEventViewer);
 }
 
 bool ViewerSystem::initialize(Game * gamePtr)
@@ -52,7 +54,8 @@ bool ViewerSystem::initialize(Game * gamePtr)
 		m_pLogViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
 		m_pObjectControlViewer = new ObjectControlViewer;
 		m_pObjectControlViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput());
-
+		m_pEventViewer = new EventViewer;
+		m_pEventViewer->initialize(gamePtr->getGraphics(), gamePtr->getInput()); 
 
 		// Memory Link Connections
 		m_pControlViewer->setMemoryLinkStatsViewer(m_pStatsViewer);
@@ -80,16 +83,22 @@ void ViewerSystem::update(float frameTime)
 		m_pMapSystem->addWorkRECT(m_pMinimapViewer->getDialogRECT());
 		m_pMapSystem->addWorkRECT(m_pLogViewer->getDialogRECT());
 		m_pMapSystem->addWorkRECT(m_pObjectControlViewer->getDialogRECT());
+		m_pMapSystem->addWorkRECT(m_pEventViewer->getDialogRECT());
 		m_bMapSystemWorkableSetup = true;
 	}
 	
 	//m_pResTreeViewer->update(frameTime);
-	m_pMapTileViewer->update(frameTime);
-	m_pMinimapViewer->update(frameTime);
-	m_pControlViewer->update(frameTime);
+	if (m_pEventViewer->getMakeEventModeActive() == false)
+	{
+		m_pMapTileViewer->update(frameTime);
+		m_pMinimapViewer->update(frameTime);
+		m_pControlViewer->update(frameTime);
+		m_pObjectControlViewer->update(frameTime);
+	}
+
 	m_pStatsViewer->update(frameTime);
 	m_pLogViewer->update(frameTime);
-	m_pObjectControlViewer->update(frameTime);
+	m_pEventViewer->update(frameTime);
 
 	if (checkMouseOver())
 		m_bUIMouseOver = true;
@@ -111,6 +120,7 @@ void ViewerSystem::render()
 	m_pStatsViewer->render();
 	m_pLogViewer->render();
 	m_pObjectControlViewer->render();
+	m_pEventViewer->render();
 }
 
 bool ViewerSystem::checkMouseOver()
@@ -121,7 +131,8 @@ bool ViewerSystem::checkMouseOver()
 		|| m_pControlViewer->getMouseOver() && m_pControlViewer->getVisible()
 		|| m_pStatsViewer->getMouseOver() && m_pStatsViewer->getVisible()
 		|| m_pLogViewer->getMouseOver() && m_pLogViewer->getVisible()
-		|| m_pObjectControlViewer->getMouseOver() && m_pObjectControlViewer->getVisible())
+		|| m_pObjectControlViewer->getMouseOver() && m_pObjectControlViewer->getVisible()
+		|| m_pEventViewer->getMouseOver() && m_pEventViewer->getVisible())
 	{
 		return true;
 	}
@@ -136,7 +147,8 @@ bool ViewerSystem::checkViewerFocus()
 		|| m_pControlViewer->getOnFocus()
 		|| m_pStatsViewer->getOnFocus()
 		|| m_pLogViewer->getOnFocus()
-		|| m_pObjectControlViewer->getOnFocus())
+		|| m_pObjectControlViewer->getOnFocus()
+		|| m_pEventViewer->getOnFocus())
 	{
 		return true;
 	}

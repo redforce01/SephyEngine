@@ -96,12 +96,12 @@ bool MapDataParser::saveData()
 				strTextureNameTab = mapDataParserNS::TAB_TWO;
 
 			strObjectData = mapDataParserNS::TAB_ONE + mapDataMessageNS::DATA_START_KEY + " " +
-				std::to_string(count) +	" " +					// Object Number
+				std::to_string(count) +	" " +														// Object Number
 				std::to_string((int)iter->getX() + m_pCameraSystem->getCameraX()) + " " +			// Object PosX
 				std::to_string((int)iter->getY() + m_pCameraSystem->getCameraY()) + " " +			// Object PosY
-				std::to_string((int)iter->getWidth()) + " " +		// Object Width
-				std::to_string((int)iter->getHeight()) + " " + 		// Object Height
-				iter->getTextureName() +						// Object Texture
+				std::to_string((int)iter->getWidth()) + " " +										// Object Width
+				std::to_string((int)iter->getHeight()) + " " + 										// Object Height
+				iter->getTextureName() +															// Object Texture
 				" " + mapDataMessageNS::DATA_END_KEY + "\n";
 			m_vData.emplace_back(strObjectData);
 			count++;
@@ -109,6 +109,35 @@ bool MapDataParser::saveData()
 		m_vData.emplace_back(mapDataMessageNS::OBJECT_START_MESSAGE + " " + mapDataMessageNS::DATA_END_KEY + "\n");
 		// Object Data Emplace to vData( std::vector<std::string> ) - End
 		//=======================================================================
+
+		//=======================================================================
+		// SAVE - EventObject
+		// Event Object Data Emplace to vData( std::vector<std::string> ) - Start
+		m_vData.emplace_back(mapDataMessageNS::DATA_START_KEY + " " + mapDataMessageNS::EVENT_OBJECT_START_MESSAGE + "\n");
+		count = 0;
+		std::string strEventObjectData;
+		strTextureNameTab = mapDataParserNS::TAB_THREE;
+		for (auto iter : m_arrMapEventObject)
+		{
+			if (count > 9)
+				strTextureNameTab = mapDataParserNS::TAB_TWO;
+
+			strObjectData = mapDataParserNS::TAB_ONE + mapDataMessageNS::DATA_START_KEY + " " +
+				std::to_string(count) + " " +														// Object Number
+				std::to_string((int)iter->getX() + m_pCameraSystem->getCameraX()) + " " +			// Event Object PosX
+				std::to_string((int)iter->getY() + m_pCameraSystem->getCameraY()) + " " +			// Event Object PosY
+				std::to_string((int)iter->getWidth()) + " " +										// Object Width
+				std::to_string((int)iter->getHeight()) + " " + 										// Object Height
+				iter->getEventTypeKey() + 
+				" " + mapDataMessageNS::DATA_END_KEY + "\n";
+			m_vData.emplace_back(strObjectData);
+			count++;
+		}
+		m_vData.emplace_back(mapDataMessageNS::EVENT_OBJECT_START_MESSAGE + " " + mapDataMessageNS::DATA_END_KEY + "\n");
+		// Event Object Data Emplace to vData( std::vector<std::string> ) - End
+		//=======================================================================
+
+
 
 		for (auto iter : m_vData)
 		{
@@ -181,11 +210,14 @@ void MapDataParser::arrayRecognize(std::vector<std::string> vArray)
 		
 	std::vector<std::string> vMapCells;
 	std::vector<std::string> vMapObject;
+	std::vector<std::string> vMapEventObject;
 		
 	bool bRecogCells = false;
 	bool bRecogObjects = false;
+	bool bRecogEventObject = false;
 	for (auto iter : vArray)
 	{
+		// CELLS KEY CHECK
 		if (iter.compare(mapDataMessageNS::DATA_START_KEY + " " + mapDataMessageNS::CELL_START_MESSAGE) == false)
 		{
 			bRecogCells = true;
@@ -203,6 +235,7 @@ void MapDataParser::arrayRecognize(std::vector<std::string> vArray)
 			continue;
 		}
 
+		// OBJECT KEY CHECK
 		if (iter.compare(mapDataMessageNS::DATA_START_KEY + " " + mapDataMessageNS::OBJECT_START_MESSAGE) == false)
 		{
 			bRecogObjects = true;
@@ -219,10 +252,29 @@ void MapDataParser::arrayRecognize(std::vector<std::string> vArray)
 			vMapObject.emplace_back(iter);
 			continue;
 		}
+
+		// EVENT OBJECT KEY CHECK
+		if (iter.compare(mapDataMessageNS::DATA_START_KEY + " " + mapDataMessageNS::EVENT_OBJECT_START_MESSAGE) == false)
+		{
+			bRecogEventObject = true;
+			continue;
+		}
+		else if (iter.compare(mapDataMessageNS::EVENT_OBJECT_START_MESSAGE + " " + mapDataMessageNS::DATA_END_KEY) == false)
+		{
+			bRecogEventObject = false;
+			continue;
+		}
+
+		if (bRecogEventObject)
+		{
+			vMapEventObject.emplace_back(iter);
+			continue;
+		}
 	}
 
 	mapCellSetup(vMapCells);
 	mapObjectSetup(vMapObject);
+	mapEventObjectSetup(vMapEventObject);
 }
 
 void MapDataParser::mapCellSetup(std::vector<std::string> vMapCells)
@@ -238,14 +290,6 @@ void MapDataParser::mapCellSetup(std::vector<std::string> vMapCells)
 	auto arrTiles = m_pMapSystem->getAllTiles();
 	for (auto iter : vMapCells)
 	{
-		//int startKeyPos = iter.find(mapDataMessageNS::DATA_START_KEY);
-		//startKeyPos += mapDataMessageNS::DATA_START_KEY.length();
-		//iter = iter.substr(startKeyPos);
-		//int textureKeyPos = iter.find_last_of("\t");				// Find Texture Key Position
-		//iter = iter.substr(textureKeyPos + 1);		//		
-		//int endKeyPos = iter.find(mapDataMessageNS::DATA_END_KEY);
-		//texture = iter.substr(textureKeyPos);						// string replace from texture key start
-
 		int startKeyPos = iter.rfind("\t");
 		int endKeyPos = iter.rfind(" ");
 		texture = iter.substr(startKeyPos + 1, endKeyPos - 1 - startKeyPos);
@@ -269,7 +313,7 @@ void MapDataParser::mapObjectSetup(std::vector<std::string> vObjectCells)
 		
 	for (auto iter : vObjectCells)
 	{
-		int recogPos = 1;
+		int recogPos = 0;
 		std::vector<std::string> vData;
 		std::istringstream iss(iter);
 		std::string token;
@@ -278,12 +322,12 @@ void MapDataParser::mapObjectSetup(std::vector<std::string> vObjectCells)
 			vData.emplace_back(token);
 		}
 		
-		objectNumber = std::stoi(vData[recogPos]); recogPos++;
-		objectX = std::stoi(vData[recogPos]); recogPos++;
-		objectY = std::stoi(vData[recogPos]); recogPos++;
-		objectWidth = std::stoi(vData[recogPos]); recogPos++;
-		objectHeight = std::stoi(vData[recogPos]); recogPos++;
-		objectTexture = vData[recogPos];
+		objectNumber = std::stoi(vData[++recogPos]);
+		objectX = std::stoi(vData[++recogPos]);
+		objectY = std::stoi(vData[++recogPos]);
+		objectWidth = std::stoi(vData[++recogPos]);
+		objectHeight = std::stoi(vData[++recogPos]);
+		objectTexture = vData[++recogPos];
 
 		MapObject* newObject = new MapObject;
 		newObject->initialize(m_pMapSystem->getGraphics(),
@@ -297,6 +341,24 @@ void MapDataParser::mapObjectSetup(std::vector<std::string> vObjectCells)
 			objectHeight);
 
 		m_pMapSystem->addObject(newObject);
+	}
+}
+
+void MapDataParser::mapEventObjectSetup(std::vector<std::string> vEventObject)
+{
+	if (vEventObject.size() <= 0)
+		return;
+
+	int EventObjectNumber;
+	int EventObjectX, EventObjectY;
+	int EventObjectWidth, EventObjectHeight;
+	std::string EventObjectType;
+
+	m_pMapSystem->resetEventObject();
+
+	for (auto iter : vEventObject)
+	{
+
 	}
 }
 

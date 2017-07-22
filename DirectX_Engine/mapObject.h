@@ -44,6 +44,7 @@ public:
 	// Move Object & Object RECT with Camera Move Horizontal
 	inline void moveRectWidth(int distance)
 	{
+		m_x += distance;
 		m_rcObject.left += distance;
 		m_rcObject.right += distance;
 		m_rcCollisionBox.left += distance;
@@ -52,6 +53,7 @@ public:
 	// Move Object & Object RECT with Camera Move Vertical
 	inline void moveRectHeight(int distance)
 	{
+		m_y += distance;
 		m_rcObject.top += distance;
 		m_rcObject.bottom += distance;
 		m_rcCollisionBox.top += distance;

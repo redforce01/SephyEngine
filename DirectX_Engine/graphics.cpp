@@ -323,6 +323,59 @@ void Graphics::drawRect(RECT & rc, float width, COLOR_ARGB color)
 	drawLine(rc.right, rc.top, rc.right, rc.bottom, width, color);
 }
 
+void Graphics::drawCircle(float centerX, float centerY, float rad, float width, COLOR_ARGB color)
+{
+	int x = centerX;
+	int y = centerY;
+	int radius = rad;
+
+	int startX = x;
+	int startY = y;
+
+	float pi = 3.14159f;
+	float smoothness = 0.2f;
+
+	float oldX = startX;
+	float oldY = startY;
+
+	VECTOR2 temp[2];
+	int count = 0;
+	for (float angle = 0.0f; angle <= (2.0f * pi); angle += smoothness)
+	{
+		temp[1] = temp[0];
+		//VECTOR2 endPoints[] = { VECTOR2(x, y), VECTOR2(oldX, oldY) };
+
+		float x = centerX + (radius * (float)sin(angle));
+		float y = centerY + (radius * (float)cos(angle));
+
+		if (angle <= 0)
+		{
+			temp[0] = { x, y };
+			temp[1] = { x, y };
+			continue;
+		}
+		temp[0] = { x, y };
+		VECTOR2 endPoints[] = { temp[0], temp[1] };
+
+		line->SetWidth(width);
+		line->Begin();
+		line->Draw(endPoints, 2, color);
+		line->End();
+
+		oldX = x, oldY = y;
+	}
+
+	float lastX = x + ((float)radius * (float)sin(0));
+	float lastY = y + ((float)radius * (float)cos(0));
+
+	VECTOR2 endPoints[] = { temp[0], VECTOR2(lastX, lastY) };
+
+	line->SetWidth(width);
+	line->Begin();
+	line->Draw(endPoints, 2, color);
+	line->End();
+}
+
 //=============================================================================
 // Display the backbuffer
 //=============================================================================

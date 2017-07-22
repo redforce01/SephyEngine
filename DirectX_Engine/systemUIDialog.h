@@ -24,6 +24,7 @@ protected:
 	float m_margin;
 	RECT m_rcBoundingBox;
 	bool m_bVisible;
+	bool m_bInitialized;
 
 	// Vertex & Background
 	VertexC vtx[4];
@@ -82,6 +83,10 @@ public:
 	void setOnFocus(bool b)
 	{
 		m_bHasFocus = b;
+	}
+	void setFont(TextDX font)
+	{
+		m_dxFont = font;
 	}
 	//=====================================
 	// Getter Functions

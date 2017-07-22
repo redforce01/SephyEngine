@@ -10,6 +10,7 @@ class MapDataParser;
 #include "mapSystem.h"
 #include "mapTile.h"
 #include "mapObject.h"
+#include "mapEventObject.h"
 
 namespace mapDataParserNS
 {
@@ -47,6 +48,7 @@ namespace mapDataMessageNS
 	const std::string DATA_END_KEY = "END";
 	const std::string CELL_START_MESSAGE = "Cells";
 	const std::string OBJECT_START_MESSAGE = "Objects";
+	const std::string EVENT_OBJECT_START_MESSAGE = "EventObject";
 	const std::string COLLISION_START_MESSAGE = "CollisionBox";
 	// Map Data DATA tag List & Key - End
 	//=====================================================
@@ -74,11 +76,12 @@ class MapDataParser
 private:
 	typedef std::vector<MapTile*> MAP_TILES;
 	typedef std::vector<MapObject*> MAP_OBJECTS;
+	typedef std::vector<MapEventObject*> MAP_EVENTOBJECTS;
 
 private: // Real Map Data From MapSystem
 	MAP_TILES m_arrMapTile;
 	MAP_OBJECTS m_arrMapObject;
-
+	MAP_EVENTOBJECTS m_arrMapEventObject;
 private: // Member variables
 	tagMapDataInfo m_MapDataInfo;
 	std::vector<std::string> m_vData;
@@ -114,6 +117,7 @@ public:
 	void arrayRecognize(std::vector<std::string> vArray);
 	void mapCellSetup(std::vector<std::string> vMapCells);
 	void mapObjectSetup(std::vector<std::string> vObjectCells);
+	void mapEventObjectSetup(std::vector<std::string> vEventObject);
 
 	// std::vector<std::string> arraySeperation(char message[]);	// Array Seperator
 	// bool recognizeData(std::vector<std::string> vArray);		// Recognize Array Function
@@ -131,6 +135,11 @@ public:
 	{
 		m_arrMapObject = pMapObject;
 	}
+	void setMapEventObject(std::vector<MapEventObject*> pMapEventObject)
+	{
+		m_arrMapEventObject = pMapEventObject;
+	}
+
 
 	// ===================================================
 	// Getter Functions

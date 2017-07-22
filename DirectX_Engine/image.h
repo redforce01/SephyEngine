@@ -205,6 +205,9 @@ class Image
 
     // Draw Image using color as filter. Default color is WHITE.
     virtual void draw(COLOR_ARGB color = graphicsNS::WHITE) { draw(color, 0); }
+	
+	// Not Implement...
+	//virtual void drawShadow(COLOR_ARGB color = graphicsNS::WHITE) { draw(); }
 
     // Draw Image using default color filter.
     // textureN is number of texture in textureManager 

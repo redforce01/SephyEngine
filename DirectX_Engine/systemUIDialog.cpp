@@ -14,6 +14,7 @@ SystemUIDialog::SystemUIDialog()
 	m_margin = 0;
 	m_rcBoundingBox = RectMake(0, 0, 0, 0);
 	m_bVisible = true;
+	m_bInitialized = false;
 
 	m_bMouseOver = false;
 	m_bHasFocus = false;
@@ -42,6 +43,7 @@ bool SystemUIDialog::initializeDialog(Graphics * g, Input * i, int x, int y, int
 		m_pInput = i;
 		m_rcBoundingBox = RectMake(x, y, w, h);
 		success = vertexSetup(x, y, w, h);
+		m_bInitialized = true;
 	}
 	catch (...)
 	{
@@ -53,7 +55,7 @@ bool SystemUIDialog::initializeDialog(Graphics * g, Input * i, int x, int y, int
 
 void SystemUIDialog::update(float frameTime)
 {
-	if (m_bVisible == false)
+	if (m_bVisible == false || m_bInitialized == false)
 		return;
 
 	if (PtInRect(&m_rcBoundingBox, m_pInput->getMousePt()))
@@ -72,7 +74,7 @@ void SystemUIDialog::update(float frameTime)
 
 void SystemUIDialog::render()
 {
-	if (m_bVisible == false)
+	if (m_bVisible == false || m_bInitialized == false)
 		return;
 
 	m_pGraphics->drawQuad(vertexBuffer);
