@@ -24,6 +24,8 @@ EngineSystem::~EngineSystem()
 	SAFE_DELETE(g_Graphics);
 	SAFE_DELETE(g_MainNode);
 	SAFE_DELETE(pEngineInput);
+
+	SAFE_DELETE(engineSetting);
 }
 
 //=============================================================================
@@ -33,8 +35,11 @@ EngineSystem::~EngineSystem()
 bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 {
 	FILEMANAGER->initialize();
-	bool success = false;
+	engineSetting = new EngineSetting;
+	engineSetting->LoadEngineSetting();
 
+	bool success = false;
+	
 	// pEngine->Set This Point. 
 	// For Static Engine & Game Proc
 	::pEngine = this;

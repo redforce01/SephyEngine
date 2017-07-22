@@ -16,6 +16,7 @@ class EngineSystem;
 #include "engineSceneView.h"
 #include "engineInspectorView.h"
 #include "engineResourceView.h"
+#include "engineSetting.h"
 
 class EngineSystem : public EngineCore
 {
@@ -27,6 +28,8 @@ private:
 	EngineSceneView* engineSceneView;
 	EngineInspectorView* engineInspectorView;
 	EngineResourceView* engineResourceView;
+
+	EngineSetting* engineSetting;
 public:
 	EngineSystem();
 	~EngineSystem();

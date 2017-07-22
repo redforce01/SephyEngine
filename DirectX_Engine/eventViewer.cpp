@@ -137,7 +137,7 @@ bool EventViewer::initialize(Graphics * g, Input * i)
 
 void EventViewer::update(float frameTime)
 {
-	if (m_bVisible == false)
+	if (getVisible() == false)
 		return;
 
 	SystemUIDialog::update(frameTime);
@@ -180,9 +180,15 @@ void EventViewer::update(float frameTime)
 	// ========================================================
 	// Event Object Making
 	if (m_pInput->getMouseLButton())
-	{
+	{		
 		if (m_bClicked == false)
 		{
+			for (auto iter : m_vWorkableRECT)
+			{
+				if (PtInRect(&iter, m_pInput->getMousePt()))
+					return;
+			}
+
 			m_bClicked = true;
 			m_ptStartPos = m_pInput->getMousePt();
 		}

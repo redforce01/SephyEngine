@@ -8,14 +8,7 @@ class Scene_Battle;
 class Scene_Battle : public Game
 {
 private:
-	Image* m_pTop;
-	Image* m_pBody;
-	Image* m_pBottom;
-	Image* m_pShadow;
-	Image* m_pWave;
-	Image* m_pSunken;
-	Image* m_pSunkenSh;
-	Image* m_Back;
+
 public:
 	Scene_Battle();
 	~Scene_Battle();

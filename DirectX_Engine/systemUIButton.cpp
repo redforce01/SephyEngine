@@ -84,7 +84,7 @@ void SystemUIButton::render()
 		m_pGraphics->drawRect(m_rcBoundingBox);
 	}
 
-
+	
 	RECT rcMessage = m_rcBoundingBox;	
 	rcMessage.left = rcMessage.left + 3;
 	rcMessage.right = rcMessage.right + 3;

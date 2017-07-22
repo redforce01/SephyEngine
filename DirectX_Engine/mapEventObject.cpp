@@ -23,7 +23,7 @@ bool MapEventObject::initialize(Graphics * g, float x, float y, float width, flo
 	bool success = false;
 	try
 	{
-		success = Image::initialize(g, 0, 0, 0, IMAGEMANAGER->getTexture("WHITE"));
+		success = Image::initialize(g, width, height, 0, IMAGEMANAGER->getTexture("WHITE"));
 		if (success == false)
 			throw("MapEvent Object Image Initialized Failed");
 
@@ -32,6 +32,8 @@ bool MapEventObject::initialize(Graphics * g, float x, float y, float width, flo
 		m_rcEventObject = RectMake(m_x, m_y, m_width, m_height);
 		m_eObjectType = eventType;
 		m_bHasImage = false;
+		setX(m_x);
+		setY(m_y);
 		setUpEventKey();
 	}
 	catch (...)
@@ -47,7 +49,7 @@ bool MapEventObject::initialize(Graphics * g, std::string textureName, float x, 
 	bool success = false;
 	try
 	{
-		success = Image::initialize(g, 0, 0, 0, IMAGEMANAGER->getTexture(textureName));
+		success = Image::initialize(g, width, height, 0, IMAGEMANAGER->getTexture(textureName));
 		if (success == false)
 			throw("MapEvent Object Image Initialized Failed");
 
@@ -56,6 +58,33 @@ bool MapEventObject::initialize(Graphics * g, std::string textureName, float x, 
 		m_rcEventObject = RectMake(m_x, m_y, m_width, m_height);
 		m_eObjectType = eventType;
 		m_bHasImage = true;
+		setX(m_x);
+		setY(m_y);
+		setUpEventKey();
+	}
+	catch (...)
+	{
+		MessageBox(g_hWndEngine, "MapEvent Object Initialize Failed", "Error", MB_OK);
+	}
+
+	return success;
+}
+
+bool MapEventObject::initialize(Graphics * g, float x, float y, float width, float height, std::string strEventType)
+{
+	bool success = false;
+	try
+	{
+		success = Image::initialize(g, width, height, 0, IMAGEMANAGER->getTexture("WHITE"));
+		if (success == false)
+			throw("MapEvent Object Image Initialized Failed");
+
+		m_x = x, m_y = y;
+		m_width = width, m_height = height;
+		m_rcEventObject = RectMake(m_x, m_y, m_width, m_height);
+		m_eObjectType = recogEventKey(strEventType);
+		m_bHasImage = false;
+
 		setUpEventKey();
 	}
 	catch (...)
@@ -118,13 +147,76 @@ void MapEventObject::setUpEventKey()
 	}
 }
 
+EVENT_OBJECT_TYPE MapEventObject::recogEventKey(std::string strKey)
+{
+	if (strKey.compare(EVENT_TYPE_KEY::COLLISION_BOX) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_BOX;
+	else if (strKey.compare(EVENT_TYPE_KEY::COLLISION_CIRCLE) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_CIRCLE;
+	else if (strKey.compare(EVENT_TYPE_KEY::COLLISION_ROTATED_BOX) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_ROTATE_BOX;
+	else if (strKey.compare(EVENT_TYPE_KEY::BUILDING_REPAIR) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REPAIR;
+	else if (strKey.compare(EVENT_TYPE_KEY::BUILDING_OBSERVER) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_OBSERVER;
+	else if (strKey.compare(EVENT_TYPE_KEY::BUILDING_REFUEL) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REFUEL;
+	else if (strKey.compare(EVENT_TYPE_KEY::WEATHER_FOG) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_WEATHER_FOG;
+	else if (strKey.compare(EVENT_TYPE_KEY::WEATHER_RAIN) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_WEATHER_RAIN;
+	else if (strKey.compare(EVENT_TYPE_KEY::GAME_RESPAWN) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_RESPAWN;
+	else if (strKey.compare(EVENT_TYPE_KEY::GAME_STARTING) == false)
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_STARTING;
+	else
+		return EVENT_OBJECT_TYPE::EVENT_OBJECT_NONE;
+}
+
 void MapEventObject::renderSketch(COLOR_ARGB color)
 {
+	switch (m_eObjectType)
+	{
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_NONE:
+		color = graphicsNS::WHITE;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_BOX:
+		color = graphicsNS::BLUE;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_CIRCLE:
+		color = graphicsNS::BLUE;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_ROTATE_BOX:
+		color = graphicsNS::BLUE;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REPAIR:
+		color = graphicsNS::GREEN;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_OBSERVER:
+		color = graphicsNS::GREEN;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REFUEL:
+		color = graphicsNS::GREEN;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_WEATHER_FOG:
+		color = graphicsNS::ORANGE;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_WEATHER_RAIN:
+		color = graphicsNS::ORANGE;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_RESPAWN:
+		color = graphicsNS::RED;
+		break;
+	case EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_STARTING:
+		color = graphicsNS::RED;
+		break;
+	}
+
 	if (m_bHasImage)
-		Image::drawRect(graphicsNS::BLUE);
+		Image::drawRect(color);
 	else
 	{
 		RECT rc = RectMake(m_x, m_y, m_width, m_height);
-		this->graphics->drawRect(rc, 1.0f, graphicsNS::BLUE);
+		this->graphics->drawRect(rc, 1.0f, color);
 	}
 }

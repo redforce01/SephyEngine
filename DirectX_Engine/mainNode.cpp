@@ -32,7 +32,7 @@ HRESULT MainNode::initialize()
 	SCENEMANAGER->addScene("Battle", new Scene_Battle);
 	
 	SCENEMANAGER->initialize();
-	SCENEMANAGER->changeScene("Battle");
+	SCENEMANAGER->changeScene("MapTool");
 
 	return S_OK;
 }

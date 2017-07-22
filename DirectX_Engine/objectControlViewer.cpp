@@ -15,7 +15,7 @@ ObjectControlViewer::ObjectControlViewer()
 	m_pMapSystem = nullptr;
 
 	m_layer = 0;
-	m_bFreePosition = false;
+	m_bFreePosition = true;
 	m_posX = m_posY = 0;
 	m_width = m_height = 0;
 	m_collisionType = OBJECT_COLLISION_TYPE::COLLISION_ISOMETRIC;

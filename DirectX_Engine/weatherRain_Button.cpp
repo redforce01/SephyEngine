@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "weatherRain_Button.h"
-
+#include "mapSystem.h"
 
 WeatherRain_Button::WeatherRain_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void WeatherRain_Button::render()
 void WeatherRain_Button::functionWeatherRain(void * obj)
 {
 	WeatherRain_Button* pThis = (WeatherRain_Button*)obj;
-	pThis->m_bActive = !pThis->m_bActive;
-	if (pThis ->m_bActive)
-		pThis->m_dxFont.setFontColor(weatherRainButtonNS::FONT_COLOR_ACTIVE);
-	else
-		pThis->m_dxFont.setFontColor(weatherRainButtonNS::FONT_COLOR_INACTIVE);
 	pThis->m_pInput->setMouseLButton(false);
+
+	pThis->m_bActive = !pThis->m_bActive;
+	if (pThis->m_bActive)
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
+		pThis->m_dxFont.setFontColor(weatherRainButtonNS::FONT_COLOR_ACTIVE);
+	}
+	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
+		pThis->m_dxFont.setFontColor(weatherRainButtonNS::FONT_COLOR_INACTIVE);
+	}
 }

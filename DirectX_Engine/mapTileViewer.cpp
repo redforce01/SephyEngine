@@ -189,13 +189,13 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 
 void MapTileViewer::update(float frameTime)
 {
+	if (getVisible() == false)
+		return;
+
 	SystemUIDialog::update(frameTime);
 
 	if (getMouseOver() == false)
 		return;
-
-	
-
 
 	if (m_pInput->getMouseLButton())
 	{

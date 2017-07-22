@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "gameStarting_Button.h"
-
+#include "mapSystem.h"
 
 GameStarting_Button::GameStarting_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void GameStarting_Button::render()
 void GameStarting_Button::functionGameStarting(void * obj)
 {
 	GameStarting_Button* pThis = (GameStarting_Button*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_bActive = !pThis->m_bActive;
 	if (pThis->m_bActive)
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
 		pThis->m_dxFont.setFontColor(gameStartingButtonNS::FONT_COLOR_ACTIVE);
+	}
 	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
 		pThis->m_dxFont.setFontColor(gameStartingButtonNS::FONT_COLOR_INACTIVE);
-	pThis->m_pInput->setMouseLButton(false);
+	}
 }

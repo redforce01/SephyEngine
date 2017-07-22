@@ -6,6 +6,7 @@ class MapEventObject;
 
 enum class EVENT_OBJECT_TYPE
 {
+	EVENT_OBJECT_NONE,
 	EVENT_OBJECT_COLLISION_BOX,			  // 충돌 처리 (박스)
 	EVENT_OBJECT_COLLISION_CIRCLE,		  // 충돌 처리 (원)
 	EVENT_OBJECT_COLLISION_ROTATE_BOX,	  // 충돌 처리 (회전형 박스)
@@ -33,6 +34,15 @@ namespace EVENT_TYPE_KEY
 	const std::string GAME_STARTING			= "GAME_STARTING";
 }
 
+namespace mapEventObjectNS
+{
+	const char FONT[] = "Courier New";  // console font
+	const int FONT_HEIGHT = 12;         // height of the font in pixels
+	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
+	const int IMAGE_WIDTH = 32;
+	const int IMAGE_HEIGHT = 32;
+}
+
 class MapEventObject : public Image
 {
 private:
@@ -50,6 +60,7 @@ public:
 
 	bool initialize(Graphics* g, float x, float y, float width, float height, EVENT_OBJECT_TYPE eventType);
 	bool initialize(Graphics* g, std::string textureName, float x, float y, float width, float height, EVENT_OBJECT_TYPE eventType);
+	bool initialize(Graphics* g, float x, float y, float width, float height, std::string strEventType);
 	void update(float frameTime);
 	void render();
 
@@ -57,6 +68,8 @@ public:
 	// Memeber Functions	
 	// ==========================================
 	void setUpEventKey();
+
+	EVENT_OBJECT_TYPE recogEventKey(std::string strKey);
 
 	// render Sketch Function
 	// draw Border Line with each Collision Types
@@ -87,6 +100,10 @@ public:
 	// ==========================================
 	// Getter Functions	
 	// ==========================================
+	RECT getEventObjectRECT() const
+	{
+		return m_rcEventObject;
+	}
 	POINT getEventObjectPos() const
 	{
 		return PointMake(m_x, m_y);

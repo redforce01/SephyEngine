@@ -53,15 +53,15 @@ void FreePositionButton::functionFreePosition(void * obj)
 
 	if (flag)
 	{
-		pThis->m_pIcon->setTextureManager(IMAGEMANAGER->getTexture(freePositionButtonNS::FILENAME_OFF));
-		pThis->m_pIcon->setWidth(freePositionButtonNS::OFF_IMAGE_WIDTH);
-		pThis->m_pIcon->setHeight(freePositionButtonNS::OFF_IMAGE_HEIGHT);
-	}
-	else
-	{
 		pThis->m_pIcon->setTextureManager(IMAGEMANAGER->getTexture(freePositionButtonNS::FILENAME_ON));
 		pThis->m_pIcon->setWidth(freePositionButtonNS::ON_IMAGE_WIDTH);
 		pThis->m_pIcon->setHeight(freePositionButtonNS::ON_IMAGE_HEIGHT);
+	}
+	else
+	{
+		pThis->m_pIcon->setTextureManager(IMAGEMANAGER->getTexture(freePositionButtonNS::FILENAME_OFF));
+		pThis->m_pIcon->setWidth(freePositionButtonNS::OFF_IMAGE_WIDTH);
+		pThis->m_pIcon->setHeight(freePositionButtonNS::OFF_IMAGE_HEIGHT);
 	}
 
 	pThis->m_pInput->setMouseLButton(false);

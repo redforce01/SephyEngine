@@ -35,7 +35,7 @@
 //-----------------------------------------
 #define WINSIZEX 1900		// 1920
 #define WINSIZEY 1000		// 1080
-#define STARTX 0
+#define STARTX 1921
 #define STARTY 0
 
 

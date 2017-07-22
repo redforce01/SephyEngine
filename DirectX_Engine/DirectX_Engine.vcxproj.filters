@@ -175,9 +175,6 @@
     <Filter Include="GameCode\Scenes\GameScene">
       <UniqueIdentifier>{bd63640c-8e5a-404c-8f53-22e41dca5d58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Scenes\MapToolScene">
-      <UniqueIdentifier>{ddd146b9-9825-4d55-bfb1-d00b028c286a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SystemCode\Engine\SystemWindow\SystemInterface\SystemTable">
       <UniqueIdentifier>{b96d34c0-1e4f-4061-97de-a815299b03f0}</UniqueIdentifier>
     </Filter>
@@ -276,6 +273,15 @@
     </Filter>
     <Filter Include="GameCode\Maptool\Viewer\EventViewer\Button">
       <UniqueIdentifier>{926211cb-ab50-4ad5-a427-5fe8374f343e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton">
+      <UniqueIdentifier>{18421ee1-59f7-4f76-a9d3-ccd78452bcec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton">
+      <UniqueIdentifier>{dc89bdb5-7776-4759-84b8-05c368292dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleCameraSystem">
+      <UniqueIdentifier>{55aafe11-4de2-415b-bd36-a69a5731debf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -474,21 +480,6 @@
     <ClCompile Include="engineBootSystem.cpp">
       <Filter>SystemCode\Engine\SystemEngineBoot</Filter>
     </ClCompile>
-    <ClCompile Include="control_LoadButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="control_SaveButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="control_ResetButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="control_DebugButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="control_PerformButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClCompile>
     <ClCompile Include="systemDebugStats.cpp">
       <Filter>GameCode\GameSystem</Filter>
     </ClCompile>
@@ -509,9 +500,6 @@
     </ClCompile>
     <ClCompile Include="systemUITitlebar.cpp">
       <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
-    </ClCompile>
-    <ClCompile Include="control_ExitButton.cpp">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
     </ClCompile>
     <ClCompile Include="logViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
@@ -560,9 +548,6 @@
     </ClCompile>
     <ClCompile Include="cameraSystem.cpp">
       <Filter>GameCode\Maptool\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="control_DebugObject.cpp">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
     </ClCompile>
     <ClCompile Include="mapObjectParser.cpp">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
@@ -617,6 +602,39 @@
     </ClCompile>
     <ClCompile Include="scene_MapTool.cpp">
       <Filter>GameCode\Maptool</Filter>
+    </ClCompile>
+    <ClCompile Include="control_DebugButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
+    </ClCompile>
+    <ClCompile Include="control_DebugCellButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
+    </ClCompile>
+    <ClCompile Include="control_DebugEventObjButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
+    </ClCompile>
+    <ClCompile Include="control_DebugObjectButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
+    </ClCompile>
+    <ClCompile Include="control_ExitButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClCompile>
+    <ClCompile Include="control_LoadButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClCompile>
+    <ClCompile Include="control_PerformButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClCompile>
+    <ClCompile Include="control_ResetButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClCompile>
+    <ClCompile Include="control_SaveButton.cpp">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_CameraSystem.cpp">
+      <Filter>GameCode\Battle\BattleCameraSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="engineSetting.cpp">
+      <Filter>SystemCode\Engine\SystemCore</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -836,21 +854,6 @@
     <ClInclude Include="control_ButtonInfo.h">
       <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
     </ClInclude>
-    <ClInclude Include="control_LoadButton.h">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="control_SaveButton.h">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="control_ResetButton.h">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="control_DebugButton.h">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="control_PerformButton.h">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
-    </ClInclude>
     <ClInclude Include="systemDebugStats.h">
       <Filter>GameCode\GameSystem</Filter>
     </ClInclude>
@@ -871,9 +874,6 @@
     </ClInclude>
     <ClInclude Include="systemUITitlebar.h">
       <Filter>SystemCode\Engine\SystemEngineUI\Control</Filter>
-    </ClInclude>
-    <ClInclude Include="control_ExitButton.h">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
     </ClInclude>
     <ClInclude Include="logViewer.h">
       <Filter>GameCode\Maptool\Viewer\LogViewer</Filter>
@@ -922,9 +922,6 @@
     </ClInclude>
     <ClInclude Include="cameraSystem.h">
       <Filter>GameCode\Maptool\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="control_DebugObject.h">
-      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button</Filter>
     </ClInclude>
     <ClInclude Include="mapObjectParser.h">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
@@ -979,6 +976,39 @@
     </ClInclude>
     <ClInclude Include="scene_MapTool.h">
       <Filter>GameCode\Maptool</Filter>
+    </ClInclude>
+    <ClInclude Include="control_DebugObjectButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
+    </ClInclude>
+    <ClInclude Include="control_DebugButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
+    </ClInclude>
+    <ClInclude Include="control_DebugCellButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
+    </ClInclude>
+    <ClInclude Include="control_DebugEventObjButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
+    </ClInclude>
+    <ClInclude Include="control_ExitButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClInclude>
+    <ClInclude Include="control_LoadButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClInclude>
+    <ClInclude Include="control_PerformButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClInclude>
+    <ClInclude Include="control_ResetButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClInclude>
+    <ClInclude Include="control_SaveButton.h">
+      <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\GerneralButton</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_CameraSystem.h">
+      <Filter>GameCode\Battle\BattleCameraSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="engineSetting.h">
+      <Filter>SystemCode\Engine\SystemCore</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

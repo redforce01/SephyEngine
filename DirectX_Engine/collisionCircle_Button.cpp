@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "collisionCircle_Button.h"
-
+#include "mapSystem.h"
 
 CollisionCircle_Button::CollisionCircle_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void CollisionCircle_Button::render()
 void CollisionCircle_Button::functionCollisionCircle(void * obj)
 {
 	CollisionCircle_Button* pThis = (CollisionCircle_Button*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_bActive = !pThis->m_bActive;
 	if (pThis->m_bActive)
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
 		pThis->m_dxFont.setFontColor(collisionCircleButtonNS::FONT_COLOR_ACTIVE);
+	}
 	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
 		pThis->m_dxFont.setFontColor(collisionCircleButtonNS::FONT_COLOR_INACTIVE);
-	pThis->m_pInput->setMouseLButton(false);
+	}
 }

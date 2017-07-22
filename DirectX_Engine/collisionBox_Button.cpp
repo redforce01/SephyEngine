@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "collisionBox_Button.h"
-
+#include "mapSystem.h"
 
 CollisionBox_Button::CollisionBox_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void CollisionBox_Button::render()
 void CollisionBox_Button::functionCollisionBox(void * obj)
 {
 	CollisionBox_Button* pThis = (CollisionBox_Button*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_bActive = !pThis->m_bActive;
 	if (pThis->m_bActive)
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
 		pThis->m_dxFont.setFontColor(collisionBoxButtonNS::FONT_COLOR_ACTIVE);
+	}
 	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
 		pThis->m_dxFont.setFontColor(collisionBoxButtonNS::FONT_COLOR_INACTIVE);
-	pThis->m_pInput->setMouseLButton(false);
+	}
 }

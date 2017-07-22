@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "gameRespawn_Button.h"
-
+#include "mapSystem.h"
 
 GameRespawn_Button::GameRespawn_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void GameRespawn_Button::render()
 void GameRespawn_Button::functionGameRespawn(void * obj)
 {
 	GameRespawn_Button* pThis = (GameRespawn_Button*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_bActive = !pThis->m_bActive;
 	if (pThis->m_bActive)
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
 		pThis->m_dxFont.setFontColor(gameRespawnButtonNS::FONT_COLOR_ACTIVE);
+	}
 	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
 		pThis->m_dxFont.setFontColor(gameRespawnButtonNS::FONT_COLOR_INACTIVE);
-	pThis->m_pInput->setMouseLButton(false);
+	}
 }

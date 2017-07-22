@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "collisionRotatedBox_Button.h"
-
+#include "mapSystem.h"
 
 CollisionRotatedBox_Button::CollisionRotatedBox_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void CollisionRotatedBox_Button::render()
 void CollisionRotatedBox_Button::functionCollisionRotatedBox(void * obj)
 {
 	CollisionRotatedBox_Button* pThis = (CollisionRotatedBox_Button*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_bActive = !pThis->m_bActive;
 	if (pThis->m_bActive)
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
 		pThis->m_dxFont.setFontColor(collisionRotatedBoxButtonNS::FONT_COLOR_ACTIVE);
+	}
 	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
 		pThis->m_dxFont.setFontColor(collisionRotatedBoxButtonNS::FONT_COLOR_INACTIVE);
-	pThis->m_pInput->setMouseLButton(false);
+	}
 }

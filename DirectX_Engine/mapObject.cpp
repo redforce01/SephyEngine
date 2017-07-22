@@ -24,7 +24,10 @@ bool MapObject::initialize(Graphics * g, UINT PID, std::string textureName, OBJE
 	bool success = false;
 
 	m_Number = PID;
-	m_rcObject = RectMake(startX, startY, width, height);
+	m_x = startX, m_y = startY;
+	m_width = width; m_height = height;
+	m_rcObject = RectMake(m_x, m_y, m_width, m_height);
+	m_rcCollisionBox = RectMake(m_x, m_y, m_width, m_height);
 	m_strTextureName = textureName;
 	m_collisionType = collisionType;
 	setX(startX);

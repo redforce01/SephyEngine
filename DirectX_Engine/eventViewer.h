@@ -68,6 +68,9 @@ private: // For DragClicked
 	POINT m_ptStartPos;
 	POINT m_ptEndPos;
 
+private:
+	std::vector<RECT> m_vWorkableRECT;
+
 private: // MapSystem Forward Pointer	
 	MapSystem* m_pMapSystem;
 
@@ -97,6 +100,10 @@ public:
 	// =========================================
 	void setupEventObject();
 
+	void addWorkableRECT(RECT rc)
+	{
+		m_vWorkableRECT.emplace_back(rc);
+	}
 	// =========================================
 	// Getter Functions
 	// =========================================
@@ -109,6 +116,16 @@ public:
 	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
 	{
 		m_pMapSystem = pMapSystem;
+		m_pCollisionBoxButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pCollisionCircleButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pCollisionRotatedBoxButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pBuildingObserverButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pBuildingRefuelButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pBuildingRepairButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pWeatherFog_Button->setMemoryLinkMapSystem(pMapSystem);
+		m_pWeatherRain_Button->setMemoryLinkMapSystem(pMapSystem);
+		m_pGameRespawn_Button->setMemoryLinkMapSystem(pMapSystem);
+		m_pGameStarting_Button->setMemoryLinkMapSystem(pMapSystem);
 	}
 };
 

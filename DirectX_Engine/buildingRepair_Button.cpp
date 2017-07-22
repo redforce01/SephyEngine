@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "buildingRepair_Button.h"
-
+#include "mapSystem.h"
 
 BuildingRepair_Button::BuildingRepair_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void BuildingRepair_Button::render()
 void BuildingRepair_Button::functionBuildingRepair(void * obj)
 {
 	BuildingRepair_Button* pThis = (BuildingRepair_Button*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_bActive = !pThis->m_bActive;
 	if (pThis->m_bActive)
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
 		pThis->m_dxFont.setFontColor(buildingRepairButtonNS::FONT_COLOR_ACTIVE);
+	}
 	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
 		pThis->m_dxFont.setFontColor(buildingRepairButtonNS::FONT_COLOR_INACTIVE);
-	pThis->m_pInput->setMouseLButton(false);
+	}
 }

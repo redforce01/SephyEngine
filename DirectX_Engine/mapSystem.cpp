@@ -11,11 +11,14 @@ MapSystem::MapSystem()
 	m_pCameraSystem = nullptr;
 	m_pMapDataParser = nullptr;
 	m_pLogViewer = nullptr;
+
 	m_bDebug = true;
+	m_bDebugTiles = true;
+	m_bDebugObject = true;
+	m_bDebugEventObject = true;
+
 	m_bMakeObject = false;
-	m_bDebugTiles = false;
-	m_bDebugObject = false;
-	m_bDebugEventObject = false;
+	m_bEventObjectMode = false;
 }
 
 
@@ -93,54 +96,6 @@ bool MapSystem::initialize(Game* gamePtr)
 
 void MapSystem::update(float frameTime)
 {
-	if (m_pInput->getMouseLButton())
-	{
-		for (auto iter : m_arrWorkableRECT)
-		{
-			if (PtInRect(&iter, m_pInput->getMousePt()))
-			{
-				if (m_bMakeObject)
-				{
-					m_pMapTileData->reset();
-					m_bMakeObject = false;
-				}
-
-				return;
-			}
-		}
-		
-		if(m_bMakeObject == false)	// Set ChangeTile (On Tile)
-			changeClickedTile();
-		else
-		{
-			setOnTileObject();		// Set Object (Free Position || None FreePosition )
-			m_pInput->setMouseLButton(false);
-		}
-
-	}
-
-	if (m_pInput->isKeyDown(VK_DELETE))
-	{
-		int count = 0;
-		for (auto iter : m_arrObjects)
-		{
-			if (PtInRect(&iter->getTileRect(), m_pInput->getMousePt()))
-			{
-				auto objIter = m_arrObjects.begin() + count;
-				m_arrObjects.erase(objIter);
-				break;
-			}
-			count++;
-		}
-	}
-
-	// Update m_pMapTileData Set to Mouse Cursor PositionX,Y
-	if (m_bMakeObject)
-	{
-		if(m_pMapTileData)
-			m_pMapTileData->setPosition(m_pInput->getMouseX(), m_pInput->getMouseY());
-	}
-
 	// Update All Tiles
 	for (auto iter : m_arrTiles)
 	{
@@ -167,6 +122,82 @@ void MapSystem::update(float frameTime)
 
 		iter->update(frameTime);
 	}
+
+
+	if (m_bEventObjectMode)
+		return;
+
+	if (m_pInput->getMouseLButton())
+	{
+		for (auto iter : m_arrWorkableRECT)
+		{
+			if (PtInRect(&iter, m_pInput->getMousePt()))
+			{
+				if (m_bMakeObject)
+				{
+					m_pMapTileData->reset();
+					m_bMakeObject = false;
+				}
+
+				return;
+			}
+		}
+		
+		if(m_bMakeObject == false)	// Set ChangeTile (On Tile)
+			changeClickedTile();
+		else
+		{
+			setOnTileObject();		// Set Object (Free Position || None FreePosition )
+			m_pInput->setMouseLButton(false);
+		}
+
+	}
+	
+	if (m_pInput->isKeyDown(VK_DELETE))
+	{
+		if (m_bDebugObject)
+		{
+			int count = 0;
+			for (auto iter : m_arrObjects)
+			{
+				RECT rc = iter->getObjectRect();
+				POINT pt = m_pInput->getMousePt();
+				if (PtInRect(&rc, pt))
+				{
+					auto objIter = m_arrObjects.begin() + count;
+					m_arrObjects.erase(objIter);
+					break;
+				}
+				count++;
+			}
+		}
+
+		if (m_bDebugEventObject)
+		{
+			int count = 0;
+			for (auto iter : m_arrEventObjects)
+			{
+				RECT rc = iter->getEventObjectRECT();
+				POINT pt = m_pInput->getMousePt();
+				if (PtInRect(&rc, pt))
+				{
+					auto eventObjIter = m_arrEventObjects.begin() + count;
+					m_arrEventObjects.erase(eventObjIter);
+					break;
+				}
+				count++;
+			}
+		}
+	}
+
+	// Update m_pMapTileData Set to Mouse Cursor PositionX,Y
+	if (m_bMakeObject)
+	{
+		if(m_pMapTileData)
+			m_pMapTileData->setPosition(m_pInput->getMouseX(), m_pInput->getMouseY());
+	}
+
+
 }
 
 void MapSystem::render()
@@ -195,7 +226,7 @@ void MapSystem::render()
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
 			continue;
-
+				
 		iter->render();
 	}
 
@@ -216,28 +247,37 @@ void MapSystem::render()
 	// This Function Will Drawing Each Object(include Tile)'s border Line
 	if (m_bDebug)
 	{
-		for (auto iter : m_arrTiles)
+		if (m_bDebugTiles)
 		{
-			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
-				continue;
+			for (auto iter : m_arrTiles)
+			{
+				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+					continue;
 
-			iter->renderSketch();
+				iter->renderSketch();
+			}
 		}
 
-		for (auto iter : m_arrObjects)
+		if (m_bDebugObject)
 		{
-			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
-				continue;
+			for (auto iter : m_arrObjects)
+			{
+				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+					continue;
 
-			iter->renderSketch();
+				iter->renderSketch();
+			}
 		}
 
-		for (auto iter : m_arrEventObjects)
+		if (m_bDebugEventObject)
 		{
-			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
-				continue;
+			for (auto iter : m_arrEventObjects)
+			{
+				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+					continue;
 
-			iter->renderSketch();
+				iter->renderSketch();
+			}
 		}
 	}
 }
@@ -317,7 +357,7 @@ void MapSystem::setOnTileObject()
 	if (m_pMapTileData == nullptr)
 		return;
 
-	if (m_pMapTileData->getFreePosition())
+	if (m_pMapTileData->getFreePosition() == false)
 	{
 		std::string name;
 		int count = 0;
@@ -333,15 +373,31 @@ void MapSystem::setOnTileObject()
 			if (MyUtil::getIsometricIn(iter->getTileRect(), m_pInput->getMousePt()))
 			{
 				MapObject* newObject = new MapObject;
-				newObject->initialize(m_pGraphics,
-					m_arrObjects.size() + 1,
-					m_pMapTileData->getTextureName(),
-					m_pMapTileData->getCollisionType(),
-					m_pMapTileData->getLayer(),
-					iter->getX(),
-					iter->getY(),
-					m_pMapTileData->getWidth(),
-					m_pMapTileData->getHeight());
+
+				int width = m_pMapTileData->getWidth();
+				int height = m_pMapTileData->getHeight();
+				if (width != 0 || height != 0)
+				{
+					newObject->initialize(m_pGraphics,
+						m_arrObjects.size() + 1,
+						m_pMapTileData->getTextureName(),
+						m_pMapTileData->getCollisionType(),
+						m_pMapTileData->getLayer(),
+						iter->getX() + (iter->getWidth() / 2),
+						iter->getY() + (iter->getHeight() / 2),
+						m_pMapTileData->getWidth(),
+						m_pMapTileData->getHeight());
+				}
+				else
+				{
+					newObject->initialize(m_pGraphics,
+						m_arrObjects.size() + 1,
+						m_pMapTileData->getTextureName(),
+						m_pMapTileData->getCollisionType(),
+						m_pMapTileData->getLayer(),
+						iter->getX() + (iter->getWidth() / 2),
+						iter->getY() + (iter->getHeight() / 2));
+				}
 					
 				m_pMapTileData->setSelected(false);
 				m_arrObjects.emplace_back(newObject);
@@ -357,15 +413,31 @@ void MapSystem::setOnTileObject()
 	else
 	{
 		MapObject* newObject = new MapObject;
-		newObject->initialize(m_pGraphics,
-			m_arrObjects.size() + 1,
-			m_pMapTileData->getTextureName(),
-			m_pMapTileData->getCollisionType(),
-			m_pMapTileData->getLayer(),
-			m_pMapTileData->getPosition().x,
-			m_pMapTileData->getPosition().y,
-			m_pMapTileData->getWidth(),
-			m_pMapTileData->getHeight());
+		int width = m_pMapTileData->getWidth();
+		int height = m_pMapTileData->getHeight();
+		if (width != 0 || height != 0)
+		{
+			newObject->initialize(m_pGraphics,
+				m_arrObjects.size() + 1,
+				m_pMapTileData->getTextureName(),
+				m_pMapTileData->getCollisionType(),
+				m_pMapTileData->getLayer(),
+				m_pMapTileData->getPosition().x,
+				m_pMapTileData->getPosition().y,
+				m_pMapTileData->getWidth(),
+				m_pMapTileData->getHeight());
+		}
+		else
+		{
+			newObject->initialize(m_pGraphics,
+				m_arrObjects.size() + 1,
+				m_pMapTileData->getTextureName(),
+				m_pMapTileData->getCollisionType(),
+				m_pMapTileData->getLayer(),
+				m_pMapTileData->getPosition().x,
+				m_pMapTileData->getPosition().y);
+		}
+
 	
 		m_pMapTileData->setSelected(false);
 		m_arrObjects.emplace_back(newObject);

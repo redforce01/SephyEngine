@@ -9,6 +9,9 @@ class ControlViewer;
 #include "control_LoadButton.h"
 #include "control_ResetButton.h"
 #include "control_DebugButton.h"
+#include "control_DebugCellButton.h"
+#include "control_DebugObjectButton.h"
+#include "control_DebugEventObjButton.h"
 #include "control_PerformButton.h"
 #include "control_ExitButton.h"
 
@@ -28,12 +31,15 @@ namespace toolControlViewerNS
 class ControlViewer : public SystemUIDialog
 {
 private:
-	Control_SaveButton* m_pSaveButton;
-	Control_LoadButton* m_pLoadButton;
-	Control_ResetButton* m_pResetButton;
-	Control_DebugButton* m_pDebugButton;
-	Control_PerformButton* m_pPerformButton;
-	Control_ExitButton* m_pExitButton;
+	Control_SaveButton*				m_pSaveButton;
+	Control_LoadButton*				m_pLoadButton;
+	Control_ResetButton*			m_pResetButton;
+	Control_DebugButton*			m_pDebugButton;
+	Control_DebugCellButton*		m_pDebugCellButton;
+	Control_DebugObjectButton*		m_pDebugObjectButton;
+	Control_DebugEventObjButton*	m_pDebugEventObjectButton;
+	Control_PerformButton*			m_pPerformButton;
+	Control_ExitButton*				m_pExitButton;
 
 public:
 	ControlViewer();
@@ -52,6 +58,9 @@ public:
 		m_pSaveButton->setMemoryLinkMapSystem(pMapSystem);
 		m_pLoadButton->setMemoryLinkMapSystem(pMapSystem);
 		m_pDebugButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pDebugCellButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pDebugObjectButton->setMemoryLinkMapSystem(pMapSystem);
+		m_pDebugEventObjectButton->setMemoryLinkMapSystem(pMapSystem);
 		m_pResetButton->setMemoryLinkMapSystem(pMapSystem);
 	}
 	void setMemoryLinkLogViewer(LogViewer* pLogViewer)
@@ -59,6 +68,9 @@ public:
 		m_pSaveButton->setMemoryLinkLogViewer(pLogViewer);
 		m_pLoadButton->setMemoryLinkLogViewer(pLogViewer);
 		m_pDebugButton->setMemoryLinkLogViewer(pLogViewer);
+		m_pDebugCellButton->setMemoryLinkLogViewer(pLogViewer);
+		m_pDebugObjectButton->setMemoryLinkLogViewer(pLogViewer);
+		m_pDebugEventObjectButton->setMemoryLinkLogViewer(pLogViewer);
 		m_pResetButton->setMemoryLinkLogViewer(pLogViewer);
 		m_pPerformButton->setMemoryLinkLogViewer(pLogViewer);
 	}

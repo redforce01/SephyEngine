@@ -11,6 +11,12 @@ enum class OBJECT_COLLISION_TYPE
 	COLLISION_BOX, COLLISION_CIRCLE, COLLISION_ISOMETRIC, COLLISION_PIXEL
 };
 
+namespace mapObjectNS
+{
+	const UINT BASIC_OBJECT_WIDTH = 256;
+	const UINT BASIC_OBJECT_HEIGHT = 128;
+}
+
 class MapObject : public Image
 {
 private:
@@ -27,7 +33,7 @@ public:
 	~MapObject();
 
 	bool initialize(Graphics* g, UINT PID, std::string textureName, OBJECT_COLLISION_TYPE collisionType, UINT layer,
-		int startX, int startY,	int width, int height);
+		int startX, int startY,	int width = mapObjectNS::BASIC_OBJECT_WIDTH, int height = mapObjectNS::BASIC_OBJECT_HEIGHT);
 	void update(float frameTime);
 	void render();
 
@@ -77,7 +83,7 @@ public:
 	// ==========================================
 	// Getter Functions
 	// ==========================================
-	inline RECT getTileRect() const
+	inline RECT getObjectRect() const
 	{
 		return m_rcObject;
 	}

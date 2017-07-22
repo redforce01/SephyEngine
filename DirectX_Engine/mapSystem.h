@@ -146,17 +146,37 @@ public:
 	// Setter Functions
 	// ============================================
 
+	// Set Make Event Object Mode Flag Function
+	void setMakeEventObjectMode(bool b)
+	{
+		m_bEventObjectMode = b;
+	}
 	// Set Debug Mode On/Off
 	void setDebug()
 	{
 		m_bDebug = !m_bDebug;
+	}
+	// Set Object Debug Mode On/Off
+	void setDebugObject()
+	{
+		m_bDebugObject = !m_bDebugObject;
+	}
+	// Set Event Object Debug Mode On/Off
+	void setDebugEventObject()
+	{
+		m_bDebugEventObject = !m_bDebugEventObject;
+	}
+	// Set Tile Debug Mode On/Off
+	void setDebugTile()
+	{
+		m_bDebugTiles = !m_bDebugTiles;
 	}
 	// Set MapTileData (Forward Pointer)
 	void setMapTileData(MapTileData* pMapTileData)
 	{
 		m_pMapTileData = pMapTileData;
 	}
-
+	// set Make Object Mode Flag Function
 	void setMakeObjectMode(bool b)
 	{
 		m_bMakeObject = b;
@@ -165,10 +185,28 @@ public:
 	// ============================================
 	// Getter Functions
 	// ============================================
+
+	// get Debug Flag
 	bool getDebug() const
 	{
 		return m_bDebug;
 	}
+	// get Debug Cell Flag
+	bool getDebugTile() const
+	{
+		return m_bDebugTiles;
+	}
+	// get Debug Object Flag
+	bool getDebugObject() const
+	{
+		return m_bDebugObject;
+	}
+	// get Debug Event Object Flag
+	bool getDebugEventObject() const
+	{
+		return m_bDebugEventObject;
+	}
+	
 	std::vector<MapTile*> getAllTiles() const
 	{
 		return m_arrTiles;

@@ -74,8 +74,10 @@ bool MapDataParser::saveData()
 			if (count > 9)
 				strTextureNameTab = mapDataParserNS::TAB_TWO;
 
-			strCellData = mapDataParserNS::TAB_ONE + mapDataMessageNS::DATA_START_KEY + " " + std::to_string(count) +
-				strTextureNameTab + iter->getTextureName() + " " + mapDataMessageNS::DATA_END_KEY + "\n";
+			strCellData = mapDataParserNS::TAB_ONE + mapDataMessageNS::DATA_START_KEY + " " +
+				std::to_string(count) +	strTextureNameTab + 
+				iter->getTextureName() + " " +
+				mapDataMessageNS::DATA_END_KEY + "\n";
 			m_vData.emplace_back(strCellData);
 			count++;
 		}
@@ -101,8 +103,8 @@ bool MapDataParser::saveData()
 				std::to_string((int)iter->getY() + m_pCameraSystem->getCameraY()) + " " +			// Object PosY
 				std::to_string((int)iter->getWidth()) + " " +										// Object Width
 				std::to_string((int)iter->getHeight()) + " " + 										// Object Height
-				iter->getTextureName() +															// Object Texture
-				" " + mapDataMessageNS::DATA_END_KEY + "\n";
+				iter->getTextureName() + " " + 														// Object Texture
+				mapDataMessageNS::DATA_END_KEY + "\n";
 			m_vData.emplace_back(strObjectData);
 			count++;
 		}
@@ -122,15 +124,15 @@ bool MapDataParser::saveData()
 			if (count > 9)
 				strTextureNameTab = mapDataParserNS::TAB_TWO;
 
-			strObjectData = mapDataParserNS::TAB_ONE + mapDataMessageNS::DATA_START_KEY + " " +
+			strEventObjectData = mapDataParserNS::TAB_ONE + mapDataMessageNS::DATA_START_KEY + " " +
 				std::to_string(count) + " " +														// Object Number
 				std::to_string((int)iter->getX() + m_pCameraSystem->getCameraX()) + " " +			// Event Object PosX
 				std::to_string((int)iter->getY() + m_pCameraSystem->getCameraY()) + " " +			// Event Object PosY
 				std::to_string((int)iter->getWidth()) + " " +										// Object Width
 				std::to_string((int)iter->getHeight()) + " " + 										// Object Height
-				iter->getEventTypeKey() + 
-				" " + mapDataMessageNS::DATA_END_KEY + "\n";
-			m_vData.emplace_back(strObjectData);
+				iter->getEventTypeKey() + " " +
+				mapDataMessageNS::DATA_END_KEY + "\n";
+			m_vData.emplace_back(strEventObjectData);
 			count++;
 		}
 		m_vData.emplace_back(mapDataMessageNS::EVENT_OBJECT_START_MESSAGE + " " + mapDataMessageNS::DATA_END_KEY + "\n");
@@ -203,10 +205,10 @@ void MapDataParser::arrayRecognize(std::vector<std::string> vArray)
 	m_MapDataInfo.OriginY = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
 	m_MapDataInfo.Width = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
 	m_MapDataInfo.Height = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
-	m_MapDataInfo.MadeTime = vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE) + 1);					// This Code Has Some Errors
-	m_MapDataInfo.RandomSeed = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));			// This Code Has Some Errors
-	m_MapDataInfo.ObjectSize = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));			// This Code Has Some Errors
-	m_MapDataInfo.CollisionBoxSize = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));	// This Code Has Some Errors
+	m_MapDataInfo.MadeTime = vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE) + 1);
+	m_MapDataInfo.RandomSeed = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
+	m_MapDataInfo.ObjectSize = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
+	m_MapDataInfo.CollisionBoxSize = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(mapDataParserNS::TAB_ONE)));
 		
 	std::vector<std::string> vMapCells;
 	std::vector<std::string> vMapObject;
@@ -358,7 +360,30 @@ void MapDataParser::mapEventObjectSetup(std::vector<std::string> vEventObject)
 
 	for (auto iter : vEventObject)
 	{
+		int recogPos = 0;
+		std::vector<std::string> vData;
+		std::istringstream iss(iter);
+		std::string token;
+		while (std::getline(iss, token, ' '))
+		{
+			vData.emplace_back(token);
+		}
+		EventObjectNumber = std::stoi(vData[++recogPos]);
+		EventObjectX = std::stoi(vData[++recogPos]);
+		EventObjectY = std::stoi(vData[++recogPos]);
+		EventObjectWidth = std::stoi(vData[++recogPos]);
+		EventObjectHeight = std::stoi(vData[++recogPos]);
+		EventObjectType = vData[++recogPos];
 
+		MapEventObject* newEventObject = new MapEventObject;
+		newEventObject->initialize(m_pMapSystem->getGraphics(),
+			EventObjectX - m_pCameraSystem->getCameraX(),
+			EventObjectY - m_pCameraSystem->getCameraY(),
+			EventObjectWidth,
+			EventObjectHeight,
+			EventObjectType);
+		
+		m_pMapSystem->addEventObject(newEventObject);
 	}
 }
 

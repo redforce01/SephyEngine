@@ -14,11 +14,13 @@ namespace collisionRotatedBoxButtonNS
 	const COLOR_ARGB FONT_COLOR_ACTIVE = graphicsNS::GREEN;
 }
 
+class MapSystem;
 class CollisionRotatedBox_Button : public SystemUIButton
 {
 private:
 	bool m_bActive;
 
+	MapSystem* m_pMapSystem;
 public:
 	CollisionRotatedBox_Button();
 	~CollisionRotatedBox_Button();
@@ -33,6 +35,11 @@ public:
 	bool getActive() const
 	{
 		return m_bActive;
+	}
+
+	void setMemoryLinkMapSystem(MapSystem* pMapSystem)
+	{
+		m_pMapSystem = pMapSystem;
 	}
 public:
 	// CALLBACK FUNCTION [STATIC]

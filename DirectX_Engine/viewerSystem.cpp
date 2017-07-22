@@ -84,6 +84,15 @@ void ViewerSystem::update(float frameTime)
 		m_pMapSystem->addWorkRECT(m_pLogViewer->getDialogRECT());
 		m_pMapSystem->addWorkRECT(m_pObjectControlViewer->getDialogRECT());
 		m_pMapSystem->addWorkRECT(m_pEventViewer->getDialogRECT());
+
+		m_pEventViewer->addWorkableRECT(m_pStatsViewer->getDialogRECT());
+		m_pEventViewer->addWorkableRECT(m_pControlViewer->getDialogRECT());
+		m_pEventViewer->addWorkableRECT(m_pMapTileViewer->getDialogRECT());
+		m_pEventViewer->addWorkableRECT(m_pMinimapViewer->getDialogRECT());
+		m_pEventViewer->addWorkableRECT(m_pLogViewer->getDialogRECT());
+		m_pEventViewer->addWorkableRECT(m_pObjectControlViewer->getDialogRECT());
+		m_pEventViewer->addWorkableRECT(m_pEventViewer->getDialogRECT());
+
 		m_bMapSystemWorkableSetup = true;
 	}
 	

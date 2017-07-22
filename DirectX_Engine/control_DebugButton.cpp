@@ -53,7 +53,7 @@ void Control_DebugButton::functionDebug(void * obj)
 
 	pThis->m_pMapSystem->setDebug();
 	if(pThis->m_pMapSystem->getDebug() == true)
-		pThis->m_pLogViewer->addLog("Debug Mode On");
+		pThis->m_pLogViewer->addLog(debugButtonNS::LOG_ON);
 	else 
-		pThis->m_pLogViewer->addLog("Debug Mode Off");
+		pThis->m_pLogViewer->addLog(debugButtonNS::LOG_OFF);
 }

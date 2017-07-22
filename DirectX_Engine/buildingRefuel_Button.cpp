@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "buildingRefuel_Button.h"
-
+#include "mapSystem.h"
 
 BuildingRefuel_Button::BuildingRefuel_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void BuildingRefuel_Button::render()
 void BuildingRefuel_Button::functionBuildingRefuel(void * obj)
 {
 	BuildingRefuel_Button* pThis = (BuildingRefuel_Button*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_bActive = !pThis->m_bActive;
 	if (pThis->m_bActive)
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
 		pThis->m_dxFont.setFontColor(buildingRefuelButtonNS::FONT_COLOR_ACTIVE);
+	}
 	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
 		pThis->m_dxFont.setFontColor(buildingRefuelButtonNS::FONT_COLOR_INACTIVE);
-	pThis->m_pInput->setMouseLButton(false);
+	}
 }

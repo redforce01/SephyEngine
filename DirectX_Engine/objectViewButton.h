@@ -10,7 +10,7 @@ namespace objectViewButtonNS
 	const std::string NAME = "OBJECT";
 	const std::string FILENAME = "ObjectButton";
 	const char FONT[] = "Courier New";  // console font
-	const int FONT_HEIGHT = 10;         // height of the font in pixels
+	const int FONT_HEIGHT = 12;         // height of the font in pixels
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 	const int IMAGE_WIDTH = 32;
 	const int IMAGE_HEIGHT = 26;

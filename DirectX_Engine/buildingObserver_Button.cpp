@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "buildingObserver_Button.h"
-
+#include "mapSystem.h"
 
 BuildingObserver_Button::BuildingObserver_Button()
 {
 	m_bActive = false;
+	m_pMapSystem = nullptr;
 }
 
 
@@ -49,10 +50,17 @@ void BuildingObserver_Button::render()
 void BuildingObserver_Button::functionBuildingObserver(void * obj)
 {
 	BuildingObserver_Button* pThis = (BuildingObserver_Button*)obj;
+	pThis->m_pInput->setMouseLButton(false);
+
 	pThis->m_bActive = !pThis->m_bActive;
 	if (pThis->m_bActive)
+	{
 		pThis->m_dxFont.setFontColor(buildingObserverButtonNS::FONT_COLOR_ACTIVE);
+		pThis->m_pMapSystem->setMakeEventObjectMode(true);
+	}
 	else
+	{
+		pThis->m_pMapSystem->setMakeEventObjectMode(false);
 		pThis->m_dxFont.setFontColor(buildingObserverButtonNS::FONT_COLOR_INACTIVE);
-	pThis->m_pInput->setMouseLButton(false);
+	}
 }
