@@ -48,14 +48,21 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 	bool success = false;
 	try
 	{
-		success = SystemUIDialog::initializeDialog(g, i, mapTileViewerNS::X, mapTileViewerNS::Y, mapTileViewerNS::WIDTH, mapTileViewerNS::HEIGHT, mapTileViewerNS::MARGIN);
+		success = SystemUIDialog::initializeDialog(g, i,
+			g_fScreenWidth - mapTileViewerNS::X,
+			mapTileViewerNS::Y,
+			mapTileViewerNS::WIDTH,
+			g_fScreenHeight - mapTileViewerNS::HEIGHT,
+			mapTileViewerNS::MARGIN);
+
 		if (success == false)
 			throw("SystemUIDialog initialized Failed");
 
 		success = m_dxFont.initialize(g, mapTileViewerNS::FONT_HEIGHT, false, false, mapTileViewerNS::FONT);
 		if (success == false)
 			throw("MapTileViewer DxFont initialized Failed");
-		m_rcPageTextBox = RectMake(mapTileViewerNS::X + mapTileViewerNS::PAGE_TEXT_BOX_POS_X, mapTileViewerNS::HEIGHT - mapTileViewerNS::PAGE_TEXT_BOX_POS_Y,
+		m_rcPageTextBox = RectMake(g_fScreenWidth - mapTileViewerNS::X + mapTileViewerNS::PAGE_TEXT_BOX_POS_X,
+			g_fScreenHeight - mapTileViewerNS::HEIGHT - mapTileViewerNS::PAGE_TEXT_BOX_POS_Y,
 			mapTileViewerNS::WIDTH - (mapTileViewerNS::MARGIN * 2), mapTileViewerNS::FONT_HEIGHT);
 		
 		// ===========================================
@@ -166,7 +173,7 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 		m_pObjectViewButton = new ObjectViewButton;
 		m_pObjectViewButton->initialize(g, i, mapTileViewerNS::OBJECT_VIEW_BUTTON_ID, this,
 			mapTileViewerNS::OBJECT_VIEW_BUTTON_X,
-			mapTileViewerNS::OBJECT_VIEW_BUTTON_Y,
+			g_fScreenHeight - mapTileViewerNS::OBJECT_VIEW_BUTTON_Y,
 			mapTileViewerNS::VIEW_BUTTON_WIDTH, mapTileViewerNS::VIEW_BUTTON_HEIGHT,
 			mapTileViewerNS::VIEW_BUTTON_MARGIN);
 		m_pObjectViewButton->setMemoryLinkMapTileViewer(this);
@@ -174,7 +181,7 @@ bool MapTileViewer::initialize(Graphics * g, Input * i)
 		m_pTileViewButton = new TileViewButton;
 		m_pTileViewButton->initialize(g, i, mapTileViewerNS::TILE_VIEW_BUTTON_ID, this,
 			mapTileViewerNS::TILE_VIEW_BUTTON_X,
-			mapTileViewerNS::TILE_VIEW_BUTTON_Y,
+			g_fScreenHeight - mapTileViewerNS::TILE_VIEW_BUTTON_Y,
 			mapTileViewerNS::VIEW_BUTTON_WIDTH, mapTileViewerNS::VIEW_BUTTON_HEIGHT,
 			mapTileViewerNS::VIEW_BUTTON_MARGIN);
 		m_pTileViewButton->setMemoryLinkMapTileViewer(this);

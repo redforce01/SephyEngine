@@ -99,7 +99,7 @@ void MapSystem::update(float frameTime)
 	// Update All Tiles
 	for (auto iter : m_arrTiles)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 			continue;
 
 		iter->update(frameTime);
@@ -108,7 +108,7 @@ void MapSystem::update(float frameTime)
 	// Update All Objects
 	for (auto iter : m_arrObjects)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 			continue;
 
 		iter->update(frameTime);
@@ -117,7 +117,7 @@ void MapSystem::update(float frameTime)
 	// Update All EventObject
 	for (auto iter : m_arrEventObjects)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 			continue;
 
 		iter->update(frameTime);
@@ -207,7 +207,7 @@ void MapSystem::render()
 	// Draw All Tiles
 	for (auto iter : m_arrTiles)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 			continue;
 		
 		iter->render();
@@ -216,7 +216,7 @@ void MapSystem::render()
 	// Draw All Objects
 	for (auto iter : m_arrObjects)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 			continue;
 
 		iter->render();
@@ -224,7 +224,7 @@ void MapSystem::render()
 
 	for (auto iter : m_arrEventObjects)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 			continue;
 				
 		iter->render();
@@ -251,7 +251,7 @@ void MapSystem::render()
 		{
 			for (auto iter : m_arrTiles)
 			{
-				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 					continue;
 
 				iter->renderSketch();
@@ -262,7 +262,7 @@ void MapSystem::render()
 		{
 			for (auto iter : m_arrObjects)
 			{
-				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 					continue;
 
 				iter->renderSketch();
@@ -273,7 +273,7 @@ void MapSystem::render()
 		{
 			for (auto iter : m_arrEventObjects)
 			{
-				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+				if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 					continue;
 
 				iter->renderSketch();
@@ -332,7 +332,7 @@ void MapSystem::changeClickedTile()
 	name = m_pMapTileData->getTextureName();
 	for (auto iter : m_arrTiles)
 	{
-		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 		{
 			count++;
 			continue;
@@ -364,7 +364,7 @@ void MapSystem::setOnTileObject()
 		name = m_pMapTileData->getTextureName();
 		for (auto iter : m_arrTiles)
 		{
-			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), WINSIZEX, WINSIZEY) == false)
+			if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
 			{
 				count++;
 				continue;

@@ -120,13 +120,13 @@ void TimeManager::drawTimeInfo()
 	char BUFFER[32];
 
 	_snprintf_s(BUFFER, BUFFER_SIZE, "Total Sec : %.1f", (float)m_TotalSec);
-	dxTimer.print(BUFFER, WINSIZEX - 150, 10);
+	dxTimer.print(BUFFER, g_fScreenWidth - 150, 10);
 
 	_snprintf_s(BUFFER, BUFFER_SIZE, "Frame Delta : %.4f", (float)m_FrameDeltaSec);
-	dxTimer.print(BUFFER, WINSIZEX - 150, 30);
+	dxTimer.print(BUFFER, g_fScreenWidth - 150, 30);
 
 	_snprintf_s(BUFFER, BUFFER_SIZE, "fps : %d", (int)m_FramePerSec);
-	dxTimer.print(BUFFER, WINSIZEX - 150, 50);
+	dxTimer.print(BUFFER, g_fScreenWidth - 150, 50);
 
 }
 

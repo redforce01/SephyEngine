@@ -28,10 +28,15 @@ bool MinimapViewer::initialize(Graphics * g, Input * i)
 
 	try
 	{
-		m_rcMinimap = RectMake(minimapViewerNS::X, minimapViewerNS::Y, minimapViewerNS::WIDTH, minimapViewerNS::HEIGHT);
-		m_rcCamera = RectMake(minimapViewerNS::X, minimapViewerNS::Y, m_CamWidth, m_CamHeight);
+		m_rcMinimap = RectMake(minimapViewerNS::X, g_fScreenHeight - minimapViewerNS::Y, minimapViewerNS::WIDTH, minimapViewerNS::HEIGHT);
+		m_rcCamera = RectMake(minimapViewerNS::X, g_fScreenHeight - minimapViewerNS::Y, m_CamWidth, m_CamHeight);
 		m_bInitialized = true;
-		success = SystemUIDialog::initializeDialog(g, i, minimapViewerNS::X, minimapViewerNS::Y, minimapViewerNS::WIDTH, minimapViewerNS::HEIGHT, minimapViewerNS::MARGIN);
+		success = SystemUIDialog::initializeDialog(g, i,
+			minimapViewerNS::X,
+			g_fScreenHeight - minimapViewerNS::Y,
+			minimapViewerNS::WIDTH,
+			minimapViewerNS::HEIGHT,
+			minimapViewerNS::MARGIN);
 	}
 	catch (...)
 	{
@@ -92,17 +97,17 @@ void MinimapViewer::checkMinimapCamRect()
 	{
 		m_rcCamera.left = minimapViewerNS::X;
 	}
-	if (m_rcCamera.top < minimapViewerNS::Y)
+	if (m_rcCamera.top < g_fScreenHeight - minimapViewerNS::Y)
 	{
-		m_rcCamera.top = minimapViewerNS::Y;
+		m_rcCamera.top = g_fScreenHeight - minimapViewerNS::Y;
 	}
 	if (m_rcCamera.right > minimapViewerNS::X + minimapViewerNS::WIDTH)
 	{
 		m_rcCamera.right = minimapViewerNS::X + minimapViewerNS::WIDTH;
 	}
-	if (m_rcCamera.bottom > minimapViewerNS::Y + minimapViewerNS::HEIGHT)
+	if (m_rcCamera.bottom > g_fScreenHeight - minimapViewerNS::Y + minimapViewerNS::HEIGHT)
 	{
-		m_rcCamera.bottom = minimapViewerNS::Y + minimapViewerNS::HEIGHT;
+		m_rcCamera.bottom = g_fScreenHeight - minimapViewerNS::Y + minimapViewerNS::HEIGHT;
 	}
 }
 
@@ -114,15 +119,15 @@ void MinimapViewer::setUpCam()
 	float camX, camY;
 	camX = 0;
 	camY = 0;
-	m_CamWidth = minimapViewerNS::WIDTH / (m_MapWidth / WINSIZEX);
-	m_CamHeight = minimapViewerNS::HEIGHT / (m_MapHeight / WINSIZEY);
+	m_CamWidth = minimapViewerNS::WIDTH / (m_MapWidth / g_fScreenWidth);
+	m_CamHeight = minimapViewerNS::HEIGHT / (m_MapHeight / g_fScreenHeight);
 
 	if (m_bIsometric)
 	{
 		m_CamHeight = m_CamHeight * 2;
 	}
 
-	m_rcCamera = RectMake(minimapViewerNS::X + camX, minimapViewerNS::Y + camY, m_CamWidth, m_CamHeight);
+	m_rcCamera = RectMake(minimapViewerNS::X + camX, g_fScreenHeight - minimapViewerNS::Y + camY, m_CamWidth, m_CamHeight);
 	checkMinimapCamRect();
 }
 
@@ -132,8 +137,8 @@ void MinimapViewer::setUpCam(float startMapX, float startMapY)
 		return;
 	
 	float camX, camY;
-	m_CamWidth = minimapViewerNS::WIDTH / (m_MapWidth / WINSIZEX);
-	m_CamHeight = minimapViewerNS::HEIGHT / (m_MapHeight / WINSIZEY);
+	m_CamWidth = minimapViewerNS::WIDTH / (m_MapWidth / g_fScreenWidth);
+	m_CamHeight = minimapViewerNS::HEIGHT / (m_MapHeight / g_fScreenHeight);
 	camX = minimapViewerNS::WIDTH * (startMapX / m_MapWidth);
 	camY = minimapViewerNS::HEIGHT * (startMapY / m_MapHeight);
 	if (m_bIsometric)
@@ -141,6 +146,6 @@ void MinimapViewer::setUpCam(float startMapX, float startMapY)
 		m_CamHeight = m_CamHeight * 2;
 		camY = camY * 2;
 	}	
-	m_rcCamera = RectMake(minimapViewerNS::X + camX, minimapViewerNS::Y + camY, m_CamWidth, m_CamHeight);
+	m_rcCamera = RectMake(minimapViewerNS::X + camX, g_fScreenHeight - minimapViewerNS::Y + camY, m_CamWidth, m_CamHeight);
 	checkMinimapCamRect();
 }

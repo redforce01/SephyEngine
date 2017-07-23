@@ -11,27 +11,27 @@
 
 namespace messageDialogNS
 {
-    const UINT WIDTH = 400;             // default width of dialog
-    const UINT HEIGHT = 100;            // default height
+    const UINT WIDTH = 400;												// default width of dialog
+    const UINT HEIGHT = 100;											// default height
     const UINT BORDER = 5;
-    const UINT MARGIN = 5;              // text margin from border
-    const char FONT[] = "Arial";        // font
-    const int FONT_HEIGHT = 18;         // font height
-    const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;        // text color
-    const COLOR_ARGB BORDER_COLOR = D3DCOLOR_ARGB(192,192,192,192); // border color
-    const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(255,100,100,192);   // backdrop color
-    const UINT X = GAME_WIDTH/2 - WIDTH/2; // default location
-    const UINT Y = GAME_HEIGHT/4 - HEIGHT/2;
+    const UINT MARGIN = 5;												// text margin from border
+    const char FONT[] = "Arial";										// font
+    const int FONT_HEIGHT = 18;											// font height
+    const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;					// text color
+    const COLOR_ARGB BORDER_COLOR = D3DCOLOR_ARGB(192,192,192,192);		// border color
+    const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(255,100,100,192);		// backdrop color
+    const UINT X = GAME_WIDTH / 2 - WIDTH / 2;							// default location			(instead of using g_fScreenWidth)
+    const UINT Y = GAME_HEIGHT / 4 - HEIGHT / 2;						//							(instead of using g_fScreenHeight)
     const UINT BUTTON_WIDTH = (UINT)(FONT_HEIGHT * 4.5);
     const UINT BUTTON_HEIGHT = FONT_HEIGHT + 4;
     const int MAX_TYPE = 2;
-    const int OK_CANCEL = 0;            // OK Cancel button type
-    const int YES_NO = 1;               // Yes No button type
+    const int OK_CANCEL = 0;											// OK Cancel button type
+    const int YES_NO = 1;												// Yes No button type
     static const char* BUTTON1_TEXT[MAX_TYPE] = {"OK", "YES"};
     static const char* BUTTON2_TEXT[MAX_TYPE] = {"CANCEL", "NO"};
-    const byte DIALOG_CLOSE_KEY = VK_RETURN;    // Enter key
-    const COLOR_ARGB BUTTON_COLOR = graphicsNS::GRAY;       // button background
-    const COLOR_ARGB BUTTON_FONT_COLOR = graphicsNS::WHITE; // button text color
+    const byte DIALOG_CLOSE_KEY = VK_RETURN;							// Enter key
+    const COLOR_ARGB BUTTON_COLOR = graphicsNS::GRAY;					// button background
+    const COLOR_ARGB BUTTON_FONT_COLOR = graphicsNS::WHITE;				// button text color
 }
 
 // Message Dialog

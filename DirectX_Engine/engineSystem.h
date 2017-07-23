@@ -29,7 +29,10 @@ private:
 	EngineInspectorView* engineInspectorView;
 	EngineResourceView* engineResourceView;
 
+private:
 	EngineSetting* engineSetting;
+	tagEngineSettingInfo m_EngineSettingInfo;
+
 public:
 	EngineSystem();
 	~EngineSystem();
@@ -37,8 +40,7 @@ public:
 	bool engineStart(HINSTANCE hInstance, int nCmdShow) override;
 	int run() override;
 	
-	bool CreateMainWindow(HWND &, HINSTANCE, int);
-	
+	bool CreateMainWindow(HWND &, HINSTANCE, int);	
 	LRESULT EngineProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 };
 

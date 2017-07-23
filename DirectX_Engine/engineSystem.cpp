@@ -14,6 +14,7 @@ static LRESULT CALLBACK EngineProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lP
 
 EngineSystem::EngineSystem()
 {
+	ZeroMemory(&m_EngineSettingInfo, sizeof(m_EngineSettingInfo));
 }
 
 EngineSystem::~EngineSystem()
@@ -24,7 +25,6 @@ EngineSystem::~EngineSystem()
 	SAFE_DELETE(g_Graphics);
 	SAFE_DELETE(g_MainNode);
 	SAFE_DELETE(pEngineInput);
-
 	SAFE_DELETE(engineSetting);
 }
 
@@ -36,7 +36,11 @@ bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 {
 	FILEMANAGER->initialize();
 	engineSetting = new EngineSetting;
+	//engineSetting->SaveEngineSetting();
 	engineSetting->LoadEngineSetting();
+
+	m_EngineSettingInfo = engineSetting->GetEngineSettings();
+	engineSetting->RealEngineSetup();
 
 	bool success = false;
 	
@@ -91,7 +95,7 @@ int EngineSystem::run()
 
 	//Graphics Initialize
 	g_Graphics = new Graphics;
-	g_Graphics->initialize(g_hWndEngine, 0, 0, false);
+	g_Graphics->initialize(g_hWndEngine, g_fScreenWidth, g_fScreenHeight, g_bWindowed);
 	//g_Graphics->initialize(g_hWndScene, 0, 0, false);
 
 	//Main Node Initialize
@@ -171,7 +175,8 @@ bool EngineSystem::CreateMainWindow(HWND &hWnd, HINSTANCE hInstance, int nCmdSho
 
 	//set up the screen in windowed or fullscreen mode?
 	DWORD style;
-	if (FULLSCREEN)
+	if(g_bWindowed)
+	//if (FULLSCREEN)
 		style = WS_EX_TOPMOST | WS_POPUP;
 	else
 		style = WS_OVERLAPPEDWINDOW;
@@ -183,28 +188,29 @@ bool EngineSystem::CreateMainWindow(HWND &hWnd, HINSTANCE hInstance, int nCmdSho
 		style,                  // window style
 		CW_USEDEFAULT,          // default horizontal position of window
 		CW_USEDEFAULT,          // default vertical position of window
-		WINSIZEX,				// width of window
-		WINSIZEY,				// height of the window
+		g_fScreenWidth,			//WINSIZEX,				// width of window
+		g_fScreenHeight,		//WINSIZEY,				// height of the window
 		(HWND)NULL,				// no parent window
 		(HMENU)NULL,			// no menu
 		hInstance,              // handle to application instance
 		(LPVOID)NULL);			// no window parameters
 
-							   // if there was an error creating the window
+	// if there was an error creating the window
 	if (!hWnd)
 		return false;
 
-	if (!FULLSCREEN)             // if window
-	{
+	if(!g_bWindowed)
+	//if (!FULLSCREEN)             // if window
+	{		
 		// Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
 		RECT clientRect;
 		GetClientRect(hWnd, &clientRect);   // get size of client area of window
 		MoveWindow(hWnd,
-			STARTX,                                      // Left
-			STARTY,                                      // Top
-			WINSIZEX + (WINSIZEX - clientRect.right),    // Right
-			WINSIZEY + (WINSIZEY - clientRect.bottom),	 // Bottom
-			TRUE);                                       // Repaint the window
+			g_fWindowPosX,													// STARTX,										// Left
+			g_fWindowPosY,													// STARTY,										// Top
+			g_fScreenWidth + (g_fScreenWidth - clientRect.right),			// WINSIZEX + (WINSIZEX - clientRect.right),    // Right
+			g_fScreenHeight + (g_fScreenHeight - clientRect.bottom),		// WINSIZEY + (WINSIZEY - clientRect.bottom),	// Bottom
+			TRUE);															// Repaint the window
 	}
 
 	// Show the window

@@ -191,12 +191,14 @@ void Game::renderGame()
         {
             // convert fps to string
             _snprintf_s(buffer, BUF_SIZE, "fps %d ", (int)fps);
-            dxFont.print(buffer,GAME_WIDTH-100,GAME_HEIGHT-28);
+            //dxFont.print(buffer,GAME_WIDTH-100,GAME_HEIGHT-28);
+			dxFont.print(buffer, g_fScreenWidth - 100, g_fScreenHeight - 28);
         }
 		if (timerOn)
 		{
 			_snprintf_s(buffer, BUF_SIZE, "timer %.1f ", (float)TIMEMANAGER->getFrameDeltaSec());
-			dxFont.print(buffer, GAME_WIDTH - 100, GAME_HEIGHT - 40);
+			//dxFont.print(buffer, GAME_WIDTH - 100, GAME_HEIGHT - 40);
+			dxFont.print(buffer, g_fScreenWidth - 100, g_fScreenHeight - 40);
 			TIMEMANAGER->drawTimeInfo();
 		}
         graphics->spriteEnd();      // end drawing sprites

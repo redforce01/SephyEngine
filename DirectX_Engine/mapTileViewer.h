@@ -15,8 +15,8 @@ class MapTileViewer;
 namespace mapTileViewerNS
 {
 	const UINT WIDTH = 400;				// width of treeViewer
-	const UINT HEIGHT = WINSIZEY - 300;	// height of treeViewer
-	const UINT X = WINSIZEX - WIDTH;	// Viewer location X
+	const UINT HEIGHT = 300;			// height of treeViewer (g_fScreenHeight - 300)
+	const UINT X = WIDTH;				// Viewer location X	(g_fScreenWidth - Width)
 	const UINT Y = 0;					// Viewer location Y
 	const UINT MARGIN = 4;              // text margin from Viewer edge
 	const char FONT[] = "Courier New";  // Viewer font
@@ -59,10 +59,10 @@ namespace mapTileViewerNS
 	const UINT VIEW_BUTTON_MARGIN = 5;
 	const UINT OBJECT_VIEW_BUTTON_ID = 102;
 	const UINT OBJECT_VIEW_BUTTON_X = WIDTH - 70;
-	const UINT OBJECT_VIEW_BUTTON_Y = HEIGHT - 55;
+	const UINT OBJECT_VIEW_BUTTON_Y = HEIGHT + 55;	// (g_fScreenHeight - Height + 70)
 	const UINT TILE_VIEW_BUTTON_ID = 103;
 	const UINT TILE_VIEW_BUTTON_X = WIDTH - 110;
-	const UINT TILE_VIEW_BUTTON_Y = HEIGHT - 55;
+	const UINT TILE_VIEW_BUTTON_Y = HEIGHT + 55;	// (g_fScreenHeight - Height + 55)
 	// VIEW BUTTON NAMESPACE - End
 	// =====================================
 }

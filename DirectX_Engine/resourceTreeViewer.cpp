@@ -28,7 +28,12 @@ bool ResourceTreeViewer::initialize(Graphics* g, Input* i)
 
 	try
 	{
-		success = SystemUIDialog::initializeDialog(g, i, treeViewerNS::X, treeViewerNS::Y, treeViewerNS::WIDTH, treeViewerNS::HEIGHT, treeViewerNS::MARGIN);
+		success = SystemUIDialog::initializeDialog(g, i,
+			g_fScreenWidth - treeViewerNS::X,
+			treeViewerNS::Y,
+			treeViewerNS::WIDTH,
+			g_fScreenHeight,
+			treeViewerNS::MARGIN);
 
 		// initialize DirectX font
 		if (m_dxFont.initialize(m_pGraphics, treeViewerNS::FONT_HEIGHT, false,

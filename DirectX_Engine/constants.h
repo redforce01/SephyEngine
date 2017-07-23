@@ -8,11 +8,11 @@
 //                  Constants
 //-----------------------------------------------
 // window
-const char CLASS_NAME[] = "DirectX_Engine";
-const char GAME_TITLE[] = "DirectX_Engine";
-const bool FULLSCREEN = false;					// windowed or fullscreen
-const UINT GAME_WIDTH = WINSIZEX;				// width of game in pixels
-const UINT GAME_HEIGHT = WINSIZEY;				// height of game in pixels
+const char CLASS_NAME[] = "Sephy_Engine";
+const char GAME_TITLE[] = "Sephy_Engine";
+const bool FULLSCREEN	= false;			// windowed or fullscreen		(instaed of g_bFullScreen)
+const UINT GAME_WIDTH	= 0;				// width of game in pixels		(instead of g_fScreenWidth)
+const UINT GAME_HEIGHT	= 0;				// height of game in pixels		(instead of g_fScreenHeight)
  
 // game
 const bool VSYNC = false;                   // true locks display to vertical sync rate

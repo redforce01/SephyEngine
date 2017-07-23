@@ -33,7 +33,7 @@ bool EventViewer::initialize(Graphics * g, Input * i)
 	bool success = false;
 	try
 	{
-		success = SystemUIDialog::initializeDialog(g, i, eventViewerNS::X, eventViewerNS::Y,
+		success = SystemUIDialog::initializeDialog(g, i, g_fScreenWidth - eventViewerNS::X, eventViewerNS::Y,
 			eventViewerNS::WIDTH, eventViewerNS::HEIGHT, eventViewerNS::MARGIN);
 		if (success == false)
 			throw("Event Viewer SystemUIDialog Initialized Failed");

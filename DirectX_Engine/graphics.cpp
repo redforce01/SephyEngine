@@ -6,17 +6,17 @@
 //=============================================================================
 Graphics::Graphics()
 {
-    direct3d = NULL;
-    device3d = NULL;
-    sprite = NULL;
-    fullscreen = false;
-    stencilSupport = false;
-    width = GAME_WIDTH;    // width & height are replaced in initialize()
-    height = GAME_HEIGHT;
-    backColor = graphicsNS::BACK_COLOR;
-    pOcclusionQuery = NULL;
+    direct3d				= NULL;
+    device3d				= NULL;
+    sprite					= NULL;
+    fullscreen				= false;
+    stencilSupport			= false;
+    width					= 0;    // width & height are replaced in initialize()
+    height					= 0;
+    backColor				= graphicsNS::BACK_COLOR;
+    pOcclusionQuery			= NULL;
     numberOfPixelsColliding = 0;
-    line = NULL;
+    line					= NULL;
 }
 
 //=============================================================================
@@ -496,37 +496,70 @@ void Graphics::changeDisplayMode(graphicsNS::DISPLAY_MODE mode)
         }
         else            // windowed
         {
-            SetWindowLong(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-            SetWindowPos(hwnd, HWND_TOP, 0,0,GAME_WIDTH,GAME_HEIGHT,
-                SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 
-            // Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
-            RECT clientRect;
-            GetClientRect(hwnd, &clientRect);   // get size of client area of window
-            MoveWindow(hwnd,
-                       0,                                           // Left
-                       0,                                           // Top
-                       GAME_WIDTH+(GAME_WIDTH-clientRect.right),    // Right
-                       GAME_HEIGHT+(GAME_HEIGHT-clientRect.bottom), // Bottom
-                       TRUE);                                       // Repaint the window
+#pragma region ORIGINAL_CODE
+			//SetWindowLong(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+			//SetWindowPos(hwnd, HWND_TOP, 0,0,GAME_WIDTH,GAME_HEIGHT,
+			//    SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+
+			//// Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
+			//RECT clientRect;
+			//GetClientRect(hwnd, &clientRect);   // get size of client area of window
+			//MoveWindow(hwnd,
+			//           0,                                           // Left
+			//           0,                                           // Top
+			//           GAME_WIDTH+(GAME_WIDTH-clientRect.right),    // Right
+			//           GAME_HEIGHT+(GAME_HEIGHT-clientRect.bottom), // Bottom
+			//           TRUE);                                       // Repaint the window
+#pragma endregion
+			SetWindowLong(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+			SetWindowPos(hwnd, HWND_TOP, 0, 0, g_fScreenWidth, g_fScreenHeight,
+				SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+
+			// Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
+			RECT clientRect;
+			GetClientRect(hwnd, &clientRect);   // get size of client area of window
+			MoveWindow(hwnd,
+				0,															// Left
+				0,															// Top
+				g_fScreenWidth + (g_fScreenWidth - clientRect.right),		// Right
+				g_fScreenHeight + (g_fScreenHeight - clientRect.bottom),	// Bottom
+				TRUE);														// Repaint the window
+
         }
 
     } catch(...)
     {
+#pragma region ORIGINAL_CODE
+		//// An error occured, try windowed mode 
+		//SetWindowLong(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+		//SetWindowPos(hwnd, HWND_TOP, 0, 0, GAME_WIDTH, GAME_HEIGHT,
+		//	SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+
+		//// Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
+		//RECT clientRect;
+		//GetClientRect(hwnd, &clientRect);   // get size of client area of window
+		//MoveWindow(hwnd,
+		//	0,                                           // Left
+		//	0,                                           // Top
+		//	GAME_WIDTH + (GAME_WIDTH - clientRect.right),    // Right
+		//	GAME_HEIGHT + (GAME_HEIGHT - clientRect.bottom), // Bottom
+		//	TRUE);                                       // Repaint the window
+#pragma endregion
         // An error occured, try windowed mode 
         SetWindowLong(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-        SetWindowPos(hwnd, HWND_TOP, 0,0,GAME_WIDTH,GAME_HEIGHT,
-            SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+		SetWindowPos(hwnd, HWND_TOP, 0, 0, g_fScreenWidth, g_fScreenHeight,
+			SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 
         // Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
         RECT clientRect;
         GetClientRect(hwnd, &clientRect);   // get size of client area of window
-        MoveWindow(hwnd,
-                    0,                                           // Left
-                    0,                                           // Top
-                    GAME_WIDTH+(GAME_WIDTH-clientRect.right),    // Right
-                    GAME_HEIGHT+(GAME_HEIGHT-clientRect.bottom), // Bottom
-                    TRUE);                                       // Repaint the window
+		MoveWindow(hwnd,
+			0,															// Left
+			0,															// Top
+			g_fScreenWidth + (g_fScreenWidth - clientRect.right),		// Right
+			g_fScreenHeight + (g_fScreenHeight - clientRect.bottom),	// Bottom
+			TRUE);														// Repaint the window
     }
 }
 

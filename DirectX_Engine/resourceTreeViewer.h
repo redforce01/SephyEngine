@@ -16,8 +16,8 @@ constexpr int viewerChildTab = 5;
 namespace treeViewerNS
 {
 	const UINT WIDTH = 300;						// width of treeViewer
-	const UINT HEIGHT = WINSIZEY;				// height of treeViewer
-	const UINT X = WINSIZEX - (400 + WIDTH);	// Viewer location X  (512 == TileViewer Width)
+	const UINT HEIGHT = 0;						// height of treeViewer			(g_fScreenHeight)
+	const UINT X = 400 + WIDTH;	// Viewer location X  (512 == TileViewer Width) (g_fScreenWidth - (400 + Width))
 	const UINT Y = 0;							// Viewer location Y
 	const UINT MARGIN = 4;						// text margin from Viewer edge
 	const char FONT[] = "Courier New";			// Viewer font

@@ -33,11 +33,8 @@
 //-----------------------------------------
 // 전처리용 #define 문
 //-----------------------------------------
-#define WINSIZEX 1900		// 1920
-#define WINSIZEY 1000		// 1080
-#define STARTX 1921
-#define STARTY 0
-
+//#define WINSIZEX 1920		// 1920
+//#define WINSIZEY 1080		// 1080
 
 //-----------------------------------------
 //전역 함수로 활용 되는 Manager
@@ -55,6 +52,7 @@
 #include "mainNode.h"
 #include "engineWindowManager.h"
 
+// ENGINE System Variables
 extern HWND g_hWndEngine;
 extern HWND g_hWndGame;
 extern HWND g_hWndScene;
@@ -63,3 +61,26 @@ extern MainNode* g_MainNode;
 extern Graphics* g_Graphics;
 extern WNDCLASSEX g_wcx;
 extern bool g_EngineShutDown;
+
+//=============================================================================
+// Engine Setting Extern Variables
+//=============================================================================
+
+// Engine Variables
+extern std::string	g_strEngineKey;
+
+// DISPLAY Variables
+extern float		g_fWindowPosX;
+extern float		g_fWindowPosY;
+extern float		g_fScreenWidth;
+extern float		g_fScreenHeight;
+extern bool			g_bWindowed;
+
+// SOUND Variables
+extern float		g_fSoundMasterVolume;
+extern float		g_fSoundEffectVolume;
+extern float		g_fSoundBGMVolume;
+
+// Debug Variables
+extern bool			g_fDebugMode;
+extern std::string	g_fDebugSceneName;

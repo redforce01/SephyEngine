@@ -25,14 +25,17 @@ namespace engineSettingNS
 	const std::string DISPLAY_POS_Y_KEY = "ScreenPosY";
 	const std::string DISPLAY_WIDTH_KEY = "ScreenWidth";
 	const std::string DISPLAY_HEIGHT_KEY = "ScreenHeight";
-	const std::string FULLSCREEN_KEY = "Windowed";
+	const std::string DISPLAY_FULLSCREEN_KEY = "Fullscreen";
 	//=======================================================
 	// SOUND SETTING
 	const std::string SOUND_SECTION = "Sound";
-	const std::string SOUND_VOLUME_KEY = "SoundVolume";
+	const std::string SOUND_MASTER_VOLUME_KEY = "SoundMasterVolume";
+	const std::string SOUND_EFFECT_VOLUME_KEY = "SoundEffectVolume";
+	const std::string SOUND_BGM_VOLUME_KEY = "SoundBGMVolume";
 	//=======================================================
 	// DEBUG SETTING
 	const std::string DEBUG_SECTION = "Debug";
+	const std::string DEBUG_MODE_STATE = "Debug";
 	const std::string DEBUG_MODE_KEY = "Mode";
 	//=======================================================
 	// LANGUAGE SETTING
@@ -51,35 +54,38 @@ namespace engineSettingDefaultNS
 	const UINT WINDOW_Y = 0;
 	const UINT WINDOW_WIDTH = 1900;
 	const UINT WINDOW_HEIGHT = 1000;
-	const BOOL WINDOWED = FALSE;
-	const BOOL DEBUGED = FALSE;
-	const std::string LANGUAGE = "English";
-	const std::string MODE = "Tool";
-	const std::string LANGUAGE_PATH = "Resources\\Language\\English.txt";
-	const float DEFAULT_VOLUME = 1.0f;
+	const BOOL FULLSCREEN = FALSE;
+	const BOOL DEFAULT_DEBUGED = FALSE;
+	const std::string DEFAULT_DEBUG_MODE = "MapTool";
+	const std::string DEFAULT_LANGUAGE = "English";
+	const std::string DEFAULT_LANGUAGE_PATH = "Resources\\Language\\English.txt";
+	const float DEFAULT_VOLUME = 1000.0f;
 }
+
+struct tagEngineSettingInfo
+{
+public:
+	std::string strEngineKey;				// Engine Key
+	std::vector<std::string> vCustomPath;	// Custom Path Vector For FILE SYSTEM
+	bool	bFullScreen;					// Display Fullscreen Flag
+	int		nScreenWidth;					// Display Start X
+	int		nScreenHeight;					// Display Start Y
+	int		nScreenPosX;					// Display Width Size
+	int		nScreenPosY;					// Display Height Size
+	float	fSoundMasterVolume;				// Sound Master Volume (min : 0 ~ max : 1000)
+	float	fSoundEffectVolume;				// Sound Effect Volume (min : 0 ~ max : 1000)
+	float	fSoundBGMVolume;				// Sound BGM Volume (min : 0 ~ max : 1000)
+	bool	bDebugMode;						// Debug Mode Flag
+	std::string strDebugScene;				// Debug Mode Scene Name (std::string)
+	std::string strLanguageKey;				// Language Key
+	std::string strLanguageFilePath;		// Language File Path
+};
 
 class EngineSetting
 {
-private:
+private: // SYSTEM
 	std::string m_strSystemPath;	// ENGINE INI SYSTEM PATH
-	std::string m_strEngineKey;		// ENGINE SECTION : EngineKey
-
-private: // DEBUG SECTION
-	bool m_bDebugMode;
-
-private: // DISPLAY SECTION
-	bool m_bFullScreen;
-	int m_nScreenWidth;
-	int m_nScreenHeight;
-	int m_nScreenPosX;
-	int m_nScreenPosY;
-
-private: // SOUND SECTION
-	float m_fSoundVolume;
-
-private: // Custom Path Vector For FILE SYSTEM
-	std::vector<std::string> m_vCustomPath;
+	tagEngineSettingInfo m_EngineSettings;
 
 public:
 	EngineSetting();
@@ -89,88 +95,147 @@ public:
 	void LoadEngineSetting();
 	// ENGINE INI SETTING SAVE FUNCTION
 	void SaveEngineSetting();
+
+	void RealEngineSetup();
 public:
 	//=====================================================
 	// Setter Functions
 	//=====================================================
 
+	// Set Display Windowed
+	void SetDisPlayWindowed(bool bWindowed)
+	{
+		m_EngineSettings.bFullScreen = bWindowed;
+	}
 	// Set Debug Mode(bool Flag)
 	void SetDebugMode(bool bDebug)
 	{
-		m_bDebugMode = bDebug;
+		m_EngineSettings.bDebugMode = bDebug;
 	}
 	// Set Display Pos X
 	void SetDisplayPosX(int posX)
 	{
-		m_nScreenPosX = posX;
+		m_EngineSettings.nScreenPosX = posX;
 	}
 	// Set Display Pos Y
 	void SetDisPlayPosY(int posY)
 	{
-		m_nScreenPosY = posY;
+		m_EngineSettings.nScreenPosY = posY;
 	}
 	// Set Display Width
 	void SetDisPlayWidth(int width)
 	{
-		m_nScreenWidth = width;
+		m_EngineSettings.nScreenWidth = width;
 	}
 	// Set Display Height
 	void SetDisPlayHeight(int height)
 	{
-		m_nScreenHeight = height;
+		m_EngineSettings.nScreenHeight = height;
 	}
-	// Set Display Windowed
-	void SetDisPlayWindowed(bool bWindowed)
+	// Set Sound Master Volume
+	void SetSoundMasterVolume(int volume)
 	{
-		m_bFullScreen = bWindowed;
+		m_EngineSettings.fSoundMasterVolume = volume;
+	}
+	// Set Sound Effect Volume
+	void SetSoundEffectVolume(int volume)
+	{
+		m_EngineSettings.fSoundEffectVolume = volume;
+	}
+	// Set Sound BGM Volume
+	void SetSoundBGMVolume(int volume)
+	{
+		m_EngineSettings.fSoundBGMVolume = volume;
+	}
+	// Set Language Key
+	void SetLanguage(std::string languageKey)
+	{
+		m_EngineSettings.strLanguageKey = languageKey;
 	}
 
 	//=====================================================
 	// Getter Functions
 	//=====================================================
+	tagEngineSettingInfo GetEngineSettings() const
+	{
+		return m_EngineSettings;
+	}
 
 private: // ENGINE INI SETTING FUNCTIONS
 	//=====================================================
 	// Engine Setting For EngineSetting.ini
-	// - ENGINE SECTION
+	// - ENGINE SECTION - LOAD
 	//  + LOAD : Engine Key
 	//=====================================================
 	void LoadEngineSection();
 
+	//=====================================================
+	// Engine Setting For EngineSetting.ini
+	// - DISPLAY SECTION - LOAD
+	//  + DISPLAY POS X,Y	(int, int) 
+	//	+ DISPLAY SIZE		(int, int) [WIDTH, HEIGHT]
+	//	+ DISPLAY WINDOWED	(DEFAULT : FALSE)
+	//=====================================================
+	void LoadDisplaySection();
+	
+	//=====================================================
+	// Engine Setting For EngineSetting.ini
+	// - SOUND SECTION - LOAD
+	//  + SOUND MASTER VOLUME (float)
+	//  + SOUND EFFECT VOLUME (float)
+	//  + SOUND BGM VOLUME (float)
+	//=====================================================
+	void LoadSoundSection();
 
 	//=====================================================
 	// Engine Setting For EngineSetting.ini
-	// - ENGINE SECTION
+	// - DEBUG SECTION - LOAD
+	//  + DEBUG SCENE NAME (std::string)
+	//=====================================================
+	void LoadDebugSection();
+
+	//=====================================================
+	// Engine Setting For EngineSetting.ini
+	// - LANGUAGE SECTION - LOAD
+	//  + Language File Path (std::string)
+	//  + 
+	//=====================================================
+	void LoadLanguageSection();
+
+private: // SAVE SECTION
+	//=====================================================
+	// Engine Setting For EngineSetting.ini
+	// - ENGINE SECTION - SAVE
 	//  + Engine Key : Sephy_s01
 	//=====================================================
 	void SaveEngineSection();
 	
 	//=====================================================
 	// Engine Setting For EngineSetting.ini
-	// - DISPLAY SECTION
-	//  + DISPLAY POS X,Y
-	//  + DISPLAY SIZE(WIDTH, HEIGHT)
-	//  + DISPLAY WINDOWED (DEFAULT : FALSE)
+	// - DISPLAY SECTION - SAVE
+	//  + DISPLAY POS X,Y	(int, int) 
+	//  + DISPLAY SIZE		(int, int) [WIDTH, HEIGHT]
+	//  + DISPLAY WINDOWED	(DEFAULT : FALSE)
 	//=====================================================
 	void SaveDisplaySection();
 
 	//=====================================================
 	// Engine Setting For EngineSetting.ini
-	// - SOUND SECTION
+	// - SOUND SECTION - SAVE
 	//  + SOUND VOLUME
 	//=====================================================
 	void SaveSoundSection();
 
 	//=====================================================
 	// Engine Setting For EngineSetting.ini
-	// - DEBUG SECTION
+	// - DEBUG SECTION - SAVE
 	//  + DEBUG MODE
 	//=====================================================
 	void SaveDebugSection();
 
 	//=====================================================
 	// Engine Setting For EngineSetting.ini
-	// - LANGUAGE SECTION
+	// - LANGUAGE SECTION - SAVE
 	//  + LANGUAGE KEY(Language)
 	//  + LANGUAGE FILE PATH
 	//=====================================================

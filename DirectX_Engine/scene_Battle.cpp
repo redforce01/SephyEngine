@@ -37,11 +37,7 @@ void Scene_Battle::collisions()
 
 void Scene_Battle::render()
 {
-	graphics->spriteBegin();
-	
 
-
-	graphics->spriteEnd();
 }
 
 void Scene_Battle::releaseAll()

@@ -42,22 +42,30 @@ bool ObjectControlViewer::initialize(Graphics * g, Input * i)
 
 	try
 	{
-		m_rcTitle = RectMake(objectControlViewerNS::X + objectControlViewerNS::MARGIN, objectControlViewerNS::Y + objectControlViewerNS::MARGIN,
+		m_rcTitle = RectMake(g_fScreenWidth - objectControlViewerNS::X + objectControlViewerNS::MARGIN,
+			g_fScreenHeight - objectControlViewerNS::Y + objectControlViewerNS::MARGIN,
 			objectControlViewerNS::WIDTH - (objectControlViewerNS::MARGIN * 2), objectControlViewerNS::FONT_HEIGHT + objectControlViewerNS::MARGIN);
 		m_rcControl = RectMake(
-			objectControlViewerNS::X + objectControlViewerNS::MARGIN + objectControlViewerNS::FONT_HEIGHT,
-			objectControlViewerNS::Y + objectControlViewerNS::MARGIN + objectControlViewerNS::FONT_HEIGHT + objectControlNS::OBJECT_CONTROL_BOX_HEIGHT,
+			g_fScreenWidth - objectControlViewerNS::X + objectControlViewerNS::MARGIN + objectControlViewerNS::FONT_HEIGHT,
+			g_fScreenHeight - objectControlViewerNS::Y + objectControlViewerNS::MARGIN + objectControlViewerNS::FONT_HEIGHT + objectControlNS::OBJECT_CONTROL_BOX_HEIGHT,
 			objectControlViewerNS::WIDTH - (objectControlViewerNS::MARGIN * 2),
 			objectControlNS::OBJECT_CONTROL_BOX_HEIGHT);
 
-		m_rcCollisionHint = RectMake(objectControlViewerNS::X + objectControlNS::OBJECT_CONTROL_BOX_WIDTH, objectControlViewerNS::Y + 250,
+		m_rcCollisionHint = RectMake(g_fScreenWidth - objectControlViewerNS::X + objectControlNS::OBJECT_CONTROL_BOX_WIDTH,
+			g_fScreenHeight - objectControlViewerNS::Y + 250,
 			objectControlViewerNS::WIDTH - (objectControlViewerNS::MARGIN * 2),	objectControlNS::OBJECT_CONTROL_BOX_HEIGHT);
 
 		success = m_dxFont.initialize(g, objectControlViewerNS::FONT_HEIGHT, false, false, objectControlViewerNS::FONT);
 		if (success == false)
 			throw("Object Control Viewer DxFont initialized Failed");
 
-		success = SystemUIDialog::initializeDialog(g, i, objectControlViewerNS::X, objectControlViewerNS::Y, objectControlViewerNS::WIDTH, objectControlViewerNS::HEIGHT, objectControlViewerNS::MARGIN);
+		success = SystemUIDialog::initializeDialog(g, i, 			
+			g_fScreenWidth - objectControlViewerNS::X,
+			g_fScreenHeight - objectControlViewerNS::Y,
+			objectControlViewerNS::WIDTH,
+			objectControlViewerNS::HEIGHT,
+			objectControlViewerNS::MARGIN);
+
 		if (success == false)
 			throw("Object Control Viewer SystemUIDialog initialized Failed");
 
@@ -231,7 +239,8 @@ void ObjectControlViewer::render()
 	// Print Object Control Title
 	m_dxFont.print(objectControlNS::OBJECT_CONTROL_TITLE, m_rcTitle, DT_LEFT | DT_VCENTER);
 
-	m_rcCollisionHint = RectMake(objectControlViewerNS::X + objectControlNS::OBJECT_CONTROL_BOX_WIDTH, objectControlViewerNS::Y + objectControlNS::COLLISION_KEY_HINT_POS_Y,
+	m_rcCollisionHint = RectMake(g_fScreenWidth - objectControlViewerNS::X + objectControlNS::OBJECT_CONTROL_BOX_WIDTH, 
+		g_fScreenHeight - objectControlViewerNS::Y + objectControlNS::COLLISION_KEY_HINT_POS_Y,
 		objectControlViewerNS::WIDTH - (objectControlViewerNS::MARGIN * 2), objectControlNS::OBJECT_CONTROL_BOX_HEIGHT);
 
 	std::string collisionHint = objectControlNS::COLLISION_KEY_HINT;

@@ -10,7 +10,7 @@ namespace logViewerNS
 	const UINT WIDTH = 500;					// width of treeViewer
 	const UINT HEIGHT = 250;				// height of treeViewer
 	const UINT X = 405;						// Viewer location X
-	const UINT Y = WINSIZEY - HEIGHT - 5;	// Viewer location Y
+	const UINT Y = HEIGHT - 5;				// Viewer location Y			(g_fScreenHeight - Height - 5)
 	const UINT MARGIN = 4;					// text margin from Viewer edge
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_HEIGHT = 14;				// height of the font in pixels

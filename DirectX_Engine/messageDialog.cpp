@@ -14,14 +14,20 @@ MessageDialog::MessageDialog()
     backColor = messageDialogNS::BACK_COLOR;
     buttonColor = messageDialogNS::BUTTON_COLOR;
     buttonFontColor = messageDialogNS::BUTTON_FONT_COLOR;
-    x = messageDialogNS::X;                // starting position
-    y = messageDialogNS::Y;
+	//x = messageDialogNS::X;                // starting position		GAME_WIDTH / 2 - WIDTH / 2;	
+	//y = messageDialogNS::Y;											GAME_HEIGHT / 4 - HEIGHT / 2;
+	x = (g_fScreenWidth / 2 - messageDialogNS::WIDTH / 2);
+	y = (g_fScreenHeight / 4 - messageDialogNS::HEIGHT / 2);
     height = messageDialogNS::HEIGHT;
     width = messageDialogNS::WIDTH;
-    textRect.bottom = messageDialogNS::Y + messageDialogNS::HEIGHT - messageDialogNS::MARGIN;
-    textRect.left = messageDialogNS::X + messageDialogNS::MARGIN;
-    textRect.right = messageDialogNS::X + messageDialogNS::WIDTH - messageDialogNS::MARGIN;
-    textRect.top = messageDialogNS::Y + messageDialogNS::MARGIN;
+    //textRect.bottom = messageDialogNS::Y + messageDialogNS::HEIGHT - messageDialogNS::MARGIN;
+    //textRect.left = messageDialogNS::X + messageDialogNS::MARGIN;
+    //textRect.right = messageDialogNS::X + messageDialogNS::WIDTH - messageDialogNS::MARGIN;
+    //textRect.top = messageDialogNS::Y + messageDialogNS::MARGIN;
+	textRect.bottom = (g_fScreenHeight / 4 - messageDialogNS::HEIGHT / 2) + messageDialogNS::HEIGHT - messageDialogNS::MARGIN;
+	textRect.left = (g_fScreenWidth / 2 - messageDialogNS::WIDTH / 2) + messageDialogNS::MARGIN;
+	textRect.right = (g_fScreenWidth / 2 - messageDialogNS::WIDTH / 2) + messageDialogNS::WIDTH - messageDialogNS::MARGIN;
+	textRect.top = (g_fScreenHeight / 4 - messageDialogNS::HEIGHT / 2) + messageDialogNS::MARGIN;
     dialogVerts = NULL;
     borderVerts = NULL;
     buttonVerts = NULL;
@@ -249,8 +255,8 @@ void MessageDialog::update()
         // calculate screen ratios incase window was resized
         RECT clientRect;
         GetClientRect(hwnd, &clientRect);
-        screenRatioX = (float)GAME_WIDTH / clientRect.right;
-        screenRatioY = (float)GAME_HEIGHT / clientRect.bottom;
+        screenRatioX = (float)g_fScreenWidth / clientRect.right;
+        screenRatioY = (float)g_fScreenHeight / clientRect.bottom;
     }
 
     if (input->getMouseLButton())       // if mouse left button
