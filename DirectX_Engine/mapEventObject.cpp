@@ -11,6 +11,7 @@ MapEventObject::MapEventObject()
 	m_radius = 0.f;
 	m_angle = 0.f;
 	m_rcEventObject = { 0, };
+	m_bPlayers = false;
 }
 
 

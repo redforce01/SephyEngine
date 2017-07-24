@@ -636,6 +636,12 @@
     <ClCompile Include="engineSetting.cpp">
       <Filter>SystemCode\Engine\SystemCore</Filter>
     </ClCompile>
+    <ClCompile Include="Battle_MapParser.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_DataParser.cpp">
+      <Filter>GameCode\Battle\BattleSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -1009,6 +1015,12 @@
     </ClInclude>
     <ClInclude Include="engineSetting.h">
       <Filter>SystemCode\Engine\SystemCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapParser.h">
+      <Filter>GameCode\Battle\BattleMapSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_DataParser.h">
+      <Filter>GameCode\Battle\BattleSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

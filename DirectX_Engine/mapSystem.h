@@ -125,7 +125,7 @@ public:
 	{
 		m_arrObjects.emplace_back(pObject);
 	}
-
+	// Add Map Event Object Function
 	void addEventObject(MapEventObject* pEventObject)
 	{
 		m_arrEventObjects.emplace_back(pEventObject);

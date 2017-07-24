@@ -16,9 +16,6 @@ namespace mapDataParserNS
 {
 	const std::string LOAD_FILE_NAME = "battleMap.mdf";
 	const std::string SAVE_FILE_NAME = "battleMap.mdf";
-	const std::string MAP_TILE_IP = "MAP TILE NAME :";
-	const std::string MAP_OBJECT_IP = "MAP OBJECT NAME :";
-
 	const std::string TAB_ONE = "\t";
 	const std::string TAB_TWO = "\t\t";
 	const std::string TAB_THREE = "\t\t\t";
@@ -105,7 +102,10 @@ public:
 	// ===================================================
 	// Member Functions
 	// ===================================================
-	void setMapDataInfo();
+	void setMapDataInfo(tagMapDataInfo gInfo)
+	{
+		m_MapDataInfo = gInfo;
+	}
 
 
 	// Save Functions

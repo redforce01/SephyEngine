@@ -17,6 +17,7 @@ TxtDataParser::~TxtDataParser()
 // Parameter (std::string fileName)
 // return std::vector<std::string>
 // The Parser Will Expect included "#". Each Line
+// and "" void Line Too.
 // =======================================================================
 std::vector<std::string> TxtDataParser::loadDataToArray(std::string fileName)
 {

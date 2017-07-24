@@ -1,0 +1,24 @@
+#-----------------------------
+# Battle Data Format
+#  - Battle Map Name
+#  - Battle Player Ship Information List
+#  - Battle AI Ship Information List
+#-----------------------------
+
+BEGIN MapData
+	BEGIN BattleMap_01 END
+MapData END
+
+BEGIN PlayerData
+	BEGIN ShipName Count END
+	BEGIN ShipName Count END
+	BEGIN ShipName Count END
+	BEGIN ShipName Count END
+PlayerData END
+
+BEGIN AIData
+	BEGIN ShipName Count END
+	BEGIN ShipName Count END
+	BEGIN ShipName Count END
+	BEGIN ShipName Count END
+AIData END

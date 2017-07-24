@@ -4,10 +4,13 @@
 class Scene_Battle;
 
 #include "game.h"
+#include "Battle_MainSystem.h"
 
 class Scene_Battle : public Game
 {
 private:
+	CBattle_MainSystem* m_pBattleMainSystem;
+
 
 public:
 	Scene_Battle();

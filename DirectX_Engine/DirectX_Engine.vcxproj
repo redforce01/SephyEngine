@@ -143,7 +143,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Battle_CameraSystem.cpp" />
+    <ClCompile Include="Battle_DataParser.cpp" />
     <ClCompile Include="Battle_MainSystem.cpp" />
+    <ClCompile Include="Battle_MapParser.cpp" />
     <ClCompile Include="Battle_MapSystem.cpp" />
     <ClCompile Include="buildingObserver_Button.cpp" />
     <ClCompile Include="buildingRefuel_Button.cpp" />
@@ -264,7 +266,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battle_CameraSystem.h" />
+    <ClInclude Include="Battle_DataParser.h" />
     <ClInclude Include="Battle_MainSystem.h" />
+    <ClInclude Include="Battle_MapParser.h" />
     <ClInclude Include="Battle_MapSystem.h" />
     <ClInclude Include="buildingObserver_Button.h" />
     <ClInclude Include="buildingRefuel_Button.h" />

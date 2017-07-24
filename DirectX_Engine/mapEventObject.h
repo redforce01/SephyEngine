@@ -49,11 +49,15 @@ private:
 	bool m_bHasImage;
 	EVENT_OBJECT_TYPE m_eObjectType;
 	std::string m_strEventType;
-	float m_x, m_y;
-	float m_width, m_height;
-	float m_radius;
-	float m_angle;
-	RECT m_rcEventObject;
+	float	m_x, m_y;
+	float	m_width, m_height;
+	float	m_radius;
+	float	m_angle;
+	RECT	m_rcEventObject;
+
+private:
+	bool m_bPlayers;
+
 public:
 	MapEventObject();
 	~MapEventObject();
@@ -97,6 +101,10 @@ public:
 	{
 		m_eObjectType = type;
 	}
+	void setPlayersObject(bool b)
+	{
+		m_bPlayers = b;
+	}
 	// ==========================================
 	// Getter Functions	
 	// ==========================================
@@ -120,7 +128,10 @@ public:
 	{
 		return m_strEventType;
 	}
-
+	bool getPlayersObject() const
+	{
+		return m_bPlayers;
+	}
 };
 
 #endif // !_MAPEVENTOBJECT_H
