@@ -1023,4 +1023,7 @@
       <Filter>GameCode\Battle\BattleSystem</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

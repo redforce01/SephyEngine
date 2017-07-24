@@ -23,13 +23,11 @@ HRESULT FileManager::initialize()
 	//function Recognize All File
 	funcRecognize();
 	
-#ifdef _DEBUG
 	//Print File Struct
 	printAllFile();
 	printAllImage();
 	printAllData();
 	printAllEtc();
-#endif // _DEBUG
 
 	FILEMANAGER->funcBackDir();
 

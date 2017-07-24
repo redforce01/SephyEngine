@@ -36,6 +36,7 @@ private:
 	
 private:
 	CBattle_MapParser* m_pBattleMapDataParser;
+
 public:
 	CBattle_MapSystem();
 	~CBattle_MapSystem();
@@ -111,6 +112,24 @@ public:
 	//=============================================
 	// Getter Functions
 	//=============================================
+
+	void setAllTiles(std::vector<MapTile*> pArrCells)
+	{
+		m_vCells = pArrCells;
+	}
+	void setAllObject(std::vector<MapObject*> pArrObjects)
+	{
+		m_vObjects = pArrObjects;
+	}
+	void setAllEventObject(std::vector<MapEventObject*> pArrEventObjects)
+	{
+		m_vEventObjects = pArrEventObjects;
+	}
+
+	//=============================================
+	// Getter Functions
+	//=============================================
+	
 	std::vector<MapTile*> getAllTiles() const
 	{
 		return m_vCells;

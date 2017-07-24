@@ -37,7 +37,7 @@ void CBattle_DataParser::battleDataRecognize(std::vector<std::string> vArray)
 			bRecogMap = true;
 			continue;
 		}
-		else if(iter.compare(battleDataParserNS::DATA_FORMAT_END_KEY + " " + battleDataParserNS::BATTLE_MAP_KEY) == false)
+		else if(iter.compare(battleDataParserNS::BATTLE_MAP_KEY + " " + battleDataParserNS::DATA_FORMAT_END_KEY) == false)
 		{
 			bRecogMap = false;
 			continue;
@@ -54,7 +54,7 @@ void CBattle_DataParser::battleDataRecognize(std::vector<std::string> vArray)
 			bRecogPlayerShip = true;
 			continue;
 		}
-		else if (iter.compare(battleDataParserNS::DATA_FORMAT_END_KEY + " " + battleDataParserNS::BATTLE_PLAYER_KEY) == false)
+		else if (iter.compare(battleDataParserNS::BATTLE_PLAYER_KEY + " " + battleDataParserNS::DATA_FORMAT_END_KEY) == false)
 		{
 			bRecogPlayerShip = false;
 			continue;
@@ -71,7 +71,7 @@ void CBattle_DataParser::battleDataRecognize(std::vector<std::string> vArray)
 			bRecogAIShip = true;
 			continue;
 		}
-		else if (iter.compare(battleDataParserNS::DATA_FORMAT_END_KEY + " " + battleDataParserNS::BATTLE_AI_KEY) == false)
+		else if (iter.compare(battleDataParserNS::BATTLE_AI_KEY + " " + battleDataParserNS::DATA_FORMAT_END_KEY) == false)
 		{
 			bRecogAIShip = false;
 			continue;
@@ -91,7 +91,14 @@ void CBattle_DataParser::battleDataRecognize(std::vector<std::string> vArray)
 
 void CBattle_DataParser::battleMapDataRecognize(std::string mapName)
 {
-	
+	int startKeyPos = mapName.rfind(battleDataParserNS::DATA_FORMAT_BEGIN_KEY);
+	int endKeyPos = mapName.rfind(battleDataParserNS::DATA_FORMAT_END_KEY);
+
+	std::string strMapName = mapName.substr(
+		startKeyPos + battleDataParserNS::DATA_FORMAT_BEGIN_KEY.length() + 1,
+		endKeyPos - (battleDataParserNS::DATA_FORMAT_END_KEY.length() * 2) - 2);
+
+	m_strMapName = strMapName;
 }
 
 void CBattle_DataParser::battlePlayerDataRecognize(std::vector<std::string> vArray)

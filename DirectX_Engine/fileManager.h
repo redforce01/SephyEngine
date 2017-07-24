@@ -22,7 +22,7 @@ struct stFile
 namespace fileManagerNS
 {
 	const std::string imgExt[] = { "jpg", "JPG", "jpeg", "JPEG", "bmp", "BMP", "png", "PNG", "gif", "GIF", "tga", "TGA" };
-	const std::string dataExt[] = { "txt", "TXT", "xml", "XML", "json", "JSON", "sql", "SQL" };
+	const std::string dataExt[] = { "txt", "TXT", "xml", "XML", "json", "JSON", "sql", "SQL" ,"mdf", "MDF" };
 }
 
 class FileManager : public cSingletonBase<FileManager>
@@ -135,7 +135,7 @@ public:
 	{
 		for (auto iter : arrImage)
 		{
-			if (iter->fileName.compare(fileName) == 0)
+			if (iter->fileName.compare(fileName) == false)
 				return iter;
 		}
 
@@ -150,7 +150,7 @@ public:
 	{
 		for (auto iter : arrData)
 		{
-			if (iter->fileName.compare(fileName) == 0)
+			if (iter->fileName.compare(fileName) == false)
 				return iter;
 		}
 	}
@@ -163,7 +163,7 @@ public:
 	{
 		for (auto iter : arrEtc)
 		{
-			if (iter->fileName.compare(fileName) == 0)
+			if (iter->fileName.compare(fileName) == false)
 				return iter;
 		}
 	}

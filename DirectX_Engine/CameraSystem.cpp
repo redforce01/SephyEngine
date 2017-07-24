@@ -37,8 +37,6 @@ bool CameraSystem::initialize(Game* gamePtr)
 
 void CameraSystem::update(float frameTime)
 {
-
-
 	if (m_pInput->isKeyDown(CameraSystemNS::CAMERA_MOVE_LEFT_KEY))
 	{
 		moveLeft();

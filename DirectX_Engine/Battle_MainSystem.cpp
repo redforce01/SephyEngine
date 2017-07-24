@@ -37,8 +37,8 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		//=====================================================================
 
 		// 
-		std::string loadMapName = m_pBattle_DataParser->getMapName();
-		m_pBattle_MapSystem->loadBattleMap(loadMapName);
+		std::string loadBattleMapName = m_pBattle_DataParser->getBattleMapName();
+		m_pBattle_MapSystem->loadBattleMap(loadBattleMapName);
 	}
 	catch (...)
 	{

@@ -11,6 +11,11 @@ namespace battleCameraSystemNS
 	const float CAMERA_NORMAL_SPEED = 10.f;
 	const float CAMERA_BOOST_SPEED = 20.0f;
 	const UCHAR CAMERA_BOOST_KEY = VK_SHIFT;
+
+	const UCHAR CAMERA_MOVE_LEFT_KEY = VK_LEFT;
+	const UCHAR CAMERA_MOVE_RIGHT_KEY = VK_RIGHT;
+	const UCHAR CAMERA_MOVE_UP_KEY = VK_UP;
+	const UCHAR CAMERA_MOVE_DOWN_KEY = VK_DOWN;
 }
 
 class CBattle_MapSystem;
@@ -20,8 +25,11 @@ class CBattle_CameraSystem : public SystemBase
 private: // Camera Variables
 	float m_fCameraX, m_fCameraY;
 	float m_fCameraSpeed;
+	float m_fCameraMinX, m_fCameraMinY;
+	float m_fCameraMaxX, m_fCameraMaxY;
+
 	bool m_bCameraBoost;
-	
+
 private: // Forward Pointer Variables
 	CBattle_MapSystem*		m_pBattleMapSystem;
 	CBattle_MiniMapSystem*	m_pBattleMinimapSystem;

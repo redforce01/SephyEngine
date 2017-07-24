@@ -16,12 +16,14 @@ CBattle_MapParser::~CBattle_MapParser()
 
 bool CBattle_MapParser::loadBattleMapData(std::string mapFileName)
 {	
+	m_strLoadFileName = mapFileName;
+	auto vData = TXTDATA_PARSER->loadDataToArray(mapFileName);
+
 	bool success = false;
 	try
-	{
-		m_strLoadFileName = mapFileName;		
-		auto vData = TXTDATA_PARSER->loadDataToArray(mapFileName);
+	{		
 		mapDataRecognize(vData);
+		m_pBattleMapSystem->setAllTiles(m_loadedCells);
 		success = true;
 	}
 	catch (...)
@@ -46,8 +48,8 @@ void CBattle_MapParser::mapDataRecognize(std::vector<std::string> vArray)
 	m_MapDataInfo.CellsY = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
 	m_MapDataInfo.OriginX = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
 	m_MapDataInfo.OriginY = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
-	m_MapDataInfo.Width = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
-	m_MapDataInfo.Height = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
+	m_MapDataInfo.OriginWidth = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
+	m_MapDataInfo.OriginHeight = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
 	m_MapDataInfo.MadeTime = vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE) + 1);
 	m_MapDataInfo.RandomSeed = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
 	m_MapDataInfo.ObjectSize = std::stoi(vArray[++recogCount].substr(vArray[recogCount].rfind(battleMapDataMessageNS::TAB_ONE)));
@@ -129,19 +131,40 @@ void CBattle_MapParser::loadBattleMapCells(std::vector<std::string> vMapCells)
 
 	m_pBattleMapSystem->resetTiles();
 
-	int cellNumber = 0;
 	std::string texture;
+	int cellNumber = 0;
+	int cellTotalX = m_MapDataInfo.CellsX;
+	int cellTotalY = m_MapDataInfo.CellsY;
+	int cellPosX = 0;
+	int cellPosY = 0;
+	int cellWidth = m_MapDataInfo.OriginWidth;
+	int cellHeight = m_MapDataInfo.OriginHeight;
 
-	auto arrTiles = m_pBattleMapSystem->getAllTiles();
+	int row = 0;
 	for (auto iter : vMapCells)
 	{
 		int startKeyPos = iter.rfind("\t");
 		int endKeyPos = iter.rfind(" ");
 		texture = iter.substr(startKeyPos + 1, endKeyPos - 1 - startKeyPos);
-				
-		arrTiles[cellNumber]->changeTexture(texture);				// Change MapSystem CellTexture
+
+		MapTile* newCell = new MapTile;
+		newCell->initialize(m_pGraphics, cellNumber, texture, cellPosX, cellPosY, cellWidth, cellHeight);
+		m_loadedCells.emplace_back(newCell);
+		
+		cellPosX += cellWidth;
+		if (cellNumber % cellTotalX == 0 && cellNumber != 0)
+		{
+			if (row % 2)
+				cellPosX = 0;
+			else
+				cellPosX = cellWidth / 2;
+
+			cellPosY += cellHeight / 2;
+			row++;			
+		}
 		cellNumber++;
 	}
+
 }
 
 void CBattle_MapParser::loadBattleMapObjects(std::vector<std::string> vMapObjects)

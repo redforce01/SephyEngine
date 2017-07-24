@@ -6,7 +6,7 @@
 #-----------------------------
 
 BEGIN MapData
-	BEGIN BattleMap_01 END
+	BEGIN BattleMap_Level2 END
 MapData END
 
 BEGIN PlayerData

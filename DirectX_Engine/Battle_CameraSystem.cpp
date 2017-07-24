@@ -6,6 +6,8 @@ CBattle_CameraSystem::CBattle_CameraSystem()
 {
 	m_fCameraX = 0.f;
 	m_fCameraY = 0.f;
+	m_fCameraMinX = m_fCameraMinY = 0.f;
+	m_fCameraMaxX = m_fCameraMaxY = 0.f;
 	m_fCameraSpeed = battleCameraSystemNS::CAMERA_NORMAL_SPEED;
 
 	m_pBattleMapSystem = nullptr;
@@ -46,6 +48,24 @@ void CBattle_CameraSystem::update(float frameTime)
 	}
 	else
 		m_fCameraSpeed = battleCameraSystemNS::CAMERA_NORMAL_SPEED;
+
+
+	if (m_pInput->isKeyDown(battleCameraSystemNS::CAMERA_MOVE_LEFT_KEY))
+	{
+		moveLeft();
+	}
+	if (m_pInput->isKeyDown(battleCameraSystemNS::CAMERA_MOVE_RIGHT_KEY))
+	{
+		moveRight();
+	}
+	if (m_pInput->isKeyDown(battleCameraSystemNS::CAMERA_MOVE_UP_KEY))
+	{
+		moveUp();
+	}
+	if (m_pInput->isKeyDown(battleCameraSystemNS::CAMERA_MOVE_DOWN_KEY))
+	{
+		moveDown();
+	}
 }
 
 

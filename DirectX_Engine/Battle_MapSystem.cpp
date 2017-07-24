@@ -36,11 +36,12 @@ bool CBattle_MapSystem::initialize(Game * gamePtr)
 	bool success = false;
 	try
 	{	
+		m_pInput = gamePtr->getInput();
+		m_pGraphics = gamePtr->getGraphics();
+
 		m_pBattleMapDataParser = new CBattle_MapParser;
 		m_pBattleMapDataParser->setMemoryLinkBattleMapSystem(this);
-		if (m_pBattleMapDataParser == nullptr)
-			throw("Error");
-
+		m_pBattleMapDataParser->setGraphics(m_pGraphics);
 		
 		success = true;
 	}

@@ -43,12 +43,11 @@ private:
 	void battleMapDataRecognize(std::string mapName);
 	void battlePlayerDataRecognize(std::vector<std::string> vArray);
 	void battleAIDataRecognize(std::vector<std::string> vArray);
-
 public:
 	//============================================
 	// Getter Functions
 	//============================================
-	std::string getMapName() const
+	std::string getBattleMapName() const
 	{
 		return m_strMapName;
 	}

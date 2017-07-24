@@ -58,8 +58,8 @@ struct tagMapBattleDataInfo
 	UINT CellsY;
 	UINT OriginX;
 	UINT OriginY;
-	UINT Width;
-	UINT Height;
+	UINT OriginWidth;
+	UINT OriginHeight;
 	std::string MadeTime;
 	UINT RandomSeed;
 	UINT ObjectSize;
@@ -74,10 +74,10 @@ private:
 	std::vector<MapTile*>			m_loadedCells;
 	std::vector<MapObject*>			m_loadedObjects;
 	std::vector<MapEventObject*>	m_loadedEventObjects;
-
 private:
 	std::string				m_strLoadFileName;	// Load File Name
 	tagMapBattleDataInfo	m_MapDataInfo;		// Map Data General Informations
+	Graphics*				m_pGraphics;		// Graphics Pointer For - Battle Map Tile(Cell) Setup
 
 private: // Forward Pointer Variables
 	CBattle_MapSystem*		m_pBattleMapSystem;
@@ -88,6 +88,11 @@ public:
 
 	// Load Battle Map Data Function
 	bool loadBattleMapData(std::string mapFileName);
+
+	void setGraphics(Graphics* pGraphics)
+	{
+		m_pGraphics = pGraphics;
+	}
 
 	// BattleMap System Forward Pointer MemoryLink Function
 	void setMemoryLinkBattleMapSystem(CBattle_MapSystem* pBattleMapSystem)
