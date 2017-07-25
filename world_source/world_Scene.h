@@ -6,6 +6,9 @@
 #include "world_Log_UI.h"
 #include "world_Minimap_UI.h"
 
+#include "World_Island_Data.h"
+#include "world_Action_Ship.h"
+
 namespace worldmapNS
 {
 	const float margin = 30.0f;
@@ -19,39 +22,9 @@ private:
 	CWorld_Turn_UI*			w_turn_ui;
 	CWorld_Log_UI*			w_log_ui;
 	CWorld_Minimap_UI*	w_minimap_ui;
-
-	class CBuilding		//building infor
-	{
-		UINT id;		//building unique number
-		UINT type;		//building type
-
-		bool in_production;	//use building
-	};
-
-	class CNeighborhood_Island	//neighborhood island infor
-	{
-		UINT id;		//n_island unique number
-		UINT type;		//n_island type -> build & resouce island
-
-		UINT resource;	//if type == resouce_island else 0
-
-		CBuilding building;	//if type == build_island else null
-	};
-
-	class CWorld_Island	//island infor
-	{
-		UINT id;		//island unique number
-
-		float x;			//island x position (standard world)
-		float y;			//island y position (standard world)
-		float width;	//island collision width;
-		float height;	//island collision height;
-
-		bool u_island;	//can go island
-
-		UINT* nextnode;	//island connect nodes
-		CNeighborhood_Island* n_island;	//island's near neighborhood island
-	};
+	
+	CWorld_Island_Data*	w_island_data;
+	CWorld_Action_Ship* w_action_ship;
 
 	Image* worldImage;	//worldmap image
 

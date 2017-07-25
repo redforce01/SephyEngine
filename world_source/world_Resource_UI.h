@@ -9,20 +9,30 @@ namespace worldresourceNS
 	const UINT x = 10;	//Viewer location
 	const UINT y = 10;
 
-	const std::string img_name = "ExitButton";	//resource img * 4
-	const UINT img_width = 36;
-	const UINT img_height = 36;
+	const std::string icon_name = "CloseButton";	//resource img * 4
+	const UINT icon_width = 24;
+	const UINT icon_height = 24;
 
-	const UINT save_width = 172;
-	const UINT save_height = 32;	//y position + 2
+	const std::string img_name = "Resource";
+	const UINT img_width = 183;
+	const UINT img_height = 24;
+	
+	const std::string img_save = "Score";
+	const UINT num_save_width = 9;		//Score -> Image Size
+	const UINT num_save_height = 13;
+	const UINT save_width = 60;
+	const UINT save_height = 15;	//y position + 2
 
+	const std::string img_increase = "AW";
+	const UINT num_increase_width = 7;		//NumT -> Image Size
+	const UINT num_increase_height = 11;
 	const UINT increase_width = 80;
-	const UINT increase_height = 30;	//y position + 1
+	const UINT increase_height = 15;	//y position + 1
 
-	const UINT distance_x = 11;
-	const UINT distance_y = 8;
+	const UINT distance_x = 15;
+	const UINT distance_y = 9;
 
-	const UINT MARGIN = 4;					// text margin from Viewer edge
+	const UINT MARGIN = 10;					// text margin from Viewer edge
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE_save = 24;
@@ -36,6 +46,7 @@ private:
 	std::map<std::string, std::string> m_saveMessage;
 	std::map<std::string, std::string> m_increaseMessage;
 
+	Image* img_resource[worldresourceNS::num];
 	RECT rect_save[worldresourceNS::num];
 	RECT rect_increase[worldresourceNS::num];
 
@@ -45,7 +56,7 @@ private:
 	Graphics*	m_pGraphics;
 	Input*		m_pInput;
 
-	Image* img_resource[worldresourceNS::num];
+	Image* icon_resource[worldresourceNS::num];
 
 	void resource_initialize(int index, std::string img);
 
@@ -57,6 +68,7 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render() ;
 
+	void replace_number_img(RECT rect, std::string message, bool big);
 	//rect_save = true , rect_increase = false
 	void addMessage(std::string key, std::string message, bool is_save)
 	{

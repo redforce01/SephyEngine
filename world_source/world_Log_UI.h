@@ -4,23 +4,24 @@
 
 namespace worldlogNS
 {
-	const UINT x = 15;
-	const UINT y = WINSIZEY - 225;	//Viewer location
+	const UINT x = 0;
+	const UINT y = WINSIZEY - 193;	//Viewer location
 
-	const UINT viewer_width = 560;
-	const UINT viewer_height = 210;
+	const UINT viewer_width = 470;
+	const UINT viewer_height = 193;
 
-	const UINT text_width = 530;
-	const UINT text_height = 180;
+	const UINT text_width = 452;
+	const UINT text_height = 165;
 
-	const UINT distance = 15;
+	const UINT distance_x = 5;	//(viewer_width - text_width) / 2;
+	const UINT distance_y = 8;	//(viewer_height - text_height) / 2;
 
-	const UINT MARGIN = 4;					// text margin from Viewer edge
-	const UINT LIMIT_LINE = 4;				// line limit
+	const UINT MARGIN = 10;					// text margin from Viewer edge
 
+	const UINT MAX_LINES = 128;
 	const char FONT[] = "Courier New";		// Viewer font
-	const int FONT_SIZE = 27;
-	const int FONT_HEIGHT = 45;				// height of the font in pixels
+	const int FONT_SIZE = 14;
+	const int FONT_HEIGHT = 15;				// height of the font in pixels
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 }
 
@@ -28,10 +29,16 @@ class CWorld_Log_UI : public SystemUIDialog
 {
 private:
 	std::map<std::string, std::string> m_eventMessage;
+	Image* img_log;
 	RECT rect_text;
+	RECT rect_scroll;
 
 	Graphics* m_pGraphics;
 	Input* m_pInput;
+
+	std::deque<std::string> w_log_message;       // console text
+	UINT scroll_mount;
+	UINT line;	//line num
 
 public:
 	CWorld_Log_UI();
@@ -41,16 +48,6 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render() override;
 
-	void addMessage(std::string key, std::string message)
-	{
-		m_eventMessage.emplace(key, message);
-	}
-	void setMessage(std::string key, std::string message)
-	{
-		m_eventMessage.find(key)->second = message;
-	}
-	void removeMessage(std::string key)
-	{
-		m_eventMessage.erase(key);
-	}
+	void print_world_log(const std::string message);
+	void scroll();
 };

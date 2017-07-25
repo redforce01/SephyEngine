@@ -31,7 +31,7 @@ bool CWorld_Turn_UI::initialize(Graphics * g, Input * i)
 		worldturnNS::cur_turn_width,
 		worldturnNS::cur_turn_height);	//right - start
 
-	dxFont.initialize(m_pGraphics, worldturnNS::FONT_SIZE, true, false, worldturnNS::FONT);
+	m_dxFont.initialize(m_pGraphics, worldturnNS::FONT_SIZE, true, false, worldturnNS::FONT);
 
 	img_turn->initialize(g, worldturnNS::pass_turn_width, worldturnNS::pass_turn_height, 0, IMAGEMANAGER->getTexture(worldturnNS::img_name));
 	img_turn->setX(rect_turn.right + worldturnNS::distance);
@@ -53,7 +53,7 @@ void CWorld_Turn_UI::render()
 
 	m_pGraphics->spriteBegin();
 
-	dxFont.print(m_turnMessage.find("turn")->second, rect_turn, DT_VCENTER + DT_CENTER);
+	m_dxFont.print(m_turnMessage.find("turn")->second, rect_turn, DT_VCENTER + DT_CENTER);
 	
 	img_turn->draw();
 
