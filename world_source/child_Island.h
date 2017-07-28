@@ -5,27 +5,21 @@
 class CChild_Island	//neighborhood island infor
 {
 private:
-	UINT id;		//n_island unique number
-	UINT type;		//n_island type -> build & resouce island
+	UINT type;	//resource type
+	UINT resource;	//resource amount
 
-	UINT resource;	//if type == resouce_island else 0
-
-	CBuilding* building;	//if type == build_island else null
 public:
 	CChild_Island();
 	~CChild_Island();
 
-	void initialize(UINT _id, UINT _type)
+	void turn_end();
+
+	void initialize(UINT _type, UINT _resource)
 	{
-		id = _id;
 		type = _type;
+		resource = _resource;
 	}
 
-	void set_building(CBuilding _building) { building = new CBuilding(_building); }
-	void set_resource(UINT _resource) { resource = _resource; }
-
-	CBuilding* get_building() { return building; }
+	UINT get_type() { return type; }
 	UINT get_resource() { return resource; }
-	UINT getID() { return id; }
-	UINT getType() { return type; }
 };

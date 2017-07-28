@@ -2,6 +2,12 @@
 
 #include "image.h"
 
+namespace worldshipNS
+{
+	//const UINT speed = 5.0f;
+	const UINT degree = 0;
+	const float scale = 0.5f;
+};
 
 class CWorld_Ship : public Image
 {
@@ -9,7 +15,7 @@ private:
 	Graphics* m_pGraphics;
 	Input* m_pInput;
 
-	std::vector<POINT> next_move;
+	//std::vector<POINT> next_move;
 
 	std::string name;
 	Image* top;
@@ -19,30 +25,30 @@ private:
 	POINT pt;
 
 	float degree;
-	float speed;
+	//float speed;
 
 	void move();
 public:
 	CWorld_Ship();
 	~CWorld_Ship();
 	
-	void initialize(Graphics* _g, Input* _i, std::string _name, int _x, int _y, float _degree);
+	void initialize(Graphics* _g, Input* _i, std::string _name, int _x, int _y, POINT _pt);
 	void update(float frameTime) override;
 	void render();
 
-	void add_move_point(POINT _pt) { next_move.emplace_back(_pt); }
-	void turn_end()
-	{
-		if (next_move.size() < 1)
-			return;
+	//void add_move_point(POINT _pt) { next_move.emplace_back(_pt); }	//목표 지점 추가 (2턴 이상 거리)
+	//void turn_end()	//턴 넘기기
+	//{
+	//	if (next_move.size() < 1)
+	//		return;
 
-		pt = next_move[next_move.size() - 1]; 
-		next_move.pop_back(); 
-	}
+	//	pt = next_move[next_move.size() - 1]; 
+	//	next_move.pop_back(); 
+	//}
 
-	POINT get_pt() { POINT _pt = { top->getX(), top->getY() }; return _pt; }
+	//POINT get_pt() { POINT _pt = { top->getCenterX(), top->getCenterY() }; return _pt; }	//현재 배의 위치
 
-	void worldMoveud(float worldSpeed)
+	void worldMoveud(float worldSpeed)	//world camera move
 	{
 		top->moveY(worldSpeed);
 		body->moveY(worldSpeed);
@@ -51,7 +57,7 @@ public:
 		pt.y += worldSpeed;
 	}
 
-	void worldMoverl(float worldSpeed)
+	void worldMoverl(float worldSpeed)	//world camera move
 	{
 		top->moveX(worldSpeed);
 		body->moveX(worldSpeed);

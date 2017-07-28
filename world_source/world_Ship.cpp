@@ -7,32 +7,39 @@ void CWorld_Ship::move()
 	//float posx = pt.x - top->getX();
 	//float posy = pt.y - top->getY();
 	//float distance = sqrt(posx*posx + posy*posy);
-	float posx = pt.x - top->getX();
-	float posy = top->getY() - pt.y;
+	float posx = pt.x - top->getCenterX();
+	float posy = top->getCenterY() - pt.y;
 	float distance = sqrt(posx*posx + posy*posy);
 	float pt_degree = (atan2(posx, posy) * 180) / PI;
 	
-	//Double ang = RadianToDegree(Math.Atan2(ydf, xdf));
-	//return ang + 90;
-	
-	if (distance < speed * 12)	//왜 12를 안곱하면 안되는지 모르겠음...
-	{
-		top->setX(pt.x);
-		top->setY(pt.y);
-		body->setX(pt.x);
-		body->setY(pt.y);
-		middle->setX(pt.x);
-		middle->setY(pt.y);
+	degree = pt_degree + 180;	//해당 지점의 반대편 각
 
-		return;
-	}
-	
-	top->moveX(cos(pt_degree) * speed);
-	top->moveY(sin(pt_degree) * speed);
-	body->moveX(cos(pt_degree) * speed);
-	body->moveY(sin(pt_degree) * speed);
-	middle->moveX(cos(pt_degree) * speed);
-	middle->moveY(sin(pt_degree) * speed);
+	// ====================== 해당 지점으로 이동 ==========================
+	//float targetPtRad = 1.0f;   // 타겟지점으로부터의 반지름 For Circle   
+	//float objectRad = top->getWidth() / 4;   // 오브젝트의 반지름
+
+	////Double ang = RadianToDegree(Math.Atan2(ydf, xdf));
+	////return ang + 90;
+	//
+	//if (distance < targetPtRad + objectRad)
+	//{
+	//	// ================= 그자리에 멈춤 ======================
+	//	//top->setX(pt.x - top->getWidth() * top->getScale() / 2);
+	//	//top->setY(pt.y - top->getHeight() * top->getScale() / 2);
+	//	//body->setX(pt.x - body->getWidth() * body->getScale() / 2);
+	//	//body->setY(pt.y - body->getHeight() * body->getScale() / 2);
+	//	//middle->setX(pt.x - middle->getWidth() * middle->getScale() / 2);
+	//	//middle->setY(pt.y - middle->getHeight() * middle->getScale() / 2);
+
+	//	return;
+	//}
+	//
+	//top->moveX(cos(pt_degree) * speed);
+	//top->moveY(sin(pt_degree) * speed);
+	//body->moveX(cos(pt_degree) * speed);
+	//body->moveY(sin(pt_degree) * speed);
+	//middle->moveX(cos(pt_degree) * speed);
+	//middle->moveY(sin(pt_degree) * speed);
 }
 
 CWorld_Ship::CWorld_Ship()
@@ -41,8 +48,8 @@ CWorld_Ship::CWorld_Ship()
 	body = new Image;
 	middle = new Image;
 
-	speed = 5.0f;
-	degree = 0;
+	//speed = worldshipNS::speed;
+	degree = worldshipNS::degree;
 }
 
 
@@ -50,7 +57,7 @@ CWorld_Ship::~CWorld_Ship()
 {
 }
 
-void CWorld_Ship::initialize(Graphics * _g, Input * _i, std::string _name, int _x, int _y, float _degree)
+void CWorld_Ship::initialize(Graphics * _g, Input * _i, std::string _name, int _x, int _y, POINT _pt)
 {
 	m_pGraphics = _g;
 	m_pInput = _i;
@@ -60,25 +67,25 @@ void CWorld_Ship::initialize(Graphics * _g, Input * _i, std::string _name, int _
 	body->initialize(_g, 0, 0, 0, IMAGEMANAGER->getTexture(_name + "body0000"));
 	middle->initialize(_g, 0, 0, 0, IMAGEMANAGER->getTexture(_name + "middle0000"));
 	
-	top->setScale(0.75f);
-	body->setScale(0.75f);
-	middle->setScale(0.75f);
+	top->setScale(worldshipNS::scale);
+	body->setScale(worldshipNS::scale);
+	middle->setScale(worldshipNS::scale);
 
-	top->setX(_x);
-	top->setY(_y);
-	body->setX(_x);
-	body->setY(_y);
-	middle->setX(_x);
-	middle->setY(_y);
+	//Image's Center position
+	top->setX(_x - top->getWidth() * top->getScale() / 2);
+	top->setY(_y - top->getHeight() * top->getScale() / 2);
+	body->setX(_x - body->getWidth() * body->getScale() / 2);
+	body->setY(_y - body->getHeight() * body->getScale() / 2);
+	middle->setX(_x - middle->getWidth() * middle->getScale() / 2);
+	middle->setY(_y - middle->getHeight() * middle->getScale() / 2);
 
-	pt = { _x, _y };
-
-	degree = _degree;
+	//pt = { _x - top->getWidth() * (int)top->getScale() / 2, _y - top->getHeight() * (int)top->getScale() / 2 };
+	pt = _pt;
 }
 
 void CWorld_Ship::update(float frameTime)
 {
-	move();
+	//move();
 
 	std::string index = "";
 	
@@ -144,5 +151,5 @@ void CWorld_Ship::render()
 	middle->draw();
 
 	m_pGraphics->spriteEnd();
-	m_pGraphics->drawLine(pt.x, pt.y, top->getX(), top->getY(), 3.0f, graphicsNS::RED);
+	//m_pGraphics->drawLine(pt.x, pt.y, top->getCenterX(), top->getCenterY(), 3.0f, graphicsNS::RED);
 }

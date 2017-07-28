@@ -4,66 +4,37 @@
 
 enum E_RESOURCE
 {
-	E_MONEY = 0, E_FUEL = 1, E_IRON = 2, E_RESEARCH = 3
+	MONEY = 0, IRON = 1, FUEL = 2, RESEARCH = 3
 };
 
 class CBuilding		//building infor
 {
 private:
+	std::string name;	//building name
 	UINT id;		//building unique number
-	UINT type;		//building type
-	UINT money;	//need build building resource
-	UINT fuel;
-	UINT iron;
-	UINT research;
+	UINT n_building;	//need building
+	UINT need_resource[2];	//need resource (0:money / 1:iron / 2:fuel / 3:research)
+	UINT produce_resource[4];	//produce resource
+	
 	UINT turn;	//spend turn
 
-	bool in_production;	//use building
+	//std::vector<CProduction_Ship*> ship;
+	std::vector<UINT> ship;
+
 public:
 	CBuilding();
 	~CBuilding();
+	
+	void turn_end();
 
-	void initialize(UINT _id, UINT _type)
-	{
-		id = _id;
-		type = _type;
-		money = fuel = iron = research = turn = 0;
-		in_production = false;
-	}
+	void initialize(std::string _name, UINT _id, UINT _turn, UINT _nBuilding, UINT _nMoney, UINT _nIron, UINT _pMoney, UINT _pIron, UINT _pFuel, UINT _pResearch);
+	void add_Ship(UINT _nextship) { ship.emplace_back(_nextship); }
 
-	void set_turn(UINT _turn) { turn = _turn; }
-
-	void set_all_resource(UINT _money, UINT _fuel, UINT _iron, UINT _research)
-	{
-		money = _money;
-		fuel = _fuel;
-		iron = _iron;
-		research = _research;
-	}
-	void set_production(bool b) { in_production = b; }
-	void set_money(UINT _money) { money = _money; }
-	void set_fuel(UINT _fuel) { fuel = _fuel; }
-	void set_iron(UINT _iron) { iron = _iron; }
-	void set_research(UINT _research) { research = _research; }
-
-	bool get_production() { return in_production; }
+	std::vector<UINT> get_ship() { return ship; }
+	UINT get_ship_size() { return ship.size(); }
 	UINT getID() { return id; }
-	UINT getType() { return type; }
 	UINT get_turn() { return turn; }
-	UINT get_resource(E_RESOURCE resource)
-	{
-		switch (resource)
-		{
-		case E_MONEY:
-			return money;
-		case E_FUEL:
-			return fuel;
-		case E_IRON:
-			return iron;
-		case E_RESEARCH:
-			return research;
-		default:
-			break;
-		}
-	}
+	UINT get_building() { return n_building; }	//필요 조건 건물
+	UINT* get_need_resource() { return need_resource; }
+	UINT* get_produce_resource() { return produce_resource; }
 };
