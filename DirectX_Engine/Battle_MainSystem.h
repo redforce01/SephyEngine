@@ -8,6 +8,7 @@ class CBattle_MainSystem;
 #include "Battle_DataParser.h"
 #include "Battle_CameraSystem.h"
 #include "Battle_MapSystem.h"
+#include "Battle_UnitSystem.h"
 
 namespace battleMainSystemNS
 {
@@ -20,7 +21,7 @@ private:
 	CBattle_DataParser*		m_pBattle_DataParser;
 	CBattle_CameraSystem*	m_pBattle_CameraSystem;
 	CBattle_MapSystem*		m_pBattle_MapSystem;
-
+	CBattle_UnitSystem*		m_pBattle_UnitSystem;
 public:
 	CBattle_MainSystem();
 	~CBattle_MainSystem();
@@ -28,6 +29,8 @@ public:
 	virtual bool initialize(Game* gamePtr) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
+	virtual void ai();
+	virtual void collision();
 };
 
 #endif // !_BATTLE_MAINSYSTEM_H

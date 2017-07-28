@@ -21,7 +21,7 @@ namespace MyUtil
 		float distance = sqrtf(x * x + y * y);
 		float angle = acosf(x / distance);
 
-		if (y > 0) angle = MY_UTIL_PI2 - angle;
+		if (y > 0) angle = MY_MATH_PI2 - angle;
 
 		return angle;
 	}

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Battle_CameraSystem.h"
 #include "Battle_MapSystem.h"
+#include "Battle_UnitSystem.h"
 
 CBattle_CameraSystem::CBattle_CameraSystem()
 {
@@ -10,8 +11,9 @@ CBattle_CameraSystem::CBattle_CameraSystem()
 	m_fCameraMaxX = m_fCameraMaxY = 0.f;
 	m_fCameraSpeed = battleCameraSystemNS::CAMERA_NORMAL_SPEED;
 
-	m_pBattleMapSystem = nullptr;
-	m_pBattleMinimapSystem = nullptr;
+	m_pBattleMapSystem		= nullptr;
+	m_pBattleMinimapSystem	= nullptr;
+	m_pBattleUnitSystem		= nullptr;
 }
 
 
@@ -38,11 +40,6 @@ bool CBattle_CameraSystem::initialize(Game * gamePtr)
 void CBattle_CameraSystem::update(float frameTime)
 {
 	if (m_pInput->isKeyDown(battleCameraSystemNS::CAMERA_BOOST_KEY))
-	{
-		m_bCameraBoost = true;
-	}
-
-	if (m_bCameraBoost)
 	{
 		m_fCameraSpeed = battleCameraSystemNS::CAMERA_BOOST_SPEED;
 	}
@@ -75,30 +72,42 @@ void CBattle_CameraSystem::render()
 
 void CBattle_CameraSystem::moveLeft()
 {
-	m_fCameraX -= m_fCameraSpeed;
-	m_pBattleMapSystem->moveX(m_fCameraSpeed);
-	//m_pMinimap->setUpCam(m_fCameraX, m_fCameraY);
+	if (m_fCameraX > m_fCameraMinX)
+	{
+		m_fCameraX -= m_fCameraSpeed;
+		m_pBattleMapSystem->moveX(m_fCameraSpeed);
+		m_pBattleUnitSystem->moveX(m_fCameraSpeed);
+	}
 }
 
 void CBattle_CameraSystem::moveRight()
 {
-	m_fCameraX += m_fCameraSpeed;
-	m_pBattleMapSystem->moveX(-m_fCameraSpeed);
-	//m_pMinimap->setUpCam(m_fCameraX, m_fCameraY);
+	if (m_fCameraX < m_fCameraMaxX)
+	{
+		m_fCameraX += m_fCameraSpeed;
+		m_pBattleMapSystem->moveX(-m_fCameraSpeed);
+		m_pBattleUnitSystem->moveX(-m_fCameraSpeed);
+	}
 }
 
 void CBattle_CameraSystem::moveUp()
 {
-	m_fCameraY -= m_fCameraSpeed;
-	m_pBattleMapSystem->moveY(m_fCameraSpeed);
-	//m_pMinimap->setUpCam(m_fCameraX, m_fCameraY);
+	if (m_fCameraY > m_fCameraMinY)
+	{
+		m_fCameraY -= m_fCameraSpeed;
+		m_pBattleMapSystem->moveY(m_fCameraSpeed);
+		m_pBattleUnitSystem->moveY(m_fCameraSpeed);
+	}
 }
 
 void CBattle_CameraSystem::moveDown()
 {
-	m_fCameraY += m_fCameraSpeed;
-	m_pBattleMapSystem->moveY(-m_fCameraSpeed);
-	//m_pMinimap->setUpCam(m_fCameraX, m_fCameraY);
+	if (m_fCameraY < m_fCameraMaxY)
+	{
+		m_fCameraY += m_fCameraSpeed;
+		m_pBattleMapSystem->moveY(-m_fCameraSpeed);
+		m_pBattleUnitSystem->moveY(-m_fCameraSpeed);
+	}
 }
 
 void CBattle_CameraSystem::setCameraPos(float x, float y)

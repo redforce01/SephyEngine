@@ -85,7 +85,8 @@ bool MapEventObject::initialize(Graphics * g, float x, float y, float width, flo
 		m_rcEventObject = RectMake(m_x, m_y, m_width, m_height);
 		m_eObjectType = recogEventKey(strEventType);
 		m_bHasImage = false;
-
+		setX(m_x);
+		setY(m_y);
 		setUpEventKey();
 	}
 	catch (...)

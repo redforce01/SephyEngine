@@ -66,3 +66,29 @@ bool TxtDataParser::saveDataFromArray(std::string filePath, std::vector<std::str
 	else
 		return false;
 }
+
+//=======================================================================
+// TXT FILE DATA PARSER
+// Recog String Function 
+// Parameter : std::string strMessage, char seperator
+// Result : return std::vector<std::string>
+// Example) parameter("Hello-World-Apple-Banana", '-')
+//			result : std::vector<std::string>	
+//				- [0] = "Hello"
+//				- [1] = "World"
+//				- [2] = "Apple"
+//				- [3] = "Banana"
+//=======================================================================
+std::vector<std::string> TxtDataParser::tokenizeFromString(std::string strMessage, char seperator)
+{
+	std::vector<std::string> vResult;
+
+	std::istringstream is(strMessage);
+	std::string part;
+	while (getline(is, part, ' '))
+	{
+		vResult.emplace_back(part);
+	}
+
+	return vResult;
+}

@@ -9,7 +9,7 @@ namespace battleCameraSystemNS
 {
 	const std::string ERROR_MESSAGE = "Battle CameraSystem Initialize Failed";
 	const float CAMERA_NORMAL_SPEED = 10.f;
-	const float CAMERA_BOOST_SPEED = 20.0f;
+	const float CAMERA_BOOST_SPEED = CAMERA_NORMAL_SPEED * 3.0f;
 	const UCHAR CAMERA_BOOST_KEY = VK_SHIFT;
 
 	const UCHAR CAMERA_MOVE_LEFT_KEY = VK_LEFT;
@@ -18,6 +18,7 @@ namespace battleCameraSystemNS
 	const UCHAR CAMERA_MOVE_DOWN_KEY = VK_DOWN;
 }
 
+class CBattle_UnitSystem;
 class CBattle_MapSystem;
 class CBattle_MiniMapSystem;
 class CBattle_CameraSystem : public SystemBase
@@ -27,13 +28,10 @@ private: // Camera Variables
 	float m_fCameraSpeed;
 	float m_fCameraMinX, m_fCameraMinY;
 	float m_fCameraMaxX, m_fCameraMaxY;
-
-	bool m_bCameraBoost;
-
 private: // Forward Pointer Variables
 	CBattle_MapSystem*		m_pBattleMapSystem;
 	CBattle_MiniMapSystem*	m_pBattleMinimapSystem;
-
+	CBattle_UnitSystem*		m_pBattleUnitSystem;
 public:
 	CBattle_CameraSystem();
 	~CBattle_CameraSystem();
@@ -61,6 +59,17 @@ public:
 	}
 	// Set Camera Position(x, y)
 	void setCameraPos(float x, float y);
+
+	// Set Camera Min X, Y
+	void setCameraMinPos(float minX, float minY)
+	{
+		m_fCameraMinX = minX, m_fCameraMinY = minY;
+	}
+	// Set Camera Max X, Y
+	void setCameraMaxPos(float maxX, float maxY)
+	{
+		m_fCameraMaxX = maxX, m_fCameraMaxY = maxY;
+	}
 
 
 	//===============================================
@@ -95,6 +104,10 @@ public:
 	void setMemoryLinkBattleMinimapSystem(CBattle_MiniMapSystem* pBattleMinimapSystem)
 	{
 		m_pBattleMinimapSystem = pBattleMinimapSystem;
+	}
+	void setMemoryLinkBattleUnitSystem(CBattle_UnitSystem* pBattleUnitSystem)
+	{
+		m_pBattleUnitSystem = pBattleUnitSystem;
 	}
 };
 

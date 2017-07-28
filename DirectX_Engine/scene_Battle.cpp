@@ -23,6 +23,7 @@ void Scene_Battle::initialize(HWND hwnd)
 void Scene_Battle::update()
 {
 	m_pBattleMainSystem->update(frameTime);
+
 }
 
 void Scene_Battle::release()
@@ -31,10 +32,12 @@ void Scene_Battle::release()
 
 void Scene_Battle::ai()
 {
+	m_pBattleMainSystem->ai();
 }
 
 void Scene_Battle::collisions()
 {
+	m_pBattleMainSystem->collision();
 }
 
 void Scene_Battle::render()

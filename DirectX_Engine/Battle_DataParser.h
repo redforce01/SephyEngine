@@ -51,6 +51,14 @@ public:
 	{
 		return m_strMapName;
 	}
+	std::vector<std::string> getBattlePlayerShipData() const
+	{
+		return m_vPlayerShipData;
+	}
+	std::vector<std::string> getBattleAIShipData() const
+	{
+		return m_vAIShipData;
+	}
 };
 
 #endif // !_BATTLE_DATAPARSER_H

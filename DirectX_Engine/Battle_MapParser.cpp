@@ -16,14 +16,33 @@ CBattle_MapParser::~CBattle_MapParser()
 
 bool CBattle_MapParser::loadBattleMapData(std::string mapFileName)
 {	
+	//============================================================================
+	// MapFile Load - Start
 	m_strLoadFileName = mapFileName;
 	auto vData = TXTDATA_PARSER->loadDataToArray(mapFileName);
-
+	// End - MapFile Load
+	//============================================================================
 	bool success = false;
 	try
-	{		
+	{	
+		//============================================================================
+		// Map Data Load And Recognize - Start
 		mapDataRecognize(vData);
 		m_pBattleMapSystem->setAllTiles(m_loadedCells);
+		// End - Map Data Load And Recognize
+		//============================================================================
+		// MapSystem MapTotal Width/Height/CellWidth/CellHeight Setup - Start
+		float cellWidth = m_MapDataInfo.OriginWidth;
+		float cellHeight = m_MapDataInfo.OriginHeight;
+		float totalWidth = (m_MapDataInfo.CellsX * m_MapDataInfo.OriginWidth);
+		float totalHeight = (m_MapDataInfo.CellsY * m_MapDataInfo.OriginHeight * battleMapDataMessageNS::ISOMETRIC_HEIGHT_TOTAL_RATE + cellHeight);
+		m_pBattleMapSystem->setMapTotalWidth(totalWidth);
+		m_pBattleMapSystem->setMapTotalHeight(totalHeight);
+		m_pBattleMapSystem->setCellWidth(cellWidth);
+		m_pBattleMapSystem->setCellHeight(cellHeight);
+		// End - MapSystem MapTotal Width/Height/CellWidth/CellHeight Setup
+		//============================================================================
+
 		success = true;
 	}
 	catch (...)

@@ -49,6 +49,8 @@ namespace battleMapDataMessageNS
 	const std::string COLLISION_START_MESSAGE = "CollisionBox";
 	// Map Data DATA tag List & Key - End
 	//=====================================================
+	const float ISOMETRIC_HEIGHT_TOTAL_RATE = 0.5f;
+	
 }
 
 struct tagMapBattleDataInfo

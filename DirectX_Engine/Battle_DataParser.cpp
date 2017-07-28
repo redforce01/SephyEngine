@@ -103,10 +103,28 @@ void CBattle_DataParser::battleMapDataRecognize(std::string mapName)
 
 void CBattle_DataParser::battlePlayerDataRecognize(std::vector<std::string> vArray)
 {
+	for (auto iter : vArray)
+	{
+		int startKeyPos = iter.rfind(battleDataParserNS::DATA_FORMAT_BEGIN_KEY);
+		int endKeyPos = iter.rfind(battleDataParserNS::DATA_FORMAT_END_KEY);
 
+		std::string shipData = iter.substr(startKeyPos + battleDataParserNS::DATA_FORMAT_BEGIN_KEY.length() + 1,
+			endKeyPos - battleDataParserNS::DATA_FORMAT_BEGIN_KEY.length() - battleDataParserNS::DATA_FORMAT_END_KEY.length());
+
+		m_vPlayerShipData.emplace_back(shipData);
+	}	
 }
 
 void CBattle_DataParser::battleAIDataRecognize(std::vector<std::string> vArray)
 {
+	for (auto iter : vArray)
+	{
+		int startKeyPos = iter.rfind(battleDataParserNS::DATA_FORMAT_BEGIN_KEY);
+		int endKeyPos = iter.rfind(battleDataParserNS::DATA_FORMAT_END_KEY);
 
+		std::string shipData = iter.substr(startKeyPos + battleDataParserNS::DATA_FORMAT_BEGIN_KEY.length() + 1,
+			endKeyPos - battleDataParserNS::DATA_FORMAT_BEGIN_KEY.length() - battleDataParserNS::DATA_FORMAT_END_KEY.length());
+
+		m_vAIShipData.emplace_back(shipData);
+	}
 }

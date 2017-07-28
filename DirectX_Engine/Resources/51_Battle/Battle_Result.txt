@@ -1,0 +1,17 @@
+BEGIN WorldIndex
+	BEGIN Alpha END
+WorldIndex END
+
+BEGIN PlayerData
+	BEGIN Corvette Count 1820 END
+	BEGIN Corvette Count 720 END
+	BEGIN Corvette Count 291 END
+	BEGIN Corvette Count 1920 END
+PlayerData END
+
+BEGIN AIData
+	BEGIN Corvette Count 1820 END
+	BEGIN Corvette Count 1820 END
+	BEGIN Corvette Count 1820 END
+	BEGIN Corvette Count 1920 END
+AIData END

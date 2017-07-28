@@ -33,8 +33,14 @@ private:
 	MAP_TILES			m_vCells;
 	MAP_OBJECTS			m_vObjects;
 	MAP_EVENT_OBJECT	m_vEventObjects;
-	
-private:
+
+private: // width/height Variables For Battle_CameraSystem [For Camera Min Max Position Setup]
+	float m_fMapTotalWidth;
+	float m_fMapTotalHeight;
+	float m_fMapCellWidth;
+	float m_fMapCellHeight;
+
+private: // Battle MapParser
 	CBattle_MapParser* m_pBattleMapDataParser;
 
 public:
@@ -110,7 +116,7 @@ public:
 	}
 
 	//=============================================
-	// Getter Functions
+	// Setter Functions
 	//=============================================
 
 	void setAllTiles(std::vector<MapTile*> pArrCells)
@@ -125,7 +131,22 @@ public:
 	{
 		m_vEventObjects = pArrEventObjects;
 	}
-
+	void setMapTotalWidth(float fWidth)
+	{
+		m_fMapTotalWidth = fWidth;
+	}
+	void setMapTotalHeight(float fHeight)
+	{
+		m_fMapTotalHeight = fHeight;
+	}
+	void setCellWidth(float fWidth)
+	{
+		m_fMapCellWidth = fWidth;
+	}
+	void setCellHeight(float fHeight)
+	{
+		m_fMapCellHeight = fHeight;
+	}
 	//=============================================
 	// Getter Functions
 	//=============================================
@@ -141,6 +162,22 @@ public:
 	std::vector<MapEventObject*> getAllEventObject() const
 	{
 		return m_vEventObjects;
+	}
+	float getMapTotalWidth() const 
+	{
+		return m_fMapTotalWidth;
+	}
+	float getMapTotalHeight() const
+	{
+		return m_fMapTotalHeight;
+	}
+	float getCellWidth() const
+	{
+		return m_fMapCellWidth;
+	}
+	float getCellHeight() const
+	{
+		return m_fMapCellHeight;
 	}
 };
 

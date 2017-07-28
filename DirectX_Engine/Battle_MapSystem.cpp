@@ -5,6 +5,10 @@
 CBattle_MapSystem::CBattle_MapSystem()
 {
 	m_pBattleMapDataParser = nullptr;
+	m_fMapTotalWidth	= 0.f;
+	m_fMapTotalHeight	= 0.f;
+	m_fMapCellWidth		= 0.f;
+	m_fMapCellHeight	= 0.f;
 }
 
 

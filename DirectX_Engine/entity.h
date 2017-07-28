@@ -443,7 +443,7 @@ class Entity : public Image
         float distY = y - getCenterY();             // destination Y - current Y
         float distance = sqrt(distX*distX + distY*distY);
         float moveTime = distance / speed;          // time required to complete move
-        moveX(frameTime, distX/moveTime);           // move in X direction
+        moveX(frameTime, distX / moveTime);         // move in X direction
         moveY(frameTime, distY / moveTime);         // move in Y direction
     }
 

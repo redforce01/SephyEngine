@@ -262,12 +262,6 @@
     <Filter Include="GameCode\Battle\BattleMapSystem">
       <UniqueIdentifier>{eabf1cca-7bea-4f5a-a576-05f8766763c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Battle\Unit">
-      <UniqueIdentifier>{c34af8c1-1a89-44e8-b6cf-df0506c116c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Battle\BattleSystem">
-      <UniqueIdentifier>{d9545dbb-5df4-47ee-b359-0c544991076f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Maptool\Viewer\EventViewer">
       <UniqueIdentifier>{d13d4da9-d7cd-4edb-9e35-1531e6eb68e5}</UniqueIdentifier>
     </Filter>
@@ -282,6 +276,30 @@
     </Filter>
     <Filter Include="GameCode\Battle\BattleCameraSystem">
       <UniqueIdentifier>{55aafe11-4de2-415b-bd36-a69a5731debf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem">
+      <UniqueIdentifier>{e6a42b50-4726-4b3f-995a-b0605323683f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Unit">
+      <UniqueIdentifier>{938797b1-b655-4fd6-82c0-40cc30f1b895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleMainSystem">
+      <UniqueIdentifier>{d9545dbb-5df4-47ee-b359-0c544991076f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Interface">
+      <UniqueIdentifier>{70ada451-5324-4d59-9077-f764724b9227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\UnitParser">
+      <UniqueIdentifier>{9e6f91dc-cc7c-4208-8a11-eaab60e380c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\GameSystem\SystemBase">
+      <UniqueIdentifier>{dae253e0-7bc8-4cd9-bae0-fdb5db47cf84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\GameSystem\SystemDebug">
+      <UniqueIdentifier>{35ccbc47-f5dd-4dff-a404-f19ef26ae77e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\GameSystem\SystemButton">
+      <UniqueIdentifier>{91ce66a2-93a9-45b3-a1a5-b9511dd36288}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -468,9 +486,6 @@
     <ClCompile Include="minimapViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\MinimapViewer</Filter>
     </ClCompile>
-    <ClCompile Include="systemBase.cpp">
-      <Filter>GameCode\GameSystem</Filter>
-    </ClCompile>
     <ClCompile Include="mapTileViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClCompile>
@@ -479,9 +494,6 @@
     </ClCompile>
     <ClCompile Include="engineBootSystem.cpp">
       <Filter>SystemCode\Engine\SystemEngineBoot</Filter>
-    </ClCompile>
-    <ClCompile Include="systemDebugStats.cpp">
-      <Filter>GameCode\GameSystem</Filter>
     </ClCompile>
     <ClCompile Include="statsViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\StatsViewer</Filter>
@@ -559,7 +571,7 @@
       <Filter>GameCode\Battle\BattleMapSystem</Filter>
     </ClCompile>
     <ClCompile Include="Battle_MainSystem.cpp">
-      <Filter>GameCode\Battle\BattleSystem</Filter>
+      <Filter>GameCode\Battle\BattleMainSystem</Filter>
     </ClCompile>
     <ClCompile Include="eventViewer.cpp">
       <Filter>GameCode\Maptool\Viewer\EventViewer</Filter>
@@ -640,7 +652,34 @@
       <Filter>GameCode\Battle\BattleMapSystem</Filter>
     </ClCompile>
     <ClCompile Include="Battle_DataParser.cpp">
-      <Filter>GameCode\Battle\BattleSystem</Filter>
+      <Filter>GameCode\Battle\BattleMainSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UnitSystem.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_Ship.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_Turret.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_Destination.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UnitParser.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_FleetCategory.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="systemBase.cpp">
+      <Filter>GameCode\GameSystem\SystemBase</Filter>
+    </ClCompile>
+    <ClCompile Include="systemDebugStats.cpp">
+      <Filter>GameCode\GameSystem\SystemDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="systemButton.cpp">
+      <Filter>GameCode\GameSystem\SystemButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -845,9 +884,6 @@
     <ClInclude Include="minimapViewer.h">
       <Filter>GameCode\Maptool\Viewer\MinimapViewer</Filter>
     </ClInclude>
-    <ClInclude Include="systemBase.h">
-      <Filter>GameCode\GameSystem</Filter>
-    </ClInclude>
     <ClInclude Include="mapTileViewer.h">
       <Filter>GameCode\Maptool\Viewer\TileViewer</Filter>
     </ClInclude>
@@ -859,9 +895,6 @@
     </ClInclude>
     <ClInclude Include="control_ButtonInfo.h">
       <Filter>GameCode\Maptool\Viewer\ToolControlViewer</Filter>
-    </ClInclude>
-    <ClInclude Include="systemDebugStats.h">
-      <Filter>GameCode\GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="statsViewer.h">
       <Filter>GameCode\Maptool\Viewer\StatsViewer</Filter>
@@ -939,7 +972,7 @@
       <Filter>GameCode\Battle\BattleMapSystem</Filter>
     </ClInclude>
     <ClInclude Include="Battle_MainSystem.h">
-      <Filter>GameCode\Battle\BattleSystem</Filter>
+      <Filter>GameCode\Battle\BattleMainSystem</Filter>
     </ClInclude>
     <ClInclude Include="eventViewer.h">
       <Filter>GameCode\Maptool\Viewer\EventViewer</Filter>
@@ -1020,10 +1053,34 @@
       <Filter>GameCode\Battle\BattleMapSystem</Filter>
     </ClInclude>
     <ClInclude Include="Battle_DataParser.h">
-      <Filter>GameCode\Battle\BattleSystem</Filter>
+      <Filter>GameCode\Battle\BattleMainSystem</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <ClInclude Include="Battle_UnitSystem.h">
+      <Filter>GameCode\Battle\BattleUnitSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_Ship.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_Turret.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_Destination.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UnitParser.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_FleetCategory.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="systemBase.h">
+      <Filter>GameCode\GameSystem\SystemBase</Filter>
+    </ClInclude>
+    <ClInclude Include="systemDebugStats.h">
+      <Filter>GameCode\GameSystem\SystemDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="systemButton.h">
+      <Filter>GameCode\GameSystem\SystemButton</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

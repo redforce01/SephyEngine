@@ -5,20 +5,17 @@
 #  - Battle AI Ship Information List
 #-----------------------------
 
+BEGIN WorldIndex
+	BEGIN Alpha END
+WorldIndex END
+
 BEGIN MapData
-	BEGIN BattleMap_Level2 END
+	BEGIN battleMap_First_Test END
 MapData END
 
 BEGIN PlayerData
-	BEGIN ShipName Count END
-	BEGIN ShipName Count END
-	BEGIN ShipName Count END
-	BEGIN ShipName Count END
+	BEGIN Z1 Count 1820 END	
 PlayerData END
 
 BEGIN AIData
-	BEGIN ShipName Count END
-	BEGIN ShipName Count END
-	BEGIN ShipName Count END
-	BEGIN ShipName Count END
 AIData END
