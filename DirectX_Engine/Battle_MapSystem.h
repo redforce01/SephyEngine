@@ -8,6 +8,7 @@ class CBattle_MapSystem;
 #include "mapObject.h"
 #include "mapEventObject.h"
 #include "Battle_MapParser.h"
+#include "Battle_MapUI_StartingArea.h"
 
 namespace battleMapSystemNS
 {
@@ -43,6 +44,9 @@ private: // width/height Variables For Battle_CameraSystem [For Camera Min Max P
 private: // Battle MapParser
 	CBattle_MapParser* m_pBattleMapDataParser;
 
+private:
+	std::vector<CBattle_MapUI_StartingArea*> m_vStartingAreaFlag;
+
 public:
 	CBattle_MapSystem();
 	~CBattle_MapSystem();
@@ -64,6 +68,7 @@ public:
 	//  + read from all Resources folders .find(mapName)
 	// ============================================
 	bool loadBattleMap(std::string mapName);
+	void setupEventObject();
 
 	// Forward Pointer Functions
 	void setMemoryLinkBattleCameraSystem(CBattle_CameraSystem* pBattleCameraSystem)
@@ -178,6 +183,12 @@ public:
 	float getCellHeight() const
 	{
 		return m_fMapCellHeight;
+	}
+
+	CBattle_MapUI_StartingArea* getPlayerStartingArea() const
+	{
+		if(m_vStartingAreaFlag.size() > 0)
+			return m_vStartingAreaFlag[0];
 	}
 };
 

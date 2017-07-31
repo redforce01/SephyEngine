@@ -34,11 +34,11 @@ protected:
 	bool		m_bUseKey;
 	bool		m_bInitialized;
 	bool		m_bActive;
-
 protected:
 	std::function<void()> m_function;
 	SYSTEM_UI_BUTTON m_enButtonState;
 private:
+	bool		m_bClicked;
 	std::string m_strButtonUpKey;
 	std::string m_strButtonDownKey;
 	std::string m_strButtonOverKey;
@@ -87,6 +87,21 @@ public:
 	{
 		m_x = x, m_y = y;
 		setupButtonRect();
+		Image::setX(m_x);
+		Image::setY(m_y);
+	}
+
+	void moveX(float fDistance)
+	{
+		m_x += fDistance;
+		setupButtonRect();
+		Image::moveX(fDistance);
+	}
+	void moveY(float fDistance)
+	{
+		m_y += fDistance;
+		setupButtonRect();
+		Image::moveY(fDistance);
 	}
 	
 	void setRegistFunction(std::function<void()> pFunction)

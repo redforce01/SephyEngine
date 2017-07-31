@@ -4,6 +4,7 @@
 class CBattle_CameraSystem;
 
 #include "systemBase.h"
+#include "Battle_MinimapView.h"
 
 namespace battleCameraSystemNS
 {
@@ -12,10 +13,10 @@ namespace battleCameraSystemNS
 	const float CAMERA_BOOST_SPEED = CAMERA_NORMAL_SPEED * 3.0f;
 	const UCHAR CAMERA_BOOST_KEY = VK_SHIFT;
 
-	const UCHAR CAMERA_MOVE_LEFT_KEY = VK_LEFT;
-	const UCHAR CAMERA_MOVE_RIGHT_KEY = VK_RIGHT;
-	const UCHAR CAMERA_MOVE_UP_KEY = VK_UP;
-	const UCHAR CAMERA_MOVE_DOWN_KEY = VK_DOWN;
+	const UCHAR CAMERA_MOVE_LEFT_KEY = 'A';
+	const UCHAR CAMERA_MOVE_RIGHT_KEY = 'D';
+	const UCHAR CAMERA_MOVE_UP_KEY = 'W';
+	const UCHAR CAMERA_MOVE_DOWN_KEY = 'S';
 }
 
 class CBattle_UnitSystem;
@@ -32,6 +33,10 @@ private: // Forward Pointer Variables
 	CBattle_MapSystem*		m_pBattleMapSystem;
 	CBattle_MiniMapSystem*	m_pBattleMinimapSystem;
 	CBattle_UnitSystem*		m_pBattleUnitSystem;
+
+private:
+	CBattle_MinimapView* m_pBattleMinimapView;
+
 public:
 	CBattle_CameraSystem();
 	~CBattle_CameraSystem();
@@ -92,6 +97,10 @@ public:
 	float getCameraY() const
 	{
 		return m_fCameraY;
+	}
+	CBattle_MinimapView* getBattleMinimapViewer() const
+	{
+		return m_pBattleMinimapView;
 	}
 	
 	//===============================================

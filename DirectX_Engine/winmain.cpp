@@ -44,8 +44,8 @@ float g_fSoundBGMVolume		= 0.f;
 // End - Extern Variables For Sound
 //=============================================================================
 // Extern Variables For Debug - Start
-bool g_fDebugMode			= false;
-std::string g_fDebugSceneName;
+bool g_bDebugMode			= false;
+std::string g_strDebugSceneName;
 // End - Extern Variables For Debug
 //=============================================================================
 

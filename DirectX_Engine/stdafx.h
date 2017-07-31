@@ -82,5 +82,5 @@ extern float		g_fSoundEffectVolume;
 extern float		g_fSoundBGMVolume;
 
 // Debug Variables
-extern bool			g_fDebugMode;
-extern std::string	g_fDebugSceneName;
+extern bool			g_bDebugMode;
+extern std::string	g_strDebugSceneName;

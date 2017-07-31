@@ -22,6 +22,8 @@
 #  + AntiAir_Capacity	대공포 갯수
 #  + AntiAir_Range	대공포 사거리
 #  + AntiAir_Damage	대공포 공격력
+#  + Phase		함선 전투 Phase Number
+#  + Mass		함선 질량(Weight)
 #  + Skill		함선 스킬
 #--------------------------------
 
@@ -48,5 +50,7 @@ BEGIN ShipData
 	+ AntiAir_Capacity	3
 	+ AntiAir_Range		40
 	+ AntiAir_Damage	10
+	+ Phase			1
+	+ Mass			100
 	+ Skill			NULL
 ShipData END

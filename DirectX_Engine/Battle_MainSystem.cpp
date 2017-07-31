@@ -44,6 +44,7 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		m_pBattle_CameraSystem->setMemoryLinkBattleMapSystem(m_pBattle_MapSystem);
 		m_pBattle_CameraSystem->setMemoryLinkBattleUnitSystem(m_pBattle_UnitSystem);
 		m_pBattle_UnitSystem->setMemoryLinkBattleCameraSystem(m_pBattle_CameraSystem);
+		m_pBattle_UnitSystem->setMemoryLinkBattleMapSystem(m_pBattle_MapSystem);
 		// End - Each System Connect to Other Systems
 		//=====================================================================
 		// Load Battle Data - Start
@@ -52,6 +53,8 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		//  + Battle AI Ship List Data
 		auto battleMapName = m_pBattle_DataParser->getBattleMapName();
 		m_pBattle_MapSystem->loadBattleMap(battleMapName);
+		m_pBattle_MapSystem->setupEventObject();
+		
 		auto battlePlayerShipData = m_pBattle_DataParser->getBattlePlayerShipData();
 		m_pBattle_UnitSystem->loadPlayerShipData(battlePlayerShipData);
 		auto battleAIDataShipData = m_pBattle_DataParser->getBattleAIShipData();
@@ -66,6 +69,9 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 
 		float resultMaxWidth = totalMapWidth - g_fScreenWidth - cellWidth;
 		float resultMaxHeight = totalMapHeight - g_fScreenHeight - cellHeight;
+		m_pBattle_CameraSystem->getBattleMinimapViewer()->setMapWidth(totalMapWidth);
+		m_pBattle_CameraSystem->getBattleMinimapViewer()->setMapHeight(totalMapHeight);
+		m_pBattle_CameraSystem->getBattleMinimapViewer()->setUpCam();
 		m_pBattle_CameraSystem->setCameraMinPos(0 + cellWidth, 0 + cellHeight);
 		m_pBattle_CameraSystem->setCameraMaxPos(
 			totalMapWidth - g_fScreenWidth - cellWidth,
@@ -84,22 +90,6 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 
 void CBattle_MainSystem::update(float frameTime)
 {
-	//static bool flag = false;
-	//if (flag == false)
-	//{
-	//	flag = true;
-	//	auto ships = m_pBattle_UnitSystem->getPlayerShips();
-	//	auto shipParts = ships[0]->getShipParts();
-	//	int posX = g_fScreenWidth / 2;
-	//	int posY = g_fScreenHeight / 2;
-	//	ships[0]->setTargetPos(VECTOR2(posX, posY));
-	//	for (auto iter : shipParts)
-	//	{
-	//		iter.second->setX(posX);
-	//		iter.second->setY(posY);
-	//	}
-	//}
-
 	m_pBattle_CameraSystem->update(frameTime);
 	m_pBattle_MapSystem->update(frameTime);
 	m_pBattle_UnitSystem->update(frameTime);
@@ -107,9 +97,9 @@ void CBattle_MainSystem::update(float frameTime)
 
 void CBattle_MainSystem::render()
 {
-	m_pBattle_CameraSystem->render();
 	m_pBattle_MapSystem->render();
 	m_pBattle_UnitSystem->render();
+	m_pBattle_CameraSystem->render();
 }
 
 void CBattle_MainSystem::ai()

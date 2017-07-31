@@ -265,6 +265,7 @@ void EventViewer::setupEventObject()
 		m_ptEndPos.x - m_ptStartPos.x,
 		m_ptEndPos.y - m_ptStartPos.y,
 		eventType);
+	newEventObj->setDebugMode(true);
 
 	m_pMapSystem->addEventObject(newEventObj);
 }

@@ -12,6 +12,7 @@ MapEventObject::MapEventObject()
 	m_angle = 0.f;
 	m_rcEventObject = { 0, };
 	m_bPlayers = false;
+	m_bDebug = false;
 }
 
 
@@ -27,6 +28,8 @@ bool MapEventObject::initialize(Graphics * g, float x, float y, float width, flo
 		success = Image::initialize(g, width, height, 0, IMAGEMANAGER->getTexture("WHITE"));
 		if (success == false)
 			throw("MapEvent Object Image Initialized Failed");
+
+		success = m_dxFont.initialize(g, mapEventObjectNS::DEBUG_FONT_HEIGHT, false, false, mapEventObjectNS::FONT);
 
 		m_x = x, m_y = y;
 		m_width = width, m_height = height;
@@ -54,6 +57,8 @@ bool MapEventObject::initialize(Graphics * g, std::string textureName, float x, 
 		if (success == false)
 			throw("MapEvent Object Image Initialized Failed");
 
+		success = m_dxFont.initialize(g, mapEventObjectNS::DEBUG_FONT_HEIGHT, false, false, mapEventObjectNS::FONT);
+
 		m_x = x, m_y = y;
 		m_width = width, m_height = height;
 		m_rcEventObject = RectMake(m_x, m_y, m_width, m_height);
@@ -79,6 +84,8 @@ bool MapEventObject::initialize(Graphics * g, float x, float y, float width, flo
 		success = Image::initialize(g, width, height, 0, IMAGEMANAGER->getTexture("WHITE"));
 		if (success == false)
 			throw("MapEvent Object Image Initialized Failed");
+
+		success = m_dxFont.initialize(g, mapEventObjectNS::DEBUG_FONT_HEIGHT, false, false, mapEventObjectNS::FONT);
 
 		m_x = x, m_y = y;
 		m_width = width, m_height = height;
@@ -107,6 +114,12 @@ void MapEventObject::render()
 {
 	if (m_bHasImage)
 		Image::draw();
+
+	if (m_bDebug)
+	{
+		RECT rc = RectMake(m_x, m_y, mapEventObjectNS::DEBUG_RECT_WIDTH, mapEventObjectNS::DEBUG_RECT_HEIGHT);
+		m_dxFont.print(m_strEventType, rc, DT_LEFT | DT_VCENTER);
+	}
 }
 
 void MapEventObject::setUpEventKey()

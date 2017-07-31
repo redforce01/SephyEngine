@@ -34,7 +34,7 @@ protected:
 private:
 	bool m_bMouseOver;
 	bool m_bHasFocus;
-
+	bool m_bDrawBorder;
 public:
 	SystemUIDialog();
 	virtual ~SystemUIDialog();
@@ -48,6 +48,11 @@ protected:
 	bool initializeDialog(Graphics* g, Input* i, int x, int y, int w, int h, int m);
 	bool vertexSetup(int x, int y, int w, int h);
 
+private:
+	void setUpRect()
+	{
+		m_rcBoundingBox = RectMake(m_x, m_y, m_width, m_height);
+	}
 public:
 	//=====================================
 	// Setter Functions
@@ -55,10 +60,26 @@ public:
 	void setDialogPos(int startX, int startY)
 	{
 		m_x = startX, m_y = startY;
+		vertexSetup(m_x, m_y, m_width, m_height);
+		setUpRect();
 	}
 	void setDialogSize(int w, int h)
 	{
 		m_width = w, m_height = h;
+		vertexSetup(m_x, m_y, m_width, m_height);
+		setUpRect();
+	}
+	void setDialogWidth(float width)
+	{
+		m_width = width;
+		vertexSetup(m_x, m_y, m_width, m_height);
+		setUpRect();
+	}
+	void setDialogHeight(float height)
+	{
+		m_height = height;
+		vertexSetup(m_x, m_y, m_width, m_height);
+		setUpRect();
 	}
 	void setDialogMargin(int m)
 	{
@@ -88,6 +109,10 @@ public:
 	{
 		m_dxFont = font;
 	}
+	void setDrawBorder(bool bBorder)
+	{
+		m_bDrawBorder = bBorder;
+	}
 	//=====================================
 	// Getter Functions
 	//=====================================
@@ -102,6 +127,14 @@ public:
 	float getDialogY() const
 	{
 		return m_y;
+	}
+	float getDialogCenterX() const
+	{
+		return m_x + (m_width / 2);
+	}
+	float getDialogCenterY() const
+	{
+		return m_y + (m_height / 2);
 	}
 	float getDialogWidth() const
 	{
@@ -130,6 +163,10 @@ public:
 	bool getOnFocus() const
 	{
 		return m_bHasFocus;
+	}
+	bool getOnDrawBorder() const
+	{
+		return m_bDrawBorder;
 	}
 };
 

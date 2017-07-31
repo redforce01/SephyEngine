@@ -41,22 +41,27 @@ namespace mapEventObjectNS
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 	const int IMAGE_WIDTH = 32;
 	const int IMAGE_HEIGHT = 32;
+
+	const int DEBUG_FONT_HEIGHT = 14;
+	const float DEBUG_RECT_WIDTH = 200;
+	const float DEBUG_RECT_HEIGHT = 15;
 }
 
 class MapEventObject : public Image
 {
 private:
-	bool m_bHasImage;
-	EVENT_OBJECT_TYPE m_eObjectType;
-	std::string m_strEventType;
 	float	m_x, m_y;
 	float	m_width, m_height;
 	float	m_radius;
 	float	m_angle;
 	RECT	m_rcEventObject;
-
+	EVENT_OBJECT_TYPE m_eObjectType;
+	std::string m_strEventType;
+	TextDX	m_dxFont;
 private:
-	bool m_bPlayers;
+	bool	m_bHasImage;
+	bool	m_bPlayers;
+	bool	m_bDebug;
 
 public:
 	MapEventObject();
@@ -105,6 +110,11 @@ public:
 	{
 		m_bPlayers = b;
 	}
+	void setDebugMode(bool bDebug)
+	{
+		m_bDebug = bDebug;
+	}
+
 	// ==========================================
 	// Getter Functions	
 	// ==========================================
@@ -124,9 +134,21 @@ public:
 	{
 		return m_y;
 	}
+	float getCenterPosX() const
+	{
+		return m_x + (m_width / 2);
+	}
+	float getCenterPosY() const
+	{
+		return m_y + (m_height / 2);
+	}
 	std::string getEventTypeKey() const
 	{
 		return m_strEventType;
+	}
+	EVENT_OBJECT_TYPE getEventObjectType() const
+	{
+		return m_eObjectType;
 	}
 	bool getPlayersObject() const
 	{

@@ -33,8 +33,8 @@ HRESULT MainNode::initialize()
 	
 	SCENEMANAGER->initialize();
 
-	if (g_fDebugMode)
-		SCENEMANAGER->changeScene(g_fDebugSceneName);
+	if (g_bDebugMode)
+		SCENEMANAGER->changeScene(g_strDebugSceneName);
 	else
 		SCENEMANAGER->changeScene("Battle");
 

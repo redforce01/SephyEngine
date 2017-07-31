@@ -32,6 +32,12 @@ CBattle_MapSystem::~CBattle_MapSystem()
 	}
 	m_vEventObjects.clear();
 
+	for (auto iter : m_vStartingAreaFlag)
+	{
+		SAFE_DELETE(iter);
+	}
+	m_vStartingAreaFlag.clear();
+
 	SAFE_DELETE(m_pBattleMapDataParser);
 }
 
@@ -85,6 +91,12 @@ void CBattle_MapSystem::update(float frameTime)
 
 		iter->update(frameTime);
 	}
+
+	// Update All Starting Area Flag UI
+	for (auto iter : m_vStartingAreaFlag)
+	{
+		iter->update(frameTime);
+	}
 }
 
 void CBattle_MapSystem::render()
@@ -109,6 +121,7 @@ void CBattle_MapSystem::render()
 		iter->render();
 	}
 
+	// Draw All Event Objects
 	for (auto iter : m_vEventObjects)
 	{
 		if (MyUtil::getScreenIn(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
@@ -116,8 +129,13 @@ void CBattle_MapSystem::render()
 
 		iter->render();
 	}
-
 	m_pGraphics->spriteEnd();
+
+	// Render Starting Area Flag
+	for (auto iter : m_vStartingAreaFlag)
+	{
+		iter->render();
+	}
 }
 
 void CBattle_MapSystem::moveX(int distance)
@@ -137,6 +155,10 @@ void CBattle_MapSystem::moveX(int distance)
 	{
 		iter->moveX(distance);
 		iter->moveRectWidth(distance);
+	}
+	for (auto iter : m_vStartingAreaFlag)
+	{
+		iter->moveX(distance);		
 	}
 }
 
@@ -158,9 +180,61 @@ void CBattle_MapSystem::moveY(int distance)
 		iter->moveY(distance);
 		iter->moveRectHeight(distance);
 	}
+	for (auto iter : m_vStartingAreaFlag)
+	{
+		iter->moveY(distance);
+	}
 }
 
 bool CBattle_MapSystem::loadBattleMap(std::string mapName)
 {
 	return m_pBattleMapDataParser->loadBattleMapData(mapName);
+}
+
+void CBattle_MapSystem::setupEventObject()
+{
+	for (auto iter : m_vEventObjects)
+	{
+		auto enType = iter->getEventObjectType();
+		switch (enType)
+		{
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_BOX:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_CIRCLE:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_ROTATE_BOX:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REPAIR:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_OBSERVER:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REFUEL:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_WEATHER_FOG:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_WEATHER_RAIN:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_RESPAWN:
+			break;
+		case EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_STARTING:
+			CBattle_MapUI_StartingArea* tempFlag = new CBattle_MapUI_StartingArea;
+			if (m_vStartingAreaFlag.size() > 0)
+			{
+				// Size > 0? Enemy Area : Player Area 
+				tempFlag->initialize(m_pGraphics, 1);
+				tempFlag->setFlagCenterX(iter->getCenterPosX());
+				tempFlag->setFlagCenterY(iter->getCenterPosY());
+			}
+			else
+			{
+				// 	Player Area Setup
+				tempFlag->initialize(m_pGraphics, 0);
+				tempFlag->setFlagCenterX(iter->getCenterPosX());
+				tempFlag->setFlagCenterY(iter->getCenterPosY());
+			}
+
+			m_vStartingAreaFlag.emplace_back(tempFlag);
+			break;
+		}
+	}
 }

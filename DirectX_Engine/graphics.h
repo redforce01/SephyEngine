@@ -64,7 +64,13 @@ namespace graphicsNS
     const COLOR_ARGB ALPHA50 = D3DCOLOR_ARGB(128,255,255,255);  // AND with color to get 50% alpha
     const COLOR_ARGB BACK_COLOR = NAVY;                         // background color of game
     const COLOR_ARGB TRANSCOLOR = BLACK;						// transparent color
+	//===================================================================
+	// Custom Color Filters
+	const COLOR_ARGB STARTING_ZONE_LINE = D3DCOLOR_ARGB(128, 16, 16, 16);
+	const COLOR_ARGB UNIT_DARK_SHADOW = D3DCOLOR_ARGB(128, 19, 19, 19);
+	const COLOR_ARGB UNIT_LIGHT_SHADOW = D3DCOLOR_ARGB(192, 19, 19, 19);
 
+	//===================================================================
     enum DISPLAY_MODE{TOGGLE, FULLSCREEN, WINDOW};
 }
 
@@ -310,8 +316,19 @@ public:
 	//=============================================================================
 	void drawRect(RECT& rc, float width = 1.0f, COLOR_ARGB color = graphicsNS::WHITE);
 	
-
+	//=============================================================================
+	// Draw DirectX Circle from CenterX, CenterY
+	//  This Function with Drawline Function
+	//  for ( Draw Circle ) = about 7200 count called
+	//=============================================================================
 	void drawCircle(float centerX, float centerY, float rad, float width = 1.0f, COLOR_ARGB color = graphicsNS::WHITE);
+
+	//=============================================================================
+	// Draw DirectX Circle from CenterX, CenterY
+	//  This Function with Drawline Function
+	//  for ( Draw Circle ) about (360 / smooth) count called
+	//=============================================================================
+	void drawCircle(float centerX, float centerY, float rad, float smooth, float width = 1.0f, COLOR_ARGB color = graphicsNS::WHITE);
 
     //=============================================================================
     // Clear backbuffer and BeginScene()

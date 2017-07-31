@@ -1,0 +1,26 @@
+BEGIN ShipData
+	+ ShipID		81
+	+ TextureKey		Carrier
+	+ TextureTop		1
+	+ TextureBody		1
+	+ TextureBottom		0
+	+ Ship_Name		carrier
+	+ Ship_Type		CV
+	+ Max DP		7800
+	+ Repair_Speed		624
+	+ Rotate_Speed		0.226
+	+ Accelerate_Speed	1.8
+	+ Max_Speed		55
+	+ Rader			100
+	+ Turret_Capacity	0
+	+ Turret_ID		0
+	+ Aircraft_Capacity	4
+	+ Performance		10000
+	+ Sailor		800
+	+ AntiAir_Capacity	1
+	+ AntiAir_Range		40
+	+ AntiAir_Damage	20
+	+ Phase			3
+	+ Mass			22.8
+	+ Skill			NULL
+ShipData END

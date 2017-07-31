@@ -46,8 +46,8 @@ void EngineSetting::RealEngineSetup()
 	g_fSoundEffectVolume = m_EngineSettings.fSoundEffectVolume;
 	g_fSoundBGMVolume = m_EngineSettings.fSoundBGMVolume;
 
-	g_fDebugMode = m_EngineSettings.bDebugMode;
-	g_fDebugSceneName = m_EngineSettings.strDebugScene;
+	g_bDebugMode = m_EngineSettings.bDebugMode;
+	g_strDebugSceneName = m_EngineSettings.strDebugScene;
 }
 
 void EngineSetting::LoadEngineSection()

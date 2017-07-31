@@ -48,14 +48,21 @@ CBattle_Ship::CBattle_Ship()
 	m_fAntiAirRange				= 0.f;
 	m_fAntiAirDamage			= 0.f;
 	m_nAirCraftCapacity			= 0;
+	m_nCallPhase				= 0;
+	m_fMass						= 0.f;
 	//===========================================
-	m_bInitialized			= false;
-	m_bActive				= false;
-	m_bDestroy				= false;
-	m_bDestroyAnimeComplete = false;
-	m_bChangeSprite			= false;
-	m_bSelected				= false;
-	m_bOnEngine				= false;
+	m_nFleetNumber				= -1;
+	//===========================================
+	m_bInitialized				= false;
+	m_bActive					= false;
+	m_bDestroy					= false;
+	m_bDestroyAnimeComplete		= false;
+	m_bChangeSprite				= false;
+	m_bSelected					= false;
+	m_bArrived					= true;
+	m_bFixedEngine				= false;
+	//===========================================	
+	m_bDebug					= true;
 	//===========================================
 	ZeroMemory(&m_stUnitTouch, sizeof(m_stUnitTouch));
 }
@@ -87,6 +94,8 @@ bool CBattle_Ship::initialize(Game * gamePtr, std::string shipName)
 	{
 		setupShipDataFormat(vData);
 
+		
+		m_BattleUIShipSelected.initialize(m_pGraphics);
 		//====================================================================
 		// Ship Entity Initialize - Start
 		std::vector<std::pair<bool, std::string>> vShipEntityData;
@@ -168,6 +177,9 @@ void CBattle_Ship::update(float frameTime)
 	if (m_bInitialized == false)
 		return;
 
+	if (m_bActive == false)
+		return;
+
 	if (m_bDestroy == true)
 	{
 		// When Ship Destroyed
@@ -195,6 +207,20 @@ void CBattle_Ship::update(float frameTime)
 
 	}	
 
+	// if Arrived TargetPos(x,y) Then
+	// Set TargetPos(_currentX + (angle * speed), _currentY + (angle * speed))
+	if (m_bArrived)
+	{
+		m_fTargetX = m_vEntity[0].second->getCenterX() + ((float)cos(m_fCurrentAngle) * m_fCurrentSpeed / 2);
+		m_fTargetY = m_vEntity[0].second->getCenterY() + (-(float)sin(m_fCurrentAngle) * m_fCurrentSpeed / 2);
+	}
+
+
+	if (m_bSelected)
+	{
+		m_BattleUIShipSelected.update(frameTime);
+	}
+
 	updateRepair(frameTime);
 	updateTouchData();
 
@@ -207,6 +233,22 @@ void CBattle_Ship::update(float frameTime)
 void CBattle_Ship::render()
 {
 	if (m_bInitialized == false)
+		return;
+
+	if (m_bActive == false)
+		return;
+
+	if (m_bSelected)
+	{
+		m_BattleUIShipSelected.render();
+	}
+
+
+	float currentX = m_vEntity[0].second->getCenter()->x;
+	float currentY = m_vEntity[0].second->getCenter()->y;
+	float objWidth = m_vEntity[0].second->getWidth();
+	float objHeight = m_vEntity[0].second->getHealth();
+	if (MyUtil::getScreenIn(currentX, currentY, objWidth, objHeight, g_fScreenWidth, g_fScreenHeight) == false)
 		return;
 
 	m_pGraphics->spriteBegin();
@@ -229,18 +271,36 @@ void CBattle_Ship::render()
 			- battleShipGeneralNS::SHIP_SUNKEN_SHADOW_TEXTURE_COUNT;
 		for (int i = 0; i < updateSize; i++)
 		{
+			//======================================================
+			// WAVE RENDERING CONTINUE -------------- WARNING
+			// WAVE RENDERING CONTINUE -------------- WARNING
+			// WAVE RENDERING CONTINUE -------------- WARNING
+			//======================================================
 			if (i == m_nSpriteWaveStart)
 				continue;
 
 			m_vEntity[i].second->draw();
 		}
-	}
-		
+	}		
 	m_pGraphics->spriteEnd();
 
-	float currentX = m_vEntity[0].second->getCenter()->x;
-	float currentY = m_vEntity[0].second->getCenter()->y;
-	m_pGraphics->drawLine(currentX, currentY, m_fTargetX, m_fTargetY, 2.0f, graphicsNS::RED);
+	if (m_bDestroy == true)
+	{
+
+	}
+	else
+	{
+		if (m_bSelected)
+		{
+			m_pGraphics->drawCircle(currentX, currentY, m_fRaderRange, 1.0f, graphicsNS::MAROON);
+		}
+	}
+
+	if (m_bDebug)
+	{
+		m_pGraphics->drawCircle(currentX, currentY, m_vEntity[0].second->getHealth() / 2, 1.0f, graphicsNS::BROWN);
+		m_pGraphics->drawLine(currentX, currentY, m_fTargetX, m_fTargetY, 1.0f, graphicsNS::RED);
+	}
 }
 
 void CBattle_Ship::ai()
@@ -408,6 +468,7 @@ void CBattle_Ship::moveX(float fDistance)
 	}
 
 	m_fTargetX += fDistance;
+	m_BattleUIShipSelected.moveX(fDistance);
 }
 
 void CBattle_Ship::moveY(float fDistance)
@@ -418,13 +479,14 @@ void CBattle_Ship::moveY(float fDistance)
 	}
 
 	m_fTargetY += fDistance;
+	m_BattleUIShipSelected.moveY(fDistance);
 }
 
 void CBattle_Ship::updateTouchData()
 {
 	m_stUnitTouch.x = m_vEntity[0].second->getCenterX();
 	m_stUnitTouch.y = m_vEntity[0].second->getCenterY();
-	m_stUnitTouch.radius = m_vEntity[0].second->getWidth() / 2;
+	m_stUnitTouch.radius = m_vEntity[0].second->getHealth() / 2;
 }
 
 void CBattle_Ship::updateMovement(float frameTime)
@@ -433,31 +495,42 @@ void CBattle_Ship::updateMovement(float frameTime)
 		return;
 
 	VECTOR2 CurrentPos = *m_vEntity[0].second->getCenter();
-	float interRadius = 5.f;
+	float interRadius = m_vEntity[0].second->getHealth() / 2;
 	float calDistance = MyUtil::getDistance(CurrentPos.x, CurrentPos.y, m_fTargetX, m_fTargetY);
 	float sumDistance = interRadius + m_stUnitTouch.radius;
 	if (calDistance < sumDistance)
-		m_bOnEngine = false;
+		m_bArrived = true;
 	else
-		m_bOnEngine = true;
+		m_bArrived = false;
 
 	for (auto iter : m_vEntity)
 	{
 		iter.second->Image::moveX((float)cos(m_fCurrentAngle) * m_fCurrentSpeed * frameTime);
 		iter.second->Image::moveY(-(float)sin(m_fCurrentAngle) * m_fCurrentSpeed * frameTime);
 	}
+	m_BattleUIShipSelected.moveX((float)cos(m_fCurrentAngle) * m_fCurrentSpeed * frameTime);
+	m_BattleUIShipSelected.moveY(-(float)sin(m_fCurrentAngle) * m_fCurrentSpeed * frameTime);
+
+
 }
 
 void CBattle_Ship::updateEngine(float frameTime)
 {
-	if (m_bOnEngine)
+	if (m_bArrived)
 	{
-		m_fCurrentSpeed += m_fAccelateSpeed * frameTime;
+		if (m_bFixedEngine)
+		{
+			m_fCurrentSpeed += m_fAccelateSpeed * frameTime;
+		}
+		else
+		{
+			if (m_fCurrentSpeed > 0.f)
+				m_fCurrentSpeed -= m_fAccelateSpeed * frameTime;
+		}
 	}
 	else
 	{
-		if(m_fCurrentSpeed > 0.f)
-			m_fCurrentSpeed -= m_fAccelateSpeed * frameTime;
+		m_fCurrentSpeed += m_fAccelateSpeed * frameTime;
 	}
 	
 	if (m_fCurrentSpeed < 0.f)
@@ -606,6 +679,8 @@ void CBattle_Ship::setupShipDataFormat(std::vector<std::string> vArray)
 	m_nAntiAirTurrectCount	= std::stoi(vArray[++dataNumber]);
 	m_fAntiAirRange			= std::stof(vArray[++dataNumber]);
 	m_fAntiAirDamage		= std::stof(vArray[++dataNumber]);
+	m_nCallPhase			= std::stoi(vArray[++dataNumber]);
+	m_fMass					= std::stof(vArray[++dataNumber]);
 }
 
 bool CBattle_Ship::setupEntity(Game * gamePtr, std::string strImageName, bool bPhysics)
@@ -614,8 +689,7 @@ bool CBattle_Ship::setupEntity(Game * gamePtr, std::string strImageName, bool bP
 	Entity* shipParts = new Entity;
 	success = shipParts->initialize(gamePtr, 0, 0, 0, IMAGEMANAGER->getTexture(strImageName));
 	shipParts->setCollisionType(entityNS::PIXEL_PERFECT);
-	shipParts->setScale(0.75);
-
+	shipParts->setScale(battleShipGeneralNS::SHIP_ENTITY_TEXTURE_SCALE);
 
 	m_vEntity.emplace_back(bPhysics, shipParts);
 	return success;

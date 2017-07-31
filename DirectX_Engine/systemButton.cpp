@@ -14,6 +14,7 @@ SystemButton::SystemButton()
 	m_bUseKey			= false;
 	m_bInitialized		= false;
 	m_bActive			= false;
+	m_bClicked			= false;
 	m_enButtonState		= SYSTEM_UI_BUTTON::BUTTON_STATE_DEACTIVE;
 }
 
@@ -82,6 +83,9 @@ bool SystemButton::initialize(Graphics * g, Input * i, float x, float y, std::st
 		m_y = y;
 		m_width = Image::getWidth();
 		m_height = Image::getHeight();
+
+		Image::setX(m_x);
+		Image::setY(m_y);
 		setupButtonRect();
 		m_bInitialized = m_bActive = success;
 	}
@@ -102,21 +106,43 @@ void SystemButton::update(float frameTime)
 	if (m_bActive == false)
 	{
 		m_enButtonState = SYSTEM_UI_BUTTON::BUTTON_STATE_DEACTIVE;
-		if(m_bUseKey)
-			Image::setTextureManager(IMAGEMANAGER->getTexture(m_strButtonDeactiveKey));
+		if (m_bUseKey)
+		{
+			auto image = IMAGEMANAGER->getTexture(m_strButtonDeactiveKey);
+			if(image != nullptr)
+				Image::setTextureManager(image);
+			else
+			{
+				auto image = IMAGEMANAGER->getTexture(m_strButtonUpKey);
+				Image::setTextureManager(image);
+			}
+		}
 		return;
 	}
 
 	if (PtInRect(&m_rcButton, m_pInput->getMousePt()))
 	{
 		if (m_bUseKey)
-			Image::setTextureManager(IMAGEMANAGER->getTexture(m_strButtonOverKey));
+		{
+			auto image = IMAGEMANAGER->getTexture(m_strButtonOverKey);
+			if (image != nullptr)
+				Image::setTextureManager(image);
+			else
+			{
+				auto image = IMAGEMANAGER->getTexture(m_strButtonUpKey);
+				Image::setTextureManager(image);
+			}
+		}
 		m_enButtonState = SYSTEM_UI_BUTTON::BUTTON_STATE_OVERLAB;
 	}
 	else
 	{
 		if (m_bUseKey)
-			Image::setTextureManager(IMAGEMANAGER->getTexture(m_strButtonUpKey));
+		{
+			auto image = IMAGEMANAGER->getTexture(m_strButtonUpKey);
+			if (image != nullptr)
+				Image::setTextureManager(image);
+		}
 		m_enButtonState = SYSTEM_UI_BUTTON::BUTTON_STATE_UP;
 	}
 
@@ -125,30 +151,39 @@ void SystemButton::update(float frameTime)
 		if (PtInRect(&m_rcButton, m_pInput->getMousePt()))
 		{
 			if (m_bUseKey)
-				Image::setTextureManager(IMAGEMANAGER->getTexture(m_strButtonDownKey));
+			{
+				auto image = IMAGEMANAGER->getTexture(m_strButtonDownKey);
+				if (image != nullptr)
+					Image::setTextureManager(image);
+				else
+				{
+					auto image = IMAGEMANAGER->getTexture(m_strButtonUpKey);
+					Image::setTextureManager(image);
+				}
+			}
 			m_enButtonState = SYSTEM_UI_BUTTON::BUTTON_STATE_DOWN;
-
-			if(m_function != nullptr)
-				m_function();
-
-			m_pInput->setMouseLButton(false);
+			m_bClicked = true;
 		}
 	}
 	else
 	{
-		if (m_bUseKey)
-			Image::setTextureManager(IMAGEMANAGER->getTexture(m_strButtonUpKey));
-		else
-			m_enButtonState = SYSTEM_UI_BUTTON::BUTTON_STATE_UP;
+		if (m_bClicked)
+		{
+			if (PtInRect(&m_rcButton, m_pInput->getMousePt()))
+			{
+				if (m_function != nullptr)
+				{
+					m_function();
+				}
+			}
+			m_bClicked = false;
+		}
 	}
 }
 
 void SystemButton::render()
 {
 	if (m_bInitialized == false)
-		return;
-
-	if (m_bActive == false)
 		return;
 
 	m_pGraphics->spriteBegin();

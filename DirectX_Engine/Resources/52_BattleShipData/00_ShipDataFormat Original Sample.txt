@@ -2,6 +2,9 @@
 # Ship Data Format
 #  + Ship ID		함선 ID
 #  + TextureKey		함선 텍스쳐 키(텍스쳐 이름)
+#  + TextureTop		함선 Top 갯수
+#  + TextureBody	함선 Body 갯수
+#  + TextureBottom	함선 Bottom 갯수
 #  + Ship Name		함선 고유이름
 #  + Ship Type		함선 타입
 #  + Unit Type		유닛 타입
@@ -19,6 +22,8 @@
 #  + AntiAir_Capacity	대공포 갯수
 #  + AntiAir_Range	대공포 사거리
 #  + AntiAir_Damage	대공포 공격력
+#  + Phase		함선 전투 Phase Number
+#  + Mass		함선 질량(Weight)
 #  + Skill		함선 스킬
 #--------------------------------
 
@@ -26,9 +31,12 @@
 BEGIN ShipData
 	+ ShipID		11
 	+ TextureKey		Corvette
+	+ TextureTop		2
+	+ TextureBody		1
+	+ TextureBottom		1
 	+ Ship_Name		corvette
 	+ Ship_Type		CC
-	+ DP(HP)		1800
+	+ Max DP		1800
 	+ Repair_Speed		63
 	+ Rotate_Speed		10
 	+ Accelerate_Speed	2
@@ -42,5 +50,7 @@ BEGIN ShipData
 	+ AntiAir_Capacity	3
 	+ AntiAir_Range		40
 	+ AntiAir_Damage	10
+	+ Phase			1
+	+ Mass			100
 	+ Skill			NULL
 ShipData END

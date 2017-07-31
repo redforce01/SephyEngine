@@ -52,6 +52,20 @@ namespace MyUtil
 		return false;
 	}
 
+	bool getPtInScreen(float ptX, float ptY, float screenWidth, float screenHeight)
+	{
+
+		if (ptX > 0 && ptX < screenWidth)
+		{
+			if (ptY > 0 && ptY < screenHeight)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	float getCenterHorizonInRect(RECT & rc)
 	{
 		return rc.left + ((rc.right - rc.left) / 2);
@@ -132,6 +146,23 @@ namespace MyUtil
 		{
 			return true;
 		}
+		return false;
+	}
+
+	bool ptInCircle(float centerX, float centerY, float radius, float ptX, float ptY)
+	{
+		float fCircleX = centerX;
+		float fCircleY = centerY;
+		float fRadius = radius;
+		float fMouseX = ptX;
+		float fMouseY = ptY;
+		float fDistance = MyUtil::getDistance(fCircleX, fCircleY, fMouseX, fMouseY);
+
+		if (fDistance < radius)
+		{
+			return true;
+		}
+
 		return false;
 	}
 

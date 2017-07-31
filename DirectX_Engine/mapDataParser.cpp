@@ -383,6 +383,9 @@ void MapDataParser::mapEventObjectSetup(std::vector<std::string> vEventObject)
 			EventObjectHeight,
 			EventObjectType);
 		
+		if(g_bDebugMode)
+			newEventObject->setDebugMode(true);
+		
 		m_pMapSystem->addEventObject(newEventObject);
 	}
 }

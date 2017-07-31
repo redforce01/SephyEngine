@@ -13,11 +13,12 @@ SystemUIDialog::SystemUIDialog()
 	m_width = m_height = 0;
 	m_margin = 0;
 	m_rcBoundingBox = RectMake(0, 0, 0, 0);
-	m_bVisible = true;
+	m_bVisible = false;
 	m_bInitialized = false;
 
 	m_bMouseOver = false;
 	m_bHasFocus = false;
+	m_bDrawBorder = true;
 }
 
 
@@ -43,6 +44,7 @@ bool SystemUIDialog::initializeDialog(Graphics * g, Input * i, int x, int y, int
 		m_pInput = i;
 		m_rcBoundingBox = RectMake(x, y, w, h);
 		success = vertexSetup(x, y, w, h);
+		m_bVisible = true;
 		m_bInitialized = true;
 	}
 	catch (...)
@@ -78,7 +80,9 @@ void SystemUIDialog::render()
 		return;
 
 	m_pGraphics->drawQuad(vertexBuffer);
-	m_pGraphics->drawRect(m_rcBoundingBox);
+
+	if(m_bDrawBorder)
+		m_pGraphics->drawRect(m_rcBoundingBox);
 }
 
 bool SystemUIDialog::vertexSetup(int x, int y, int w, int h)

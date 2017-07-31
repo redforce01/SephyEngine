@@ -22,6 +22,8 @@
 #  + AntiAir_Capacity	대공포 갯수
 #  + AntiAir_Range	대공포 사거리
 #  + AntiAir_Damage	대공포 공격력
+#  + Phase		함선 전투 Phase Number
+#  + Mass		함선 질량(Weight)
 #  + Skill		함선 스킬
 #--------------------------------
 
@@ -29,24 +31,26 @@
 BEGIN ShipData
 	+ ShipID		11
 	+ TextureKey		Corvette
-	+ TextureTop		2
+	+ TextureTop		1
 	+ TextureBody		1
 	+ TextureBottom		1
 	+ Ship_Name		corvette
 	+ Ship_Type		CC
 	+ Max DP		1800
 	+ Repair_Speed		63
-	+ Rotate_Speed		10
-	+ Accelerate_Speed	2
-	+ Max_Speed		40
+	+ Rotate_Speed		0.488
+	+ Accelerate_Speed	4.8
+	+ Max_Speed		88
 	+ Rader			150
 	+ Turret_Capacity	3
 	+ Turret_ID		1
 	+ Aircraft_Capacity	0
 	+ Performance		250
 	+ Sailor		20
-	+ AntiAir_Capacity	3
+	+ AntiAir_Capacity	1
 	+ AntiAir_Range		40
-	+ AntiAir_Damage	10
+	+ AntiAir_Damage	20
+	+ Phase			1
+	+ Mass			10.95
 	+ Skill			NULL
 ShipData END

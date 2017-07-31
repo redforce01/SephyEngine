@@ -33,10 +33,10 @@ namespace MyUtil
 
 	// Object in Screen(with Object Width/Height)? Function. return bool
 	bool getScreenIn(int objX, int objY, int objWidth, int objHeight, int screenSizeW, int screenSizeH);
-		
-	// Not Implementated
-	bool getObjectIn(int objX, int objY, int objWidth, int objHeight, int targetX, int targetY);
-
+	
+	// Some Pt in Screen ((Width, Height) - Check function
+	bool getPtInScreen(float ptX, float ptY, float screenWidth, float screenHeight);
+	
 	// Get Horizon Center Value(float) In Rect
 	float getCenterHorizonInRect(RECT &rc);
 
@@ -47,7 +47,9 @@ namespace MyUtil
 	bool getIsometricIn(RECT &rc, POINT pt);
 
 	// Get Isometric In Bool used (RECT, float x,y)
-	bool getIsometricIn(RECT &rc, float x, float y);	 
+	bool getIsometricIn(RECT &rc, float x, float y);	
+
+	bool ptInCircle(float centerX, float centerY, float radius, float ptX, float ptY);
 }
 
 #endif
