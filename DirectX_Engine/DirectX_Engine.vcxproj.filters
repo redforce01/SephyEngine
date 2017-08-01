@@ -325,6 +325,15 @@
     <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\BattleStart">
       <UniqueIdentifier>{21311722-67c9-406c-a536-71de74ee9505}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView">
+      <UniqueIdentifier>{00ce8ad6-2388-462f-9fb0-836760be9438}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button">
+      <UniqueIdentifier>{5c9787dc-04da-4943-b004-59f380137135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleFleetSystem">
+      <UniqueIdentifier>{8dd9ce4c-d4a5-4d09-aace-fbfb1a948b90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -708,9 +717,6 @@
     <ClCompile Include="Battle_UI_FleetMark.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMarkView</Filter>
     </ClCompile>
-    <ClCompile Include="Battle_UI_FleetMarkView.cpp">
-      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMarkView</Filter>
-    </ClCompile>
     <ClCompile Include="Battle_UI_ShipSelected.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\UnitSelect</Filter>
     </ClCompile>
@@ -723,8 +729,29 @@
     <ClCompile Include="Battle_MinimapView.cpp">
       <Filter>GameCode\Battle\BattleCameraSystem\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Battle_StartButton.cpp">
+    <ClCompile Include="Battle_UI_StartButton.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\BattleStart</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_FleetMakeViewer.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_FleetMakeButton.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_FleetMarkViewer.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMarkView</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_FleetSystem.cpp">
+      <Filter>GameCode\Battle\BattleFleetSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_FleetRemoveButton.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_FleetSetupButton.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_FlagShipButton.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1127,9 +1154,6 @@
     <ClInclude Include="Battle_UI_Destination.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\Destination</Filter>
     </ClInclude>
-    <ClInclude Include="Battle_UI_FleetMarkView.h">
-      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMarkView</Filter>
-    </ClInclude>
     <ClInclude Include="Battle_UI_FleetMark.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMarkView</Filter>
     </ClInclude>
@@ -1145,8 +1169,29 @@
     <ClInclude Include="Battle_MinimapView.h">
       <Filter>GameCode\Battle\BattleCameraSystem\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Battle_StartButton.h">
+    <ClInclude Include="Battle_UI_StartButton.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\BattleStart</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_FleetMakeViewer.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_FleetMakeButton.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_FleetMarkViewer.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMarkView</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_FleetSystem.h">
+      <Filter>GameCode\Battle\BattleFleetSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_FleetRemoveButton.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_FleetSetupButton.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_FlagShipButton.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

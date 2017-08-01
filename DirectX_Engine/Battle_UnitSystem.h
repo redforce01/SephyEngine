@@ -13,7 +13,9 @@ class CBattle_UnitSystem;
 #include "Battle_Ship.h"
 #include "Battle_UI_Destination.h"
 #include "Battle_UI_FleetListView.h"
-#include "Battle_UI_FleetMarkView.h"
+#include "Battle_UI_FleetMarkViewer.h"
+#include "Battle_UI_FleetMakeViewer.h"
+#include "Battle_UI_StartButton.h"
 
 namespace battleUnitSystemNS
 {
@@ -38,7 +40,6 @@ private:
 private: // Unit Variables
 	arrShips m_vPlayerShips;	// PLAYER BATTLE SHIPS
 	arrShips m_vCompterShips;	// COMPUTER BATTLE SHIPS
-
 	int m_nCurrentBattlePhase;
 	int m_nSetupShipIndex;
 	int m_nSelectUnitNum;
@@ -48,15 +49,25 @@ private:
 	bool m_bReSetupShip;
 	bool m_bSetupShip;
 	bool m_bBattleStart;
+
+private:
+	bool m_bClicked;
+	bool m_bSimpleClicked;
+	float m_fClickStartX;
+	float m_fClickStartY;
+	float m_fClickEndX;
+	float m_fClickEndY;
+
 private:
 	std::vector<RECT> m_vWorkableRect; // UI Workable vector<RECT>
 
-private:
+private: // Battle Interface 
 	CBattle_UnitParser*			m_pBattleUnitParser;
 	CBattle_UI_Destination*		m_pBattle_UI_Destination;
 	CBattle_UI_FleetListView*	m_pBattle_UI_FleetListView;
-	CBattle_UI_FleetMarkView*	m_pBattle_UI_FleetMarkView;
-
+	CBattle_UI_FleetMarkViewer*	m_pBattle_UI_FleetMarkView;
+	CBattle_UI_FleetMakeViewer* m_pBattle_UI_FleetMakeView;
+	CBattle_UI_StartButton*		m_pBattle_UI_StartButton;
 public:
 	CBattle_UnitSystem();
 	~CBattle_UnitSystem();
@@ -78,6 +89,10 @@ public:
 	//==================================================
 	// Member Functions
 	//==================================================
+	void updateFuncBeforeStart(float frameTime);
+
+	void updateFuncAfterStart(float frameTime);
+
 
 	//==================================================
 	// All Unit Move Functions Called From CameraSystem
@@ -86,6 +101,8 @@ public:
 	//==================================================
 	void clearActiveShip();
 	void setupShip(std::string shipName);
+
+	void setupActiveForStart();
 
 	void addWorkableRect(RECT rc)
 	{
@@ -112,6 +129,11 @@ public:
 		m_nCurrentBattlePhase = nPhase;
 	}
 
+	void setBattleStart(bool bStart)
+	{
+		m_bBattleStart = bStart;
+	}
+
 	//==================================================
 	// Getter Functions
 	//==================================================
@@ -121,6 +143,10 @@ public:
 		return m_nCurrentBattlePhase;
 	}
 
+	bool getBattleStart() const
+	{
+		return m_bBattleStart;
+	}
 
 	std::vector<CBattle_Ship*> getPlayerShips() const
 	{

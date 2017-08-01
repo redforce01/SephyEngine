@@ -10,7 +10,7 @@ BEGIN WorldIndex
 WorldIndex END
 
 BEGIN MapData
-	BEGIN battleMap_StartingTest END
+	BEGIN battleMap_RespawnTest END
 MapData END
 
 BEGIN PlayerData

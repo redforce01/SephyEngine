@@ -126,7 +126,10 @@ void CBattle_MapUI_StartingArea::render()
 	if (MyUtil::getScreenIn(x, y, width, height, g_fScreenWidth, g_fScreenHeight) == false)
 		return;
 
-	m_pGraphics->drawCircle(m_pAreaFlag->getCenterX(), m_pAreaFlag->getCenterY(), m_fAreaRadius, 0.05f, 1.5f, graphicsNS::STARTING_ZONE_LINE);
+	m_pGraphics->drawCircle(m_pAreaFlag->getCenterX(), m_pAreaFlag->getCenterY(),
+		battleMapUIStartingAreaNS::STARTING_AREA_RADIUS,
+		battleMapUIStartingAreaNS::STARTING_AREA_SMOOTHNESS,
+		2.0f, graphicsNS::STARTING_ZONE_LINE);
 		
 	m_pGraphics->spriteBegin();
 	m_pAreaFlag->draw();

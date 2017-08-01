@@ -145,7 +145,7 @@ private:
 	float		m_fAntiAirDamage;			// Unit AntiAir Turret Damage
 	int			m_nAirCraftCapacity;		// Unit AirCraft Capacity
 	int			m_nCallPhase;				// Unit CallPhase Number
-	float		m_fMass;					// Unit Mass ( Unit Real Weight )
+	float		m_fMass;					// Unit Mass ( Unit Real Weight )	
 	//================================================
 	bool		m_bIncludedFleet;			// Ship Included Fleet
 	int			m_nFleetNumber;				// Ship Fleet Number
@@ -193,6 +193,7 @@ private:
 	bool m_bSelected;
 	bool m_bArrived;
 	bool m_bFixedEngine;
+	bool m_bFlagShip;
 	//===============================================
 	bool m_bDebug;
 
@@ -406,6 +407,11 @@ public:
 	void setShipActive(bool bActive)
 	{
 		m_bActive = bActive;
+	}
+
+	void setFlagShip(bool bFlagShip)
+	{
+		m_bFlagShip = bFlagShip;
 	}
 
 	//===============================================
@@ -630,6 +636,11 @@ public:
 	float getShipHeight() const
 	{
 		return m_vEntity[0].second->getHeight();
+	}
+
+	bool getFlagShip() const
+	{
+		return m_bFlagShip;
 	}
 };
 

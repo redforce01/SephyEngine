@@ -44,17 +44,11 @@ bool CBattle_UI_FleetMark::initialize(Graphics * g, Input * i, int index)
 		if (index > 0)
 		{
 			m_y = battleFleetMarkNS::FLEET_MARK_Y + (battleFleetMarkNS::FLEET_MARK_TOTAL_HEIGHT * index);
-			//if (index % 3 == 0)
-			//	m_y = battleFleetMarkNS::FLEET_MARK_TOTAL_HEIGHT * (index / 3);
 			m_width = m_pFleetMark->getWidth() + m_pFleetText->getWidth();
 			m_height = m_pFleetText->getHeight();
 		}
-
-		m_x = g_fScreenWidth - battleFleetMarkNS::FLEET_MARK_TOTAL_WIDTH;
-
+		
 		m_rcFleetMark = RectMake(m_x, m_y, m_width, m_height);
-
-
 		m_pFleetMark->setX(m_x);
 		m_pFleetMark->setY(m_y);
 		m_pFleetText->setX(m_x + m_pFleetMark->getWidth() + battleFleetMarkNS::FLEET_MARK_MARGIN);
@@ -76,7 +70,6 @@ void CBattle_UI_FleetMark::update(float frameTime)
 		if (PtInRect(&m_rcFleetMark, m_pInput->getMousePt()))
 		{
 			
-
 		}
 	}
 }
@@ -87,4 +80,20 @@ void CBattle_UI_FleetMark::render()
 	m_pFleetMark->draw();
 	m_pFleetText->draw();
 	m_pGraphics->spriteEnd();
+}
+
+void CBattle_UI_FleetMark::moveFleetMarkX(float distance)
+{
+	m_x += distance;
+	m_pFleetMark->moveX(distance);
+	m_pFleetText->moveX(distance);
+	updateFleetMarkRect();
+}
+
+void CBattle_UI_FleetMark::moveFleetMarkY(float distance)
+{
+	m_y += distance;
+	m_pFleetMark->moveY(distance);
+	m_pFleetText->moveY(distance);
+	updateFleetMarkRect();
 }

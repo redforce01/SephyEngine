@@ -61,6 +61,7 @@ CBattle_Ship::CBattle_Ship()
 	m_bSelected					= false;
 	m_bArrived					= true;
 	m_bFixedEngine				= false;
+	m_bFlagShip					= false;
 	//===========================================	
 	m_bDebug					= true;
 	//===========================================

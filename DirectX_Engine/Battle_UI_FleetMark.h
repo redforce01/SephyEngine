@@ -13,12 +13,13 @@ namespace battleFleetMarkNS
 	const std::string ERROR_MESSAGE = "Fleet Mark Initialize Failed";
 	const std::string FLEET_MARK_FILENAME = "Fleet_Mark_";
 	const std::string FLEET_TEXT_FILENAME = "Fleet_Text_";
-	const UINT FLEET_MARK_MAX_COUNT = 8;
-	const UINT FLEET_MARK_X = 0.f;
-	const UINT FLEET_MARK_Y = 300.f;
-	const UINT FLEET_MARK_MARGIN = 3;
-	const UINT FLEET_MARK_TOTAL_WIDTH = 110;
-	const UINT FLEET_MARK_TOTAL_HEIGHT = 30;
+	const float FLEET_MARK_MAX_COUNT = 8;
+	const float FLEET_MARK_X = 10;
+	const float FLEET_MARK_Y = 330;
+	const float FLEET_MARK_MARGIN = 3;
+	const float FLEET_MARK_TOTAL_WIDTH = 110;
+	const float FLEET_MARK_TOTAL_HEIGHT = 30;
+	const float FLEET_MARK_INVISIBLE_X = -90;
 }
 
 class CBattle_UI_FleetMark
@@ -48,15 +49,34 @@ public:
 	void update(float frameTime);
 	void render();
 
-	void setActive(bool bActive)
+	//===================================================
+	// Member Functions
+	//===================================================
+	void updateFleetMarkRect()
 	{
-		m_bActive = bActive;
+		m_rcFleetMark = RectMake(m_x, m_y, m_width, m_height);
 	}
+
+	void moveFleetMarkX(float distance);
+	void moveFleetMarkY(float distance);
 
 	void addShipToFleet(int shipNumber)
 	{
 		m_vShipIndex.emplace_back(shipNumber);
 	}
+
+	//===================================================
+	// Setter Functions
+	//===================================================
+
+	void setActive(bool bActive)
+	{
+		m_bActive = bActive;
+	}
+
+	//===================================================
+	// Getter Functions
+	//===================================================
 
 	bool getActive() const
 	{

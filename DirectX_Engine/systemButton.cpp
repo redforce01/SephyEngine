@@ -11,6 +11,7 @@ SystemButton::SystemButton()
 	m_width				= 0.f;
 	m_height			= 0.f;
 	m_rcButton			= { 0, };
+	m_bMessageButton	= false;
 	m_bUseKey			= false;
 	m_bInitialized		= false;
 	m_bActive			= false;
@@ -21,6 +22,31 @@ SystemButton::SystemButton()
 
 SystemButton::~SystemButton()
 {
+}
+
+bool SystemButton::initialize(Graphics * g, Input * i, std::string message, float x, float y, float width, float height)
+{
+	bool success = false;
+	try
+	{
+		m_pGraphics = g;
+		m_pInput = i;
+		
+		m_x = x;
+		m_y = y;
+		m_width = width;
+		m_height = height;
+		m_bMessageButton = true;		
+		setupButtonRect();
+		m_bInitialized = m_bActive = success = m_bMessageButton;
+	}
+	catch (...)
+	{
+		std::string error = systemButtonNS::ERROR_MESSAGE + " : " + message;
+		MessageBox(g_hWndEngine, error.c_str(), "Error", MB_OK);
+	}
+
+	return success;
 }
 
 bool SystemButton::initialize(Graphics * g, Input * i, std::string imageName, bool bUseKey)
@@ -102,6 +128,14 @@ void SystemButton::update(float frameTime)
 {
 	if (m_bInitialized == false)
 		return;
+
+	if (m_bUseKey)
+	{
+		m_strButtonUpKey = m_strButtonKey + systemButtonNS::FRAME_UP_KEY;
+		m_strButtonDownKey = m_strButtonKey + systemButtonNS::FRAME_DOWN_KEY;
+		m_strButtonOverKey = m_strButtonKey + systemButtonNS::FRAME_OVERLAB_KEY;
+		m_strButtonDeactiveKey = m_strButtonKey + systemButtonNS::FRAME_DEACTIVE_KEY;
+	}
 
 	if (m_bActive == false)
 	{

@@ -158,13 +158,43 @@ namespace MyUtil
 		float fMouseY = ptY;
 		float fDistance = MyUtil::getDistance(fCircleX, fCircleY, fMouseX, fMouseY);
 
-		if (fDistance < radius)
+		if (fDistance <= radius)
 		{
 			return true;
 		}
 
 		return false;
 	}
+	bool circleInRect(float cx, float cy, float cr, const LPRECT rc)
+	{
+		float centerX = cx;
+		float centerY = cy;
+		float radius = cr;
 
+		if ((rc->left <= centerX && centerX <= rc->right) ||
+			(rc->top <= centerY && centerY <= rc->bottom))
+		{
+			RECT rcEx = {
+				rc->left - radius,
+				rc->top - radius,
+				rc->right + radius,
+				rc->bottom + radius
+			};
 
+			if ((rcEx.left < centerX && centerX <= rcEx.right) &&
+				(rcEx.top < centerY && centerY < rcEx.bottom))
+			{
+				return true;
+			}
+		}
+		else
+		{
+			if (ptInCircle(cx, cy, cr, rc->left, rc->top)) return true;
+			if (ptInCircle(cx, cy, cr, rc->left, rc->bottom)) return true;
+			if (ptInCircle(cx, cy, cr, rc->right, rc->top)) return true;
+			if (ptInCircle(cx, cy, cr, rc->right, rc->bottom)) return true;
+		}
+
+		return false;
+	}
 }

@@ -54,12 +54,38 @@ private:
 		m_rcBoundingBox = RectMake(m_x, m_y, m_width, m_height);
 	}
 public:
+
+	void moveDialogX(float distance)
+	{
+		m_x += distance;
+		vertexSetup(m_x, m_y, m_width, m_height);
+		setUpRect();
+	}
+	void moveDialogY(float distance)
+	{
+		m_y += distance;
+		vertexSetup(m_x, m_y, m_width, m_height);
+		setUpRect();
+	}
+
 	//=====================================
 	// Setter Functions
 	//=====================================	
 	void setDialogPos(int startX, int startY)
 	{
 		m_x = startX, m_y = startY;
+		vertexSetup(m_x, m_y, m_width, m_height);
+		setUpRect();
+	}
+	void setDialogX(float x)
+	{
+		m_x = x;
+		vertexSetup(m_x, m_y, m_width, m_height);
+		setUpRect();
+	}
+	void setDialogY(float y)
+	{
+		m_y = y;
 		vertexSetup(m_x, m_y, m_width, m_height);
 		setUpRect();
 	}

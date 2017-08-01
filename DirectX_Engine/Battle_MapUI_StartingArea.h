@@ -11,6 +11,7 @@ namespace battleMapUIStartingAreaNS
 	const std::string AREA_FLAG_SHADOW_KEY			= "FlagShadow_";
 	const UINT STARTING_AREA_FLAG_MAX_FRAME			= 46; // 0 ~ 45	
 	const float STARTING_AREA_RADIUS = 500.f;
+	const float STARTING_AREA_SMOOTHNESS = 0.1f;
 }
 
 

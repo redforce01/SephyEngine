@@ -29,14 +29,15 @@ protected:
 	float		m_x, m_y;
 	float		m_width, m_height;
 	RECT		m_rcButton;
-
+	TextDX		m_dxFont;
 protected:
 	bool		m_bUseKey;
 	bool		m_bInitialized;
 	bool		m_bActive;
 protected:
-	std::function<void()> m_function;
-	SYSTEM_UI_BUTTON m_enButtonState;
+	std::function<void()>	m_function;
+	SYSTEM_UI_BUTTON		m_enButtonState;
+	bool					m_bMessageButton;
 private:
 	bool		m_bClicked;
 	std::string m_strButtonUpKey;
@@ -47,6 +48,7 @@ public:
 	SystemButton();
 	virtual ~SystemButton();
 
+	virtual bool initialize(Graphics* g, Input* i, std::string message, float x, float y, float width = 43.f, float height = 18.f);
 	virtual bool initialize(Graphics* g, Input* i, std::string imageName, bool bUseKey = false);
 	virtual bool initialize(Graphics* g, Input* i, float x, float y, std::string imageName, bool bUseKey = false);
 	virtual void update(float frameTime);
@@ -107,6 +109,11 @@ public:
 	void setRegistFunction(std::function<void()> pFunction)
 	{
 		m_function = pFunction;
+	}
+
+	void setButtonSpriteKey(std::string strKey)
+	{
+		m_strButtonKey = strKey;
 	}
 
 	//==================================================

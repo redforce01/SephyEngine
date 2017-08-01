@@ -50,6 +50,8 @@ namespace MyUtil
 	bool getIsometricIn(RECT &rc, float x, float y);	
 
 	bool ptInCircle(float centerX, float centerY, float radius, float ptX, float ptY);
+
+	bool circleInRect(float cx, float cy, float cr, const LPRECT rc);
 }
 
 #endif
