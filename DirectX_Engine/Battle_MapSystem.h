@@ -9,6 +9,8 @@ class CBattle_MapSystem;
 #include "mapEventObject.h"
 #include "Battle_MapParser.h"
 #include "Battle_MapUI_StartingArea.h"
+#include "Battle_MapUI_RespawnArea.h"
+#include "Battle_MapUI_CollisionArea.h"
 
 namespace battleMapSystemNS
 {
@@ -21,6 +23,8 @@ namespace battleMapSystemNS
 class CBattle_CameraSystem;
 class CBattle_MapSystem : public SystemBase
 {
+private:
+	Game* m_pGame;
 private:
 	typedef std::vector<MapTile*>					MAP_TILES;
 	typedef std::vector<MapTile*>::iterator			MAP_TILES_ITER;
@@ -46,7 +50,8 @@ private: // Battle MapParser
 
 private:
 	std::vector<CBattle_MapUI_StartingArea*> m_vStartingAreaFlag;
-
+	std::vector<CBattle_MapUI_RespawnArea*> m_vRespawnArea;
+	std::vector<CBattle_MapUI_CollisionArea*> m_vCollisionArea;
 public:
 	CBattle_MapSystem();
 	~CBattle_MapSystem();
@@ -183,6 +188,17 @@ public:
 	float getCellHeight() const
 	{
 		return m_fMapCellHeight;
+	}
+
+	std::vector<CBattle_MapUI_CollisionArea*> getCollisionAreas() const
+	{
+		return m_vCollisionArea;
+	}
+
+	CBattle_MapUI_RespawnArea* getPlayerRespawnArea() const
+	{
+		if (m_vRespawnArea.size() > 0)
+			return m_vRespawnArea[0];
 	}
 
 	CBattle_MapUI_StartingArea* getPlayerStartingArea() const

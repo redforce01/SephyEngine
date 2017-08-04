@@ -44,6 +44,10 @@ CBattle_UI_FleetListView::CBattle_UI_FleetListView() : SystemUIDialog()
 
 CBattle_UI_FleetListView::~CBattle_UI_FleetListView()
 {
+	SAFE_DELETE(m_pFleetButton);
+	SAFE_DELETE(m_pSendButton);
+	SAFE_DELETE(m_pClearButton);
+	SAFE_DELETE(m_pCloseButton);
 }
 
 bool CBattle_UI_FleetListView::initialize(Graphics * g, Input * i)
@@ -58,14 +62,13 @@ bool CBattle_UI_FleetListView::initialize(Graphics * g, Input * i)
 		SystemUIDialog::setDrawBorder(false);
 
 		success = m_dxFont.initialize(g, battleFleetListViewNS::FONT_HEIGHT, false, false, battleFleetListViewNS::FONT);
-		
+		//==========================================================================================================
 		m_pFleetButton = new SystemButton;
 		m_pFleetButton->initialize(m_pGraphics, m_pInput,
 			battleFleetListViewNS::FLEET_BUTTON_X,
 			battleFleetListViewNS::FLEET_BUTTON_Y,
 			battleFleetListViewNS::FLEET_BUTTON_FILENAME, false);
 		m_pFleetButton->setRegistFunction(std::bind(&CBattle_UI_FleetListView::functionFleetButton));
-
 
 		m_pSendButton = new SystemButton;
 		m_pSendButton->initialize(m_pGraphics, m_pInput,
@@ -87,7 +90,7 @@ bool CBattle_UI_FleetListView::initialize(Graphics * g, Input * i)
 			battleFleetListViewNS::CLOSE_BUTTON_Y,
 			battleFleetListViewNS::CLOSE_BUTTON_FILENAME, true);
 		m_pCloseButton->setRegistFunction(std::bind(&CBattle_UI_FleetListView::functionCloseButton));
-		
+		//==========================================================================================================
 		float totalRate = battleFleetListViewNS::FLEET_LIST_GUIDE_NAME_WIDTH_RATE 
 			+ battleFleetListViewNS::FLEET_LIST_GUIDE_PHASE_WIDTH_RATE
 			+ battleFleetListViewNS::FLEET_LIST_GUIDE_COUNT_WIDTH_RATE
@@ -108,12 +111,11 @@ bool CBattle_UI_FleetListView::initialize(Graphics * g, Input * i)
 			guideWidth,
 			battleFleetListViewNS::FLEET_LIST_GUIDE_HEIGHT);
 
-
 		guideWidth = battleFleetListViewNS::FLEET_VIEW_ACTIVE_WIDTH * (battleFleetListViewNS::FLEET_LIST_GUIDE_COUNT_WIDTH_RATE / totalRate);
 		m_rcGuideShipCount = RectMake(m_rcGuideShipPhase.right, m_rcGuideShipPhase.top,
 			guideWidth,
 			battleFleetListViewNS::FLEET_LIST_GUIDE_HEIGHT);
-
+		//==========================================================================================================
 
 		m_bInitialized = success;
 	}
@@ -129,8 +131,7 @@ void CBattle_UI_FleetListView::update(float frameTime)
 {
 	if (m_bInitialized == false)
 		return;
-
-
+	
 	m_pFleetButton->update(frameTime);
 
 	SystemUIDialog::update(frameTime);

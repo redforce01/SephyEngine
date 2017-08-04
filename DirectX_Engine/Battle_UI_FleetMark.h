@@ -22,8 +22,10 @@ namespace battleFleetMarkNS
 	const float FLEET_MARK_INVISIBLE_X = -90;
 }
 
+class CBattle_UI_FleetMarkViewer;
 class CBattle_UI_FleetMark
 {
+	CBattle_UI_FleetMarkViewer* m_pBattleUIFleetMarkViewer;
 private:
 	Graphics* m_pGraphics;
 	Input* m_pInput;
@@ -65,6 +67,11 @@ public:
 		m_vShipIndex.emplace_back(shipNumber);
 	}
 
+	void setMemoryLinkBattleUIFleetMarkViewer(CBattle_UI_FleetMarkViewer* pBattleFleetMarkViewer)
+	{
+		m_pBattleUIFleetMarkViewer = pBattleFleetMarkViewer;
+	}
+
 	//===================================================
 	// Setter Functions
 	//===================================================
@@ -78,9 +85,34 @@ public:
 	// Getter Functions
 	//===================================================
 
+	float getPosX() const
+	{
+		return m_x;
+	}
+
+	float getPosY() const
+	{
+		return m_y;
+	}
+
+	float getWidth() const
+	{
+		return m_width;
+	}
+
+	float getHeight() const
+	{
+		return m_height;
+	}
+
 	bool getActive() const
 	{
 		return m_bActive;
+	}
+
+	RECT getFleetMarkRect() const
+	{
+		return m_rcFleetMark;
 	}
 };
 

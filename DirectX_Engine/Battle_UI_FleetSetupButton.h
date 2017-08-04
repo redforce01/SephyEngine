@@ -9,11 +9,11 @@ class CBattle_UI_FleetSetupButton;
 namespace battleUIFleetSetupButtonNS
 {
 	const std::string FILENAME = "SetUpButton";
-	const float FLEET_SETUP_BUTTON_X = 0; // (mean : g_fScreenWidth - VIEW_WIDTH(220) + Margin(20))
-	const float FLEET_SETUP_BUTTON_Y = 270;
+	const float FLEET_SETUP_BUTTON_X = 0; // (mean : g_fScreenWidth - VIEW_WIDTH(220) + MarginFromLeft(100))
+	const float FLEET_SETUP_BUTTON_Y = 490 - 24 - 10;
 	const float FLEET_SETUP_BUTTON_WIDTH = 43.f;
 	const float FLEET_SETUP_BUTTON_HEIGHT = 24.f;
-	const float FLEET_SETUP_BUTTON_MARGIN = 20.f;
+	const float FLEET_SETUP_BUTTON_MARGIN = 100.f;
 	const float FLEET_MAKE_VIEW_WIDTH = 220;
 }
 

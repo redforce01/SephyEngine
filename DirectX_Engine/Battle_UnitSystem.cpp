@@ -2,11 +2,15 @@
 #include "Battle_UnitSystem.h"
 #include "Battle_CameraSystem.h"
 #include "Battle_MapSystem.h"
+#include "Battle_FleetSystem.h"
+
+#include <iostream>
 
 CBattle_UnitSystem::CBattle_UnitSystem()
 {
 	m_pBattleCameraSystem		= nullptr;
 	m_pBattleMapSystem			= nullptr;
+	m_pBattleFleetSystem		= nullptr;
 	//=======================================
 	m_pBattleUnitParser			= nullptr;
 	m_pBattle_UI_Destination	= nullptr;
@@ -18,17 +22,24 @@ CBattle_UnitSystem::CBattle_UnitSystem()
 	m_nSelectUnitNum		= -1;
 	//=======================================
 	m_bSelectedUnit		= false;
-	m_bReSetupShip		= false;
+	m_bRePlaceShip		= false;
 	m_bSetupShip		= false;
 	m_bBattleStart		= false;
 	m_bWorkableSetup	= false;
+	m_bCreateFleet		= false;
+	m_bSetUpFlagShip	= false;
+	//=======================================
+	m_nSelectFlagShip	= -1;
 	//=======================================
 	m_bClicked			= false;
 	m_bSimpleClicked	= false;
-	m_fClickStartX = 0.f;
-	m_fClickStartY = 0.f;
-	m_fClickEndX = 0.f;
-	m_fClickEndY = 0.f;
+	m_fClickStartX		= 0.f;
+	m_fClickStartY		= 0.f;
+	m_fClickEndX		= 0.f;
+	m_fClickEndY		= 0.f;
+	//=======================================
+	m_nLoad_Player_ShipUniqueID = 0;
+	m_nLoad_AI_ShipUniqueID		= 0;
 }
 
 
@@ -38,10 +49,17 @@ CBattle_UnitSystem::~CBattle_UnitSystem()
 	{
 		SAFE_DELETE(iter);
 	}
+	m_vPlayerShips.clear();
 	for (auto iter : m_vCompterShips)
 	{
 		SAFE_DELETE(iter);
 	}
+	m_vCompterShips.clear();
+	for (auto iter : m_vBattle_UI_DummyShip)
+	{
+		SAFE_DELETE(iter);
+	}
+	m_vBattle_UI_DummyShip.clear();
 	
 	SAFE_DELETE(m_pBattleUnitParser);
 	SAFE_DELETE(m_pBattle_UI_Destination);
@@ -76,7 +94,9 @@ bool CBattle_UnitSystem::initialize(Game * gamePtr)
 		//================================================================================
 		m_pBattle_UI_StartButton = new CBattle_UI_StartButton;
 		success = m_pBattle_UI_StartButton->initialize(m_pGraphics, m_pInput);
+		//================================================================================
 		m_pBattle_UI_StartButton->setMemoryLinkBattleUnitSystem(this);
+		m_pBattle_UI_FleetMakeView->setMemoryLinkBattleUnitSystem(this);
 		//================================================================================
 		m_vWorkableRect.emplace_back(m_pBattle_UI_FleetListView->getDialogRECT());
 		m_vWorkableRect.emplace_back(m_pBattle_UI_FleetMarkView->getDialogRECT());
@@ -107,16 +127,22 @@ void CBattle_UnitSystem::update(float frameTime)
 
 void CBattle_UnitSystem::render()
 {
+	// Player Ships Render
 	for (auto iter : m_vPlayerShips)
 	{
 		iter->render();
 	}
-
+	// AI Ships Render
 	for (auto iter : m_vCompterShips)
 	{
 		iter->render();
 	}
-
+	// Dummy Ship Render
+	for (auto iter : m_vBattle_UI_DummyShip)
+	{
+		iter->render();
+	}
+	// Mouse Drag Box Draw
 	if (m_bClicked)
 	{
 		RECT rc = { m_fClickStartX, m_fClickStartY, m_fClickEndX, m_fClickEndY };
@@ -133,27 +159,53 @@ void CBattle_UnitSystem::render()
 
 void CBattle_UnitSystem::ai()
 {
+	if (m_bBattleStart == false)
+		return;
+
+	for (auto iter : m_vPlayerShips)
+	{
+		iter->ai();
+	}
+	for (auto iter : m_vCompterShips)
+	{
+		iter->ai();
+	}
 }
 
 void CBattle_UnitSystem::collision()
 {
+	if (m_bBattleStart == false)
+		return;
+
+	for (auto iter : m_vPlayerShips)
+	{
+		iter->collision();
+	}
+	for (auto iter : m_vCompterShips)
+	{
+		iter->collision();
+	}
 }
 
 void CBattle_UnitSystem::loadPlayerShipData(std::vector<std::string> vArray)
-{
+{	
 	for (auto iter : vArray)
 	{		
 		auto vData = functionTokenize(iter);
 		std::string shipName = vData[battleUnitSystemNS::UNIT_NAME_POS];
 		CBattle_Ship* newShip = new CBattle_Ship;
 		newShip->initialize(m_pGamePtr, shipName);
-		m_vPlayerShips.emplace_back(newShip);
+		newShip->setShipUniqueID(m_nLoad_Player_ShipUniqueID);
+		newShip->setMemoryLinkBattleMapSystem(m_pBattleMapSystem);
+		newShip->setMemoryLinkBattleUnitSystem(this);
 
+		m_vPlayerShips.emplace_back(newShip);
+		//=========================================================
 		std::string resultShipType = newShip->getShipType();
 		std::string resultShipName = newShip->getShipName();
 		int resultShipPhase = newShip->getCallPhase();
 		m_pBattle_UI_FleetListView->addShipToFleetList(resultShipType, resultShipName, resultShipPhase);
-
+		m_nLoad_Player_ShipUniqueID++;
 	}
 }
 
@@ -163,10 +215,14 @@ void CBattle_UnitSystem::loadAIShipData(std::vector<std::string> vArray)
 	{
 		auto vData = functionTokenize(iter);
 		std::string shipName = vData[battleUnitSystemNS::UNIT_NAME_POS];
-
 		CBattle_Ship* newShip = new CBattle_Ship;
 		newShip->initialize(m_pGamePtr, shipName);
+		newShip->setShipUniqueID(m_nLoad_AI_ShipUniqueID);
+		newShip->setMemoryLinkBattleMapSystem(m_pBattleMapSystem);
+		newShip->setMemoryLinkBattleUnitSystem(this);
 		m_vCompterShips.emplace_back(newShip);
+		//=========================================================
+		m_nLoad_AI_ShipUniqueID++;
 	}
 }
 
@@ -189,7 +245,7 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 	//=======================================
 	// Update Before - Battle Start 
 	//=======================================
-
+	
 	if (m_bSetupShip)
 	{
 		auto ship = m_vPlayerShips[m_nSetupShipIndex];
@@ -199,41 +255,90 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 		ship->setShipActive(true);
 	}
 
-	if (m_bReSetupShip)
+	if (m_bRePlaceShip)
 	{
 		m_vPlayerShips[m_nSelectUnitNum]->setCurrentX(m_pInput->getMouseX() - (m_vPlayerShips[m_nSelectUnitNum]->getShipHeight() / 2));
 		m_vPlayerShips[m_nSelectUnitNum]->setCurrentY(m_pInput->getMouseY() - (m_vPlayerShips[m_nSelectUnitNum]->getShipHeight() / 2));
-		if (m_pInput->getMouseLButton())
-		{
-			auto areaCenterX = m_pBattleMapSystem->getPlayerStartingArea()->getCenterX() + m_pBattleCameraSystem->getCameraX();
-			auto areaCenterY = m_pBattleMapSystem->getPlayerStartingArea()->getCenterY() + m_pBattleCameraSystem->getCameraY();
-			auto areaRadius = m_pBattleMapSystem->getPlayerStartingArea()->getRadius();
-			auto mouseX = m_pInput->getMouseX();
-			auto mouseY = m_pInput->getMouseY();
-			auto distance = MyUtil::getDistance(mouseX, mouseY, areaCenterX, areaCenterY);
-
-			//=======================================
-			// Checking MouseOverlab Unit Position
-			// true : unit In AreaCircle
-			// false : unit Out AreaCircle
-			//=======================================
-			if (distance < areaRadius)
-			{
-				m_vPlayerShips[m_nSelectUnitNum]->setCurrentX(m_pInput->getMouseX() - (m_vPlayerShips[m_nSelectUnitNum]->getShipHeight() / 2));
-				m_vPlayerShips[m_nSelectUnitNum]->setCurrentY(m_pInput->getMouseY() - (m_vPlayerShips[m_nSelectUnitNum]->getShipHeight() / 2));
-				m_bReSetupShip = false;
-				m_pInput->setMouseLButton(false);
-			}
-		}
 	}
-
+	
 	if (m_pInput->getMouseLButton())
 	{
-		if (m_bSetupShip)
+		if (m_bSetUpFlagShip)
+		{
+			int nSelectShipNum = 0;
+			for (auto iter : m_vPlayerShips)
+			{
+				if (iter->getShipActive() == false)
+				{
+					nSelectShipNum++;
+					continue;
+				}
+
+				if (iter->getFlagShip())
+				{
+					nSelectShipNum++;
+					continue;
+				}
+
+				auto mouseX = m_pInput->getMouseX();
+				auto mouseY = m_pInput->getMouseY();
+				if (MyUtil::ptInCircle(iter->getCurrentCenterX(), iter->getCurrentCenterY(), (iter->getShipHeight() / 2), mouseX, mouseY))
+				{
+					if (m_vFleetMakeShips.size() > 0)
+					{
+						m_vFleetMakeShips.clear();
+					}
+
+					// Save Select Ship Number For FlagShip Number
+					m_nSelectFlagShip = nSelectShipNum;
+					
+					m_vFleetMakeShips.emplace_back(iter);
+
+					// FleetMakeViewer - Set FlagShip Messages ( shipType , shipName )
+					m_pBattle_UI_FleetMakeView->setFlagShipMessage(iter->getShipType(), iter->getShipName());
+					m_bSetUpFlagShip = false;
+					m_bCreateFleet = true;
+					break;
+				}
+
+				nSelectShipNum++;
+			}
+			m_pInput->setMouseLButton(false);
+		}
+		else if (m_bCreateFleet)
+		{			
+			for (auto iter : m_vPlayerShips)
+			{
+				if (iter->getShipActive() == false)
+					continue;
+
+				if (iter->getFlagShip())
+					continue;
+
+				bool bContinue = false;
+				for (auto fleetIter : m_vFleetMakeShips)
+				{
+					if (fleetIter->getShipUniqueID() == iter->getShipUniqueID())
+						bContinue = true;
+				}
+				if (bContinue)
+					continue;
+
+				auto mouseX = m_pInput->getMouseX();
+				auto mouseY = m_pInput->getMouseY();
+				if (MyUtil::ptInCircle(iter->getCurrentCenterX(), iter->getCurrentCenterY(), (iter->getShipHeight() / 2), mouseX, mouseY))
+				{
+					m_vFleetMakeShips.emplace_back(iter);
+					break;
+				}
+			}
+			m_pInput->setMouseLButton(false);
+		}
+		else if (m_bSetupShip)
 		{
 			auto ship = m_vPlayerShips[m_nSetupShipIndex];
-			auto areaCenterX = m_pBattleMapSystem->getPlayerStartingArea()->getCenterX() + m_pBattleCameraSystem->getCameraX();
-			auto areaCenterY = m_pBattleMapSystem->getPlayerStartingArea()->getCenterY() + m_pBattleCameraSystem->getCameraY();
+			auto areaCenterX = m_pBattleMapSystem->getPlayerStartingArea()->getCenterX();
+			auto areaCenterY = m_pBattleMapSystem->getPlayerStartingArea()->getCenterY();
 			auto areaRadius = m_pBattleMapSystem->getPlayerStartingArea()->getRadius();
 			auto mouseX = m_pInput->getMouseX();
 			auto mouseY = m_pInput->getMouseY();
@@ -253,10 +358,32 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 				m_pInput->setMouseLButton(false);
 			}
 		}
+		else if (m_bRePlaceShip)
+		{
+			auto areaCenterX = m_pBattleMapSystem->getPlayerStartingArea()->getCenterX() + m_pBattleCameraSystem->getCameraX();
+			auto areaCenterY = m_pBattleMapSystem->getPlayerStartingArea()->getCenterY() + m_pBattleCameraSystem->getCameraY();
+			auto areaRadius = m_pBattleMapSystem->getPlayerStartingArea()->getRadius();
+			auto mouseX = m_pInput->getMouseX();
+			auto mouseY = m_pInput->getMouseY();
+			auto distance = MyUtil::getDistance(mouseX, mouseY, areaCenterX, areaCenterY);
+
+			//=======================================
+			// Checking MouseOverlab Unit Position
+			// true : unit In AreaCircle
+			// false : unit Out AreaCircle
+			//=======================================
+			if (distance < areaRadius)
+			{
+				m_vPlayerShips[m_nSelectUnitNum]->setCurrentX(m_pInput->getMouseX() - (m_vPlayerShips[m_nSelectUnitNum]->getShipHeight() / 2));
+				m_vPlayerShips[m_nSelectUnitNum]->setCurrentY(m_pInput->getMouseY() - (m_vPlayerShips[m_nSelectUnitNum]->getShipHeight() / 2));
+				m_bRePlaceShip = false;
+				m_pInput->setMouseLButton(false);
+			}
+		}
 		else
 		{
-			if (m_bReSetupShip)
-				m_bReSetupShip = false;
+			if (m_bRePlaceShip)
+				m_bRePlaceShip = false;
 
 			int count = 0;
 			for (auto iter : m_vPlayerShips)
@@ -271,13 +398,14 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 				auto mouseY = m_pInput->getMouseY();
 				if (MyUtil::ptInCircle(iter->getCurrentCenterX(), iter->getCurrentCenterY(), (iter->getShipHeight() / 2), mouseX, mouseY))
 				{
-					m_bReSetupShip = true;
+					m_bRePlaceShip = true;
 					m_nSelectUnitNum = count;
 					m_pInput->setMouseLButton(false);
 					break;
 				}
 				count++;
 			}
+			m_pBattle_UI_FleetMakeView->setFlagShipMessage("N/A", "N/A");
 		}
 	}
 
@@ -292,8 +420,12 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 				if (iter->getShipActive() == false)
 					continue;
 
+				m_nSetupShipIndex = -1;
+				m_bSetupShip = false;
 				iter->setShipActive(false);
+				iter->resetShipFleetData();
 				m_pBattle_UI_FleetListView->addShipToFleetList(iter->getShipType(), iter->getShipName(), iter->getCallPhase());
+				break;
 			}
 		}
 	}
@@ -304,12 +436,61 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 
 void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 {
+	static bool debugAI = false;
+	if (debugAI == false)
+	{
+		debugAI = true;
+		m_vCompterShips[0]->setCurrentCenterX(600);
+		m_vCompterShips[0]->setCurrentCenterY(500);
+		m_vCompterShips[0]->setShipActive(true);
+	}
+
+
 	//=======================================
 	// Update After - Battle Start 
 	//=======================================
+	
+	if (m_bFleetClicked)
+	{
+		for (auto iter : m_vPlayerShips)
+		{
+			if (iter->getShipActive() == false)
+				continue;
+
+			if (iter->getFleetIncluded() == false)
+				continue;
+
+			if (iter->getShipDestroy() == true)
+				continue;
+
+			if (iter->getFleetNumber() == m_nClickedFleetNumber)
+			{
+				iter->setUnitSelected(true);
+			}
+			else
+				iter->setUnitSelected(false);
+		}
+	}
+
+	// When Drag Boxing Update ClickEnd(x, y)
+	if (m_bClicked)
+	{
+		m_fClickEndX = m_pInput->getMouseX();
+		m_fClickEndY = m_pInput->getMouseY();
+	}
+
+	if (m_bSetupShip)
+	{
+		auto ship = m_vPlayerShips[m_nSetupShipIndex];
+
+		ship->setCurrentX(m_pInput->getMouseX() - (ship->getShipWidth() / 2));
+		ship->setCurrentY(m_pInput->getMouseY() - (ship->getShipHeight() / 2));
+		ship->setShipActive(true);
+	}
 
 	if (m_pInput->getMouseLButton())
 	{
+		// Mouse Drag Event
 		if (m_bClicked == false)
 		{
 			m_bClicked = true;
@@ -323,34 +504,74 @@ void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 			m_bSelectedUnit = false;
 
 		m_bSimpleClicked = true;
+
+		if (m_bSetupShip)
+		{			
+			auto ship = m_vPlayerShips[m_nSetupShipIndex];
+			ship->setShipActive(false);
+			CBattle_UI_DummyShip* dummyShip;
+			dummyShip = new CBattle_UI_DummyShip;
+			dummyShip->initialize(m_pGamePtr, ship->getTextureKey(), m_nSetupShipIndex);
+			dummyShip->setCurrentX(m_pInput->getMouseX() - (dummyShip->getShipHeight() / 2));
+			dummyShip->setCurrentY(m_pInput->getMouseY() - (dummyShip->getShipHeight() / 2));
+			dummyShip->setShipActive(true);
+			m_nSetupShipIndex = -1;
+			m_bSetupShip = false;
+			m_vBattle_UI_DummyShip.emplace_back(dummyShip);
+			m_pInput->setMouseLButton(false);
+		}
 	}
 	else
 	{
 		if (m_bSimpleClicked)
 		{
+			float mouseX = m_pInput->getMouseX();
+			float mouseY = m_pInput->getMouseY();
+			float mouseClickRadius = 1.f;
 			int unitCount = 0;
 			for (auto iter : m_vPlayerShips)
 			{
-				float unitX = iter->getShipTouchData().x;
-				float unitY = iter->getShipTouchData().y;
-				float unitRadius = iter->getShipTouchData().radius;
+				if (iter->getShipActive() == false)
+					continue;
+				
+				if (iter->getShipDestroy() == true)
+					continue;
 
-				float mouseX = m_pInput->getMouseX();
-				float mouseY = m_pInput->getMouseY();
-				float mouseClickRadius = 1.f;
-
-				float distance = MyUtil::getDistance(unitX, unitY, mouseX, mouseY);
-				float sumRadius = unitRadius + mouseClickRadius;
-
-				if (distance < sumRadius)
+				if (iter->getFleetIncluded() == true)
 				{
-					m_vPlayerShips[unitCount]->setUnitSelected(true);
-					m_bSelectedUnit = true;
+					if (m_bFleetClicked)
+					{
+						m_bFleetClicked = false;
+						m_bSelectedUnit = false;
+						break;
+					}
+
+					float unitX = iter->getShipTouchData().x;
+					float unitY = iter->getShipTouchData().y;
+					float unitRadius = iter->getShipTouchData().radius;
+					if (MyUtil::ptInCircle(unitX, unitY, unitRadius, mouseX, mouseY))
+					{
+						m_bFleetClicked = true;
+						m_nClickedFleetNumber = iter->getFleetNumber();
+						m_bSelectedUnit = true;
+						break;
+					}
 				}
 				else
 				{
-					m_vPlayerShips[unitCount]->setUnitSelected(false);
-				}
+					float unitX = iter->getShipTouchData().x;
+					float unitY = iter->getShipTouchData().y;
+					float unitRadius = iter->getShipTouchData().radius;
+					if (MyUtil::ptInCircle(unitX, unitY, unitRadius, mouseX, mouseY))
+					{
+						m_vPlayerShips[unitCount]->setUnitSelected(true);
+						m_bSelectedUnit = true;
+					}
+					else
+					{
+						m_vPlayerShips[unitCount]->setUnitSelected(false);
+					}
+				}				
 				unitCount++;
 			}
 			m_bSimpleClicked = false;
@@ -374,18 +595,33 @@ void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 					iter->setUnitSelected(false);
 			}
 		}
-
-
 	}
 
 	if (m_pInput->getMouseRButton())
 	{
-		if (m_bSelectedUnit)
+		if (m_bFleetClicked)
+		{
+			float targetX = m_pInput->getMousePt().x;
+			float targetY = m_pInput->getMousePt().y;
+
+			m_pBattleFleetSystem->getFleet(m_nClickedFleetNumber)->flagShip->setTargetX(targetX);
+			m_pBattleFleetSystem->getFleet(m_nClickedFleetNumber)->flagShip->setTargetY(targetY);
+			m_pBattle_UI_Destination->setActive(true);
+			m_pBattle_UI_Destination->setDestinationPos(VECTOR2(targetX, targetY));
+			m_pInput->setMouseRButton(false);
+		}
+		else if (m_bSelectedUnit)
 		{
 			float targetX = m_pInput->getMousePt().x;
 			float targetY = m_pInput->getMousePt().y;
 			for (auto iter : m_vPlayerShips)
 			{
+				if (iter->getShipActive() == false)
+					continue;
+
+				if (iter->getShipDestroy() == true)
+					continue;
+
 				if (iter->getShipSelected())
 				{
 					iter->setTargetPos(VECTOR2(targetX, targetY));
@@ -395,24 +631,96 @@ void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 			m_pBattle_UI_Destination->setDestinationPos(VECTOR2(targetX, targetY));
 			m_pInput->setMouseRButton(false);
 		}
+
+		//===========================================
+		// Dummy Ship Delete Event
+		//===========================================
+		auto mouseX = m_pInput->getMouseX();
+		auto mouseY = m_pInput->getMouseY();
+		int dummyShipCount = 0;
+		for (auto iter : m_vBattle_UI_DummyShip)
+		{
+			if (MyUtil::ptInCircle(iter->getShipTouchData().x, iter->getShipTouchData().y, iter->getShipTouchData().radius, mouseX, mouseY))
+			{
+				if (iter->getShipActive() == false)
+				{
+					dummyShipCount++;
+					continue;
+				}
+				
+				m_nSetupShipIndex = -1;
+				m_bSetupShip = false;
+				iter->setShipActive(false);
+				iter->setDummyShip(false);
+				iter->resetShipFleetData();
+				m_pBattle_UI_FleetListView->addShipToFleetList(iter->getShipType(), iter->getShipName(), iter->getCallPhase());
+				m_vBattle_UI_DummyShip.erase(m_vBattle_UI_DummyShip.begin() + dummyShipCount);
+				SAFE_DELETE(iter);
+				break;
+			}
+			dummyShipCount++;
+		}
 	}
 
-	if (m_bClicked)
-	{
-		m_fClickEndX = m_pInput->getMouseX();
-		m_fClickEndY = m_pInput->getMouseY();
-	}
-
+	//============================================
+	// Player & AI Ship Update
+	//  + It would be updating Only Active Ships
+	//============================================
 	for (auto iter : m_vPlayerShips)
 	{
 		iter->update(frameTime);
 	}
-
 	for (auto iter : m_vCompterShips)
 	{
 		iter->update(frameTime);
 	}
 
+	//============================================
+	// Update Dummy Ship - if Complete Setup Time
+	//  + Spawn Ship to Respawn Area
+	//  + And Erase Dummy Ship UI
+	//============================================
+	int dummyShipCount = 0;
+	for (auto iter : m_vBattle_UI_DummyShip)
+	{
+		if (iter->getSetup() == false)
+		{
+			iter->update(frameTime);
+			dummyShipCount++;
+			continue;
+		}
+
+		auto activeShipName = iter->getShipName();
+		for (auto iterPlayerShip : m_vPlayerShips)
+		{
+			if (iterPlayerShip->getShipActive() == true)
+				continue;
+
+			if (iterPlayerShip->getShipDestroy() == true)
+				continue;
+
+			if (iterPlayerShip->getShipName().compare(activeShipName) == false)
+			{
+				iterPlayerShip->setShipActive(true);
+				iterPlayerShip->setCurrentCenterX(m_pBattleMapSystem->getPlayerRespawnArea()->getRespawnAreaCenterX());
+				iterPlayerShip->setCurrentCenterY(m_pBattleMapSystem->getPlayerRespawnArea()->getRespawnAreaCenterY());
+				iterPlayerShip->setTargetX(iter->getCurrentCenterX());
+				iterPlayerShip->setTargetY(iter->getCurrentCenterY());
+				iterPlayerShip->setShipArrived(false);
+
+				auto iterator = m_vBattle_UI_DummyShip.begin() + dummyShipCount;
+				m_vBattle_UI_DummyShip.erase(iterator);
+				SAFE_DELETE(iter);
+				break;
+			}
+		}
+		dummyShipCount++;
+	}
+
+	//============================================
+	// Destination UI Update 
+	//  + This UI is Only one Object
+	//============================================
 	m_pBattle_UI_Destination->update(frameTime);
 }
 
@@ -424,6 +732,10 @@ void CBattle_UnitSystem::moveX(float fDistance)
 	}
 
 	for (auto iter : m_vCompterShips)
+	{
+		iter->moveX(fDistance);
+	}
+	for (auto iter : m_vBattle_UI_DummyShip)
 	{
 		iter->moveX(fDistance);
 	}
@@ -439,6 +751,10 @@ void CBattle_UnitSystem::moveY(float fDistance)
 	}
 
 	for (auto iter : m_vCompterShips)
+	{
+		iter->moveY(fDistance);
+	}
+	for (auto iter : m_vBattle_UI_DummyShip)
 	{
 		iter->moveY(fDistance);
 	}
@@ -488,4 +804,52 @@ void CBattle_UnitSystem::setupActiveForStart()
 			iter->setShipActive(false);
 		}
 	}
+}
+
+void CBattle_UnitSystem::setupFleetToFleetSystem()
+{
+	if (m_bCreateFleet == false)
+		return;
+
+	if (m_vFleetMakeShips.size() <= 0)
+		return;
+
+	int nFleetNumber = m_pBattle_UI_FleetMarkView->getSelectedFleet();	
+
+	auto selectFleetData = m_pBattleFleetSystem->getFleet(nFleetNumber);
+	if (selectFleetData->bActiveFleet)
+	{
+		nFleetNumber++;
+	}
+	
+	// Selected Ship Setup - Flag Ship (true)
+	m_vFleetMakeShips[0]->setFlagShip(true);
+	m_vFleetMakeShips[0]->setFleetConnectFlagShip(m_vFleetMakeShips[0]);
+	m_vFleetMakeShips[0]->setFleetIncluded(true);
+	m_vFleetMakeShips[0]->setFleetNumber(nFleetNumber);
+
+	// Fleet System->SetFlagShip Throw Parameter(Ship, Selected Fleet Number)
+	m_pBattleFleetSystem->setFlagShip(m_vFleetMakeShips[0], nFleetNumber);
+
+	// Fleet System->SetFleetShips Throw Parameter(Ships, Select Fleet Number)
+	m_pBattleFleetSystem->setFleetShips(m_vFleetMakeShips, nFleetNumber);
+
+	int shipCount = 0;
+	for (auto iter : m_vFleetMakeShips)
+	{
+		if (shipCount == 0)
+		{
+			shipCount++;
+			continue;
+		}
+			
+		iter->setFlagShip(false);
+		iter->setFleetConnectFlagShip(m_vFleetMakeShips[0]);
+		iter->setFleetIncluded(true);
+		iter->setFleetNumber(nFleetNumber);
+
+		shipCount++;
+	}
+
+	m_bCreateFleet = false;
 }

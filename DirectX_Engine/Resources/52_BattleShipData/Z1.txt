@@ -41,7 +41,7 @@ BEGIN ShipData
 	+ Rotate_Speed		0.2967
 	+ Accelerate_Speed	3
 	+ Max_Speed		65
-	+ Rader			120
+	+ Rader			880
 	+ Turret_Capacity	4
 	+ Turret_ID		1
 	+ Aircraft_Capacity	0

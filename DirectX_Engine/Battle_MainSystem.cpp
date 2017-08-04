@@ -8,6 +8,7 @@ CBattle_MainSystem::CBattle_MainSystem()
 	m_pBattle_CameraSystem = nullptr;
 	m_pBattle_MapSystem = nullptr;
 	m_pBattle_UnitSystem = nullptr;
+	m_pBattle_FleetSystem = nullptr;
 }
 
 
@@ -17,6 +18,7 @@ CBattle_MainSystem::~CBattle_MainSystem()
 	SAFE_DELETE(m_pBattle_CameraSystem);
 	SAFE_DELETE(m_pBattle_MapSystem);
 	SAFE_DELETE(m_pBattle_UnitSystem);
+	SAFE_DELETE(m_pBattle_FleetSystem);
 }
 
 bool CBattle_MainSystem::initialize(Game * gamePtr)
@@ -37,6 +39,8 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		success = m_pBattle_MapSystem->initialize(gamePtr);
 		m_pBattle_UnitSystem = new CBattle_UnitSystem;
 		success = m_pBattle_UnitSystem->initialize(gamePtr);
+		m_pBattle_FleetSystem = new CBattle_FleetSystem;
+		success = m_pBattle_FleetSystem->initialize(gamePtr);
 		// End - Battle Map DataParser
 		//=====================================================================
 		// Each System Connect to The Other Systems - Start
@@ -45,7 +49,11 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		m_pBattle_CameraSystem->setMemoryLinkBattleUnitSystem(m_pBattle_UnitSystem);
 		m_pBattle_UnitSystem->setMemoryLinkBattleCameraSystem(m_pBattle_CameraSystem);
 		m_pBattle_UnitSystem->setMemoryLinkBattleMapSystem(m_pBattle_MapSystem);
+		m_pBattle_UnitSystem->setMemoryLinkBattleFleetSystem(m_pBattle_FleetSystem);
 		// End - Each System Connect to Other Systems
+		//=====================================================================
+		// UnitSystem Workable Add Rect 
+		//  + 
 		//=====================================================================
 		// Load Battle Data - Start
 		//  + Battle Map FileName

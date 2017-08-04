@@ -16,6 +16,7 @@ class CBattle_UnitSystem;
 #include "Battle_UI_FleetMarkViewer.h"
 #include "Battle_UI_FleetMakeViewer.h"
 #include "Battle_UI_StartButton.h"
+#include "Battle_UI_DummyShip.h"
 
 namespace battleUnitSystemNS
 {
@@ -24,15 +25,19 @@ namespace battleUnitSystemNS
 	const std::string UNIT_END_KEY = "END";
 
 	const UINT UNIT_NAME_POS = 0;
+	const UCHAR FLEET_SELECT_CONTROL_KEY = VK_CONTROL;
+	const UCHAR FLEET_SELECT_SHIFT_KEY = VK_SHIFT;
 }
 
+class CBattle_FleetSystem;
 class CBattle_MapSystem;
 class CBattle_CameraSystem;
 class CBattle_UnitSystem : public SystemBase
 {
 private: // Forward Declaration
-	CBattle_CameraSystem* m_pBattleCameraSystem;
-	CBattle_MapSystem* m_pBattleMapSystem;
+	CBattle_CameraSystem*	m_pBattleCameraSystem;
+	CBattle_MapSystem*		m_pBattleMapSystem;
+	CBattle_FleetSystem*	m_pBattleFleetSystem;
 private:
 	typedef std::vector<CBattle_Ship*> arrShips;
 	Game* m_pGamePtr;
@@ -46,13 +51,16 @@ private: // Unit Variables
 private:
 	bool m_bWorkableSetup;
 	bool m_bSelectedUnit;
-	bool m_bReSetupShip;
+	bool m_bRePlaceShip;
 	bool m_bSetupShip;
 	bool m_bBattleStart;
-
+	bool m_bCreateFleet;
+	bool m_bSetUpFlagShip;
 private:
 	bool m_bClicked;
 	bool m_bSimpleClicked;
+	bool m_bFleetClicked;
+	int m_nClickedFleetNumber;
 	float m_fClickStartX;
 	float m_fClickStartY;
 	float m_fClickEndX;
@@ -68,6 +76,16 @@ private: // Battle Interface
 	CBattle_UI_FleetMarkViewer*	m_pBattle_UI_FleetMarkView;
 	CBattle_UI_FleetMakeViewer* m_pBattle_UI_FleetMakeView;
 	CBattle_UI_StartButton*		m_pBattle_UI_StartButton;
+	std::vector<CBattle_UI_DummyShip*> m_vBattle_UI_DummyShip;
+
+private:
+	std::vector<CBattle_Ship*>	m_vFleetMakeShips;
+	int							m_nSelectFlagShip;
+
+private:
+	int m_nLoad_Player_ShipUniqueID;
+	int m_nLoad_AI_ShipUniqueID;
+
 public:
 	CBattle_UnitSystem();
 	~CBattle_UnitSystem();
@@ -90,9 +108,7 @@ public:
 	// Member Functions
 	//==================================================
 	void updateFuncBeforeStart(float frameTime);
-
 	void updateFuncAfterStart(float frameTime);
-
 
 	//==================================================
 	// All Unit Move Functions Called From CameraSystem
@@ -101,8 +117,9 @@ public:
 	//==================================================
 	void clearActiveShip();
 	void setupShip(std::string shipName);
-
 	void setupActiveForStart();
+
+	void setupFleetToFleetSystem();
 
 	void addWorkableRect(RECT rc)
 	{
@@ -134,6 +151,16 @@ public:
 		m_bBattleStart = bStart;
 	}
 
+	void setCreateFleet(bool bCreateFleet)
+	{
+		m_bCreateFleet = bCreateFleet;
+	}
+
+	void setSetupFlagShip(bool bSetUpFlagShip)
+	{
+		m_bSetUpFlagShip = bSetUpFlagShip;
+	}
+
 	//==================================================
 	// Getter Functions
 	//==================================================
@@ -157,6 +184,21 @@ public:
 		return m_vCompterShips;
 	}
 
+	bool getCreateFleet() const
+	{
+		return m_bCreateFleet;
+	}
+
+	bool getSetupFlagShip() const
+	{
+		return m_bSetUpFlagShip;
+	}
+
+	std::vector<CBattle_Ship*> getFleetMakeShips() const
+	{
+		return m_vFleetMakeShips;
+	}
+
 	//==================================================
 	// Forward Declaration MemoryLink Functions
 	//==================================================
@@ -168,7 +210,10 @@ public:
 	{
 		m_pBattleMapSystem = pBattleMapSystem;
 	}
-
+	void setMemoryLinkBattleFleetSystem(CBattle_FleetSystem* pBattleFleetSystem)
+	{
+		m_pBattleFleetSystem = pBattleFleetSystem;
+	}
 };
 
 #endif // !_BATTLE_UNITSYSTEM_H

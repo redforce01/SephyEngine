@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Battle_UI_FleetMark.h"
-
+#include "Battle_UI_FleetMarkViewer.h"
 
 CBattle_UI_FleetMark::CBattle_UI_FleetMark()
 {
@@ -44,9 +44,9 @@ bool CBattle_UI_FleetMark::initialize(Graphics * g, Input * i, int index)
 		if (index > 0)
 		{
 			m_y = battleFleetMarkNS::FLEET_MARK_Y + (battleFleetMarkNS::FLEET_MARK_TOTAL_HEIGHT * index);
-			m_width = m_pFleetMark->getWidth() + m_pFleetText->getWidth();
-			m_height = m_pFleetText->getHeight();
 		}
+		m_width = m_pFleetMark->getWidth() + m_pFleetText->getWidth();
+		m_height = m_pFleetText->getHeight();
 		
 		m_rcFleetMark = RectMake(m_x, m_y, m_width, m_height);
 		m_pFleetMark->setX(m_x);
@@ -69,7 +69,7 @@ void CBattle_UI_FleetMark::update(float frameTime)
 	{
 		if (PtInRect(&m_rcFleetMark, m_pInput->getMousePt()))
 		{
-			
+			m_pBattleUIFleetMarkViewer->setArrowAtMark(m_nIndex);
 		}
 	}
 }

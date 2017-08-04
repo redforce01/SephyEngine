@@ -10,10 +10,11 @@ namespace battleUIFleetMakeButtonNS
 {
 	const std::string FLEET_MAKE_BUTTON_CLOSE_KEY = "EscortButtonClose";
 	const std::string FLEET_MAKE_BUTTON_OPEN_KEY = "EscortButtonOpen";
-	const float FLEET_MAKE_BUTTON_X = 0.f;
+	const float FLEET_MAKE_BUTTON_X = 0.f; // ( mean : g_fScreenWidth - BUTTON_WIDTH(200) - MARGIN(10))
 	const float FLEET_MAKE_BUTTON_Y = 180.f;
 	const float FLEET_MAKE_BUTTON_WIDTH = 200.f;
 	const float FLEET_MAKE_BUTTON_HEIGHT = 60.f;
+	const float FLEET_MAKE_BUTTON_MARGIN = 20.f;
 }
 
 class CBattle_UI_FleetMakeButton : public SystemButton

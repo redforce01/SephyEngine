@@ -142,6 +142,15 @@ public:
 	{
 		return m_y + (m_height / 2);
 	}
+	float getWidth() const
+	{
+		return m_width;
+	}
+	float getHeight() const
+	{
+		return m_height;
+	}
+
 	std::string getEventTypeKey() const
 	{
 		return m_strEventType;

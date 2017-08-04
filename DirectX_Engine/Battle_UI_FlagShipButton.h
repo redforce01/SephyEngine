@@ -9,10 +9,11 @@ class CBattle_UI_FlagShipButton;
 namespace battleUIFlagShipButtonNS
 {
 	const std::string FILENAME = "Set";
-	const float FLAG_SHIP_BUTTON_X = 0; // ( mean : g_fScreenWidth - VIEW_WIDTH - BUTTON_WIDTH(90))
-	const float FLAG_SHIP_BUTTON_Y = 220.f;
+	const float FLAG_SHIP_BUTTON_X = 0; // ( mean : g_fScreenWidth - VIEW_WIDTH(220) + MarginFromLeft(110))
+	const float FLAG_SHIP_BUTTON_Y = 300.f;
 	const float FLAG_SHIP_BUTTON_WIDTH = 90.f;
 	const float FLAG_SHIP_BUTTON_HEIGHT = 35.f;
+	const float FLAG_SHIP_BUTTON_MARGIN = 110.f;
 	const float FLEET_MAKE_VIEW_WIDTH = 220.f;
 }
 

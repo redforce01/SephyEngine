@@ -9,6 +9,7 @@ class CBattle_MainSystem;
 #include "Battle_CameraSystem.h"
 #include "Battle_MapSystem.h"
 #include "Battle_UnitSystem.h"
+#include "Battle_FleetSystem.h"
 
 namespace battleMainSystemNS
 {
@@ -22,6 +23,7 @@ private:
 	CBattle_CameraSystem*	m_pBattle_CameraSystem;
 	CBattle_MapSystem*		m_pBattle_MapSystem;
 	CBattle_UnitSystem*		m_pBattle_UnitSystem;
+	CBattle_FleetSystem*	m_pBattle_FleetSystem;
 public:
 	CBattle_MainSystem();
 	~CBattle_MainSystem();

@@ -334,6 +334,18 @@
     <Filter Include="GameCode\Battle\BattleFleetSystem">
       <UniqueIdentifier>{8dd9ce4c-d4a5-4d09-aace-fbfb1a948b90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Unit\Interface">
+      <UniqueIdentifier>{f26d1931-973e-4f93-9a83-83545ae365d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleLogSystem">
+      <UniqueIdentifier>{48823a71-61d6-48ad-9caa-b1fa327a63c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\DummyShip">
+      <UniqueIdentifier>{bf3612c7-b20f-472f-b881-853f7891d58e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleMainSystem\MainSystem Parser">
+      <UniqueIdentifier>{7a86c769-4545-4df4-92df-5f3d61074537}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -681,9 +693,6 @@
     <ClCompile Include="engineSetting.cpp">
       <Filter>SystemCode\Engine\SystemCore</Filter>
     </ClCompile>
-    <ClCompile Include="Battle_DataParser.cpp">
-      <Filter>GameCode\Battle\BattleMainSystem</Filter>
-    </ClCompile>
     <ClCompile Include="Battle_UnitSystem.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem</Filter>
     </ClCompile>
@@ -752,6 +761,33 @@
     </ClCompile>
     <ClCompile Include="Battle_UI_FlagShipButton.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_ShipUI_FleetMark.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_ShipUI_Indicator.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_LogSystem.cpp">
+      <Filter>GameCode\Battle\BattleLogSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_TurretTest.cpp">
+      <Filter>GameCode\Scenes\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_DummyShip.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\DummyShip</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapUI_RespawnArea.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_DataParser.cpp">
+      <Filter>GameCode\Battle\BattleMainSystem\MainSystem Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapUI_CollisionArea.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_TurretParser.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1121,9 +1157,6 @@
     <ClInclude Include="engineSetting.h">
       <Filter>SystemCode\Engine\SystemCore</Filter>
     </ClInclude>
-    <ClInclude Include="Battle_DataParser.h">
-      <Filter>GameCode\Battle\BattleMainSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Battle_UnitSystem.h">
       <Filter>GameCode\Battle\BattleUnitSystem</Filter>
     </ClInclude>
@@ -1192,6 +1225,33 @@
     </ClInclude>
     <ClInclude Include="Battle_UI_FlagShipButton.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetMakeView\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_ShipUI_FleetMark.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_ShipUI_Indicator.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_LogSystem.h">
+      <Filter>GameCode\Battle\BattleLogSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_TurretTest.h">
+      <Filter>GameCode\Scenes\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_DummyShip.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\DummyShip</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapUI_RespawnArea.h">
+      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_DataParser.h">
+      <Filter>GameCode\Battle\BattleMainSystem\MainSystem Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapUI_CollisionArea.h">
+      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_TurretParser.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

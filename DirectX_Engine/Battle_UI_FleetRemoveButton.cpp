@@ -13,7 +13,7 @@ CBattle_UI_FleetRemoveButton::~CBattle_UI_FleetRemoveButton()
 bool CBattle_UI_FleetRemoveButton::initialize(Graphics * g, Input * i)
 {
 	bool success = SystemButton::initialize(g, i,
-		g_fScreenWidth - battleUIFleetRemoveButtonNS::FLEET_MAKE_VIEW_WIDTH + battleUIFleetRemoveButtonNS::FLEET_REMOVE_BUTTON_WIDTH + battleUIFleetRemoveButtonNS::FLEET_REMOVE_BUTTON_MARGIN,
+		g_fScreenWidth - battleUIFleetRemoveButtonNS::FLEET_MAKE_VIEW_WIDTH + battleUIFleetRemoveButtonNS::FLEET_REMOVE_BUTTON_MARGIN,
 		battleUIFleetRemoveButtonNS::FLEET_REMOVE_BUTTON_Y,
 		battleUIFleetRemoveButtonNS::FILENAME, true);
 	return success;

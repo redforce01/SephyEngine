@@ -6,10 +6,8 @@ class CBattle_FleetSystem;
 
 #include <vector>
 #include <functional>
-
 #include "systemBase.h"
 #include "Battle_Ship.h"
-
 
 namespace battleFleetSystemNS
 {
@@ -25,7 +23,7 @@ namespace battleFleetSystemNS
 	const UINT FLEET_TOTAL_SIZE = 8;
 }
 
-enum BATTLE_FLEET_LIST
+enum class BATTLE_FLEET_LIST
 {
 	FLEET_ALPHA = 0
 	,FLEET_BRAVO
@@ -39,8 +37,18 @@ enum BATTLE_FLEET_LIST
 
 struct tagFleetData
 {
-	std::vector<CBattle_Ship*> ships;
-	BATTLE_FLEET_LIST enFleetType;
+	bool						bActiveFleet;
+	bool						bBufEffect;
+	std::vector<CBattle_Ship*>	ships;
+	CBattle_Ship*				flagShip;
+	BATTLE_FLEET_LIST			enFleetType;
+
+	tagFleetData()
+	{
+		bActiveFleet = false;
+		bBufEffect = false;
+		enFleetType = BATTLE_FLEET_LIST::FLEET_ALPHA;
+	}
 };
 
 class CBattle_FleetSystem : public SystemBase
@@ -56,18 +64,36 @@ public:
 	void update(float frameTime) override;
 	void render() override;
 
-	void addFleet(tagFleetData* fleet)
+	void setFlagShip(CBattle_Ship* pShip, int fleetNumber)
 	{
 		for (auto iter : m_vFleets)
 		{
-			if (iter->enFleetType == fleet->enFleetType)
-			{
-				iter = fleet;
-				break;
-			}			
+			if (iter->flagShip == nullptr)
+				continue;
+
+			if (iter->flagShip->getShipUniqueID() != pShip->getShipUniqueID())
+				continue;
+
+			iter->bActiveFleet = false;
+			iter->ships.clear();
+			break;
 		}
 
-		m_vFleets.emplace_back(fleet);
+		m_vFleets[fleetNumber]->bActiveFleet = true;
+		m_vFleets[fleetNumber]->flagShip = pShip;
+	}
+
+	void setFleetShips(std::vector<CBattle_Ship*> vFleetShips, int fleetNumber)
+	{
+		m_vFleets[fleetNumber]->ships = vFleetShips;
+	}
+
+	tagFleetData* getFleet(int fleetNum)
+	{
+		if (fleetNum < m_vFleets.size())
+			return m_vFleets[fleetNum];
+		else
+			return nullptr;
 	}
 };
 

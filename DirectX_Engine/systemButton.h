@@ -149,6 +149,16 @@ public:
 	{
 		return m_rcButton;
 	}
+
+	float getButtonCenterX() const
+	{
+		return m_x + (m_width / 2);
+	}
+
+	float getButtonCenterY() const
+	{
+		return m_y + (m_height / 2);
+	}
 };
 
 #endif // !_SYSTEM_BUTTON_H

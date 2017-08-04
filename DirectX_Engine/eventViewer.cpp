@@ -191,6 +191,7 @@ void EventViewer::update(float frameTime)
 
 			m_bClicked = true;
 			m_ptStartPos = m_pInput->getMousePt();
+			m_ptEndPos = m_pInput->getMousePt();
 		}
 		else
 		{

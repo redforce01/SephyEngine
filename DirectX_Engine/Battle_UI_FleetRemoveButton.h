@@ -9,12 +9,12 @@ class CBattle_UI_FleetRemoveButton;
 namespace battleUIFleetRemoveButtonNS
 {
 	const std::string FILENAME = "RemoveButton";
-	const float FLEET_REMOVE_BUTTON_X = 0; // (mean : g_fScreenWidth - VIEW_WIDTH(220) - SETUP_BUTTON_WIDTH(43) + MARGIN(10)
-	const float FLEET_REMOVE_BUTTON_Y = 270;
+	const float FLEET_REMOVE_BUTTON_X = 0; // (mean : g_fScreenWidth - VIEW_WIDTH(220) + MarginFromRight(153)
+	const float FLEET_REMOVE_BUTTON_Y = 490 - 24 - 10;
 	const float FLEET_REMOVE_BUTTON_WIDTH = 43.f;
 	const float FLEET_REMOVE_BUTTON_HEIGHT = 24.f;
-	const float FLEET_REMOVE_BUTTON_MARGIN = 20.f;
-	const float FLEET_MAKE_VIEW_WIDTH = 220.f;
+	const float FLEET_REMOVE_BUTTON_MARGIN = 153.f;
+	const float FLEET_MAKE_VIEW_WIDTH = 220;
 }
 
 class CBattle_UI_FleetRemoveButton : public SystemButton

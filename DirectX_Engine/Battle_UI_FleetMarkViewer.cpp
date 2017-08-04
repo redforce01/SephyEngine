@@ -4,9 +4,13 @@
 
 CBattle_UI_FleetMarkViewer::CBattle_UI_FleetMarkViewer()
 {
+	m_pArrow			= nullptr;
+	//=======================================
+	m_bVisibleView		= true;
+	m_bAnime			= false;
+	m_nSelectedFleet	= 0;
+	//=======================================
 	backColor = battleFleetMarkViewerNS::BACK_COLOR_ACTIVE;
-	m_bVisibleView	= true;
-	m_bAnime		= false;
 }
 
 
@@ -16,6 +20,8 @@ CBattle_UI_FleetMarkViewer::~CBattle_UI_FleetMarkViewer()
 	{
 		SAFE_DELETE(iter);
 	}
+	m_vFleetMarks.clear();
+	SAFE_DELETE(m_pArrow);
 }
 
 bool CBattle_UI_FleetMarkViewer::initialize(Graphics * g, Input * i)
@@ -27,6 +33,7 @@ bool CBattle_UI_FleetMarkViewer::initialize(Graphics * g, Input * i)
 		{
 			CBattle_UI_FleetMark* temp = new CBattle_UI_FleetMark;
 			temp->initialize(g, i, k);
+			temp->setMemoryLinkBattleUIFleetMarkViewer(this);
 			m_vFleetMarks.emplace_back(temp);
 		}
 
@@ -37,6 +44,13 @@ bool CBattle_UI_FleetMarkViewer::initialize(Graphics * g, Input * i)
 			battleFleetMarkViewerNS::FLEET_MARK_VIEW_HEIGHT, 0);
 		SystemUIDialog::setDrawBorder(false);
 
+		m_pArrow = new Image;
+		m_pArrow->initialize(m_pGraphics, 0, 0, 0, IMAGEMANAGER->getTexture(battleFleetMarkViewerNS::ARROW_FILENAME));
+
+		float markRight = m_vFleetMarks[0]->getFleetMarkRect().right;
+		float markCenterHeight = m_vFleetMarks[0]->getFleetMarkRect().top + (m_vFleetMarks[0]->getHeight() / 2);
+		m_pArrow->setX(markRight + 2);
+		m_pArrow->setY(markCenterHeight - (m_pArrow->getHeight() / 2));
 	}
 	catch (...)
 	{
@@ -50,6 +64,7 @@ void CBattle_UI_FleetMarkViewer::update(float frameTime)
 {
 	SystemUIDialog::update(frameTime);
 
+#pragma region FLEET_LIST_VIEW_ANIMATION_NOT USING THIS_CODE
 	//if (PtInRect(&this->getDialogRECT(), m_pInput->getMousePt()))
 	//{
 	//	m_bVisibleView = true;
@@ -58,7 +73,6 @@ void CBattle_UI_FleetMarkViewer::update(float frameTime)
 	//{
 	//	m_bVisibleView = false;
 	//}
-
 	//if (m_bVisibleView)
 	//{
 	//	if (this->getDialogX() < battleFleetMarkViewerNS::FLEET_MARK_VIEW_X)
@@ -81,10 +95,19 @@ void CBattle_UI_FleetMarkViewer::update(float frameTime)
 	//		}
 	//	}
 	//}
-
+#pragma endregion
+	
 	if (SystemUIDialog::getMouseOver() == false)
 		return;
 
+	
+	if (m_pInput->getMouseLButton())
+	{
+
+	}
+	
+	
+	
 	for (auto iter : m_vFleetMarks)
 	{
 		iter->update(frameTime);
@@ -95,9 +118,12 @@ void CBattle_UI_FleetMarkViewer::render()
 {
 	SystemUIDialog::render();
 	
-
 	for (auto iter : m_vFleetMarks)
 	{
 		iter->render();
 	}
+
+	m_pGraphics->spriteBegin();
+	m_pArrow->draw();
+	m_pGraphics->spriteEnd();
 }

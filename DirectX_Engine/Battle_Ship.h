@@ -11,6 +11,8 @@ class CBattle_Ship;
 #include "entity.h"
 #include "Battle_Turret.h"
 #include "Battle_UI_ShipSelected.h"
+#include "Battle_ShipUI_FleetMark.h"
+#include "Battle_ShipUI_Indicator.h"
 
 namespace battleShipTextureNS
 {
@@ -21,7 +23,7 @@ namespace battleShipTextureNS
 	const std::string TEXTURE_KEY_SHADOW		= "Shadow_";
 	const std::string TEXTURE_KEY_SUNKEN		= "Sunken_";
 	const std::string TEXTURE_KEY_SUNKEN_SHADOW = "Sunkenshadow_";
-
+	
 }
 
 namespace battleShipGeneralNS
@@ -67,11 +69,34 @@ enum class BUF_DEBUF_EVENT {};
 //  + QUDRANT_LEFT_TOP		: 1	(mean = x,y graph 2 qudrant)
 //  + QUDRANT_LEFT_BOTTOM	: 2	(mean = x,y graph 3 qudrant)
 //	+ QUDRANT_RIGHT_BOTTOM	: 3	(mean = x,y graph 4 qudrant)
+//===============================================
 enum class QUDRANT_TYPE	
 { QUDRANT_RIGHT_TOP, QUDRANT_LEFT_TOP, QUDRANT_LEFT_BOTTOM, QUDRANT_RIGHT_BOTTOM };
 
+//===============================================
+// Forward Declaration Class List
+//===============================================
+class CBattle_MapSystem;
+class CBattle_UnitSystem;
+
+//===============================================
+// CBattle_Ship Class
+//===============================================
 class CBattle_Ship
 {	
+private: // Forward Declarations
+	CBattle_MapSystem* m_pBattleMapSystem;
+	CBattle_UnitSystem* m_pBattleUnitSystem;
+public:
+	void setMemoryLinkBattleMapSystem(CBattle_MapSystem* pBattleMapSystem)
+	{
+		m_pBattleMapSystem = pBattleMapSystem;
+	}
+	void setMemoryLinkBattleUnitSystem(CBattle_UnitSystem* pBattleUnitSystem)
+	{
+		m_pBattleUnitSystem = pBattleUnitSystem;
+	}
+
 private: // typedef
 	typedef std::vector<CBattle_Turret*>			vTurrets;		// mean : vector<Turret*>	
 	typedef std::vector<std::pair<bool, Entity*>>	vShipParts;		// mean : vector<pair<physics flag(bool), ShipParts*(Entity*)>
@@ -82,6 +107,7 @@ private:
 	//===============================================
 	// Units Variables 
 	//===============================================
+	int			m_nUnitUniqueID;			// Unit Unique ID
 	int			m_nUnitID;					// Unit ID
 	std::string m_strName;					// Unit Name
 	std::string m_strTextureKey;			// Unit Texture Key
@@ -147,10 +173,14 @@ private:
 	int			m_nCallPhase;				// Unit CallPhase Number
 	float		m_fMass;					// Unit Mass ( Unit Real Weight )	
 	//================================================
-	bool		m_bIncludedFleet;			// Ship Included Fleet
-	int			m_nFleetNumber;				// Ship Fleet Number
-	float		m_fDistanceFromFleet;		// Ship Distance From Fleet
-	float		m_fAngleFromFleet;			// Ship Angle From Fleet
+	bool			m_bIncludedFleet;			// Ship Included Fleet
+	int				m_nFleetNumber;				// Ship Fleet Number
+	float			m_fDistanceFromFleet;		// Ship Distance From Fleet
+	float			m_fAngleFromFleet;			// Ship Angle From Fleet
+	CBattle_Ship*	m_pFlagShip;				// Ship - FlagShip Connected Pointer (it would be connected when this ship is not flagShip)
+	float			m_fFormationX;				// m_fFormationX = cos(m_fAngleFromFleet) * m_fDistanceFromFleet + m_pFlagShip->getCurrentCenterX()
+	float			m_fFormationY;				// m_fFormationY = -sin(m_fAngleFromFleet) * m_fDistanceFromFleet + m_pFlagShip->getCurrentCenterY()
+	float			m_fFleetMaxSpeed;			// Fleet Max Speed ( Top Slowly Ship Speed In Fleet : ex) cv speed - 20, ff speed - 44 == FleetMaxSpeed : 20 )
 	//===============================================
 	// enum class Type Variables
 	//===============================================
@@ -170,6 +200,11 @@ private:
 	//  + Original : std::vector<std::pair<bool, Entity*>>
 	//===============================================
 	vShipParts m_vEntity;
+public:
+	vShipParts getShipEntity() const
+	{
+		return m_vEntity;
+	}
 
 private:
 	// TouchData :  mean = Circle Data For UnitSelect
@@ -178,12 +213,23 @@ private:
 		float x, y;
 		float radius;
 	};
+	// Collision : mean = Circle Data for Unit Collision Pre Detect
+	struct tagCollision
+	{
+		float x, y;
+		float radius;
+	};
 private:
-	tagTouch m_stUnitTouch;	// For Unit Clicekd TouchData
+	tagTouch		m_stUnitTouch;		// For Unit Clicekd TouchData
+	tagCollision	m_stUnitCollision;	// For Unit Collision
 
-private:
-	CBattle_UnitParser m_UnitDataParser; // UNIT DATA PARSER
-	CBattle_UI_ShipSelected m_BattleUIShipSelected;
+private: // UNIT DATA PARSER
+	CBattle_UnitParser m_UnitDataParser; 
+
+private: // SHIP UI
+	CBattle_ShipUI_FleetMark	m_BattleShipUI_FleetMark;
+	CBattle_UI_ShipSelected		m_BattleUIShipSelected;
+	CBattle_ShipUI_Indicator	m_BattleUIShipIndicator;
 private:
 	bool m_bInitialized;
 	bool m_bActive;
@@ -192,10 +238,12 @@ private:
 	bool m_bChangeSprite;
 	bool m_bSelected;
 	bool m_bArrived;
+	bool m_bIntersect;
 	bool m_bFixedEngine;
 	bool m_bFlagShip;
 	//===============================================
 	bool m_bDebug;
+	bool m_bDummy;
 
 public:
 	CBattle_Ship();
@@ -236,6 +284,7 @@ public:
 
 private:
 	void updateTouchData();
+	void updateCollisionData();
 	void updateMovement(float frameTime);
 	void updateEngine(float frameTime);
 	bool updateRotate(float frameTime);
@@ -257,9 +306,32 @@ public:
 	void moveX(float fDistance);
 	void moveY(float fDistance);
 
+	void resetShipFleetData()
+	{
+		setFlagShip(false);
+		setFleetIncluded(false);
+		setFleetAngleFromFlagShip(0.f);
+		setFleetDistanceFromFlagShip(0.f);
+		setFleetNumber(-1);
+	}
+
+	void setDummyShip(bool bDummy)
+	{
+		m_bDummy = bDummy;
+	}
+
+	bool getDummyShip() const
+	{
+		return m_bDummy;
+	}
+
 	//===============================================
 	// Setter Functions
 	//===============================================
+	void setShipUniqueID(int id)
+	{
+		m_nUnitUniqueID = id;
+	}
 
 	void setTargetPos(VECTOR2 target)
 	{
@@ -286,6 +358,7 @@ public:
 			iter.second->setX(posX);
 		}
 		m_fTargetX = m_vEntity[0].second->getCenterX();
+		m_stUnitTouch.x = posX;
 		m_BattleUIShipSelected.setUIPosX(m_vEntity[0].second->getCenterX());
 	}
 
@@ -296,6 +369,31 @@ public:
 			iter.second->setY(posY);
 		}
 		m_fTargetY = m_vEntity[0].second->getCenterY();
+		m_stUnitTouch.x = posY;
+		m_BattleUIShipSelected.setUIPosY(m_vEntity[0].second->getCenterY());
+	}
+
+	void setCurrentCenterX(float centerX)
+	{
+		auto shipWidth = m_vEntity[0].second->getWidth();
+		for (auto iter : m_vEntity)
+		{
+			iter.second->setX(centerX - (shipWidth / 2));
+		}
+		m_fTargetX = m_vEntity[0].second->getCenterX();
+		m_stUnitTouch.x = centerX - (shipWidth / 2);
+		m_BattleUIShipSelected.setUIPosX(m_vEntity[0].second->getCenterX());
+	}
+
+	void setCurrentCenterY(float centerY)
+	{
+		auto shipHeight = m_vEntity[0].second->getHeight();
+		for (auto iter : m_vEntity)
+		{
+			iter.second->setY(centerY - (shipHeight / 2));
+		}
+		m_fTargetY = m_vEntity[0].second->getCenterY();
+		m_stUnitTouch.x = centerY - (shipHeight / 2);
 		m_BattleUIShipSelected.setUIPosY(m_vEntity[0].second->getCenterY());
 	}
 
@@ -394,9 +492,43 @@ public:
 		m_fMass = fMass;
 	}
 
+	void setFleetIncluded(bool bIncluded)
+	{
+		m_bIncludedFleet = bIncluded;		
+	}
+
 	void setFleetNumber(int nFleetNumber)
 	{
+		m_BattleShipUI_FleetMark.setFleetMarkNumber(nFleetNumber);
 		m_nFleetNumber = nFleetNumber;
+	}
+
+	void setFleetDistanceFromFlagShip(float fDistance)
+	{
+		m_fDistanceFromFleet = fDistance;
+	}
+
+	void setFleetAngleFromFlagShip(float fAngle) // : radian
+	{
+		m_fAngleFromFleet = fAngle;
+	}
+
+	void setFleetConnectFlagShip(CBattle_Ship* pFlagShip)
+	{
+		if (pFlagShip == nullptr)
+			return;
+
+		auto flagShipX = pFlagShip->getCurrentCenterX();
+		auto flagShipY = pFlagShip->getCurrentCenterY();
+		auto thisShipX = this->getCurrentCenterX();
+		auto thisShipY = this->getCurrentCenterY();
+
+		auto fDistanceFromFlagShip = MyUtil::getDistance(flagShipX, flagShipY, thisShipX, thisShipY);
+		auto fAngleFromFlagShip = MyUtil::getAngle(flagShipX, flagShipY, thisShipX, thisShipY);
+		m_fDistanceFromFleet = fDistanceFromFlagShip;
+		m_fAngleFromFleet = fAngleFromFlagShip;
+
+		m_pFlagShip = pFlagShip;
 	}
 
 	void setShipArrived(bool bArrived)
@@ -414,9 +546,22 @@ public:
 		m_bFlagShip = bFlagShip;
 	}
 
+	void setShipColorFilter(COLOR_ARGB color)
+	{
+		for (auto iter : m_vEntity)
+		{
+			iter.second->setColorFilter(color);
+		}
+	}
+
 	//===============================================
 	// Getter Functions
 	//===============================================
+
+	int getShipUniqueID() const
+	{
+		return m_nUnitUniqueID;
+	}
 
 	// Get Ship TouchData( struct { float x, y, radius } )
 	// TouchData :  mean = Circle Data For UnitSelect
@@ -601,9 +746,29 @@ public:
 		return m_fMass;
 	}
 
+	bool getFleetIncluded() const
+	{
+		return m_bIncludedFleet;
+	}
+
 	int getFleetNumber() const
 	{
 		return m_nFleetNumber;
+	}
+
+	float getFleetDistanceFromFlagShip() const
+	{
+		return m_fDistanceFromFleet;
+	}
+
+	float getFleetAngleFromFlagShip() const
+	{
+		return m_fAngleFromFleet;
+	}
+
+	CBattle_Ship* getFleetConnectFlagShip() const
+	{
+		return m_pFlagShip;
 	}
 
 	bool getShipSelected() const

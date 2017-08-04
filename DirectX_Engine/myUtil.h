@@ -29,10 +29,10 @@ namespace MyUtil
 	float getAngle(float startX, float startY, float endX, float endY);
 
 	// Object in Screen? Function. return bool
-	bool getScreenIn(int objX, int objY, int screenSizeW, int screenSizeH);
+	bool getObjInScreen(int objX, int objY, int screenSizeW, int screenSizeH);
 
 	// Object in Screen(with Object Width/Height)? Function. return bool
-	bool getScreenIn(int objX, int objY, int objWidth, int objHeight, int screenSizeW, int screenSizeH);
+	bool getObjInScreen(int objX, int objY, int objWidth, int objHeight, int screenSizeW, int screenSizeH);
 	
 	// Some Pt in Screen ((Width, Height) - Check function
 	bool getPtInScreen(float ptX, float ptY, float screenWidth, float screenHeight);
@@ -52,6 +52,8 @@ namespace MyUtil
 	bool ptInCircle(float centerX, float centerY, float radius, float ptX, float ptY);
 
 	bool circleInRect(float cx, float cy, float cr, const LPRECT rc);
+
+	bool circleIncircle(float c1_x, float c1_y, float c1_rad, float c2_x, float c2_y, float c2_rad);
 }
 
 #endif

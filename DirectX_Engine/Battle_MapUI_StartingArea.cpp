@@ -76,7 +76,7 @@ void CBattle_MapUI_StartingArea::update(float frameTime)
 	m_centerX = m_pAreaFlag->getCenterX();
 	m_centerY = m_pAreaFlag->getCenterY();
 
-	if (MyUtil::getScreenIn(x, y, width, height, g_fScreenWidth, g_fScreenHeight) == false)
+	if (MyUtil::getObjInScreen(x, y, width, height, g_fScreenWidth, g_fScreenHeight) == false)
 		return;
 
 	if (m_nSpriteNumber >= battleMapUIStartingAreaNS::STARTING_AREA_FLAG_MAX_FRAME)
@@ -123,7 +123,7 @@ void CBattle_MapUI_StartingArea::render()
 	float width = m_pAreaFlag->getWidth();
 	float height = m_pAreaFlag->getHeight();
 
-	if (MyUtil::getScreenIn(x, y, width, height, g_fScreenWidth, g_fScreenHeight) == false)
+	if (MyUtil::getObjInScreen(x, y, width, height, g_fScreenWidth, g_fScreenHeight) == false)
 		return;
 
 	m_pGraphics->drawCircle(m_pAreaFlag->getCenterX(), m_pAreaFlag->getCenterY(),

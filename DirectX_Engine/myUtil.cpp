@@ -26,7 +26,7 @@ namespace MyUtil
 		return angle;
 	}
 
-	bool getScreenIn(int objX, int objY, int screenSizeW, int screenSizeH)
+	bool getObjInScreen(int objX, int objY, int screenSizeW, int screenSizeH)
 	{
 		if (objX > 0 && objX < screenSizeW)
 		{
@@ -39,7 +39,7 @@ namespace MyUtil
 		return false;
 	}
 
-	bool getScreenIn(int  objX, int objY, int objWidth, int objHeight, int screenSizeW, int screenSizeH)
+	bool getObjInScreen(int  objX, int objY, int objWidth, int objHeight, int screenSizeW, int screenSizeH)
 	{
 		if (objX > -objWidth && objX < screenSizeW + objWidth)
 		{
@@ -195,6 +195,14 @@ namespace MyUtil
 			if (ptInCircle(cx, cy, cr, rc->right, rc->bottom)) return true;
 		}
 
+		return false;
+	}
+	bool circleIncircle(float c1_x, float c1_y, float c1_rad, float c2_x, float c2_y, float c2_rad)
+	{
+		auto distance = getDistance(c1_x, c1_y, c2_x, c2_y);
+		if (c1_rad + c2_rad > distance)
+			return true;
+		
 		return false;
 	}
 }
