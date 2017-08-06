@@ -1,7 +1,7 @@
-#ifndef _SCENEMAPTOOL_H
-#define _SCENEMAPTOOL_H
+#ifndef _SCENE_MAPTOOL_H
+#define _SCENE_MAPTOOL_H
 
-class Scene_Maptool;
+class CScene_MapTool;
 
 #include "game.h"
 #include "mapSystem.h"
@@ -14,7 +14,7 @@ namespace MapToolNS
 	const UCHAR SCENE_CHANGE_KEY = VK_SPACE;
 }
 
-class Scene_MapTool : public Game	// Scene
+class CScene_MapTool : public Game	// Scene
 {
 private:
 	MapSystem* mapSystem;
@@ -22,8 +22,8 @@ private:
 	ViewerSystem* viewerSystem;
 
 public:
-	Scene_MapTool();
-	~Scene_MapTool();
+	CScene_MapTool();
+	~CScene_MapTool();
 
 	virtual void initialize(HWND hwnd)	override;
 	virtual void update()				override;
@@ -35,4 +35,4 @@ public:
 	virtual void resetAll()				override;
 };
 
-#endif // !_SCENEMAPTOOL_H
+#endif // !_SCENE_MAPTOOL_H

@@ -43,7 +43,7 @@ BEGIN ShipData
 	+ Max_Speed		61
 	+ Rader			190
 	+ Turret_Capacity	5
-	+ Turret_ID		1
+	+ Turret_ID		Cannon
 	+ Aircraft_Capacity	0
 	+ Performance		10000
 	+ Sailor		800

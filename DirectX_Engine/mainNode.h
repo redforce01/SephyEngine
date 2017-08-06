@@ -20,7 +20,6 @@ public:
 
 	HRESULT initialize();
 	void release();
-	void start();
 	void update();
 	void render();
 

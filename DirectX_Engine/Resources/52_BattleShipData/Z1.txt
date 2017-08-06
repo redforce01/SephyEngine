@@ -43,7 +43,7 @@ BEGIN ShipData
 	+ Max_Speed		65
 	+ Rader			880
 	+ Turret_Capacity	4
-	+ Turret_ID		1
+	+ Turret_ID		Cannon
 	+ Aircraft_Capacity	0
 	+ Performance		250
 	+ Sailor		20
@@ -52,5 +52,6 @@ BEGIN ShipData
 	+ AntiAir_Damage	10
 	+ Phase			1
 	+ Mass			100
+	+ EvasionRadius		100
 	+ Skill			NULL
 ShipData END

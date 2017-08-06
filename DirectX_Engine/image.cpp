@@ -142,8 +142,11 @@ void Image::draw(COLOR_ARGB color, UINT textureN)
 	//if (this->layer->getLayerState() < LAYERMANAGER->getCurrentLayerState())
 	//	return;
 
-	if (this->layer->getSwitch() == FALSE)
-		return;
+	if (layer != nullptr)
+	{
+		if (this->layer->getSwitch() == FALSE)
+			return;
+	}
 	
     if (!visible || graphics == NULL)
         return;

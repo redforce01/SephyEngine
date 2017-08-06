@@ -1,13 +1,13 @@
 #include "stdafx.h"
-#include "scene_MapTool.h"
+#include "Scene_MapTool.h"
 
 
-Scene_MapTool::Scene_MapTool() : Game()
+CScene_MapTool::CScene_MapTool() : Game()
 {
 }
 
 
-Scene_MapTool::~Scene_MapTool()
+CScene_MapTool::~CScene_MapTool()
 {
 	SAFE_DELETE(mapSystem);
 	SAFE_DELETE(cameraSystem);
@@ -16,7 +16,7 @@ Scene_MapTool::~Scene_MapTool()
 	releaseAll();
 }
 
-void Scene_MapTool::initialize(HWND hwnd)
+void CScene_MapTool::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
 
@@ -49,7 +49,7 @@ void Scene_MapTool::initialize(HWND hwnd)
 	viewerSystem->getMinimapViewer()->setIsoMetric(true);
 }
 
-void Scene_MapTool::update()
+void CScene_MapTool::update()
 {	
 	mapSystem->update(frameTime);
 
@@ -65,31 +65,31 @@ void Scene_MapTool::update()
 	}
 }
 
-void Scene_MapTool::release()
+void CScene_MapTool::release()
 {
 }
 
-void Scene_MapTool::ai()
+void CScene_MapTool::ai()
 {
 }
 
-void Scene_MapTool::collisions()
+void CScene_MapTool::collisions()
 {
 }
 
-void Scene_MapTool::render()
+void CScene_MapTool::render()
 {
 	mapSystem->render();
 	viewerSystem->render();
 }
 
-void Scene_MapTool::releaseAll()
+void CScene_MapTool::releaseAll()
 {
 	Game::releaseAll();
 	return;
 }
 
-void Scene_MapTool::resetAll()
+void CScene_MapTool::resetAll()
 {
 	Game::resetAll();
 	return;

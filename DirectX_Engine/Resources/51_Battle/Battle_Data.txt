@@ -14,15 +14,7 @@ BEGIN MapData
 MapData END
 
 BEGIN PlayerData
-	BEGIN Corvette count 30 END
-	BEGIN Corvette count 30 END
-	BEGIN Frigate count 30 END
-	BEGIN Frigate count 30 END
 	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
-	BEGIN Crusier count 30 END
-	BEGIN Battleship3 count 30 END
-	BEGIN Carrier count 30 END
 PlayerData END
 
 BEGIN AIData

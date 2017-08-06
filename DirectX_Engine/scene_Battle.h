@@ -1,20 +1,20 @@
 #ifndef _SCENE_BATTLE_H
 #define _SCENE_BATTLE_H
 
-class Scene_Battle;
+class CScene_Battle;
 
 #include "game.h"
 #include "Battle_MainSystem.h"
 
-class Scene_Battle : public Game
+class CScene_Battle : public Game
 {
 private:
 	CBattle_MainSystem* m_pBattleMainSystem;
 
 
 public:
-	Scene_Battle();
-	~Scene_Battle();
+	CScene_Battle();
+	~CScene_Battle();
 
 	virtual void initialize(HWND hwnd)	override;
 	virtual void update()				override;

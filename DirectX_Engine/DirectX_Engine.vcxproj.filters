@@ -346,6 +346,27 @@
     <Filter Include="GameCode\Battle\BattleMainSystem\MainSystem Parser">
       <UniqueIdentifier>{7a86c769-4545-4df4-92df-5f3d61074537}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\UnitTool">
+      <UniqueIdentifier>{cbcc192d-6b0a-4aea-9680-6c58c362325a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Unit">
+      <UniqueIdentifier>{931e1b94-f924-4664-ab2e-6964b446e1d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\UnitControlSystem">
+      <UniqueIdentifier>{16eb6cc1-0982-47bb-bff9-d676792b9342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\CameraSystem">
+      <UniqueIdentifier>{7fd6e207-b81f-4fe1-ad71-433cf476b4e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools">
+      <UniqueIdentifier>{ffdc7913-0762-457c-917f-8574b85fc7ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\UnitToolMainSystem">
+      <UniqueIdentifier>{93aade1b-cc69-40f3-b52c-a129747aff2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\UnitToolMapSystem">
+      <UniqueIdentifier>{c2a6af54-1c33-4080-bec3-f70eee43632b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -654,12 +675,6 @@
     <ClCompile Include="gameStarting_Button.cpp">
       <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
     </ClCompile>
-    <ClCompile Include="scene_Battle.cpp">
-      <Filter>GameCode\Battle</Filter>
-    </ClCompile>
-    <ClCompile Include="scene_MapTool.cpp">
-      <Filter>GameCode\Maptool</Filter>
-    </ClCompile>
     <ClCompile Include="control_DebugButton.cpp">
       <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
     </ClCompile>
@@ -788,6 +803,33 @@
     </ClCompile>
     <ClCompile Include="Battle_TurretParser.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_Bullet.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_ShipUI_State.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="engineBootLog.cpp">
+      <Filter>SystemCode\Engine\SystemEngineBoot</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_UnitTool.cpp">
+      <Filter>GameCode\UnitTool</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Battle.cpp">
+      <Filter>GameCode\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_MapTool.cpp">
+      <Filter>GameCode\Maptool</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_MainSystem.cpp">
+      <Filter>GameCode\UnitTool\UnitToolMainSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_UISystem.cpp">
+      <Filter>GameCode\UnitTool\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_MapSystem.cpp">
+      <Filter>GameCode\UnitTool\UnitToolMapSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1118,12 +1160,6 @@
     <ClInclude Include="gameStarting_Button.h">
       <Filter>GameCode\Maptool\Viewer\EventViewer\Button</Filter>
     </ClInclude>
-    <ClInclude Include="scene_Battle.h">
-      <Filter>GameCode\Battle</Filter>
-    </ClInclude>
-    <ClInclude Include="scene_MapTool.h">
-      <Filter>GameCode\Maptool</Filter>
-    </ClInclude>
     <ClInclude Include="control_DebugObjectButton.h">
       <Filter>GameCode\Maptool\Viewer\ToolControlViewer\Button\DebugButton</Filter>
     </ClInclude>
@@ -1252,6 +1288,33 @@
     </ClInclude>
     <ClInclude Include="Battle_TurretParser.h">
       <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_Bullet.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_ShipUI_State.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="engineBootLog.h">
+      <Filter>SystemCode\Engine\SystemEngineBoot</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_UnitTool.h">
+      <Filter>GameCode\UnitTool</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Battle.h">
+      <Filter>GameCode\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_MapTool.h">
+      <Filter>GameCode\Maptool</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_MainSystem.h">
+      <Filter>GameCode\UnitTool\UnitToolMainSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_UISystem.h">
+      <Filter>GameCode\UnitTool\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_MapSystem.h">
+      <Filter>GameCode\UnitTool\UnitToolMapSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

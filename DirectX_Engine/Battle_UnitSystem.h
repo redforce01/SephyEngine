@@ -82,9 +82,18 @@ private:
 	std::vector<CBattle_Ship*>	m_vFleetMakeShips;
 	int							m_nSelectFlagShip;
 
-private:
+private: // Variables For Setup Unique ID to Ship
 	int m_nLoad_Player_ShipUniqueID;
 	int m_nLoad_AI_ShipUniqueID;
+
+
+private: // Bullet
+	std::vector<CBattle_Bullet*> m_vBullets;
+public:
+	void addBulletInBattle(CBattle_Bullet* pBullet)
+	{
+		m_vBullets.emplace_back(pBullet);
+	}
 
 public:
 	CBattle_UnitSystem();

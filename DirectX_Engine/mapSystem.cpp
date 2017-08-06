@@ -157,35 +157,34 @@ void MapSystem::update(float frameTime)
 	{
 		if (m_bDebugObject)
 		{
-			int count = 0;
-			for (auto iter : m_arrObjects)
+			for (auto iter = m_arrObjects.begin(); iter != m_arrObjects.end(); )
 			{
-				RECT rc = iter->getObjectRect();
+				RECT rc = (*iter)->getObjectRect();
 				POINT pt = m_pInput->getMousePt();
 				if (PtInRect(&rc, pt))
 				{
-					auto objIter = m_arrObjects.begin() + count;
-					m_arrObjects.erase(objIter);
-					break;
+					SAFE_DELETE(*iter);
+					m_arrObjects.erase(iter);
 				}
-				count++;
+				else
+					iter++;
 			}
+
 		}
 
 		if (m_bDebugEventObject)
 		{
-			int count = 0;
-			for (auto iter : m_arrEventObjects)
+			for (auto iter = m_arrEventObjects.begin(); iter != m_arrEventObjects.end(); )
 			{
-				RECT rc = iter->getEventObjectRECT();
+				RECT rc = (*iter)->getEventObjectRECT();
 				POINT pt = m_pInput->getMousePt();
 				if (PtInRect(&rc, pt))
 				{
-					auto eventObjIter = m_arrEventObjects.begin() + count;
-					m_arrEventObjects.erase(eventObjIter);
-					break;
+					SAFE_DELETE(*iter);
+					m_arrEventObjects.erase(iter);
 				}
-				count++;
+				else
+					iter++;
 			}
 		}
 	}

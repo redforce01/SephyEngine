@@ -14,7 +14,7 @@ namespace TurretParserNS
 
 namespace battleTurretParserNS
 {
-
+	// Not Using namespace...
 }
 
 

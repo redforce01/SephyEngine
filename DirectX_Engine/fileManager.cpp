@@ -17,6 +17,7 @@ HRESULT FileManager::initialize()
 	char path[MAX_PATH];
 	::GetCurrentDirectory(MAX_PATH, path);
 
+	ENGINE_BOOT_LOG->setLog("FileSystem initialize Start");
 	//function Find Resource Folder Files
 	funcFindResource(path);
 
@@ -64,6 +65,7 @@ void FileManager::funcFindItem(char * path)
 
 void FileManager::funcFindResource(char* path)
 {
+	ENGINE_BOOT_LOG->setLog("Finding Resources Folder");
 	char resPath[MAX_PATH];
 	sprintf_s(resPath, "%s%s", path, "\\Resources");
 	::SetCurrentDirectory(resPath);
@@ -72,6 +74,7 @@ void FileManager::funcFindResource(char* path)
 
 void FileManager::funcCheckResource(char * path)
 {
+	ENGINE_BOOT_LOG->setLog("Resources Folder Recognize Start");
 	HANDLE hSrch;
 	WIN32_FIND_DATA wfd;
 	BOOL bResult = TRUE;
@@ -107,8 +110,9 @@ void FileManager::funcCheckResource(char * path)
 			temp->fileName		= getFileName(wfd.cFileName);
 			temp->ext			= getFileExtension(wfd.cFileName);
 			temp->parentDir		= getLastDir(dir);
-
+			
 			arrFile.find(temp->parentDir.c_str())->second->emplace_back(temp);
+			ENGINE_BOOT_LOG->setLog(temp->fileName + " Uploaded");
 		}
 
 		bResult = FindNextFile(hSrch, &wfd);
@@ -305,7 +309,7 @@ void FileManager::funcRecognize()
 				//arrMapImage.emplace(newImageFile.fileName, &newImageFile);
 
 				arrImage.emplace_back((*iter));
-
+				ENGINE_BOOT_LOG->setLog((*iter)->fileName + " Recognized");
 				extension.clear();
 				continue;
 			}
@@ -322,7 +326,7 @@ void FileManager::funcRecognize()
 				//arrData.emplace_back(newDataFile);
 
 				arrData.emplace_back((*iter));
-
+				ENGINE_BOOT_LOG->setLog((*iter)->fileName + " Recognized");
 				extension.clear();
 				continue;
 			}
@@ -330,6 +334,7 @@ void FileManager::funcRecognize()
 			else
 			{
 				funcRecogEtc((*iter));
+				ENGINE_BOOT_LOG->setLog((*iter)->fileName + " Recognized");
 				extension.clear();
 				continue;
 			}

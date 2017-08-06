@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Battle_Bullet.cpp" />
     <ClCompile Include="Battle_CameraSystem.cpp" />
     <ClCompile Include="Battle_DataParser.cpp" />
     <ClCompile Include="Battle_FleetSystem.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Battle_Ship.cpp" />
     <ClCompile Include="Battle_ShipUI_FleetMark.cpp" />
     <ClCompile Include="Battle_ShipUI_Indicator.cpp" />
+    <ClCompile Include="Battle_ShipUI_State.cpp" />
     <ClCompile Include="Battle_TurretParser.cpp" />
     <ClCompile Include="Battle_UI_DummyShip.cpp" />
     <ClCompile Include="Battle_UI_FlagShipButton.cpp" />
@@ -208,6 +210,7 @@
     <ClCompile Include="engineTable.cpp" />
     <ClCompile Include="EngineTableCell.cpp" />
     <ClCompile Include="engineWindowManager.cpp" />
+    <ClCompile Include="engineBootLog.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="engineWindow.cpp" />
     <ClCompile Include="eventViewer.cpp" />
@@ -231,8 +234,9 @@
     <ClCompile Include="objectViewButton.cpp" />
     <ClCompile Include="randomMaker.cpp" />
     <ClCompile Include="saveLoadViewer.cpp" />
-    <ClCompile Include="scene_Battle.cpp" />
+    <ClCompile Include="Scene_Battle.cpp" />
     <ClCompile Include="Scene_TurretTest.cpp" />
+    <ClCompile Include="Scene_UnitTool.cpp" />
     <ClCompile Include="statsViewer.cpp" />
     <ClCompile Include="systemBase.cpp" />
     <ClCompile Include="gocMessage.cpp" />
@@ -260,7 +264,7 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="scene_Lobby.cpp" />
     <ClCompile Include="scene_Main.cpp" />
-    <ClCompile Include="scene_MapTool.cpp" />
+    <ClCompile Include="Scene_MapTool.cpp" />
     <ClCompile Include="scene_Test.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -287,12 +291,16 @@
     <ClCompile Include="uiParent.cpp" />
     <ClCompile Include="uiProgressBar.cpp" />
     <ClCompile Include="uiTab.cpp" />
+    <ClCompile Include="UnitTool_MainSystem.cpp" />
+    <ClCompile Include="UnitTool_MapSystem.cpp" />
+    <ClCompile Include="UnitTool_UISystem.cpp" />
     <ClCompile Include="viewerSystem.cpp" />
     <ClCompile Include="weatherFog_Button.cpp" />
     <ClCompile Include="weatherRain_Button.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Battle_Bullet.h" />
     <ClInclude Include="Battle_CameraSystem.h" />
     <ClInclude Include="Battle_DataParser.h" />
     <ClInclude Include="Battle_FleetSystem.h" />
@@ -307,6 +315,7 @@
     <ClInclude Include="Battle_Ship.h" />
     <ClInclude Include="Battle_ShipUI_FleetMark.h" />
     <ClInclude Include="Battle_ShipUI_Indicator.h" />
+    <ClInclude Include="Battle_ShipUI_State.h" />
     <ClInclude Include="Battle_TurretParser.h" />
     <ClInclude Include="Battle_UI_DummyShip.h" />
     <ClInclude Include="Battle_UI_FlagShipButton.h" />
@@ -363,6 +372,7 @@
     <ClInclude Include="engineTable.h" />
     <ClInclude Include="EngineTableCell.h" />
     <ClInclude Include="engineWindowManager.h" />
+    <ClInclude Include="engineBootLog.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="engineWindow.h" />
     <ClInclude Include="eventViewer.h" />
@@ -387,8 +397,9 @@
     <ClInclude Include="objectViewButton.h" />
     <ClInclude Include="randomMaker.h" />
     <ClInclude Include="saveLoadViewer.h" />
-    <ClInclude Include="scene_Battle.h" />
+    <ClInclude Include="Scene_Battle.h" />
     <ClInclude Include="Scene_TurretTest.h" />
+    <ClInclude Include="Scene_UnitTool.h" />
     <ClInclude Include="statsViewer.h" />
     <ClInclude Include="systemBase.h" />
     <ClInclude Include="gocMessage.h" />
@@ -418,7 +429,7 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="scene_Lobby.h" />
     <ClInclude Include="scene_Main.h" />
-    <ClInclude Include="scene_MapTool.h" />
+    <ClInclude Include="Scene_MapTool.h" />
     <ClInclude Include="scene_Test.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="systemButton.h" />
@@ -444,6 +455,9 @@
     <ClInclude Include="uiParent.h" />
     <ClInclude Include="uiProgressBar.h" />
     <ClInclude Include="uiTab.h" />
+    <ClInclude Include="UnitTool_MainSystem.h" />
+    <ClInclude Include="UnitTool_MapSystem.h" />
+    <ClInclude Include="UnitTool_UISystem.h" />
     <ClInclude Include="viewerSystem.h" />
     <ClInclude Include="weatherFog_Button.h" />
     <ClInclude Include="weatherRain_Button.h" />

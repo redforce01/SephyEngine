@@ -5,13 +5,19 @@
 class CBattle_Turret;
 
 #include "Battle_TurretParser.h"
+#include "Battle_Bullet.h"
 
+namespace battleTurretNS
+{
+	const std::string ERROR_MESSAGE = "Battle Ship-Turret Initialize Failed";
+}
 
+class CBattle_Ship;
 class CBattle_Turret
 {
 private:
 	Graphics* m_pGraphics;
-
+	CBattle_Ship* m_pShip;
 private:
 	//=================================================
 	int			m_TurretID;
@@ -30,18 +36,31 @@ private:
 	//=================================================
 	std::string m_strSoundFileName_Fire;
 	std::string m_strSoundFileName_Miss;
+private:
+	float m_turretX, m_turretY;
 
+	float m_fDeltaTime;
+	bool m_bReloading;
+	
 public:
 	CBattle_Turret();
 	~CBattle_Turret();
 
-	bool initialize(Graphics* g, std::string strTurretName);
+	bool initialize(Graphics* g, std::string strTurretName, CBattle_Ship* pShip);
 	void update(float frameTime);
 	void render();
 
 	//=================================================
 	// Member Functions
 	//=================================================
+
+	void Fire(float targetX, float targetY);
+	bool IsReloading() const
+	{
+		return m_bReloading;
+	}
+private:
+	void setupTurretDataFormat(std::vector<std::string> vArray);
 
 private:
 	CBattle_TurretParser m_turretDataParser;

@@ -123,10 +123,30 @@ void CBattle_UnitSystem::update(float frameTime)
 	{
 		updateFuncAfterStart(frameTime);
 	}
+
+	//========================================
+	// All Bullet Update 
+	//  + Included Enemy Bullet & Player Bullet
+	//  + Working InActive Bullet Deleting
+	//  + Not Using Auto Iterator -> using std::vector<type>::iterator
+	//========================================
+	for (auto iter = m_vBullets.begin(); iter != m_vBullets.end(); )
+	{
+		(*iter)->update(frameTime);
+		if ((*iter)->IsActive() == false)
+		{
+			SAFE_DELETE(*iter);
+			m_vBullets.erase(iter);
+		}
+		else
+			iter++;
+	}
 }
 
 void CBattle_UnitSystem::render()
 {
+	m_pBattle_UI_Destination->render();
+
 	// Player Ships Render
 	for (auto iter : m_vPlayerShips)
 	{
@@ -142,6 +162,11 @@ void CBattle_UnitSystem::render()
 	{
 		iter->render();
 	}
+	// Bullet Render
+	for (auto iter : m_vBullets)
+	{
+		iter->render();
+	}
 	// Mouse Drag Box Draw
 	if (m_bClicked)
 	{
@@ -149,7 +174,6 @@ void CBattle_UnitSystem::render()
 		m_pGraphics->drawRect(rc, 1.0f, graphicsNS::GREEN);
 	}
 	
-	m_pBattle_UI_Destination->render();
 	m_pBattle_UI_FleetListView->render();
 	m_pBattle_UI_FleetMarkView->render();
 	m_pBattle_UI_FleetMakeView->render();
@@ -185,6 +209,17 @@ void CBattle_UnitSystem::collision()
 	{
 		iter->collision();
 	}
+	for (auto iter : m_vBullets)
+	{
+		for (auto playerIter : m_vPlayerShips)
+		{
+			iter->collision(playerIter);
+		}
+		for (auto computerIter : m_vCompterShips)
+		{
+			iter->collision(computerIter);
+		}
+	}
 }
 
 void CBattle_UnitSystem::loadPlayerShipData(std::vector<std::string> vArray)
@@ -196,6 +231,7 @@ void CBattle_UnitSystem::loadPlayerShipData(std::vector<std::string> vArray)
 		CBattle_Ship* newShip = new CBattle_Ship;
 		newShip->initialize(m_pGamePtr, shipName);
 		newShip->setShipUniqueID(m_nLoad_Player_ShipUniqueID);
+		newShip->setPlayerShip(true);
 		newShip->setMemoryLinkBattleMapSystem(m_pBattleMapSystem);
 		newShip->setMemoryLinkBattleUnitSystem(this);
 
@@ -429,21 +465,38 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 			}
 		}
 	}
-
-
+	
+	//============================================
+	// Player & AI Ship Update
+	//  + It would be updating Only Active Ships
+	//============================================
+	for (auto iter : m_vPlayerShips)
+	{
+		iter->update(frameTime);
+	}
+	for (auto iter : m_vCompterShips)
+	{
+		iter->update(frameTime);
+	}
+	
+	//============================================
+	// Batte Start Button Update
+	//============================================
 	m_pBattle_UI_StartButton->update(frameTime);
 }
 
 void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 {
-	static bool debugAI = false;
-	if (debugAI == false)
-	{
-		debugAI = true;
-		m_vCompterShips[0]->setCurrentCenterX(600);
-		m_vCompterShips[0]->setCurrentCenterY(500);
-		m_vCompterShips[0]->setShipActive(true);
-	}
+	//static bool debugAI = false;
+	//if (debugAI == false)
+	//{
+	//	debugAI = true;
+	//	m_vCompterShips[0]->setCurrentCenterX(1900);
+	//	m_vCompterShips[0]->setCurrentCenterY(500);
+	//	m_vCompterShips[0]->setShipActive(true);
+	//	m_vCompterShips[0]->setTargetX(600);
+	//	m_vCompterShips[0]->setTargetY(900);
+	//}
 
 
 	//=======================================
@@ -739,6 +792,10 @@ void CBattle_UnitSystem::moveX(float fDistance)
 	{
 		iter->moveX(fDistance);
 	}
+	for (auto iter : m_vBullets)
+	{
+		iter->moveX(fDistance);
+	}
 
 	m_pBattle_UI_Destination->moveX(fDistance);
 }
@@ -755,6 +812,10 @@ void CBattle_UnitSystem::moveY(float fDistance)
 		iter->moveY(fDistance);
 	}
 	for (auto iter : m_vBattle_UI_DummyShip)
+	{
+		iter->moveY(fDistance);
+	}
+	for (auto iter : m_vBullets)
 	{
 		iter->moveY(fDistance);
 	}

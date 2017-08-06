@@ -1,10 +1,8 @@
 #include "stdafx.h"
 #include "mainNode.h"
-#include "scene_Main.h"
-#include "scene_Test.h"
-#include "scene_MapTool.h"
-#include "scene_Battle.h"
-#include "Scene_TurretTest.h"
+#include "Scene_MapTool.h"
+#include "Scene_Battle.h"
+#include "Scene_UnitTool.h"
 
 MainNode::MainNode() : initializedMgr(FALSE)
 {
@@ -27,19 +25,16 @@ HRESULT MainNode::initialize()
 	
 	// Create the game, sets up message handler
 	//game = new scene_Main;	
-	SCENEMANAGER->addScene("MapTool", new Scene_MapTool);
-	SCENEMANAGER->addScene("Test", new Scene_Test);
-	SCENEMANAGER->addScene("Main", new scene_Main);
-	SCENEMANAGER->addScene("Scene_TurretTest", new Scene_TurretTest);
-	SCENEMANAGER->addScene("Battle", new Scene_Battle);
-	
+	SCENEMANAGER->addScene("MapTool", new CScene_MapTool);
+	SCENEMANAGER->addScene("Battle", new CScene_Battle);
+	SCENEMANAGER->addScene("UnitTool", new CScene_UnitTool);
 	
 	SCENEMANAGER->initialize();
 
 	if (g_bDebugMode)
 		SCENEMANAGER->changeScene(g_strDebugSceneName);
 	else
-		SCENEMANAGER->changeScene("Battle");
+		SCENEMANAGER->changeScene("UnitTool");
 
 	return S_OK;
 }

@@ -17,12 +17,13 @@ class EngineSystem;
 #include "engineInspectorView.h"
 #include "engineResourceView.h"
 #include "engineSetting.h"
+#include "engineBootSystem.h"
 
 class EngineSystem : public EngineCore
 {
 private:	
-	EngineInput* pEngineInput;			// Engine Input
-	EngineMenuBar engineMenubar;		// Engine MainWindow Menubar
+	EngineInput* pEngineInput;				// Engine Input
+	EngineMenuBar engineMenubar;			// Engine MainWindow Menubar
 
 	// Engine System Interface List
 	EngineSceneView* engineSceneView;
@@ -30,6 +31,7 @@ private:
 	EngineResourceView* engineResourceView;
 
 private:
+	EngineBootSystem engineBootSystem;	// Engine Boot System
 	EngineSetting* engineSetting;
 	tagEngineSettingInfo m_EngineSettingInfo;
 

@@ -14,11 +14,19 @@ static LRESULT CALLBACK EngineProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lP
 
 EngineSystem::EngineSystem()
 {
+	pEngineInput		= nullptr;
+	engineSceneView		= nullptr;
+	engineInspectorView = nullptr;
+	engineResourceView	= nullptr;
+	engineSetting		= nullptr;
+
 	ZeroMemory(&m_EngineSettingInfo, sizeof(m_EngineSettingInfo));
 }
 
 EngineSystem::~EngineSystem()
 {
+	engineSetting->SaveEngineSetting();
+
 	SAFE_DELETE(engineSceneView);
 	SAFE_DELETE(engineResourceView);
 	SAFE_DELETE(engineInspectorView);
@@ -34,13 +42,15 @@ EngineSystem::~EngineSystem()
 //=============================================================================
 bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 {
-	FILEMANAGER->initialize();
-	engineSetting = new EngineSetting;
-	//engineSetting->SaveEngineSetting();
-	engineSetting->LoadEngineSetting();
+	engineBootSystem.BootSystemInitialize(hInstance, nCmdShow);
 
-	m_EngineSettingInfo = engineSetting->GetEngineSettings();
-	engineSetting->RealEngineSetup();
+	//FILEMANAGER->initialize();
+
+	engineSetting = new EngineSetting;
+	//engineSetting->LoadEngineSetting();
+
+	//m_EngineSettingInfo = engineSetting->GetEngineSettings();
+	//engineSetting->RealEngineSetup();
 
 	bool success = false;
 	
@@ -90,17 +100,20 @@ bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 // if has found something problem, It would be catched GameError
 //=============================================================================
 int EngineSystem::run()
-{
+{	
 	bEngineStart = true;
 
 	//Graphics Initialize
 	g_Graphics = new Graphics;
 	g_Graphics->initialize(g_hWndEngine, g_fScreenWidth, g_fScreenHeight, g_bWindowed);
-	//g_Graphics->initialize(g_hWndScene, 0, 0, false);
 
 	//Main Node Initialize
 	g_MainNode = new MainNode;
 	g_MainNode->initialize();
+
+	auto handle = engineBootSystem.GetBootSystemHandle();
+	DestroyWindow(handle);
+	ShowWindow(g_hWndEngine, SW_SHOWNORMAL);
 
 	MSG msg;
 	try {
@@ -214,7 +227,7 @@ bool EngineSystem::CreateMainWindow(HWND &hWnd, HINSTANCE hInstance, int nCmdSho
 	}
 
 	// Show the window
-	ShowWindow(hWnd, nCmdShow);
+	//ShowWindow(hWnd, nCmdShow);
 
 	return true;
 }

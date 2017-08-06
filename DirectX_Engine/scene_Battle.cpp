@@ -1,18 +1,19 @@
 #include "stdafx.h"
-#include "scene_Battle.h"
+#include "Scene_Battle.h"
 
 
-Scene_Battle::Scene_Battle() : Game()
+CScene_Battle::CScene_Battle() : Game()
 {
 }
 
 
-Scene_Battle::~Scene_Battle()
+CScene_Battle::~CScene_Battle()
 {
 	releaseAll();
+	SAFE_DELETE(m_pBattleMainSystem);
 }
 
-void Scene_Battle::initialize(HWND hwnd)
+void CScene_Battle::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
 	
@@ -20,38 +21,38 @@ void Scene_Battle::initialize(HWND hwnd)
 	m_pBattleMainSystem->initialize(this);
 }
 
-void Scene_Battle::update()
+void CScene_Battle::update()
 {
 	m_pBattleMainSystem->update(frameTime);
 
 }
 
-void Scene_Battle::release()
+void CScene_Battle::release()
 {
 }
 
-void Scene_Battle::ai()
+void CScene_Battle::ai()
 {
 	m_pBattleMainSystem->ai();
 }
 
-void Scene_Battle::collisions()
+void CScene_Battle::collisions()
 {
 	m_pBattleMainSystem->collision();
 }
 
-void Scene_Battle::render()
+void CScene_Battle::render()
 {
 	m_pBattleMainSystem->render();
 }
 
-void Scene_Battle::releaseAll()
+void CScene_Battle::releaseAll()
 {
 	Game::releaseAll();
 	return;
 }
 
-void Scene_Battle::resetAll()
+void CScene_Battle::resetAll()
 {
 	Game::resetAll();
 	return;

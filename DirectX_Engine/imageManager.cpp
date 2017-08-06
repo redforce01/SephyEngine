@@ -16,7 +16,7 @@ ImageManager::~ImageManager()
 bool ImageManager::initialize(Graphics *graphics)
 {
 	printf("ImageManager Initialize Start\n\n");
-
+	ENGINE_BOOT_LOG->setLog("Texture ImageManager System Initialize Start");
 	this->graphics = graphics;
 	
 
@@ -40,7 +40,7 @@ bool ImageManager::initialize(Graphics *graphics)
 
 		//newTexture.texture = new TextureManager;
 		hr = newTexture.texture->initialize(g_Graphics, filePath);
-
+		ENGINE_BOOT_LOG->setLog("Texture : " + imageKey + "initialize");
 		if (newTexture.texture->getTexture() == NULL)
 		{
 			hr = E_FAIL;
@@ -62,6 +62,7 @@ bool ImageManager::initialize(Graphics *graphics)
 			newTexture.texturePath = filePath;
 			printf("Texture Load Name : %s\n", imageKey.c_str());
 			IMAGEMANAGER->arrTexture.emplace(imageKey, newTexture);	//texture insert Map
+			ENGINE_BOOT_LOG->setLog("Texture : " + imageKey + "Emplace Container");
 		}
 	}
 

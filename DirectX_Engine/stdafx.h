@@ -30,11 +30,6 @@
 //-----------------------------------------
 #include "myUtil.h"
 #include "commonMacroFunction.h"
-//-----------------------------------------
-// 전처리용 #define 문
-//-----------------------------------------
-//#define WINSIZEX 1920		// 1920
-//#define WINSIZEY 1080		// 1080
 
 //-----------------------------------------
 //전역 함수로 활용 되는 Manager
@@ -45,12 +40,14 @@
 #include "timeManager.h"
 #include "layerManager.h"
 #include "txtDataParser.h"
+#include "randomMaker.h"
 
 //=============================================================================
 // Engine System
 //=============================================================================
 #include "mainNode.h"
 #include "engineWindowManager.h"
+#include "engineBootLog.h"
 
 // ENGINE System Variables
 extern HWND g_hWndEngine;
