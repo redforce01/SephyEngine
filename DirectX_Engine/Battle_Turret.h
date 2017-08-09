@@ -55,6 +55,8 @@ public:
 	//=================================================
 
 	void Fire(float targetX, float targetY);
+	void FireInUnitTool(float targetX, float targetY);
+
 	bool IsReloading() const
 	{
 		return m_bReloading;

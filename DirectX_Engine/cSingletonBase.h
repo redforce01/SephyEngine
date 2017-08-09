@@ -1,6 +1,4 @@
 #pragma once
-
-
 template<typename T>
 class cSingletonBase
 {
@@ -23,8 +21,6 @@ public:
 //인스턴스 포인터 초기화
 template<typename T>
 T*		cSingletonBase<T>::s_pInstance = NULL;
-
-
 
 //인스턴스 얻기 함수
 template<typename T>

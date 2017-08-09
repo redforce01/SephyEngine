@@ -2,6 +2,7 @@
 #include "Battle_Turret.h"
 #include "Battle_Ship.h"
 #include "Battle_UnitSystem.h"
+#include "UnitTool_UnitControlSystem.h"
 
 CBattle_Turret::CBattle_Turret()
 {
@@ -104,6 +105,42 @@ void CBattle_Turret::Fire(float targetX, float targetY)
 		bullet->initializeSprite(m_strBulletTextureKey_Hit, m_nBulletMaxFrame_Hit, m_strBulletTextureKey_Miss, m_nBulletMaxFrame_Miss);
 		m_pShip->getBattleUnitSystem()->addBulletInBattle(bullet);
 	}	
+	m_bReloading = true;
+}
+
+void CBattle_Turret::FireInUnitTool(float targetX, float targetY)
+{
+	if (m_bReloading)
+		return;
+
+	bool bPlayerShip = m_pShip->getIsPlayerShip();
+	for (int i = 0; i < m_nTurretBarrelCount; i++)
+	{
+		auto interpolateRand = RANDOM_MAKER->GetInt(0, 50);
+		auto interpolateFlag = RANDOM_MAKER->GetBool();
+		float startX = m_turretX;
+		float startY = m_turretY;
+		float aimX = targetX;
+		float aimY = targetY;
+		if (interpolateFlag)
+		{
+			startX += interpolateRand;
+			startY += interpolateRand;
+			aimX += interpolateRand;
+			aimY += interpolateRand;
+		}
+		else
+		{
+			startX -= interpolateRand;
+			startY -= interpolateRand;
+			aimX -= interpolateRand;
+			aimY -= interpolateRand;
+		}
+		CBattle_Bullet* bullet = new CBattle_Bullet;
+		bullet->initialize(m_pShip, startX, startY, aimX, aimY, m_fBulletSpeed, m_fBulletDamage, bPlayerShip);
+		bullet->initializeSprite(m_strBulletTextureKey_Hit, m_nBulletMaxFrame_Hit, m_strBulletTextureKey_Miss, m_nBulletMaxFrame_Miss);
+		m_pShip->getUnitToolUnitControlSystem()->addBulletInBattle(bullet);
+	}
 	m_bReloading = true;
 }
 

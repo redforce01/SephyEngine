@@ -24,6 +24,7 @@
 #  + AntiAir_Damage	대공포 공격력
 #  + Phase		함선 전투 Phase Number
 #  + Mass		함선 질량(Weight)
+#  + EvasionRadius	함포 조준당할 시 범위
 #  + Skill		함선 스킬
 #--------------------------------
 
@@ -36,8 +37,8 @@ BEGIN ShipData
 	+ TextureBottom		1
 	+ Ship_Name		Z1
 	+ Ship_Type		DD
-	+ Max DP		10230
-	+ Repair_Speed		562.65
+	+ Max DP		10000
+	+ Repair_Speed		30
 	+ Rotate_Speed		0.2967
 	+ Accelerate_Speed	3
 	+ Max_Speed		65

@@ -52,15 +52,7 @@ public:
 	// ===============================================
 	// Setter Functions
 	// ===============================================
-	void setEditText(std::string &str)
-	{
-		m_strEditText = str;
-	}
 	void setEditText(std::string str)
-	{
-		m_strEditText = str;
-	}
-	void setEditText(const char* str)
 	{
 		m_strEditText = str;
 	}

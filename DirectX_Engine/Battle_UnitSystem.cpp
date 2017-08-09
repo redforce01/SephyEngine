@@ -487,16 +487,22 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 
 void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 {
-	//static bool debugAI = false;
-	//if (debugAI == false)
-	//{
-	//	debugAI = true;
-	//	m_vCompterShips[0]->setCurrentCenterX(1900);
-	//	m_vCompterShips[0]->setCurrentCenterY(500);
-	//	m_vCompterShips[0]->setShipActive(true);
-	//	m_vCompterShips[0]->setTargetX(600);
-	//	m_vCompterShips[0]->setTargetY(900);
-	//}
+	static bool debugAI = false;
+	if (debugAI == false)
+	{
+		debugAI = true;
+		for (auto iter : m_vCompterShips)
+		{
+			float randX = RANDOM_MAKER->GetInt(2000, 2500);
+			float randY = RANDOM_MAKER->GetInt(200, 300);
+
+			iter->setCurrentCenterX(randX);
+			iter->setCurrentCenterY(randY);
+			iter->setShipActive(true);
+			iter->setTargetX(100);
+			iter->setTargetY(100);
+		}
+	}
 
 
 	//=======================================

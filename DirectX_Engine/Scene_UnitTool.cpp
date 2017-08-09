@@ -15,6 +15,7 @@ CScene_UnitTool::~CScene_UnitTool()
 
 void CScene_UnitTool::initialize(HWND hwnd)
 {
+	Game::initialize(hwnd);
 	m_pUnitToolMainSystem = new CUnitTool_MainSystem;
 	m_pUnitToolMainSystem->initialize(this);
 }
@@ -45,8 +46,12 @@ void CScene_UnitTool::render()
 
 void CScene_UnitTool::releaseAll()
 {
+	Game::releaseAll();
+	return;
 }
 
 void CScene_UnitTool::resetAll()
 {
+	Game::resetAll();
+	return;
 }

@@ -58,6 +58,7 @@ private:
 	bool m_bArrived;
 	bool m_bExplosion;
 	bool m_bActive;
+	bool m_bHit;
 public:
 	CBattle_Bullet();
 	~CBattle_Bullet();

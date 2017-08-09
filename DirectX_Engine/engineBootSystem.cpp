@@ -17,7 +17,7 @@ EngineBootSystem::EngineBootSystem()
 }
 
 EngineBootSystem::~EngineBootSystem()
-{
+{	
 	SAFE_DELETE(bootGraphics);
 	if (bootThread.joinable())
 		bootThread.join();

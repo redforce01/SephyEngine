@@ -22,5 +22,6 @@ BEGIN ShipData
 	+ AntiAir_Damage	20
 	+ Phase			3
 	+ Mass			22.8
+	+ EvasionRadius		100
 	+ Skill			NULL
 ShipData END

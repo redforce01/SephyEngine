@@ -34,7 +34,7 @@ BEGIN ShipData
 	+ TextureTop		1
 	+ TextureBody		1
 	+ TextureBottom		1
-	+ Ship_Name		frigate
+	+ Ship_Name		Frigate
 	+ Ship_Type		FF
 	+ Max DP		3960
 	+ Repair_Speed		138.6
@@ -52,5 +52,6 @@ BEGIN ShipData
 	+ AntiAir_Damage	20
 	+ Phase			1
 	+ Mass			16.25
+	+ EvasionRadius		100
 	+ Skill			NULL
 ShipData END

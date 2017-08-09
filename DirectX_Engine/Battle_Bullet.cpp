@@ -39,6 +39,7 @@ CBattle_Bullet::CBattle_Bullet()
 	m_bActive		= false;
 	m_bArrived		= false;
 	m_bExplosion	= false;
+	m_bHit			= false;
 }
 
 
@@ -215,6 +216,9 @@ void CBattle_Bullet::collision(CBattle_Ship * pShip)
 	if (m_bArrived == false)
 		return;
 
+	if (m_bHit)
+		return;
+	
 	auto shipX = pShip->getShipCollision().x;
 	auto shipY = pShip->getShipCollision().y;
 	auto shipRad = pShip->getShipCollision().radius;
@@ -228,6 +232,7 @@ void CBattle_Bullet::collision(CBattle_Ship * pShip)
 		if (m_pBullet->collidesWith(*iter.second, collisionVector))
 		{
 			m_bExplosion = true;
+			m_bHit = true;
 			pShip->HitDamage(m_fDamage);
 			break;
 		}

@@ -33,7 +33,7 @@ EngineSystem::~EngineSystem()
 	SAFE_DELETE(g_Graphics);
 	SAFE_DELETE(g_MainNode);
 	SAFE_DELETE(pEngineInput);
-	SAFE_DELETE(engineSetting);
+	SAFE_DELETE(engineSetting);	
 }
 
 //=============================================================================

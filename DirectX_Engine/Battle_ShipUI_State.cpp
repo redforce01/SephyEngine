@@ -8,14 +8,12 @@ CBattle_ShipUI_State::CBattle_ShipUI_State()
 	m_pGraphics			= nullptr;
 	//================================================
 	m_pDPBack			= nullptr;
-	m_pDPProgress		= nullptr;
+	m_pProgress			= nullptr;
 	m_pShipGuide		= nullptr;
 	m_pShipRank			= nullptr;
 	m_strDPProgressKey	= battleShipUIStateNS::DP_GUAGE_GREEN_FILENAME;
 	m_strShipRankKey = battleShipUIStateNS::SHIP_RANK_CHIEF;
 	//================================================
-	m_maxDP				= 0.f; 
-	m_currentDP			= 0.f;
 	m_maxWidth			= battleShipUIStateNS::DP_MAX_PROGRESS_WIDTH;
 	m_targetWidth		= 0.f;
 	m_bAnimation		= false;
@@ -25,7 +23,7 @@ CBattle_ShipUI_State::CBattle_ShipUI_State()
 CBattle_ShipUI_State::~CBattle_ShipUI_State()
 {
 	SAFE_DELETE(m_pDPBack);
-	SAFE_DELETE(m_pDPProgress);
+	SAFE_DELETE(m_pProgress);
 	SAFE_DELETE(m_pShipGuide);
 	SAFE_DELETE(m_pShipRank);
 }
@@ -38,9 +36,7 @@ bool CBattle_ShipUI_State::initialize(Graphics * g, CBattle_Ship * pMaster)
 		m_pGraphics = g;
 		m_pMaster = pMaster;
 
-		m_strShipName	= m_pMaster->getShipName();
-		m_currentDP		= m_pMaster->getCurrentHealth();
-		m_maxDP			= m_pMaster->getMaxHealth();		
+		m_strShipName	= m_pMaster->getShipName();	
 
 
 		success = m_dxFont.initialize(m_pGraphics, battleShipUIStateNS::FONT_HEIGHT, battleShipUIStateNS::FONT_BOLD, false, battleShipUIStateNS::FONT);
@@ -68,11 +64,12 @@ bool CBattle_ShipUI_State::initialize(Graphics * g, CBattle_Ship * pMaster)
 		m_pDPBack->setX(m_pMaster->getCurrentCenterX() + battleShipUIStateNS::STATE_UI_DP_BACK_RELATE_X);
 		m_pDPBack->setY(m_pMaster->getCurrentCenterY() + battleShipUIStateNS::STATE_UI_DP_BACK_RELATE_Y);
 
-		m_pDPProgress = new Image;
-		m_pDPProgress->initialize(m_pGraphics, 0, 0, 0, IMAGEMANAGER->getTexture(m_strDPProgressKey));
-		m_pDPProgress->setX(m_pMaster->getCurrentCenterX() + battleShipUIStateNS::STATE_UI_PROGRESS_RELATE_X);
-		m_pDPProgress->setY(m_pMaster->getCurrentCenterY() + battleShipUIStateNS::STATE_UI_PROGRESS_RELATE_Y);
+		m_pProgress = new Image;
+		m_pProgress->initialize(m_pGraphics, 0, 0, 0, IMAGEMANAGER->getTexture(m_strDPProgressKey));
+		m_pProgress->setX(m_pMaster->getCurrentCenterX() + battleShipUIStateNS::STATE_UI_PROGRESS_RELATE_X);
+		m_pProgress->setY(m_pMaster->getCurrentCenterY() + battleShipUIStateNS::STATE_UI_PROGRESS_RELATE_Y);
 		
+		m_maxWidth = m_pProgress->getWidth();
 	}
 	catch (...)
 	{
@@ -84,27 +81,8 @@ bool CBattle_ShipUI_State::initialize(Graphics * g, CBattle_Ship * pMaster)
 
 void CBattle_ShipUI_State::update(float frameTime)
 {
-	auto currentRate = (m_currentDP / m_maxDP) * 100;
-	
-	if (currentRate >= battleShipUIStateNS::DP_COLOR_RATE_GREEN)
-	{
-		m_strDPProgressKey = battleShipUIStateNS::DP_GUAGE_GREEN_FILENAME;
-	}
-	else if (currentRate >= battleShipUIStateNS::DP_COLOR_RATE_YELLOW)
-	{
-		m_strDPProgressKey = battleShipUIStateNS::DP_GUAGE_YELLOW_FILENAME;
-	}
-	else if (currentRate >= battleShipUIStateNS::DP_COLOR_RATE_ORANGE)
-	{
-		m_strDPProgressKey = battleShipUIStateNS::DP_GUAGE_ORANGE_FILENAME;
-	}
-	else
-	{
-		m_strDPProgressKey = battleShipUIStateNS::DP_GUAGE_RED_FILENAME;
-	}
-	m_pDPProgress->setTextureManager(IMAGEMANAGER->getTexture(m_strDPProgressKey));
-
 	setupStateUIPos();
+	updateAnimation(frameTime);
 }
 
 void CBattle_ShipUI_State::render()
@@ -120,14 +98,14 @@ void CBattle_ShipUI_State::render()
 	m_pShipGuide->draw();
 	m_pShipRank->draw();
 	m_pDPBack->draw();
-	m_pDPProgress->draw();
+	m_pProgress->draw();
 	m_pGraphics->spriteEnd();
 }
 
 void CBattle_ShipUI_State::moveX(float distance)
 {
 	m_pDPBack->moveX(distance);
-	m_pDPProgress->moveX(distance);
+	m_pProgress->moveX(distance);
 	m_pShipGuide->moveX(distance);
 	m_pShipRank->moveX(distance);
 }
@@ -135,7 +113,7 @@ void CBattle_ShipUI_State::moveX(float distance)
 void CBattle_ShipUI_State::moveY(float distance)
 {
 	m_pDPBack->moveY(distance);
-	m_pDPProgress->moveY(distance);
+	m_pProgress->moveY(distance);
 	m_pShipGuide->moveY(distance);
 	m_pShipRank->moveY(distance);
 }
@@ -148,19 +126,48 @@ void CBattle_ShipUI_State::setupStateUIPos()
 	m_pShipRank->setY(m_pMaster->getCurrentCenterY() + battleShipUIStateNS::STATE_UI_SHIPRANK_RELATE_Y);
 	m_pDPBack->setX(m_pMaster->getCurrentCenterX() + battleShipUIStateNS::STATE_UI_DP_BACK_RELATE_X);
 	m_pDPBack->setY(m_pMaster->getCurrentCenterY() + battleShipUIStateNS::STATE_UI_DP_BACK_RELATE_Y);
-	m_pDPProgress->setX(m_pMaster->getCurrentCenterX() + battleShipUIStateNS::STATE_UI_PROGRESS_RELATE_X);
-	m_pDPProgress->setY(m_pMaster->getCurrentCenterY() + battleShipUIStateNS::STATE_UI_PROGRESS_RELATE_Y);
+	m_pProgress->setX(m_pMaster->getCurrentCenterX() + battleShipUIStateNS::STATE_UI_PROGRESS_RELATE_X);
+	m_pProgress->setY(m_pMaster->getCurrentCenterY() + battleShipUIStateNS::STATE_UI_PROGRESS_RELATE_Y);
 }
 
-void CBattle_ShipUI_State::damageToDP(float damage)
+void CBattle_ShipUI_State::setupProgress(float currentDP, float maxDP)
 {
-	//m_bAnimation = true;
-	//auto dpRate = (m_currentDP / m_maxDP) * 100;
-	//auto widthRate = m_maxWidth / 100 * dpRate;
-	//m_targetWidth = widthRate;
+	m_bAnimation = true;
+	auto dpRate = (currentDP / maxDP) * 100;
+	auto widthRate = m_maxWidth * (dpRate / 100);
+	m_targetWidth = widthRate;
+
+	if (dpRate >= battleShipUIStateNS::DP_COLOR_RATE_GREEN)
+	{
+		m_strDPProgressKey = battleShipUIStateNS::DP_GUAGE_GREEN_FILENAME;
+	}
+	else if (dpRate >= battleShipUIStateNS::DP_COLOR_RATE_YELLOW)
+	{
+		m_strDPProgressKey = battleShipUIStateNS::DP_GUAGE_YELLOW_FILENAME;
+	}
+	else if (dpRate >= battleShipUIStateNS::DP_COLOR_RATE_ORANGE)
+	{
+		m_strDPProgressKey = battleShipUIStateNS::DP_GUAGE_ORANGE_FILENAME;
+	}
+	else
+	{
+		m_strDPProgressKey = battleShipUIStateNS::DP_GUAGE_RED_FILENAME;
+	}
+	m_pProgress->setTextureManager(IMAGEMANAGER->getTexture(m_strDPProgressKey));
 }
 
-void CBattle_ShipUI_State::updateAnimation()
+void CBattle_ShipUI_State::updateAnimation(float frameTime)
 {
-
+	if (m_bAnimation)
+	{
+		auto spriteRect = m_pProgress->getSpriteDataRect();
+		float currentWidth = spriteRect.right - spriteRect.left;
+		if (currentWidth > m_targetWidth)
+		{			
+			spriteRect.right -= battleShipUIStateNS::DP_ANIMATION_ACCELATE;
+			m_pProgress->setSpriteDataRect(spriteRect);
+		}
+		else
+			m_bAnimation = false;
+	}
 }

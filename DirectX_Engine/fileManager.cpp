@@ -31,7 +31,7 @@ HRESULT FileManager::initialize()
 	printAllEtc();
 
 	FILEMANAGER->funcBackDir();
-
+	ENGINE_BOOT_LOG->setLog("FileSystem initialize Complete");
 	initialized = true;
 
 	return S_OK;

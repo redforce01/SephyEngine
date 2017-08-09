@@ -34,7 +34,7 @@ BEGIN ShipData
 	+ TextureTop		1
 	+ TextureBody		1
 	+ TextureBottom		1
-	+ Ship_Name		corvette
+	+ Ship_Name		Corvette
 	+ Ship_Type		CC
 	+ Max DP		1800
 	+ Repair_Speed		63
@@ -52,5 +52,6 @@ BEGIN ShipData
 	+ AntiAir_Damage	20
 	+ Phase			1
 	+ Mass			10.95
+	+ EvasionRadius		100
 	+ Skill			NULL
 ShipData END

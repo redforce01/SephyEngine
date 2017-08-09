@@ -34,7 +34,7 @@ BEGIN ShipData
 	+ TextureTop		1
 	+ TextureBody		1
 	+ TextureBottom		1
-	+ Ship_Name		battleship3
+	+ Ship_Name		Battleship3
 	+ Ship_Type		BB
 	+ Max DP		50600
 	+ Repair_Speed		6072
@@ -52,5 +52,6 @@ BEGIN ShipData
 	+ AntiAir_Damage	20
 	+ Phase			3
 	+ Mass			58.08
+	+ EvasionRadius		100
 	+ Skill			NULL
 ShipData END

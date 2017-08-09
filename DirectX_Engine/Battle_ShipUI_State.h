@@ -34,7 +34,7 @@ namespace battleShipUIStateNS
 	const float DP_COLOR_RATE_YELLOW	= 50.f;
 	const float DP_COLOR_RATE_ORANGE	= 20.f;
 	const float DP_COLOR_RATE_RED		= 0.f;
-	const float DP_ANIMATION_ACCELATE	= 0.05f;
+	const float DP_ANIMATION_ACCELATE	= 1.0f;
 	//==============================================================
 	const std::string SHIP_RANK_CHIEF					= "ChifWarrantOfficer";
 	const std::string SHIP_RANK_ENSIGN					= "Ensign";
@@ -65,14 +65,12 @@ private:
 	TextDX			m_dxFont;
 private:
 	Image* m_pDPBack;
-	Image* m_pDPProgress;
+	Image* m_pProgress;
 	Image* m_pShipGuide;
 	Image* m_pShipRank;
 	std::string m_strDPProgressKey;
 	std::string m_strShipRankKey;
 	//===================================
-	float m_maxDP;
-	float m_currentDP;
 	float m_maxWidth;
 	float m_targetWidth;
 	bool m_bAnimation;
@@ -95,8 +93,8 @@ public:
 	
 	void setupStateUIPos();
 
-	void damageToDP(float damage);
-	void updateAnimation();
+	void setupProgress(float currentDP, float maxDP);
+	void updateAnimation(float frametime);
 
 	//=============================================
 	// Member Functions

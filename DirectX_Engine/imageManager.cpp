@@ -11,6 +11,12 @@ ImageManager::~ImageManager()
 {
 	if(loadingThread.joinable())
 		loadingThread.join();
+
+	for (auto iter : arrTexture)
+	{
+		SAFE_DELETE(iter.second.texture);
+	}
+	arrTexture.clear();
 }
 
 bool ImageManager::initialize(Graphics *graphics)

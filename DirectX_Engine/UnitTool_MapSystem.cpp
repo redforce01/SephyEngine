@@ -11,14 +11,16 @@ CUnitTool_MapSystem::~CUnitTool_MapSystem()
 {
 	for (auto iter : m_vMapCells)
 	{
-		SAFE_DELETE(m_vMapCells);
+		SAFE_DELETE(iter);
 	}
 	m_vMapCells.clear();
-
 }
 
 bool CUnitTool_MapSystem::initialize(Game* gamePtr)
 {
+	m_pGraphics = gamePtr->getGraphics();
+	m_pInput = gamePtr->getInput();
+
 	int UIDCount = 0;
 	int mapX, mapY;
 	mapX = mapY = 0;
@@ -41,13 +43,50 @@ bool CUnitTool_MapSystem::initialize(Game* gamePtr)
 		else mapX = unitToolMapSystemNS::MAP_CELL_WIDTH / 2;
 	}
 
-	return false;
+	m_fMapCellWidth = unitToolMapSystemNS::MAP_CELL_WIDTH;
+	m_fMapCellHeight = unitToolMapSystemNS::MAP_CELL_HEIGHT;
+	m_fMapTotalWidth = (unitToolMapSystemNS::MAP_CELL_X * unitToolMapSystemNS::MAP_CELL_WIDTH);
+	m_fMapTotalHeight = (unitToolMapSystemNS::MAP_CELL_Y * unitToolMapSystemNS::MAP_CELL_HEIGHT * unitToolMapSystemNS::ISOMETRIC_HEIGHT_TOTAL_RATE + m_fMapCellHeight);
+
+	return true;
 }
 
 void CUnitTool_MapSystem::update(float frameTime)
 {
+	for (auto iter : m_vMapCells)
+	{
+		if (MyUtil::getObjInScreen(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
+			continue;
+
+		iter->update(frameTime);
+	}
 }
 
 void CUnitTool_MapSystem::render()
 {
+	m_pGraphics->spriteBegin();
+	for (auto iter : m_vMapCells)
+	{
+		if (MyUtil::getObjInScreen(iter->getX(), iter->getY(), iter->getWidth(), iter->getHeight(), g_fScreenWidth, g_fScreenHeight) == false)
+			continue;
+		
+		iter->render();
+	}
+	m_pGraphics->spriteEnd();
+}
+
+void CUnitTool_MapSystem::moveX(int distance)
+{
+	for (auto iter : m_vMapCells)
+	{
+		iter->moveX(distance);
+	}
+}
+
+void CUnitTool_MapSystem::moveY(int distance)
+{
+	for (auto iter : m_vMapCells)
+	{
+		iter->moveY(distance);
+	}
 }

@@ -199,9 +199,6 @@
     <Filter Include="GameCode\Maptool\Viewer\ResourceTreeViewer">
       <UniqueIdentifier>{29332b23-7d30-4266-8fd3-48ba638934d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\GameSystem">
-      <UniqueIdentifier>{57766a28-45a0-4655-aff0-cd1d5a58c49f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Maptool\Viewer\MinimapViewer">
       <UniqueIdentifier>{ab85eb13-8e22-417e-a9bc-384189757911}</UniqueIdentifier>
     </Filter>
@@ -292,15 +289,6 @@
     <Filter Include="GameCode\Battle\BattleUnitSystem\UnitParser">
       <UniqueIdentifier>{9e6f91dc-cc7c-4208-8a11-eaab60e380c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\GameSystem\SystemBase">
-      <UniqueIdentifier>{dae253e0-7bc8-4cd9-bae0-fdb5db47cf84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\GameSystem\SystemDebug">
-      <UniqueIdentifier>{35ccbc47-f5dd-4dff-a404-f19ef26ae77e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\GameSystem\SystemButton">
-      <UniqueIdentifier>{91ce66a2-93a9-45b3-a1a5-b9511dd36288}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\FleetListView">
       <UniqueIdentifier>{a8296617-b3ef-490e-80c7-9999deebeb54}</UniqueIdentifier>
     </Filter>
@@ -349,9 +337,6 @@
     <Filter Include="GameCode\UnitTool">
       <UniqueIdentifier>{cbcc192d-6b0a-4aea-9680-6c58c362325a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\UnitTool\Unit">
-      <UniqueIdentifier>{931e1b94-f924-4664-ab2e-6964b446e1d8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\UnitTool\UnitControlSystem">
       <UniqueIdentifier>{16eb6cc1-0982-47bb-bff9-d676792b9342}</UniqueIdentifier>
     </Filter>
@@ -366,6 +351,48 @@
     </Filter>
     <Filter Include="GameCode\UnitTool\UnitToolMapSystem">
       <UniqueIdentifier>{c2a6af54-1c33-4080-bec3-f70eee43632b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer">
+      <UniqueIdentifier>{aaa1adb9-7c2b-400e-82b7-07dae4ab074d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SystemCode\Engine\SystemFileWatcher">
+      <UniqueIdentifier>{b5ba77d2-821c-4bf6-aba3-4b1b467bc334}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit Information">
+      <UniqueIdentifier>{8dc4cc3a-9bc5-4d5c-a530-6efe755c6dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitRespawnListViewer">
+      <UniqueIdentifier>{ac5f2441-62c9-41d4-a785-4c02e4eba39b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\SceneControlSystem">
+      <UniqueIdentifier>{ae299651-a03a-4232-a6bf-8b031cdd962b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\SceneControlSystem\Interface">
+      <UniqueIdentifier>{dc611fa8-0f1c-4f5b-b847-72955f921ef4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit Setter">
+      <UniqueIdentifier>{97f80c71-ebca-4904-ac26-3260d0360d11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit Make">
+      <UniqueIdentifier>{b71d4be9-915f-4c93-a163-4f74b2370dce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit Make\Parser">
+      <UniqueIdentifier>{672999b8-26bf-4025-a06e-4a276c992cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\OverLabShip">
+      <UniqueIdentifier>{b3ad7dbf-2ace-4da0-9e10-e11826b8e7d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\GameSystemSupport">
+      <UniqueIdentifier>{57766a28-45a0-4655-aff0-cd1d5a58c49f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\GameSystemSupport\SystemBase">
+      <UniqueIdentifier>{dae253e0-7bc8-4cd9-bae0-fdb5db47cf84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\GameSystemSupport\SystemDebug">
+      <UniqueIdentifier>{35ccbc47-f5dd-4dff-a404-f19ef26ae77e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\GameSystemSupport\SystemButton">
+      <UniqueIdentifier>{91ce66a2-93a9-45b3-a1a5-b9511dd36288}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -622,7 +649,7 @@
       <Filter>GameCode\Maptool\Viewer\ObjectControlViewer\Button</Filter>
     </ClCompile>
     <ClCompile Include="txtDataParser.cpp">
-      <Filter>GameCode\GameSystem</Filter>
+      <Filter>GameCode\GameSystemSupport</Filter>
     </ClCompile>
     <ClCompile Include="cameraSystem.cpp">
       <Filter>GameCode\Maptool\Camera</Filter>
@@ -721,16 +748,16 @@
       <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
     </ClCompile>
     <ClCompile Include="systemBase.cpp">
-      <Filter>GameCode\GameSystem\SystemBase</Filter>
+      <Filter>GameCode\GameSystemSupport\SystemBase</Filter>
     </ClCompile>
     <ClCompile Include="systemDebugStats.cpp">
-      <Filter>GameCode\GameSystem\SystemDebug</Filter>
+      <Filter>GameCode\GameSystemSupport\SystemDebug</Filter>
     </ClCompile>
     <ClCompile Include="systemButton.cpp">
-      <Filter>GameCode\GameSystem\SystemButton</Filter>
+      <Filter>GameCode\GameSystemSupport\SystemButton</Filter>
     </ClCompile>
     <ClCompile Include="randomMaker.cpp">
-      <Filter>GameCode\GameSystem</Filter>
+      <Filter>GameCode\GameSystemSupport</Filter>
     </ClCompile>
     <ClCompile Include="Battle_UI_FleetListView.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetListView</Filter>
@@ -830,6 +857,39 @@
     </ClCompile>
     <ClCompile Include="UnitTool_MapSystem.cpp">
       <Filter>GameCode\UnitTool\UnitToolMapSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_CameraSystem.cpp">
+      <Filter>GameCode\UnitTool\CameraSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_UnitMakeViewer.cpp">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Make</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_UnitListParser.cpp">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Make\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_RespawnListViewer.cpp">
+      <Filter>GameCode\UnitTool\Tools\UnitRespawnListViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_UIViewer.cpp">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Information</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_ShipDataSetter.cpp">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Setter</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_UnitControlSystem.cpp">
+      <Filter>GameCode\UnitTool\UnitControlSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_SceneControlSystem.cpp">
+      <Filter>GameCode\UnitTool\SceneControlSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_SceneControlViewer.cpp">
+      <Filter>GameCode\UnitTool\SceneControlSystem\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_MouseOverShip.cpp">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\OverLabShip</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_ShipUI_DPNumber.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1107,7 +1167,7 @@
       <Filter>GameCode\Maptool\Viewer\ObjectControlViewer\Button</Filter>
     </ClInclude>
     <ClInclude Include="txtDataParser.h">
-      <Filter>GameCode\GameSystem</Filter>
+      <Filter>GameCode\GameSystemSupport</Filter>
     </ClInclude>
     <ClInclude Include="cameraSystem.h">
       <Filter>GameCode\Maptool\Camera</Filter>
@@ -1206,16 +1266,16 @@
       <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
     </ClInclude>
     <ClInclude Include="systemBase.h">
-      <Filter>GameCode\GameSystem\SystemBase</Filter>
+      <Filter>GameCode\GameSystemSupport\SystemBase</Filter>
     </ClInclude>
     <ClInclude Include="systemDebugStats.h">
-      <Filter>GameCode\GameSystem\SystemDebug</Filter>
+      <Filter>GameCode\GameSystemSupport\SystemDebug</Filter>
     </ClInclude>
     <ClInclude Include="systemButton.h">
-      <Filter>GameCode\GameSystem\SystemButton</Filter>
+      <Filter>GameCode\GameSystemSupport\SystemButton</Filter>
     </ClInclude>
     <ClInclude Include="randomMaker.h">
-      <Filter>GameCode\GameSystem</Filter>
+      <Filter>GameCode\GameSystemSupport</Filter>
     </ClInclude>
     <ClInclude Include="Battle_UI_FleetListView.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\FleetListView</Filter>
@@ -1315,6 +1375,39 @@
     </ClInclude>
     <ClInclude Include="UnitTool_MapSystem.h">
       <Filter>GameCode\UnitTool\UnitToolMapSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_CameraSystem.h">
+      <Filter>GameCode\UnitTool\CameraSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_UnitMakeViewer.h">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Make</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_UnitListParser.h">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Make\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_RespawnListViewer.h">
+      <Filter>GameCode\UnitTool\Tools\UnitRespawnListViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_UIViewer.h">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Information</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_ShipDataSetter.h">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Setter</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_UnitControlSystem.h">
+      <Filter>GameCode\UnitTool\UnitControlSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_SceneControlSystem.h">
+      <Filter>GameCode\UnitTool\SceneControlSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_SceneControlViewer.h">
+      <Filter>GameCode\UnitTool\SceneControlSystem\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_MouseOverShip.h">
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\OverLabShip</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_ShipUI_DPNumber.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

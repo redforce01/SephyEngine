@@ -16,7 +16,6 @@ MainNode::~MainNode()
 HRESULT MainNode::initialize()
 {
 	//Need Not Hwnd Managers initialize
-	//FILEMANAGER->initialize();
 	TIMEMANAGER->initialize();
 	LAYERMANAGER->initialize();
 
@@ -24,7 +23,6 @@ HRESULT MainNode::initialize()
 	IMAGEMANAGER->initialize(g_Graphics);
 	
 	// Create the game, sets up message handler
-	//game = new scene_Main;	
 	SCENEMANAGER->addScene("MapTool", new CScene_MapTool);
 	SCENEMANAGER->addScene("Battle", new CScene_Battle);
 	SCENEMANAGER->addScene("UnitTool", new CScene_UnitTool);
@@ -34,7 +32,7 @@ HRESULT MainNode::initialize()
 	if (g_bDebugMode)
 		SCENEMANAGER->changeScene(g_strDebugSceneName);
 	else
-		SCENEMANAGER->changeScene("UnitTool");
+		SCENEMANAGER->changeScene("Battle");
 
 	return S_OK;
 }
@@ -46,6 +44,14 @@ void MainNode::release()
 	IMAGEMANAGER->release();
 	FILEMANAGER->release();
 	LAYERMANAGER->release();
+
+	SCENEMANAGER->ReleaseInstance();
+	TIMEMANAGER->ReleaseInstance();
+	IMAGEMANAGER->ReleaseInstance();
+	FILEMANAGER->ReleaseInstance();
+	LAYERMANAGER->ReleaseInstance();
+	TXTDATA_PARSER->ReleaseInstance();
+	RANDOM_MAKER->ReleaseInstance();
 }
 
 void MainNode::update()

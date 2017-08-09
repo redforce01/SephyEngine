@@ -34,7 +34,7 @@ BEGIN ShipData
 	+ TextureTop		1
 	+ TextureBody		1
 	+ TextureBottom		1
-	+ Ship_Name		crusier
+	+ Ship_Name		Crusier
 	+ Ship_Type		CL
 	+ Max DP		20680
 	+ Repair_Speed		1654.4
@@ -52,5 +52,6 @@ BEGIN ShipData
 	+ AntiAir_Damage	30
 	+ Phase			2
 	+ Mass			100
+	+ EvasionRadius		100
 	+ Skill			NULL
 ShipData END

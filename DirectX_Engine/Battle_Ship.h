@@ -24,7 +24,9 @@ namespace battleShipTextureNS
 	const std::string TEXTURE_KEY_SHADOW		= "Shadow_";
 	const std::string TEXTURE_KEY_SUNKEN		= "Sunken_";
 	const std::string TEXTURE_KEY_SUNKEN_SHADOW = "Sunkenshadow_";
-	
+	const UINT SHIP_SUNKEN_MAX_FRAME = 10;
+
+	const COLOR_ARGB SHIP_SHADOW_COLOR = SETCOLOR_ARGB(128, 32, 32, 32);
 }
 
 namespace battleShipGeneralNS
@@ -42,6 +44,9 @@ namespace battleShipGeneralNS
 	const UINT SHIP_BASIC_TEXTURE_COUNT = 
 		SHIP_WAVE_TEXTURE_COUNT + SHIP_SHADOW_TEXTURE_COUNT + 
 		SHIP_SUNKEN_TEXTURE_COUNT + SHIP_SUNKEN_SHADOW_TEXTURE_COUNT;
+
+	const float SHIP_SUNKEN_SPRITE_CHANGE_TIME_EARLY = 5.0f;
+	const float SHIP_SUNKEN_SPRITE_CHANGE_TIME_LATE = 30.0f;
 }
 
 //===============================================
@@ -79,13 +84,15 @@ enum class QUDRANT_TYPE
 //===============================================
 class CBattle_MapSystem;
 class CBattle_UnitSystem;
+class CUnitTool_UnitControlSystem;
+class CUnitTool_UnitMapSystem;
 
 //===============================================
 // CBattle_Ship Class
 //===============================================
 class CBattle_Ship
 {	
-private: // Forward Declarations
+private: // Forward Declarations - For Battle
 	CBattle_MapSystem* m_pBattleMapSystem;
 	CBattle_UnitSystem* m_pBattleUnitSystem;
 public:
@@ -100,6 +107,27 @@ public:
 	CBattle_UnitSystem* getBattleUnitSystem() const
 	{
 		return m_pBattleUnitSystem;
+	}
+private: // Forward Declarations - For UnitTool
+	CUnitTool_UnitControlSystem* m_pUnitControlSystem;
+	CUnitTool_UnitMapSystem* m_pUnitMapSystem;
+	bool m_bUnitToolMode;
+public:
+	void setMemoryLinkUnitControlSystem(CUnitTool_UnitControlSystem* pUnitControlSystem)
+	{
+		m_pUnitControlSystem = pUnitControlSystem;
+	}
+	void setMemoryLinkUnitToolMapSystem(CUnitTool_UnitMapSystem* pUnitToolMapSystem)
+	{
+		m_pUnitMapSystem = pUnitToolMapSystem;
+	}
+	CUnitTool_UnitControlSystem* getUnitToolUnitControlSystem() const
+	{
+		return m_pUnitControlSystem;
+	}
+	void setUnitToolMode(bool bUnitToolMode)
+	{
+		m_bUnitToolMode = bUnitToolMode;
 	}
 
 private: // typedef
@@ -185,14 +213,19 @@ private:
 	float		m_fMass;					// Unit Mass ( Unit Real Weight )	
 	float		m_fEvasionRange;			// Unit Evasion
 	//================================================
-	bool			m_bIncludedFleet;			// Ship Included Fleet
-	int				m_nFleetNumber;				// Ship Fleet Number
-	float			m_fDistanceFromFleet;		// Ship Distance From Fleet
-	float			m_fAngleFromFleet;			// Ship Angle From Fleet
-	CBattle_Ship*	m_pFlagShip;				// Ship - FlagShip Connected Pointer (it would be connected when this ship is not flagShip)
-	float			m_fFormationX;				// m_fFormationX = cos(m_fAngleFromFleet) * m_fDistanceFromFleet + m_pFlagShip->getCurrentCenterX()
-	float			m_fFormationY;				// m_fFormationY = -sin(m_fAngleFromFleet) * m_fDistanceFromFleet + m_pFlagShip->getCurrentCenterY()
-	float			m_fFleetMaxSpeed;			// Fleet Max Speed ( Top Slowly Ship Speed In Fleet : ex) cv speed - 20, ff speed - 44 == FleetMaxSpeed : 20 )
+	bool			m_bIncludedFleet;		// Ship Included Fleet
+	int				m_nFleetNumber;			// Ship Fleet Number
+	float			m_fDistanceFromFleet;	// Ship Distance From Fleet
+	float			m_fAngleFromFleet;		// Ship Angle From Fleet
+	CBattle_Ship*	m_pFlagShip;			// Ship - FlagShip Connected Pointer (it would be connected when this ship is not flagShip)
+	float			m_fFormationX;			// m_fFormationX = cos(m_fAngleFromFleet) * m_fDistanceFromFleet + m_pFlagShip->getCurrentCenterX()
+	float			m_fFormationY;			// m_fFormationY = -sin(m_fAngleFromFleet) * m_fDistanceFromFleet + m_pFlagShip->getCurrentCenterY()
+	float			m_fFleetMaxSpeed;		// Fleet Max Speed ( Top Slowly Ship Speed In Fleet : ex) cv speed - 20, ff speed - 44 == FleetMaxSpeed : 20 )
+private:
+	bool m_bSunkenComplete;
+	float m_fSunkenDeltaTime;
+
+private:
 	//===============================================
 	// enum class Type Variables
 	//===============================================
@@ -368,10 +401,10 @@ private:
 	void updateEngine(float frameTime);
 	bool updateRotate(float frameTime);
 	void updateRepair(float frameTime);
-	void updateSprite();
+	void updateSprite(float frameTime);
 	void updateShipSprite();
 	void updateWaveSprite();
-	void updateSunkenSprite();
+	void updateSunkenSprite(float frameTime);
 	void updateTurret(float frameTime);
 
 private:
@@ -408,6 +441,7 @@ public:
 	void HitDamage(float damage)
 	{
 		m_fCurrentHealth -= damage;
+		m_BattleShipUI_State.setupProgress(m_fCurrentHealth, m_fMaxHealth);
 	}
 
 	//===============================================
@@ -486,11 +520,13 @@ public:
 	void setTargetX(float targetX)
 	{
 		m_fTargetX = targetX;
+		setShipArrived(false);
 	}
 
 	void setTargetY(float targetY)
 	{
 		m_fTargetY = targetY;
+		setShipArrived(false);
 	}
 
 	void setCurrentHealth(float fHealth)
@@ -541,6 +577,7 @@ public:
 	void setRaderRange(float fRaderRange)
 	{
 		m_fRaderRange = fRaderRange;
+		setupRaderRadius(m_fRaderRange);
 	}
 
 	void setPerformance(float fPerformance)
@@ -558,7 +595,7 @@ public:
 		m_nAntiAirTurrectCount = nTurretCount;
 	}
 
-	void getAntiAirRange(float fRange)
+	void setAntiAirRange(float fRange)
 	{
 		m_fAntiAirRange = fRange;
 	}
@@ -581,6 +618,7 @@ public:
 	void setEvasion(float fEvasion)
 	{
 		m_fEvasionRange = fEvasion;
+		setupEvasionRadius(m_fEvasionRange);
 	}
 
 	void setFleetIncluded(bool bIncluded)
@@ -908,6 +946,19 @@ public:
 	bool getFlagShip() const
 	{
 		return m_bFlagShip;
+	}
+
+	int getTopSpriteCount() const
+	{
+		return m_nSpriteTopCount;
+	}
+	int getBodySpriteCount() const
+	{
+		return m_nSpriteBodyCount;
+	}
+	int getBottomSpriteCount() const
+	{
+		return m_nSpriteBottomCount;
 	}
 };
 

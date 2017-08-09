@@ -2,11 +2,15 @@
 #include "Battle_Ship.h"
 #include "Battle_MapSystem.h"
 #include "Battle_UnitSystem.h"
+#include "UnitTool_UnitControlSystem.h"
 
 CBattle_Ship::CBattle_Ship()
 {
 	m_pBattleUnitSystem			= nullptr;
 	m_pBattleMapSystem			= nullptr;
+	m_pUnitControlSystem		= nullptr;
+	m_pUnitMapSystem			= nullptr;
+	m_bUnitToolMode				= false;
 	//===========================================
 	m_pGame						= nullptr;
 	m_pGraphics					= nullptr;
@@ -66,6 +70,9 @@ CBattle_Ship::CBattle_Ship()
 	m_fFormationX				= 0.f;
 	m_fFormationY				= 0.f;
 	m_fFleetMaxSpeed			= 0.f;
+	//===========================================
+	m_fSunkenDeltaTime			= 0.f;
+	m_bSunkenComplete			= false;
 	//===========================================
 	m_bPlayerShip				= false;
 	m_bInitialized				= false;
@@ -183,10 +190,13 @@ bool CBattle_Ship::initialize(Game * gamePtr, std::string shipName)
 		}
 
 		int shadowEntity = m_nSpriteTopCount + m_nSpriteBodyCount + m_nSpriteBottomCount;
-		m_vEntity[shadowEntity].second->setColorFilter(SETCOLOR_ARGB(128, 19, 19, 19));
+		m_vEntity[shadowEntity].second->setColorFilter(battleShipTextureNS::SHIP_SHADOW_COLOR);
 
 		int waveEntity = m_nSpriteTopCount + m_nSpriteBodyCount + m_nSpriteBottomCount + battleShipGeneralNS::SHIP_SHADOW_TEXTURE_COUNT;
 		m_vEntity[waveEntity].second->setColorFilter(SETCOLOR_ARGB(192, 128, 128, 128));
+
+		int sunkenShadowEntity = m_vEntity.size() - 1;
+		m_vEntity[sunkenShadowEntity].second->setColorFilter(battleShipTextureNS::SHIP_SHADOW_COLOR);
 		// End - Ship Entity Initialize
 		//====================================================================
 #pragma endregion	
@@ -272,7 +282,8 @@ void CBattle_Ship::update(float frameTime)
 		{
 			m_vEntity[updatePos].second->update(frameTime);
 		}
-
+		m_bChangeSprite = updateRotate(frameTime);
+		updateSprite(frameTime);
 		return;
 	}
 	else
@@ -285,10 +296,22 @@ void CBattle_Ship::update(float frameTime)
 		{
 			m_vEntity[i].second->update(frameTime);
 		}
-
-
 	}
 
+	//======================================
+	// Ship Destroy Event Check
+	//======================================
+	if (m_fCurrentHealth <= 0)
+	{
+		m_bDestroy = true;
+		m_bChangeSprite = updateRotate(frameTime);
+		updateSprite(frameTime);
+		return;
+	}
+	
+	//======================================
+	// When Ship is Included Fleet Update
+	//======================================
 	if (m_bIncludedFleet)
 	{
 		m_BattleShipUI_FleetMark.update(frameTime);
@@ -323,9 +346,6 @@ void CBattle_Ship::update(float frameTime)
 		}
 	}
 
-	if (m_bSelected)
-	{
-	}
 	m_BattleShipUI_Selected.update(frameTime);
 	m_BattleShipUI_State.update(frameTime);
 
@@ -334,7 +354,7 @@ void CBattle_Ship::update(float frameTime)
 	updateTagDataPos(shipCenterX, shipCenterY);
 
 	m_bChangeSprite = updateRotate(frameTime);
-	updateSprite();
+	updateSprite(frameTime);
 
 	updateRepair(frameTime);
 	updateEngine(frameTime);
@@ -346,6 +366,9 @@ void CBattle_Ship::update(float frameTime)
 void CBattle_Ship::render()
 {
 	if (m_bInitialized == false)
+		return;
+
+	if (m_bSunkenComplete)
 		return;
 
 	// Draw Dummy Ship For Dummy Ship UI
@@ -375,7 +398,10 @@ void CBattle_Ship::render()
 		return;
 
 	if (m_bSelected)
-		m_BattleShipUI_Selected.render();
+	{
+		if(m_bDestroy == false)
+			m_BattleShipUI_Selected.render();
+	}
 
 	if(m_bDestroy == false)
 		m_BattleShipUI_State.render();
@@ -398,6 +424,7 @@ void CBattle_Ship::render()
 		{
 			m_vEntity[renderPos].second->draw();
 		}
+		return;
 	}
 	else
 	{
@@ -460,6 +487,55 @@ void CBattle_Ship::collision()
 
 	if (m_bDestroy)
 		return;
+
+	if (m_bUnitToolMode)
+	{
+#pragma region UNIT Tool Mode - Ship vs Ship Enemy Targetting Detection Function
+		//====================================================
+		// Ship Rader Collision Check
+		//  + Enemy Ship Detection
+		//  + Aim At Fire
+		//====================================================
+		auto enemyShips = m_pUnitControlSystem->getComputerShips();
+		if (m_bPlayerShip == false)
+			enemyShips = m_pUnitControlSystem->getPlayerShips();
+
+		for (auto iter : enemyShips)
+		{
+			if (iter->getShipActive() == false)
+				continue;
+
+			if (iter->getShipDestroy())
+				continue;
+
+			auto enemyShipX = iter->getShipCollision().x;
+			auto enemyShipY = iter->getShipCollision().y;
+			auto enemyShipRad = iter->getShipCollision().radius;
+			auto raderX = this->getShipRaderCollision().x;
+			auto raderY = this->getShipRaderCollision().y;
+			auto raderRad = this->getShipRaderCollision().radius;
+
+			if (MyUtil::circleIncircle(raderX, raderY, raderRad, enemyShipX, enemyShipY, enemyShipRad))
+			{
+				auto targetEvasionX = iter->getShipEvasionCollision().x;
+				auto targetEvasionY = iter->getShipEvasionCollision().y;
+				auto targetEvasionRad = iter->getShipEvasionCollision().radius;
+
+				POINT target = RANDOM_MAKER->GetPtInCircle(targetEvasionX, targetEvasionY, targetEvasionRad);
+
+				for (auto turretIter : m_vTurret)
+				{
+					if (turretIter->IsReloading())
+						continue;
+
+					turretIter->FireInUnitTool(target.x, target.y);
+				}
+				break;
+			}
+		}
+#pragma endregion
+		return;
+	}
 	
 	// Collision Vector2
 	VECTOR2 collisionVector;
@@ -503,10 +579,12 @@ void CBattle_Ship::collision()
 		}
 	}
 #pragma endregion
+#pragma region Ship_vs_Ship Collision Check
 	//====================================================
 	// Ship vs Ship Collision Check
+	//  + Not Implemented...
 	//====================================================
-#pragma region Ship_vs_Ship Collision Check
+
 	//auto playerShips = m_pBattleUnitSystem->getPlayerShips();
 	//for (auto iter : playerShips)
 	//{
@@ -564,14 +642,14 @@ void CBattle_Ship::collision()
 #pragma endregion
 }
 
-void CBattle_Ship::updateSprite()
-{	
+void CBattle_Ship::updateSprite(float frameTime)
+{
 	if (m_bChangeSprite == false)
 		return;
-
+	
 	updateShipSprite();
 	updateWaveSprite();
-	updateSunkenSprite();
+	updateSunkenSprite(frameTime);
 
 	//===================================================================
 	// Ship Sprite Number Recognize & Setup Sprite Keys - Start
@@ -708,14 +786,46 @@ void CBattle_Ship::updateWaveSprite()
 		m_nSpriteShipWaveRotateNum = (int)(degreeAngle - D3DXToDegree(D3DX_PI / 2)) / 10;
 	}
 
-	if (m_nSpriteShipWaveNum > 9)
+	if (m_nSpriteShipWaveNum >= 10)
 		m_nSpriteShipWaveNum = 0;
 	m_nSpriteShipWaveNum++;
 }
 
-void CBattle_Ship::updateSunkenSprite()
+void CBattle_Ship::updateSunkenSprite(float frameTime)
 {
+	if (m_bSunkenComplete)
+		return;
 
+	if (m_nSpriteSunkenNum < 4)
+	{
+		if (m_fSunkenDeltaTime >= battleShipGeneralNS::SHIP_SUNKEN_SPRITE_CHANGE_TIME_EARLY)
+		{
+			m_fSunkenDeltaTime = 0.f;
+			m_nSpriteSunkenNum++;
+			m_nSpriteSunkenShadowNum++;
+		}
+		else
+		{
+			m_fSunkenDeltaTime += frameTime;
+		}
+	}
+	else
+	{
+		if (m_fSunkenDeltaTime >= battleShipGeneralNS::SHIP_SUNKEN_SPRITE_CHANGE_TIME_LATE)
+		{
+			m_fSunkenDeltaTime = 0.f;
+			m_nSpriteSunkenNum++;
+			m_nSpriteSunkenShadowNum++;
+			if (m_nSpriteSunkenNum >= battleShipTextureNS::SHIP_SUNKEN_MAX_FRAME)
+				m_bSunkenComplete = true;
+		}
+		else
+		{
+			m_fSunkenDeltaTime += frameTime;
+		}
+	}
+
+	
 }
 
 void CBattle_Ship::updateTurret(float frameTime)
@@ -830,7 +940,7 @@ void CBattle_Ship::updateEngine(float frameTime)
 bool CBattle_Ship::updateRotate(float frameTime)
 {
 	if (m_bDestroy)
-		return false;
+		return true;
 	
 	VECTOR2 CurrentPos = *m_vEntity[0].second->getCenter();
 	m_fTargetAngle = MyUtil::getAngle(CurrentPos.x, CurrentPos.y, m_fTargetX, m_fTargetY);
@@ -936,6 +1046,7 @@ void CBattle_Ship::updateRepair(float frameTime)
 {
 	if (m_fCurrentHealth < m_fMaxHealth)
 		m_fCurrentHealth += m_fRepairSpeed * frameTime;
+	m_BattleShipUI_State.setupProgress(m_fCurrentHealth, m_fMaxHealth);
 }
 
 void CBattle_Ship::setupShipDataFormat(std::vector<std::string> vArray)
@@ -945,30 +1056,30 @@ void CBattle_Ship::setupShipDataFormat(std::vector<std::string> vArray)
 
 	int dataNumber = 0;
 	
-	m_nUnitID				= std::stoi(vArray[dataNumber]);
-	m_strTextureKey			= vArray[++dataNumber];
-	m_nSpriteTopCount		= std::stoi(vArray[++dataNumber]);
-	m_nSpriteBodyCount		= std::stoi(vArray[++dataNumber]);
-	m_nSpriteBottomCount	= std::stoi(vArray[++dataNumber]);
-	m_strName				= vArray[++dataNumber];
-	m_strShipType			= vArray[++dataNumber];
-	m_fMaxHealth			= std::stof(vArray[++dataNumber]);
-	m_fRepairSpeed			= std::stof(vArray[++dataNumber]);
-	m_fRotateSpeed			= std::stof(vArray[++dataNumber]);
-	m_fAccelateSpeed		= std::stof(vArray[++dataNumber]);
-	m_fMaxSpeed				= std::stof(vArray[++dataNumber]);
-	m_fRaderRange			= std::stof(vArray[++dataNumber]);
-	m_nTurretCount			= std::stoi(vArray[++dataNumber]);
-	m_strTurretID			= vArray[++dataNumber];
-	m_nAirCraftCapacity		= std::stoi(vArray[++dataNumber]);
-	m_fPerformance			= std::stof(vArray[++dataNumber]);
-	m_nSailorCount			= std::stoi(vArray[++dataNumber]);
-	m_nAntiAirTurrectCount	= std::stoi(vArray[++dataNumber]);
-	m_fAntiAirRange			= std::stof(vArray[++dataNumber]);
-	m_fAntiAirDamage		= std::stof(vArray[++dataNumber]);
-	m_nCallPhase			= std::stoi(vArray[++dataNumber]);
-	m_fMass					= std::stof(vArray[++dataNumber]);
-	m_fEvasionRange			= std::stof(vArray[++dataNumber]);
+	m_nUnitID						= std::stoi(vArray[dataNumber]);
+	m_strTextureKey					= vArray[++dataNumber];
+	m_nSpriteTopCount				= std::stoi(vArray[++dataNumber]);
+	m_nSpriteBodyCount				= std::stoi(vArray[++dataNumber]);
+	m_nSpriteBottomCount			= std::stoi(vArray[++dataNumber]);
+	m_strName						= vArray[++dataNumber];
+	m_strShipType					= vArray[++dataNumber];
+	m_fCurrentHealth = m_fMaxHealth = std::stof(vArray[++dataNumber]);
+	m_fRepairSpeed					= std::stof(vArray[++dataNumber]);
+	m_fRotateSpeed					= std::stof(vArray[++dataNumber]);
+	m_fAccelateSpeed				= std::stof(vArray[++dataNumber]);
+	m_fMaxSpeed						= std::stof(vArray[++dataNumber]);
+	m_fRaderRange					= std::stof(vArray[++dataNumber]);
+	m_nTurretCount					= std::stoi(vArray[++dataNumber]);
+	m_strTurretID					= vArray[++dataNumber];
+	m_nAirCraftCapacity				= std::stoi(vArray[++dataNumber]);
+	m_fPerformance					= std::stof(vArray[++dataNumber]);
+	m_nSailorCount					= std::stoi(vArray[++dataNumber]);
+	m_nAntiAirTurrectCount			= std::stoi(vArray[++dataNumber]);
+	m_fAntiAirRange					= std::stof(vArray[++dataNumber]);
+	m_fAntiAirDamage				= std::stof(vArray[++dataNumber]);
+	m_nCallPhase					= std::stoi(vArray[++dataNumber]);
+	m_fMass							= std::stof(vArray[++dataNumber]);
+	m_fEvasionRange					= std::stof(vArray[++dataNumber]);
 }
 
 bool CBattle_Ship::setupEntity(Game * gamePtr, std::string strImageName, bool bPhysics)
