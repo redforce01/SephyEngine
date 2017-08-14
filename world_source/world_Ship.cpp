@@ -79,13 +79,20 @@ void CWorld_Ship::initialize(Graphics * _g, Input * _i, std::string _name, int _
 	middle->setX(_x - middle->getWidth() * middle->getScale() / 2);
 	middle->setY(_y - middle->getHeight() * middle->getScale() / 2);
 
+	rt = RectMake(
+		_x - top->getWidth() * top->getScale() / 2, 
+		_y - top->getHeight() * top->getScale() / 2, 
+		top->getWidth() * top->getScale(), 
+		top->getHeight() * top->getScale()
+	);
+
 	//pt = { _x - top->getWidth() * (int)top->getScale() / 2, _y - top->getHeight() * (int)top->getScale() / 2 };
 	pt = _pt;
 }
 
 void CWorld_Ship::update(float frameTime)
 {
-	//move();
+	move();
 
 	std::string index = "";
 	
@@ -152,4 +159,5 @@ void CWorld_Ship::render()
 
 	m_pGraphics->spriteEnd();
 	//m_pGraphics->drawLine(pt.x, pt.y, top->getCenterX(), top->getCenterY(), 3.0f, graphicsNS::RED);
+	//m_pGraphics->drawRect(rt, 3.0f, graphicsNS::RED);
 }

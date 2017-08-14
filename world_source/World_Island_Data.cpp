@@ -1,11 +1,14 @@
 #include "stdafx.h"
 #include "World_Island_Data.h"
 #include "world_User.h"
+#include "world_Scene.h"
+
+#include "iostream"
 
 void CWorld_Island_Data::island_data()
 {
 	//divide player & computer
-	std::vector<std::string> island_data = loadObjectData("World_Island_Information");
+	std::vector<std::string> island_data = loadObjectData(world_island_dataNS::ISLAND_NAME);
 
 	int temp = 0;
 	int node_index = 0;
@@ -16,10 +19,12 @@ void CWorld_Island_Data::island_data()
 
 	std::string name = "";
 	UINT id;
-	UINT x;
-	UINT y;
+	int x;
+	int y;
 	UINT width;
 	UINT height;
+	int tile_x;
+	int tile_y;
 
 	std::vector<int> nodeList;
 
@@ -35,11 +40,21 @@ void CWorld_Island_Data::island_data()
 
 			if (node_index != 0)
 			{
-				if (flag) player->add_island(obj);	//player & computer's island
-				else computer->add_island(obj);
+				//player->add_island(obj);	//Test
+				if (flag)
+				{
+					player->add_island(obj);	//player & computer's island
+					obj->SetLoadLinkUser(player);
+				}
+				else
+				{
+					computer->add_island(obj);
+					obj->SetLoadLinkUser(computer);
+				}
+				island_node.emplace_back(obj);
 
-				obj->initialize(m_pGraphics, m_pInput, name, id, x, y, width, height);
-				obj->set_rt(x, y, width, height);
+				obj->initialize(m_pGraphics, m_pInput, name, id, x, y, width, height, tile_x, tile_y);
+				//obj->set_rt(x, y, width, height);
 				for (auto nIter : nodeList)
 					obj->add_node(nIter);
 				nodeList.clear();
@@ -63,6 +78,10 @@ void CWorld_Island_Data::island_data()
 			width = std::stoi(iter);
 		else if (temp == 6)
 			height = std::stoi(iter);
+		else if (temp == 7)
+			tile_x = std::stoi(iter);
+		else if (temp == 8)
+			tile_y = std::stoi(iter);
 		else
 			nodeList.emplace_back(std::stoi(iter));
 
@@ -72,7 +91,7 @@ void CWorld_Island_Data::island_data()
 
 void CWorld_Island_Data::building_data()
 {
-	std::vector<std::string> ship_data = loadObjectData("World_Building_Information");
+	std::vector<std::string> ship_data = loadObjectData(world_island_dataNS::BUILDING_NAME);
 
 	int temp = 0;
 	int node_index = 0;
@@ -82,13 +101,13 @@ void CWorld_Island_Data::building_data()
 	std::string name = "";
 	UINT id;
 	UINT turn;
-	UINT n_building;
-	UINT n_money;
-	UINT n_iron;
-	UINT p_money;
-	UINT p_iron;
-	UINT p_fuel;
-	UINT p_research;
+	int n_building;
+	int n_money;
+	int n_iron;
+	int p_money;
+	int p_iron;
+	int p_fuel;
+	int p_research;
 
 	std::vector<int> nodeList;
 
@@ -101,14 +120,15 @@ void CWorld_Island_Data::building_data()
 		{
 			obj = new CBuilding;
 			temp = 0;
-			building_node.emplace_back(obj);
 
 			if (node_index != 0)
 			{
+				building_node.emplace_back(obj);
 				obj->initialize(name, id, turn, n_building, n_money, n_iron, p_money, p_iron, p_fuel, p_research);
 				
 				for (auto nIter : nodeList)
 					obj->add_Ship(nIter);
+
 				nodeList.clear();
 			}
 
@@ -141,11 +161,14 @@ void CWorld_Island_Data::building_data()
 
 		temp++;
 	}
+
+	for (int i = 0; i < building_node.size(); i++)
+		std::cout << i << " : " << building_node[i]->getName() << std::endl;
 }
 
 void CWorld_Island_Data::ship_data()
 {
-	std::vector<std::string> ship_data = loadObjectData("World_Ship_Information");
+	std::vector<std::string> ship_data = loadObjectData(world_island_dataNS::SHIP_NAME);
 
 	int temp = 0;
 	int node_index = 0;
@@ -154,11 +177,12 @@ void CWorld_Island_Data::ship_data()
 
 	std::string name = "";
 	UINT id;
-	UINT money;
-	UINT iron;
-	UINT fuel;
-	UINT research;
-	UINT cost;
+	int turn;
+	int money;
+	int iron;
+	int fuel;
+	int research;
+	int cost;
 
 	std::vector<int> nodeList;
 
@@ -171,11 +195,11 @@ void CWorld_Island_Data::ship_data()
 		{
 			obj = new CProduction_Ship;
 			temp = 0;
-			ship_node.emplace_back(obj);
 
 			if (node_index != 0)
 			{
-				obj->initialize(name, id, money, iron, fuel, research, cost);
+				ship_node.emplace_back(obj);
+				obj->initialize(name, id, turn, money, iron, fuel, research, cost);
 
 				for (auto nIter : nodeList)
 					obj->add_building(nIter);
@@ -191,14 +215,16 @@ void CWorld_Island_Data::ship_data()
 		else if (temp == 1)
 			id = std::stoi(iter);
 		else if (temp == 2)
-			money = std::stoi(iter);
+			turn = std::stoi(iter);
 		else if (temp == 3)
-			iron = std::stoi(iter);
+			money = std::stoi(iter);
 		else if (temp == 4)
-			fuel = std::stoi(iter);
+			iron = std::stoi(iter);
 		else if (temp == 5)
-			research = std::stoi(iter);
+			fuel = std::stoi(iter);
 		else if (temp == 6)
+			research = std::stoi(iter);
+		else if (temp == 7)
 			cost = std::stoi(iter);
 		else
 			nodeList.emplace_back(std::stoi(iter));
@@ -213,19 +239,18 @@ CWorld_Island_Data::CWorld_Island_Data()
 
 CWorld_Island_Data::~CWorld_Island_Data()
 {
-	
 }
 
 bool CWorld_Island_Data::initialize(Graphics* g, Input* i)
 {
 	m_pGraphics = g;
 	m_pInput = i;
-
+	
 	//load 데이터가 없으면 이거 island_data() 실행
 	island_data();	//load island data
 	building_data();	//load building data
 	ship_data();	//load ship data
-	
+
 	//로드 데이터 있으면 실행
 	//바로 데이터 내용 추가
 	//player->initialize(g, i, money, iron, fuel, research);
@@ -288,27 +313,27 @@ std::vector<std::string> CWorld_Island_Data::loadObjectData(std::string name)
 //	}
 //}
 
-CBuilding * CWorld_Island_Data::get_Building(int _index)
-{
-	int index = 0;
-
-	for (auto iter : building_node)
-	{
-		if (index++ == _index)
-			return iter;
-	}
-}
-
-CProduction_Ship * CWorld_Island_Data::get_Ship(int _index)
-{
-	int index = 0;
-
-	for (auto iter : ship_node)
-	{
-		if (index++ == _index)
-			return iter;
-	}
-}
+//CBuilding * CWorld_Island_Data::get_Building(int _index)
+//{
+//	int index = 0;
+//
+//	for (auto iter : building_node)
+//	{
+//		if (index++ == _index)
+//			return iter;
+//	}
+//}
+//
+//CProduction_Ship * CWorld_Island_Data::get_Ship(int _index)
+//{
+//	int index = 0;
+//
+//	for (auto iter : ship_node)
+//	{
+//		if (index++ == _index)
+//			return iter;
+//	}
+//}
 
 void CWorld_Island_Data::ReplaceStringInPlace(std::string & subject, const std::string & search, const std::string & replace)
 {

@@ -1,18 +1,20 @@
 #pragma once
 
 #include "systemUIDialog.h"
+#include "systemButton.h"
 
 namespace worldturnNS
 {
-	const UINT x = WINSIZEX - 273;	//Viewer location (cur + pass + distance * 2)
+	const UINT x = 213;	//Viewer location (cur + pass + distance * 2)
 	const UINT y = 15;
 
-	const std::string img_name = "ExitButton";	//turn img
+	const std::string img_name = "Turn_Button_";	//turn img
 	const UINT cur_turn_width = 73;
 	const UINT cur_turn_height = 73;
+	const COLOR_ARGB CUR_BACKGROUND_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);
 
-	const UINT pass_turn_width = 170;
-	const UINT pass_turn_height = 170;
+	const UINT pass_turn_width = 100;
+	const UINT pass_turn_height = 100;
 
 	const UINT distance = 15;
 
@@ -24,18 +26,24 @@ namespace worldturnNS
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 }
 
+class CWorld_Player;
 class CWorld_Turn_UI : public SystemUIDialog
 {
 private:
-	std::map<std::string, std::string> m_turnMessage;
+	CWorld_Player* player;
 	RECT rect_turn;
 
 	Graphics* m_pGraphics;
 	Input* m_pInput;
 
-	Image* img_turn;
+	SystemButton* button;
+
+	//std::map<std::string, std::string> m_turnMessage;
+	//Image* img_turn;
 
 public:
+	void SetLoadLinkPlayer(CWorld_Player* _player) { player = _player; }
+
 	CWorld_Turn_UI();
 	~CWorld_Turn_UI();
 
@@ -43,17 +51,19 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render() override;
 
-	void addMessage(std::string key, std::string message)
-	{
-		m_turnMessage.emplace(key, message);
-	}
-	void setMessage(std::string key, std::string message)
-	{
-		m_turnMessage.find(key)->second = message;
-	}
-	void removeMessage(std::string key)
-	{
-		m_turnMessage.erase(key);
-	}
+	static void click_event();
+
+	//void addMessage(std::string key, std::string message)
+	//{
+	//	m_turnMessage.emplace(key, message);
+	//}
+	//void setMessage(std::string key, std::string message)
+	//{
+	//	m_turnMessage.find(key)->second = message;
+	//}
+	//void removeMessage(std::string key)
+	//{
+	//	m_turnMessage.erase(key);
+	//}
 };
 

@@ -6,8 +6,8 @@ namespace worldminimapNS
 {
 	const UINT width = 210;	//map size
 	const UINT height = 210;
-	const UINT x = WINSIZEX - 230;	//map position
-	const UINT y = WINSIZEY - 230;
+	const UINT x = 230;	//map position g_fScreenWidth - 230;
+	const UINT y = 230;	//g_fScreenHeight - 230;
 
 	const UINT cam_width = 20;	//cam size -> wmap size / 210
 	const UINT cam_height = 9;

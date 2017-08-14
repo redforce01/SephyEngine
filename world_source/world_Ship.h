@@ -6,7 +6,7 @@ namespace worldshipNS
 {
 	//const UINT speed = 5.0f;
 	const UINT degree = 0;
-	const float scale = 0.5f;
+	const float scale = 0.3f;
 };
 
 class CWorld_Ship : public Image
@@ -23,6 +23,7 @@ private:
 	Image* middle;
 
 	POINT pt;
+	RECT rt;
 
 	float degree;
 	//float speed;
@@ -47,6 +48,7 @@ public:
 	//}
 
 	//POINT get_pt() { POINT _pt = { top->getCenterX(), top->getCenterY() }; return _pt; }	//현재 배의 위치
+	RECT get_rt() { return rt; }
 
 	void worldMoveud(float worldSpeed)	//world camera move
 	{
@@ -55,6 +57,8 @@ public:
 		middle->moveY(worldSpeed);
 
 		pt.y += worldSpeed;
+		rt.top += worldSpeed;
+		rt.bottom += worldSpeed;
 	}
 
 	void worldMoverl(float worldSpeed)	//world camera move
@@ -64,6 +68,8 @@ public:
 		middle->moveX(worldSpeed);
 
 		pt.x += worldSpeed;
+		rt.left += worldSpeed;
+		rt.right += worldSpeed;
 	}
 };
 

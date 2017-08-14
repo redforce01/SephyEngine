@@ -4,8 +4,11 @@
 
 namespace worldlogNS
 {
-	const UINT x = 0;
-	const UINT y = WINSIZEY - 193;	//Viewer location
+	const std::string img_log = "LogBox";
+	const std::string img_log_top = "LogTop";
+
+	const UINT x = 30;
+	const UINT y = 193;	//Viewer location
 
 	const UINT viewer_width = 470;
 	const UINT viewer_height = 193;
@@ -17,11 +20,12 @@ namespace worldlogNS
 	const UINT distance_y = 8;	//(viewer_height - text_height) / 2;
 
 	const UINT MARGIN = 10;					// text margin from Viewer edge
+	const UINT LINE = 8;		//by top
 
 	const UINT MAX_LINES = 128;
 	const char FONT[] = "Courier New";		// Viewer font
-	const int FONT_SIZE = 14;
-	const int FONT_HEIGHT = 15;				// height of the font in pixels
+	const int FONT_SIZE = 16;
+	const int FONT_HEIGHT = 17;				// height of the font in pixels
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 }
 
@@ -30,6 +34,7 @@ class CWorld_Log_UI : public SystemUIDialog
 private:
 	std::map<std::string, std::string> m_eventMessage;
 	Image* img_log;
+	Image* img_log_top;
 	RECT rect_text;
 	RECT rect_scroll;
 
@@ -48,6 +53,7 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render() override;
 
+	std::deque<std::string> get_log_message() { return w_log_message; }
 	void print_world_log(const std::string message);
 	void scroll();
 };
