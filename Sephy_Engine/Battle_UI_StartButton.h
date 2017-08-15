@@ -13,6 +13,8 @@ namespace battleStartButtonNS
 	const float START_BUTTON_Y = 20.f;
 	const float START_BUTTON_WIDTH = 71.f;
 	const float START_BUTTON_HEIGHT = 31.f;
+
+	const std::string BATTLE_START_BGM_PHASE_1_NAME = "battle2";
 }
 
 class CBattle_UnitSystem;

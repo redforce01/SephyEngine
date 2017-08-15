@@ -40,19 +40,21 @@ public:
 	SceneManager();
 	~SceneManager();
 
-	bool initialize();
-	void start();
 	void update();
-	void render();
 	void release();
-
-	void addScene(std::string sceneName, Game* pScene);
-	
+	void addScene(std::string sceneName, Game* pScene);	
+	void addLoadingScene(std::string sceneName, Game* pScene);
 	bool changeScene(std::string sceneName);
-	bool changeScene(std::string sceneName, std::string loadingScene);
-	
-	void SceneChange();
-	void SceneChangeWithLoading();
+	bool changeSceneWithLoading(std::string sceneName, std::string loadingScene);
+
+private:
+	static void sceneChangeThreadFunction();
+
+public:
+	int getTotalSceneSize() const
+	{
+		return arrScene.size();
+	}
 
 	Game* getCurrentScene() { return m_pCurrentScene; }
 

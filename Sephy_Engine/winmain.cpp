@@ -13,10 +13,6 @@
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int);
 // Engine Instance
 EngineSystem engine;
-
-float g_fRateMin = 0.f;
-float g_fRateMax = 0.f;
-
 //=============================================================================
 // Global Extern Variables
 //=============================================================================

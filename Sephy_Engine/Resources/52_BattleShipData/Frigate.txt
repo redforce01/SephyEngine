@@ -37,12 +37,12 @@ BEGIN ShipData
 	+ Ship_Name		Frigate
 	+ Ship_Type		FF
 	+ Max DP		3960
-	+ Repair_Speed		138.6
-	+ Rotate_Speed		0.384
-	+ Accelerate_Speed	4.1
-	+ Max_Speed		84
-	+ Rader			140
-	+ Turret_Capacity	3
+	+ Repair_Speed		35.64
+	+ Rotate_Speed		0.837
+	+ Accelerate_Speed	4.7
+	+ Max_Speed		87
+	+ Rader			880
+	+ Turret_Capacity	4
 	+ Turret_ID		Cannon
 	+ Aircraft_Capacity	0
 	+ Performance		700
@@ -53,5 +53,7 @@ BEGIN ShipData
 	+ Phase			1
 	+ Mass			16.25
 	+ EvasionRadius		100
+	+ ShipRankMark		1L
+	+ SunkenSound		Sunken_S
 	+ Skill			NULL
 ShipData END

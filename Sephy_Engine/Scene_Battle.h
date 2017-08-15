@@ -1,5 +1,6 @@
 #ifndef _SCENE_BATTLE_H
 #define _SCENE_BATTLE_H
+#define WIN32_LEAN_AND_MEAN
 
 class CScene_Battle;
 

@@ -10,17 +10,17 @@ BEGIN WorldIndex
 WorldIndex END
 
 BEGIN MapData
-	BEGIN BattleMap_Collision END
+	BEGIN BattleMap_Testing_Area END
 MapData END
 
 BEGIN PlayerData
 	BEGIN Z1 count 30 END
 	BEGIN Z1 count 30 END
 	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
-	BEGIN Frigate2 count 30 END
-	BEGIN Frigate2 count 30 END
-	BEGIN Frigate2 count 30 END
+	BEGIN Cruiser count 30 END
+	BEGIN Cruiser count 30 END
+	BEGIN Battleship count 30 END
+	BEGIN Battleship count 30 END
 PlayerData END
 
 BEGIN AIData

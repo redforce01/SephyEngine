@@ -233,23 +233,6 @@ void CBattle_Bullet::collision(CBattle_Ship * pShip)
 	// ORIGINAL BULLET DMANAGE FUNCTION
 	//=========================================
 
-	//auto parts = pShip->getShipRealParts();
-	//for (auto iter : parts)
-	//{
-	//	if (m_pBullet->collidesWith(*iter.second, collisionVector))
-	//	{
-	//		m_bExplosion = true;
-	//		m_bHit = true;
-	//		
-	//		pShip->HitDamage(m_fDamage);
-	//		break;
-	//	}
-	//	else
-	//	{
-	//		m_bExplosion = false;
-	//	}
-	//}	
-
 	auto parts = pShip->getShipRealParts();
 	for (auto iter : parts)
 	{
@@ -257,15 +240,24 @@ void CBattle_Bullet::collision(CBattle_Ship * pShip)
 		{
 			m_bExplosion = true;
 			m_bHit = true;
+			
+			if (RANDOM_MAKER->GetBool())
+				m_fDamage += RANDOM_MAKER->GetInt(1, 20);
+			else
+				m_fDamage -= RANDOM_MAKER->GetInt(1, 20);
 
-			pShip->HitDamage(m_fDamage * g_fRateMax);
-			return;
+			pShip->HitDamage(m_fDamage * battleBulletNS::DAMAGE_RATE_MAX);
+			break;
+		}
+		else
+		{
+			m_bExplosion = false;
+			m_bHit = true;
+			pShip->HitDamage(m_fDamage * battleBulletNS::DAMAGE_RATE_MIN);
+			SOUNDMANAGER->play(m_strMissSoundName, g_fSoundMasterVolume * g_fSoundEffectVolume);
+			break;
 		}
 	}
-
-	m_bExplosion = false;
-	m_bHit = true;
-	pShip->HitDamage(m_fDamage * g_fRateMin);
 }
 
 void CBattle_Bullet::moveX(float distance)

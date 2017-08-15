@@ -14,6 +14,8 @@ class CBattle_Ship;
 #include "Battle_ShipUI_FleetMark.h"
 #include "Battle_ShipUI_Indicator.h"
 #include "Battle_ShipUI_State.h"
+#include "Battle_DamageDigit.h"
+#include "Battle_Operator.h"
 
 namespace battleShipTextureNS
 {
@@ -47,6 +49,13 @@ namespace battleShipGeneralNS
 
 	const float SHIP_SUNKEN_SPRITE_CHANGE_TIME_EARLY = 5.0f;
 	const float SHIP_SUNKEN_SPRITE_CHANGE_TIME_LATE = 30.0f;
+	const float BATTLEMAP_OUTLINE_REVERSING_DISTANCE = 200.f;
+
+	//===============================================
+	// Set Off Sound Check Time
+	//===============================================
+	const float UNDETECTED_SOUND_TIME = 10.f;
+	const float UNATTACKED_SOUND_TIME = 3.0f;
 }
 
 //===============================================
@@ -187,12 +196,13 @@ private:
 	int			m_nSpriteSunkenNum;				// Unit Current Ship Sunken Sprite Number
 	int			m_nSpriteSunkenShadowNum;		// Unit Current Ship Sunken Shadow Sprite Number
 	//================================================
-	std::string m_strShipType;				// UNIT Type
+	std::string m_strShipType;				// Unit Type
 	float		m_fTargetX;					// Unit Target X
 	float		m_fTargetY;					// Unit Target Y
 	float		m_fCurrentHealth;			// Unit Current HP
 	float		m_fMaxHealth;				// Unit Max HP
-	float		m_fRepairSpeed;				// Unit Repair Speed
+	float		m_fRepairSpeed;				// Unit Current Repair Speed
+	float		m_fRepairSpeedOriginal;		// Unit Original Repair Speed
 	float		m_fCurrentAngle;			// Unit Current Angle In Radians
 	float		m_fTargetAngle;				// Unit Target Angle In Radians
 	float		m_fRotateSpeed;				// Unit Rotate Speed
@@ -222,9 +232,13 @@ private:
 	float			m_fFormationY;			// m_fFormationY = -sin(m_fAngleFromFleet) * m_fDistanceFromFleet + m_pFlagShip->getCurrentCenterY()
 	float			m_fFleetMaxSpeed;		// Fleet Max Speed ( Top Slowly Ship Speed In Fleet : ex) cv speed - 20, ff speed - 44 == FleetMaxSpeed : 20 )
 	//================================================
+	std::string m_strShipRankMark;			// Ship Rank Mark FileName
+
 
 private: // Ship Detected Code - For Ship vs Ship with RaderRange
 	bool m_bDetected;
+	bool m_bDetectedSound;
+	float m_fUnDetectedTime;
 public:
 	void setDetected(bool bDetected)
 	{
@@ -234,11 +248,45 @@ public:
 	{
 		return m_bDetected;
 	}
-
+	void setDetectedSound(bool bDetectedSound)
+	{
+		m_bDetectedSound = bDetectedSound;
+	}
+	bool getDetectedSound() const
+	{
+		return m_bDetectedSound;
+	}
 private:
+	bool m_bAttacked;
+	bool m_bAttackedSound;
+	float m_fUnattackedTime;
+public:
+	void setAttacked(bool bAttacked)
+	{
+		m_bAttacked = bAttacked;
+	}
+	bool getAttacked() const
+	{
+		return m_bAttacked;
+	}
+	void setAttackedSound(bool bAttackedSound)
+	{
+		m_bAttackedSound = bAttackedSound;
+	}
+	bool getAttackedSound() const
+	{
+		return m_bAttackedSound;
+	}
+private:
+	bool m_bSukenStart;
 	bool m_bSunkenComplete;
 	float m_fSunkenDeltaTime;
-
+	std::string m_strSukenSoundName;
+public:
+	bool getSunkenComplete() const
+	{
+		return m_bSunkenComplete;
+	}
 private:
 	//===============================================
 	// enum class Type Variables
@@ -411,21 +459,44 @@ public:
 	void collision();
 
 private:
+	//===============================================
+	// Movement Update
+	//  + Ship Rotate->return bool(true -> update sprite)
+	//  + Ship Engine
+	//  + Ship Movement
+	//===============================================
 	void updateMovement(float frameTime);
 	void updateEngine(float frameTime);
 	bool updateRotate(float frameTime);
+	//===============================================
+	// Repair Update
+	//  + ShipHealth += Ship Repairspeed * frameTime
+	//===============================================
 	void updateRepair(float frameTime);
+	//===============================================
+	// Sprite Update
+	//  + Update Only Normal Sprite (Alive)
+	//  + Update Sunken Sprite (Destroyed)
+	//===============================================
 	void updateSprite(float frameTime);
 	void updateShipSprite();
 	void updateWaveSprite();
 	void updateSunkenSprite(float frameTime);
+	//===============================================
+	// Turret Update
+	//  + Auto Targeting
+	//===============================================
 	void updateTurret(float frameTime);
 
-private:
-	void renderBeforeSetup();
-	void renderAfterSetup();
-	void renderShipUI();
+	//===============================================
+	// Sound Update 
+	//  + Detected Sound Update
+	//  + Damaged Sound Update
+	//===============================================
+	void updateUndetectedSound(float frameTime);
+	void updateAttackedSound(float frameTime);
 
+	void playSoundDamagedOperator();
 private:
 	void setupShipDataFormat(std::vector<std::string> vArray);
 	bool setupEntity(Game* gamePtr, std::string strImageName, bool bPhysics);
@@ -456,13 +527,21 @@ public:
 	{
 		return m_bDummy;
 	}
-
-	void HitDamage(float damage)
-	{
-		m_fCurrentHealth -= damage;
-		m_BattleShipUI_State.setupProgress(m_fCurrentHealth, m_fMaxHealth);
-	}
-
+	
+	//===============================================
+	// Hit damage Function
+	//  + Send Damage
+	//  + Sound Play
+	//===============================================
+	void HitDamage(float damage);
+	
+	//===============================================
+	// Take Buff Functions
+	//===============================================
+		
+	void takeRepairBuf(bool bTakeOnOff, float bufSpeed = 0.f);
+	
+	
 	//===============================================
 	// Setter Functions
 	//===============================================
@@ -499,6 +578,9 @@ public:
 		m_fTargetX = m_vEntity[0].second->getCenterX();
 		updateTagDataX(posX + m_vEntity[0].second->getWidth() / 2);
 		m_BattleShipUI_Selected.setUIPosX(m_vEntity[0].second->getCenterX());
+		m_BattleShipUI_Indicator.setUIPos();
+		m_BattleShipUI_FleetMark.setUIPos();
+		m_BattleShipUI_State.setupStateUIPos();
 	}
 
 	void setCurrentY(float posY)
@@ -510,6 +592,9 @@ public:
 		m_fTargetY = m_vEntity[0].second->getCenterY();
 		updateTagDataY(posY + m_vEntity[0].second->getHeight() / 2);
 		m_BattleShipUI_Selected.setUIPosY(m_vEntity[0].second->getCenterY());
+		m_BattleShipUI_Indicator.setUIPos();
+		m_BattleShipUI_FleetMark.setUIPos();
+		m_BattleShipUI_State.setupStateUIPos();
 	}
 
 	void setCurrentCenterX(float centerX)
@@ -522,6 +607,9 @@ public:
 		m_fTargetX = m_vEntity[0].second->getCenterX();
 		updateTagDataX(centerX - (shipWidth / 2));
 		m_BattleShipUI_Selected.setUIPosX(m_vEntity[0].second->getCenterX());
+		m_BattleShipUI_Indicator.setUIPos();
+		m_BattleShipUI_FleetMark.setUIPos();
+		m_BattleShipUI_State.setupStateUIPos();
 	}
 
 	void setCurrentCenterY(float centerY)
@@ -534,6 +622,9 @@ public:
 		m_fTargetY = m_vEntity[0].second->getCenterY();
 		updateTagDataY(centerY - (shipHeight / 2));
 		m_BattleShipUI_Selected.setUIPosY(m_vEntity[0].second->getCenterY());
+		m_BattleShipUI_Indicator.setUIPos();
+		m_BattleShipUI_FleetMark.setUIPos();
+		m_BattleShipUI_State.setupStateUIPos();
 	}
 
 	void setTargetX(float targetX)

@@ -16,6 +16,7 @@ CSoundManager::~CSoundManager()
 
 void CSoundManager::loadSoundData()
 {
+	// EFFECT SOUND INITIALIZE
 	auto vSoundEffects = FILEMANAGER->getFileListInFolder(soundManagerNS::SOUND_EFFECT_FOLDER_NAME);
 	for (auto iter : *vSoundEffects)
 	{
@@ -25,6 +26,17 @@ void CSoundManager::loadSoundData()
 		addSound(soundKey, soundFilePath, false, false);
 	}
 
+	// ALERT SOUND INITIALIZE
+	auto vSoundNewSounds = FILEMANAGER->getFileListInFolder(soundManagerNS::SOUND_EFFECT_ALERT_FOLDER_NAME);
+	for (auto iter : *vSoundNewSounds)
+	{
+		std::string soundKey = iter->fileName;
+		std::string soundFilePath = iter->projectPath;
+
+		addSound(soundKey, soundFilePath, false, false);
+	}
+
+	// BGM SOUND INITIALIZE
 	auto vSoundBGMs = FILEMANAGER->getFileListInFolder(soundManagerNS::SOUND_BGM_FOLDER_NAME);
 	for (auto iter : *vSoundBGMs)
 	{
@@ -33,6 +45,17 @@ void CSoundManager::loadSoundData()
 
 		addSound(soundKey, soundFilePath, true, true);
 	}
+
+	// OPERATOR SOUND INITIALIZE
+	auto vSoundOperators = FILEMANAGER->getFileListInFolder(soundManagerNS::SOUND_EFFECT_OPERATOR_FOLDER_NAME);
+	for (auto iter : *vSoundOperators)
+	{
+		std::string soundKey = iter->fileName;
+		std::string soundFilePath = iter->projectPath;
+
+		addSound(soundKey, soundFilePath, false, false);
+	}
+	
 }
 
 bool CSoundManager::initialize()

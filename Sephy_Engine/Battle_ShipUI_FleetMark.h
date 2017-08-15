@@ -41,6 +41,8 @@ public:
 	void moveX(float distance);
 	void moveY(float distance);
 
+	void setUIPos();
+
 	//==========================================
 	// Setter Functions
 	//==========================================

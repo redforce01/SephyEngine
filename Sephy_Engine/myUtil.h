@@ -5,6 +5,7 @@
 
 #include <cmath>
 #include <vector>
+#include <list>
 //-----------------------------------------------
 // #Defines
 //-----------------------------------------------
@@ -54,6 +55,8 @@ namespace MyUtil
 	bool circleInRect(float cx, float cy, float cr, const LPRECT rc);
 
 	bool circleIncircle(float c1_x, float c1_y, float c1_rad, float c2_x, float c2_y, float c2_rad);
+
+	std::list<int> splitNumberToDigit(int number);
 }
 
 #endif

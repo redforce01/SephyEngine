@@ -23,6 +23,10 @@ EngineBootSystem::~EngineBootSystem()
 		bootThread.join();
 }
 
+//====================================================
+// Engine Boot Function - static void function
+//  + Work On Boot Thread
+//====================================================
 void EngineBootSystem::EngineBoot()
 {
 	FILEMANAGER->initialize();

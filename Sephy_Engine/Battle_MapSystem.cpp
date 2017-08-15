@@ -252,7 +252,7 @@ void CBattle_MapSystem::setupEventObject()
 		{
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_BOX:
 			{
-				CBattle_MapUI_CollisionArea* tempColBox = new CBattle_MapUI_CollisionArea;
+				CBattle_MapEventArea_CollisionArea* tempColBox = new CBattle_MapEventArea_CollisionArea;
 				tempColBox->initialize(m_pGame);
 				tempColBox->setCollisionX(iter->getPosX());
 				tempColBox->setCollisionY(iter->getPosY());
@@ -266,7 +266,12 @@ void CBattle_MapSystem::setupEventObject()
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_COLLISION_ROTATE_BOX:
 			break;
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REPAIR:
-			break;
+			{
+				CBattle_MapEventArea_RepairArea* repairArea = new CBattle_MapEventArea_RepairArea;
+				repairArea->initialize(m_pGraphics, iter->getCenterPosX(), iter->getCenterPosY());
+				m_vRepairArea.emplace_back(repairArea);
+				break;
+			}
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_OBSERVER:
 			break;
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REFUEL:
@@ -277,7 +282,7 @@ void CBattle_MapSystem::setupEventObject()
 			break;
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_RESPAWN:
 			{
-				CBattle_MapUI_RespawnArea* tempArea = new CBattle_MapUI_RespawnArea;
+			CBattle_MapEventArea_RespawnArea* tempArea = new CBattle_MapEventArea_RespawnArea;
 				tempArea->initialize(m_pGraphics);
 				tempArea->setRespawnAreaCenterX(iter->getCenterPosX());
 				tempArea->setRespawnAreaCenterY(iter->getCenterPosY());
@@ -287,7 +292,7 @@ void CBattle_MapSystem::setupEventObject()
 			}
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_STARTING:
 			{
-				CBattle_MapUI_StartingArea* tempFlag = new CBattle_MapUI_StartingArea;
+			CBattle_MapEventArea_StartingArea* tempFlag = new CBattle_MapEventArea_StartingArea;
 				if (m_vStartingAreaFlag.size() > 0)
 				{
 					// Size > 0? Enemy Area
@@ -308,4 +313,26 @@ void CBattle_MapSystem::setupEventObject()
 			}
 		}
 	}
+}
+
+float CBattle_MapSystem::getMapBorderLeft() const
+{
+	return m_vCells[0]->getX();
+}
+
+float CBattle_MapSystem::getMapBorderRight() const
+{
+	auto totalSize = m_vCells.size();
+	return m_vCells[totalSize - 1]->getX() + m_vCells[totalSize - 1]->getWidth();
+}
+
+float CBattle_MapSystem::getMapBorderTop() const
+{	
+	return m_vCells[0]->getY();
+}
+
+float CBattle_MapSystem::getMapBorderBottom() const
+{
+	auto totalSize = m_vCells.size();
+	return m_vCells[totalSize - 1]->getY() + m_vCells[totalSize - 1]->getHeight();
 }

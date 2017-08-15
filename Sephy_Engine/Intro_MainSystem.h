@@ -5,19 +5,12 @@
 class CIntro_MainSystem;
 
 #include "systemBase.h"
-
-namespace introMainSystemNS
-{
-	const std::string SOUND_BGM_NAME = "main_theme";
-
-}
+#include "Intro_AnimeSystem.h"
 
 class CIntro_MainSystem : public SystemBase
 {
 private:
-	Image* m_pBackground;
-	Image* m_pAircraft;
-	
+	CIntro_AnimeSystem m_AnimeSystem;
 
 public:
 	CIntro_MainSystem();

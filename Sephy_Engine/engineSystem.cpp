@@ -25,7 +25,7 @@ EngineSystem::EngineSystem()
 
 EngineSystem::~EngineSystem()
 {
-	engineSetting->SaveEngineSetting();
+	//engineSetting->SaveEngineSetting();
 
 	SAFE_DELETE(engineSceneView);
 	SAFE_DELETE(engineResourceView);

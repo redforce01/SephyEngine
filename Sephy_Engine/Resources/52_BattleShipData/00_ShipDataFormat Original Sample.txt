@@ -24,6 +24,8 @@
 #  + AntiAir_Damage	대공포 공격력
 #  + Phase		함선 전투 Phase Number
 #  + Mass		함선 질량(Weight)
+#  + ShipRankMark	함선 계급장
+#  + SunkenSound	침몰 사운드
 #  + Skill		함선 스킬
 #--------------------------------
 
@@ -52,5 +54,7 @@ BEGIN ShipData
 	+ AntiAir_Damage	10
 	+ Phase			1
 	+ Mass			100
+	+ ShipRankMark		...
+	+ SunkenSound		...
 	+ Skill			NULL
 ShipData END

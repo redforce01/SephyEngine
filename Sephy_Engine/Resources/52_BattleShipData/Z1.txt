@@ -37,22 +37,24 @@ BEGIN ShipData
 	+ TextureBottom		1
 	+ Ship_Name		Z1
 	+ Ship_Type		DD
-	+ Max DP		10000
-	+ Repair_Speed		100
-	+ Rotate_Speed		0.2967
-	+ Accelerate_Speed	3
-	+ Max_Speed		65
-	+ Rader			400
-	+ Turret_Capacity	4
-	+ Turret_ID		Cannon
+	+ Max DP		6930
+	+ Repair_Speed		69.3
+	+ Rotate_Speed		0.541
+	+ Accelerate_Speed	3.9
+	+ Max_Speed		82
+	+ Rader			880
+	+ Turret_Capacity	3
+	+ Turret_ID		Cannon2
 	+ Aircraft_Capacity	0
-	+ Performance		250
-	+ Sailor		20
-	+ AntiAir_Capacity	3
-	+ AntiAir_Range		40
-	+ AntiAir_Damage	10
+	+ Performance		1500
+	+ Sailor		120
+	+ AntiAir_Capacity	4
+	+ AntiAir_Range		80
+	+ AntiAir_Damage	40
 	+ Phase			1
-	+ Mass			100
-	+ EvasionRadius		100
+	+ Mass			21.5
+	+ EvasionRadius		88
+	+ ShipRankMark		4CM
+	+ SunkenSound		Sunken_M
 	+ Skill			NULL
 ShipData END

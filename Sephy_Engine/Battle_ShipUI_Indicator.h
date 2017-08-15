@@ -10,18 +10,15 @@ namespace battleShipUIIndicatorNS
 {
 	const std::string INDICATOR_FILENAME	= "Indicators";
 	const std::string INDICATOR_NORMAL_KEY	= "Normal_";
-	const std::string INDICATOR_OVERLAB_KEY = "Mouse_";
-	const std::string INDICATOR_CLICK_KEY	= "Click_";
+	const std::string INDICATOR_OVERLAB_KEY = "Normal_";
+	const std::string INDICATOR_CLICK_KEY	= "Normal_";
+	//const std::string INDICATOR_OVERLAB_KEY = "Mouse_"; // ORIGINAL INDICATOR - NOT USING
+	//const std::string INDICATOR_CLICK_KEY	= "Click_"; // ORIGINAL INDICATOR - NOT USING
 	const std::string INDICATOR_BLUE_KEY	= "B";
 	const std::string INDICATOR_GREEN_KEY	= "G";
 	const UINT INDICATOR_MAX_FRAME = 5; // size 5 ( 0 ~ 4 )
 	
-	//IndicatorsBClick_
-	//IndicatorsBMouse_
-	//IndicatorsBNormal_
-	//IndicatorsGClick
-	//IndicatorsGMouse_
-	//IndicatorsGNormal_
+	const float INDICATOR_RELATE_MARGIN = 5;
 }
 
 enum class INDICATOR_TYPE
@@ -31,7 +28,9 @@ class CBattle_Ship;
 class CBattle_ShipUI_Indicator : public Image
 {
 private:
+	Graphics*		m_pGraphics;
 	Input*			m_pInput;
+private:
 	std::string		m_strIndicatorKey;
 	std::string		m_strIndicatorTypeKey;
 	INDICATOR_TYPE	m_enIndicatorType;
@@ -42,10 +41,19 @@ public:
 	CBattle_ShipUI_Indicator();
 	~CBattle_ShipUI_Indicator();
 
-	bool initialize(Graphics* g, Input* i, INDICATOR_TYPE type);
+	bool initialize(Graphics* g, Input* i, INDICATOR_TYPE type, CBattle_Ship* pMaster);
 	void update(float frameTime);
-	void draw();
+	void render();
 
+	//==============================================
+	// Member Functions
+	//==============================================
+
+	void moveX(float distance);
+	void moveY(float distance);
+
+	void updateSprite();
+	void setUIPos();
 
 	//==============================================
 	// Setter Functions

@@ -127,7 +127,7 @@ void CBattle_MainSystem::update(float frameTime)
 void CBattle_MainSystem::render()
 {
 	m_pBattle_MapSystem->render();
-	m_pBattle_FogSystem->render();
+	//m_pBattle_FogSystem->render();
 	m_pBattle_UnitSystem->render();
 	m_pBattle_CameraSystem->render();
 }

@@ -113,19 +113,19 @@ void EngineSetting::LoadSoundSection()
 		engineSettingNS::SOUND_MASTER_VOLUME_KEY.c_str(),
 		engineSettingDefaultNS::DEFAULT_VOLUME,
 		m_strSystemPath.c_str());
-	m_EngineSettings.fSoundMasterVolume = fResult;
+	m_EngineSettings.fSoundMasterVolume = fResult / 1000;
 
 	fResult = GetPrivateProfileInt(engineSettingNS::SOUND_SECTION.c_str(),
 		engineSettingNS::SOUND_EFFECT_VOLUME_KEY.c_str(),
 		engineSettingDefaultNS::DEFAULT_VOLUME,
 		m_strSystemPath.c_str());
-	m_EngineSettings.fSoundEffectVolume = fResult;
+	m_EngineSettings.fSoundEffectVolume = fResult / 1000;
 
 	fResult = GetPrivateProfileInt(engineSettingNS::SOUND_SECTION.c_str(),
 		engineSettingNS::SOUND_BGM_VOLUME_KEY.c_str(),
 		engineSettingDefaultNS::DEFAULT_VOLUME,
 		m_strSystemPath.c_str());
-	m_EngineSettings.fSoundBGMVolume = fResult;
+	m_EngineSettings.fSoundBGMVolume = fResult / 1000;
 	// End - SOUND SECTION
 	//===================================================================
 }
@@ -193,31 +193,31 @@ void EngineSetting::SaveDisplaySection()
 	// SCREEN X
 	WritePrivateProfileString(engineSettingNS::DISPLAY_SECTION.c_str(),
 		engineSettingNS::DISPLAY_POS_X_KEY.c_str(),
-		std::to_string(engineSettingDefaultNS::WINDOW_X).c_str(),
+		std::to_string(g_fWindowPosX).c_str(),
 		m_strSystemPath.c_str());
 
 	// SCREEN Y
 	WritePrivateProfileString(engineSettingNS::DISPLAY_SECTION.c_str(),
 		engineSettingNS::DISPLAY_POS_Y_KEY.c_str(),
-		std::to_string(engineSettingDefaultNS::WINDOW_Y).c_str(),
+		std::to_string(g_fWindowPosY).c_str(),
 		m_strSystemPath.c_str());
 
 	// SCREEN WIDTH
 	WritePrivateProfileString(engineSettingNS::DISPLAY_SECTION.c_str(),
 		engineSettingNS::DISPLAY_WIDTH_KEY.c_str(),
-		std::to_string(engineSettingDefaultNS::WINDOW_WIDTH).c_str(),
+		std::to_string(g_fScreenWidth).c_str(),
 		m_strSystemPath.c_str());
 
 	// SCREEN HEIGHT
 	WritePrivateProfileString(engineSettingNS::DISPLAY_SECTION.c_str(),
 		engineSettingNS::DISPLAY_HEIGHT_KEY.c_str(),
-		std::to_string(engineSettingDefaultNS::WINDOW_HEIGHT).c_str(),
+		std::to_string(g_fScreenHeight).c_str(),
 		m_strSystemPath.c_str());
 
 	// SCREEN - WINDOWED
 	WritePrivateProfileString(engineSettingNS::DISPLAY_SECTION.c_str(),
 		engineSettingNS::DISPLAY_FULLSCREEN_KEY.c_str(),
-		std::to_string(engineSettingDefaultNS::FULLSCREEN).c_str(),
+		std::to_string(g_bWindowed).c_str(),
 		m_strSystemPath.c_str());
 	// End - DISPLAY SECTION
 	//===================================================================
@@ -230,17 +230,17 @@ void EngineSetting::SaveSoundSection()
 	// SOUND SECTION - Start
 	WritePrivateProfileString(engineSettingNS::SOUND_SECTION.c_str(),
 		engineSettingNS::SOUND_MASTER_VOLUME_KEY.c_str(),
-		std::to_string(engineSettingDefaultNS::DEFAULT_VOLUME).c_str(),
+		std::to_string(g_fSoundMasterVolume).c_str(),
 		m_strSystemPath.c_str());
 
 	WritePrivateProfileString(engineSettingNS::SOUND_SECTION.c_str(),
 		engineSettingNS::SOUND_EFFECT_VOLUME_KEY.c_str(),
-		std::to_string(engineSettingDefaultNS::DEFAULT_VOLUME).c_str(),
+		std::to_string(g_fSoundEffectVolume).c_str(),
 		m_strSystemPath.c_str());
 
 	WritePrivateProfileString(engineSettingNS::SOUND_SECTION.c_str(),
 		engineSettingNS::SOUND_BGM_VOLUME_KEY.c_str(),
-		std::to_string(engineSettingDefaultNS::DEFAULT_VOLUME).c_str(),
+		std::to_string(g_fSoundBGMVolume).c_str(),
 		m_strSystemPath.c_str());
 	// End - SOUND SECTION
 	//===================================================================

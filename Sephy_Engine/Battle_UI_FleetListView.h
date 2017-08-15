@@ -33,6 +33,13 @@ namespace battleFleetListViewNS
 	const float CLOSE_BUTTON_X = FLEET_VIEW_X + FLEET_VIEW_ACTIVE_WIDTH - 40;
 	const float CLOSE_BUTTON_Y = FLEET_VIEW_Y + 5;
 	//======================================================================
+	const std::string PAGE_UP_BUTTON_FILENAME	= "ScrollUp";
+	const std::string PAGE_DOWN_BUTTON_FILENAME = "ScrollDown";
+	const float PAGE_UP_BUTTON_RELATE_X = 0;
+	const float PAGE_UP_BUTTON_RELATE_Y = 0;
+	const float PAGE_DOWN_BUTTON_RELATE_X = 0;
+	const float PAGE_DOWN_BUTTON_RELATE_Y = 0;
+	//======================================================================
 	const float FLEET_LIST_GUIDE_START_X = FLEET_VIEW_X;
 	const float FLEET_LIST_GUIDE_START_Y = FLEET_VIEW_Y + FLEET_VIEW_INACTIVE_HEIGHT + 10;
 	const float FLEET_LIST_GUIDE_HEIGHT = 16;
@@ -109,6 +116,7 @@ class CBattle_UI_FleetListView : public SystemUIDialog
 private:
 	Graphics*	m_pGraphics;
 	Input*		m_pInput;
+
 private:
 	FLEET_LIST_ITEM m_vFleetListItems;
 	std::string		m_strSelectItemName;
@@ -134,6 +142,12 @@ private:
 	SystemButton* m_pSendButton;
 	SystemButton* m_pClearButton;
 	SystemButton* m_pCloseButton;
+
+private:
+	int m_nItemStart;
+	int m_nItemEnd;
+	SystemButton* m_pPageUpButton;
+	SystemButton* m_pPageDownButton;
 public:
 	CBattle_UI_FleetListView();
 	~CBattle_UI_FleetListView();
@@ -152,6 +166,8 @@ private: // Button static Function
 	static void functionClearButton();
 	static void functionCloseButton();
 
+	static void functionPageUpButton();
+	static void functionPageDownButton();
 public:
 	void addShipToFleetList(std::string strShipType, std::string strShipName, int nPhase);
 

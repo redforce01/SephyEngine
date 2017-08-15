@@ -27,11 +27,7 @@ void CBattle_ShipUI_FleetMark::update(float frameTime)
 	if (m_pMaster == nullptr)
 		return;
 
-	auto fShipX = m_pMaster->getCurrentX();
-	auto fShipY = m_pMaster->getCurrentY();
-
-	Image::setX(fShipX - battleShipUIFleetMarkNS::FLEET_MARK_POS_X);
-	Image::setY(fShipY - battleShipUIFleetMarkNS::FLEET_MARK_POS_Y);
+	setUIPos();
 }
 
 void CBattle_ShipUI_FleetMark::draw()
@@ -50,6 +46,15 @@ void CBattle_ShipUI_FleetMark::moveX(float distance)
 void CBattle_ShipUI_FleetMark::moveY(float distance)
 {
 	Image::moveY(distance);
+}
+
+void CBattle_ShipUI_FleetMark::setUIPos()
+{
+	auto fShipX = m_pMaster->getCurrentX();
+	auto fShipY = m_pMaster->getCurrentY();
+
+	Image::setX(fShipX - battleShipUIFleetMarkNS::FLEET_MARK_POS_X);
+	Image::setY(fShipY - battleShipUIFleetMarkNS::FLEET_MARK_POS_Y);
 }
 
 void CBattle_ShipUI_FleetMark::setMaster(CBattle_Ship * pShip)

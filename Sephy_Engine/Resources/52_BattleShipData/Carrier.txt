@@ -6,12 +6,12 @@ BEGIN ShipData
 	+ TextureBottom		0
 	+ Ship_Name		carrier
 	+ Ship_Type		CV
-	+ Max DP		7800
-	+ Repair_Speed		624
+	+ Max DP		9400
+	+ Repair_Speed		77.55
 	+ Rotate_Speed		0.226
 	+ Accelerate_Speed	1.8
 	+ Max_Speed		55
-	+ Rader			100
+	+ Rader			500
 	+ Turret_Capacity	0
 	+ Turret_ID		0
 	+ Aircraft_Capacity	4
@@ -21,7 +21,9 @@ BEGIN ShipData
 	+ AntiAir_Range		40
 	+ AntiAir_Damage	20
 	+ Phase			3
-	+ Mass			22.8
-	+ EvasionRadius		100
+	+ Mass			25
+	+ EvasionRadius		70
+	+ ShipRankMark		8VA
+	+ SunkenSound		Sunken_H
 	+ Skill			NULL
 ShipData END

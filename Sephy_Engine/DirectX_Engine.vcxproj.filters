@@ -298,14 +298,8 @@
     <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\FleetMarkView">
       <UniqueIdentifier>{990227f4-3a07-4ce5-892c-d532c75b45f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\UnitSelect">
-      <UniqueIdentifier>{7df78a4e-f6cf-41c4-bf76-6d34d2d12794}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Battle\BattleMapSystem\MapParser">
       <UniqueIdentifier>{a0cfbf75-6c8d-4982-ace9-36145202ed1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Battle\BattleMapSystem\MapInterface">
-      <UniqueIdentifier>{ae1cd87e-2efb-4791-8601-2754641a2117}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameCode\Battle\BattleCameraSystem\Interface">
       <UniqueIdentifier>{30389f33-8567-46c7-baec-61edd2f1d58e}</UniqueIdentifier>
@@ -394,12 +388,6 @@
     <Filter Include="GameCode\GameSystemSupport\SystemButton">
       <UniqueIdentifier>{91ce66a2-93a9-45b3-a1a5-b9511dd36288}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Battle\Battle_FogSystem">
-      <UniqueIdentifier>{e4aa1a83-c484-48e8-9418-79ca69fe4426}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Battle\Battle_FogSystem\Fog">
-      <UniqueIdentifier>{beb694c3-7697-4d27-b5a0-6b2d9086b07e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Intro">
       <UniqueIdentifier>{ba6e957d-875f-4a0c-a2a7-9d1ded4db66b}</UniqueIdentifier>
     </Filter>
@@ -414,6 +402,36 @@
     </Filter>
     <Filter Include="GameCode\Battle\BattleUnitSystem\Unit\Particle">
       <UniqueIdentifier>{f0676096-8019-4174-ad53-3305d673b6f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Unit\Numbering">
+      <UniqueIdentifier>{dc4219f5-d5ff-4182-a2d6-56b432de2c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Intro\Intro_ControlSystem">
+      <UniqueIdentifier>{39ee4277-9135-4bd2-84d2-ad1eae29ea1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Intro\Intro_AnimeSystem">
+      <UniqueIdentifier>{06ef3efd-9f0a-4463-8ce4-4f9c707def54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Operator">
+      <UniqueIdentifier>{cb1b0aaf-f67c-4723-8352-a7cb187bfe72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleFogSystem">
+      <UniqueIdentifier>{e4aa1a83-c484-48e8-9418-79ca69fe4426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleFogSystem\Fog">
+      <UniqueIdentifier>{beb694c3-7697-4d27-b5a0-6b2d9086b07e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\UnitSelect">
+      <UniqueIdentifier>{7df78a4e-f6cf-41c4-bf76-6d34d2d12794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\UnitControlView">
+      <UniqueIdentifier>{b4b96111-1027-4da2-9a70-1be4f2783141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleMapSystem\MapEventArea">
+      <UniqueIdentifier>{ae1cd87e-2efb-4791-8601-2754641a2117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\BattlePhaseAlert">
+      <UniqueIdentifier>{cba55bb9-f91f-4ba5-b5bb-4031db5bbfb7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -795,9 +813,6 @@
     <ClCompile Include="Battle_MapParser.cpp">
       <Filter>GameCode\Battle\BattleMapSystem\MapParser</Filter>
     </ClCompile>
-    <ClCompile Include="Battle_MapUI_StartingArea.cpp">
-      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
-    </ClCompile>
     <ClCompile Include="Battle_MinimapView.cpp">
       <Filter>GameCode\Battle\BattleCameraSystem\Interface</Filter>
     </ClCompile>
@@ -840,14 +855,8 @@
     <ClCompile Include="Battle_UI_DummyShip.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\DummyShip</Filter>
     </ClCompile>
-    <ClCompile Include="Battle_MapUI_RespawnArea.cpp">
-      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
-    </ClCompile>
     <ClCompile Include="Battle_DataParser.cpp">
       <Filter>GameCode\Battle\BattleMainSystem\MainSystem Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="Battle_MapUI_CollisionArea.cpp">
-      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
     </ClCompile>
     <ClCompile Include="Battle_TurretParser.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
@@ -913,10 +922,10 @@
       <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
     </ClCompile>
     <ClCompile Include="Battle_FogSystem.cpp">
-      <Filter>GameCode\Battle\Battle_FogSystem</Filter>
+      <Filter>GameCode\Battle\BattleFogSystem</Filter>
     </ClCompile>
     <ClCompile Include="Battle_FogCell.cpp">
-      <Filter>GameCode\Battle\Battle_FogSystem\Fog</Filter>
+      <Filter>GameCode\Battle\BattleFogSystem\Fog</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Intro.cpp">
       <Filter>GameCode\Intro</Filter>
@@ -932,6 +941,39 @@
     </ClCompile>
     <ClCompile Include="Battle_Particle.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Unit\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_DamageDigit.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Numbering</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro_ControlSystem.cpp">
+      <Filter>GameCode\Intro\Intro_ControlSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro_AnimeSystem.cpp">
+      <Filter>GameCode\Intro\Intro_AnimeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_Operator.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Operator</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapEventArea_StartingArea.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapEventArea_RespawnArea.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapEventArea_CollisionArea.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapEventArea_RepairArea.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_UnitControlViewer.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\UnitControlView</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_UI_PhaseAlert.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\BattlePhaseAlert</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_BattleLoading.cpp">
+      <Filter>GameCode\Battle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1334,9 +1376,6 @@
     <ClInclude Include="Battle_MapParser.h">
       <Filter>GameCode\Battle\BattleMapSystem\MapParser</Filter>
     </ClInclude>
-    <ClInclude Include="Battle_MapUI_StartingArea.h">
-      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
-    </ClInclude>
     <ClInclude Include="Battle_MinimapView.h">
       <Filter>GameCode\Battle\BattleCameraSystem\Interface</Filter>
     </ClInclude>
@@ -1379,14 +1418,8 @@
     <ClInclude Include="Battle_UI_DummyShip.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Interface\DummyShip</Filter>
     </ClInclude>
-    <ClInclude Include="Battle_MapUI_RespawnArea.h">
-      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
-    </ClInclude>
     <ClInclude Include="Battle_DataParser.h">
       <Filter>GameCode\Battle\BattleMainSystem\MainSystem Parser</Filter>
-    </ClInclude>
-    <ClInclude Include="Battle_MapUI_CollisionArea.h">
-      <Filter>GameCode\Battle\BattleMapSystem\MapInterface</Filter>
     </ClInclude>
     <ClInclude Include="Battle_TurretParser.h">
       <Filter>GameCode\Battle\BattleUnitSystem\UnitParser</Filter>
@@ -1452,10 +1485,10 @@
       <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Battle_FogSystem.h">
-      <Filter>GameCode\Battle\Battle_FogSystem</Filter>
+      <Filter>GameCode\Battle\BattleFogSystem</Filter>
     </ClInclude>
     <ClInclude Include="Battle_FogCell.h">
-      <Filter>GameCode\Battle\Battle_FogSystem\Fog</Filter>
+      <Filter>GameCode\Battle\BattleFogSystem\Fog</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Intro.h">
       <Filter>GameCode\Intro</Filter>
@@ -1471,6 +1504,39 @@
     </ClInclude>
     <ClInclude Include="Battle_Particle.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Unit\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_DamageDigit.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Numbering</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro_ControlSystem.h">
+      <Filter>GameCode\Intro\Intro_ControlSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro_AnimeSystem.h">
+      <Filter>GameCode\Intro\Intro_AnimeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_Operator.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Operator</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapEventArea_StartingArea.h">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapEventArea_RespawnArea.h">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapEventArea_CollisionArea.h">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapEventArea_RepairArea.h">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_UnitControlViewer.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\UnitControlView</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_UI_PhaseAlert.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Interface\BattlePhaseAlert</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_BattleLoading.h">
+      <Filter>GameCode\Battle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

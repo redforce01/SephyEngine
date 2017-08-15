@@ -205,4 +205,24 @@ namespace MyUtil
 		
 		return false;
 	}
+	std::list<int> splitNumberToDigit(int number)
+	{
+		std::list<int> vDigits;
+		if (number <= 0)
+		{
+			vDigits.push_front(0);
+		}
+		else
+		{
+			int remainNumber = number;
+			while (number != 0)
+			{
+				int last = number % 10;
+				vDigits.push_front(last);
+				number = (number - last) / 10;
+			}
+		}
+
+		return vDigits;
+	}
 }

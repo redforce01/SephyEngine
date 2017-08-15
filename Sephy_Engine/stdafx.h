@@ -82,16 +82,3 @@ extern float		g_fSoundBGMVolume;
 // Debug Variables
 extern bool			g_bDebugMode;
 extern std::string	g_strDebugSceneName;
-
-//=============================================================================
-// Unit Tool Testing - Must Delete After
-// Unit Tool Testing - Must Delete After
-// Unit Tool Testing - Must Delete After
-// Unit Tool Testing - Must Delete After
-// Unit Tool Testing - Must Delete After
-// Unit Tool Testing - Must Delete After
-// Unit Tool Testing - Must Delete After
-// Unit Tool Testing - Must Delete After
-//=============================================================================
-extern float g_fRateMin;
-extern float g_fRateMax;

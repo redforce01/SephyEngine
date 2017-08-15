@@ -23,6 +23,7 @@ private:
 	int			m_TurretID;
 	std::string m_strTurretName;
 	float		m_fTurretRotateSpeed;
+	float		m_fFireReteOriginal;
 	float		m_fFireRate;
 	int			m_nTurretBarrelCount;
 	//=================================================

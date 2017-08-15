@@ -11,6 +11,7 @@ CBattle_Turret::CBattle_Turret()
 	//=================================================
 	m_TurretID				= -1;
 	m_fTurretRotateSpeed	= 0.f;
+	m_fFireReteOriginal		= 0.f;
 	m_fFireRate				= 0.f;
 	m_nTurretBarrelCount	= -1;
 	//=================================================
@@ -75,35 +76,34 @@ void CBattle_Turret::Fire(float targetX, float targetY)
 {
 	if (m_bReloading)
 		return;
-
-
+	
 	bool bPlayerShip = m_pShip->getIsPlayerShip();
 	for (int i = 0; i < m_nTurretBarrelCount; i++)
 	{
-		auto interpolateRand = RANDOM_MAKER->GetInt(0, 50);
-		auto interpolateFlag = RANDOM_MAKER->GetBool();
+		auto interpolateRand = RANDOM_MAKER->GetInt(-20, 20);
 		float startX = m_turretX;
 		float startY = m_turretY;
 		float aimX = targetX;
 		float aimY = targetY;
-		if (interpolateFlag)
-		{
-			startX += interpolateRand;
-			startY += interpolateRand;
-			aimX += interpolateRand;
-			aimY += interpolateRand;
-		}
-		else
-		{
-			startX -= interpolateRand;
-			startY -= interpolateRand;
-			aimX -= interpolateRand;
-			aimY -= interpolateRand;
-		}
+		startX += interpolateRand;
+		startY += interpolateRand;
+		aimX += interpolateRand;
+		aimY += interpolateRand;
+
 		CBattle_Bullet* bullet = new CBattle_Bullet;
 		bullet->initialize(m_pShip, startX, startY, aimX, aimY, m_fBulletSpeed, m_fBulletDamage, bPlayerShip);
 		bullet->initializeSprite(m_strBulletTextureKey_Hit, m_nBulletMaxFrame_Hit, m_strBulletTextureKey_Miss, m_nBulletMaxFrame_Miss);
 		m_pShip->getBattleUnitSystem()->addBulletInBattle(bullet);
+
+		m_fFireRate = m_fFireReteOriginal;
+		if (RANDOM_MAKER->GetBool())
+		{
+			m_fFireRate += RANDOM_MAKER->GetInt(0, 100) / 1000;
+		}
+		else
+			m_fFireRate -= RANDOM_MAKER->GetInt(0, 100) / 1000;
+
+		SOUNDMANAGER->play(m_strSoundFileName_Fire, g_fSoundMasterVolume * g_fSoundEffectVolume);
 	}	
 	m_bReloading = true;
 }
@@ -154,7 +154,7 @@ void CBattle_Turret::setupTurretDataFormat(std::vector<std::string> vArray)
 	m_TurretID					= std::stoi(vArray[dataNumber]);
 	m_strTurretName				= vArray[++dataNumber];
 	m_fTurretRotateSpeed		= std::stof(vArray[++dataNumber]);
-	m_fFireRate					= std::stof(vArray[++dataNumber]);
+	m_fFireReteOriginal			= std::stof(vArray[++dataNumber]);
 	m_nTurretBarrelCount		= std::stoi(vArray[++dataNumber]);
 	m_fBulletSpeed				= std::stof(vArray[++dataNumber]);
 	m_fBulletDamage				= std::stof(vArray[++dataNumber]);
@@ -162,4 +162,6 @@ void CBattle_Turret::setupTurretDataFormat(std::vector<std::string> vArray)
 	m_strBulletTextureKey_Miss	= vArray[++dataNumber];
 	m_nBulletMaxFrame_Hit		= std::stoi(vArray[++dataNumber]);
 	m_nBulletMaxFrame_Miss		= std::stoi(vArray[++dataNumber]);
+	m_strSoundFileName_Miss		= vArray[+dataNumber];
+	m_strSoundFileName_Fire		= vArray[++dataNumber];
 }

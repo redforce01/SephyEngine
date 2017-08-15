@@ -54,7 +54,8 @@ std::vector<std::string> CBattle_TurretParser::setupTurretData(std::vector<std::
 	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//	 #  + Turret Bullet TextureKey_Miss
 	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//	 #  + Turret Bullet TextureKey_Hit_MaxFrame
 	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//	 #  + Turret Bullet TextureKey_Miss_MaxFrame
-	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//	 #  + Turret Sound File Name
+	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//	 #  + Turret Miss Sound File Name
+	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//	 #  + Turret Fire Sound File Name
 
 	return vResult;
 }

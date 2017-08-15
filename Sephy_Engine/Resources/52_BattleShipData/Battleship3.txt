@@ -36,14 +36,14 @@ BEGIN ShipData
 	+ TextureBottom		1
 	+ Ship_Name		Battleship3
 	+ Ship_Type		BB
-	+ Max DP		50600
-	+ Repair_Speed		6072
-	+ Rotate_Speed		0.191
-	+ Accelerate_Speed	2.7
-	+ Max_Speed		61
-	+ Rader			190
-	+ Turret_Capacity	5
-	+ Turret_ID		Cannon
+	+ Max DP		37500
+	+ Repair_Speed		937.5
+	+ Rotate_Speed		0.29
+	+ Accelerate_Speed	3.1
+	+ Max_Speed		72
+	+ Rader			1080
+	+ Turret_Capacity	4
+	+ Turret_ID		Cannon10
 	+ Aircraft_Capacity	0
 	+ Performance		10000
 	+ Sailor		800
@@ -51,7 +51,9 @@ BEGIN ShipData
 	+ AntiAir_Range		50
 	+ AntiAir_Damage	20
 	+ Phase			3
-	+ Mass			58.08
-	+ EvasionRadius		100
+	+ Mass			50
+	+ EvasionRadius		76
+	+ ShipRankMark		9AD
+	+ SunkenSound		Sunken_H
 	+ Skill			NULL
 ShipData END

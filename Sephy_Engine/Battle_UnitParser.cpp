@@ -67,6 +67,8 @@ std::vector<std::string> CBattle_UnitParser::setupShipData(std::vector<std::stri
 	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//   #  + Phase					함선 전투 Phase Number
 	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//   #  + Mass					함선 질량(Weight)
 	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//   #  + Evasion				함선 타겟 범위(Evasion Radius)
+	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//   #  + ShipRankMark			함선 계급장
+	vResult.emplace_back(vArray[++dataNumber].substr(vArray[dataNumber].rfind('\t') + 1));	//   #  + SukenSound			함선 침몰 사운드 이름
 																							//   #  + Skill					함선 스킬
 
 	return vResult;

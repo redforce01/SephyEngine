@@ -15,6 +15,9 @@ namespace battleBulletNS
 	const float BULLET_GRAVITY = 500.f;
 	const float BULLET_RADIUS = 5.0f;
 	const float SPRITE_SPEED = 0.04f;
+
+	const float DAMAGE_RATE_MIN = 0.143f;
+	const float DAMAGE_RATE_MAX = 1.0f;
 }
 
 
@@ -38,6 +41,9 @@ private:
 	int		m_nExplosionMaxFrame;
 	int		m_nMissMaxFrame;
 	float	m_nDeltaTime;
+private:
+	std::string m_strMissSoundName;
+
 private:
 	//==========================================
 	float m_x, m_y;
@@ -73,6 +79,11 @@ public:
 	//================================================
 	// Member Functions
 	//================================================
+
+	void setupMissSoundName(std::string missSoundName)
+	{
+		m_strMissSoundName = missSoundName;
+	}
 
 	void moveX(float distance);
 	void moveY(float distance);

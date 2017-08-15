@@ -4,6 +4,7 @@
 #include "Battle_UnitSystem.h"
 #include "UnitTool_UnitControlSystem.h"
 
+
 CBattle_Ship::CBattle_Ship()
 {
 	m_pBattleUnitSystem			= nullptr;
@@ -44,6 +45,7 @@ CBattle_Ship::CBattle_Ship()
 	m_fCurrentHealth			= 0.f;
 	m_fMaxHealth				= 0.f;
 	m_fRepairSpeed				= 0.f;
+	m_fRepairSpeedOriginal		= 0.f;
 	m_fCurrentAngle				= 0.f;
 	m_fTargetAngle				= 0.f;
 	m_fRotateSpeed				= 0.f;
@@ -71,8 +73,9 @@ CBattle_Ship::CBattle_Ship()
 	m_fFormationY				= 0.f;
 	m_fFleetMaxSpeed			= 0.f;
 	//===========================================
-	m_fSunkenDeltaTime			= 0.f;
+	m_bSukenStart				= false;
 	m_bSunkenComplete			= false;
+	m_fSunkenDeltaTime			= 0.f;
 	//===========================================
 	m_bPlayerShip				= false;
 	m_bInitialized				= false;
@@ -86,10 +89,13 @@ CBattle_Ship::CBattle_Ship()
 	m_bFlagShip					= false;
 	//===========================================
 	m_bDetected					= false;
-
-
+	m_bDetectedSound			= false;
+	m_fUnDetectedTime			= 0.f;
+	m_bAttacked					= false;
+	m_bAttackedSound			= false;
+	m_fUnattackedTime			= 0.f;
 	//===========================================
-	m_bDebug					= true;
+	m_bDebug					= g_bDebugMode;
 	m_bDummy					= false;
 	//===========================================
 	ZeroMemory(&m_stUnitTouch, sizeof(m_stUnitTouch));
@@ -220,18 +226,16 @@ bool CBattle_Ship::initialize(Game * gamePtr, std::string shipName)
 
 #pragma region SHIP_INTERFACE_INITIALIZE
 
-		m_BattleShipUI_Selected.initialize(m_pGraphics);
+		m_BattleShipUI_Selected.initialize(m_pGraphics);		
 		m_BattleShipUI_FleetMark.initialize(m_pGraphics);
 		m_BattleShipUI_FleetMark.setMaster(this);
+		m_BattleShipUI_FleetMark.setUIPos();
 		m_BattleShipUI_State.initialize(m_pGraphics, this);
+		m_BattleShipUI_State.setupProgress(m_fCurrentHealth, m_fMaxHealth);
+		m_BattleShipUI_State.setupShipRankMark(m_strShipRankMark);
 		m_BattleShipUI_State.setupStateUIPos();
-
-		// WARNING - NOT USING YET!
-		// WARNING - NOT USING YET!
-		// WARNING - NOT USING YET!
-		// WARNING - NOT USING YET!
-		// WARNING - NOT USING YET!
-		m_BattleShipUI_Indicator.initialize(m_pGraphics, m_pInput, INDICATOR_TYPE::INDICATOR_BLUE);
+		m_BattleShipUI_Indicator.initialize(m_pGraphics, m_pInput, INDICATOR_TYPE::INDICATOR_BLUE, this);
+		m_BattleShipUI_Indicator.setUIPos();
 		//====================================================================
 #pragma endregion
 
@@ -241,7 +245,7 @@ bool CBattle_Ship::initialize(Game * gamePtr, std::string shipName)
 
 		m_stUnitTouch.x = shipCenterX;
 		m_stUnitTouch.y = shipCenterY;
-		m_stUnitTouch.radius = m_vEntity[0].second->getHeight() / 2;
+		m_stUnitTouch.radius = m_vEntity[0].second->getHeight() / 3;
 
 		m_stUnitCollision.x = shipCenterX;
 		m_stUnitCollision.y = shipCenterY;
@@ -310,6 +314,11 @@ void CBattle_Ship::update(float frameTime)
 		m_bDestroy = true;
 		m_bChangeSprite = updateRotate(frameTime);
 		updateSprite(frameTime);
+		if (m_bSukenStart == false)
+		{
+			m_bSukenStart = true;
+			SOUNDMANAGER->play(m_strSukenSoundName, g_fSoundMasterVolume * g_fSoundEffectVolume);
+		}
 		return;
 	}
 	
@@ -349,9 +358,15 @@ void CBattle_Ship::update(float frameTime)
 			m_fTargetY = m_vEntity[0].second->getCenterY() + (-(float)sin(m_fCurrentAngle) * m_fCurrentSpeed / 2);
 		}
 	}
+	
+	if (m_bDummy)
+		return;
 
-	m_BattleShipUI_Selected.update(frameTime);
+	// Not Using This Indicator - Selecting UI
+	//m_BattleShipUI_Selected.update(frameTime);
 	m_BattleShipUI_State.update(frameTime);
+	m_BattleShipUI_FleetMark.update(frameTime);
+	m_BattleShipUI_Indicator.update(frameTime);
 
 	auto shipCenterX = m_vEntity[0].second->getCenterX();
 	auto shipCenterY = m_vEntity[0].second->getCenterY();
@@ -364,7 +379,12 @@ void CBattle_Ship::update(float frameTime)
 	updateEngine(frameTime);
 	updateMovement(frameTime);
 
+
 	updateTurret(frameTime);
+
+	
+	updateUndetectedSound(frameTime);
+	updateAttackedSound(frameTime);
 }
 
 void CBattle_Ship::render()
@@ -417,8 +437,12 @@ void CBattle_Ship::render()
 	//======================================================
 	if (m_bDestroy == false)
 	{
-		if(m_bSelected)
-			m_BattleShipUI_Selected.render();
+		if (m_bSelected)
+		{
+			// Not Using This Indicator - Selecting UI
+			//m_BattleShipUI_Selected.render();
+			m_BattleShipUI_Indicator.render();
+		}
 
 		if(m_bDetected)
 			m_BattleShipUI_State.render();
@@ -642,43 +666,13 @@ void CBattle_Ship::collision()
 #pragma region EnemyShip Detection & Fire
 	//====================================================
 	// Ship Rader Collision Check
-	//  + Enemy Ship Detection
+	//  + Enemy Ship Detection (-- This Function Moved To UnitSystem --)
 	//  + Aim At Fire
 	//====================================================
 	auto enemyShips = m_pBattleUnitSystem->getComputerShips();
 	if (m_bPlayerShip == false)
 		enemyShips = m_pBattleUnitSystem->getPlayerShips();
 	
-	// Not Using Detection Code On Each Ship Class
-	// Those Code Shift To UnitSystem
-#pragma region EnemyShip Detection
-	//====================================================
-	// Detected Enemy Ship Setup For Draw
-	//  + This Code Shift To UnitSystem 
-	//  + Not Using Those Code
-	//  + But Remain For Backup
-	//====================================================
-	//for (auto iter : enemyShips)
-	//{
-	//	if (iter->getShipActive() == false)
-	//		continue;
-	//			
-	//	auto enemyShipX = iter->getShipCollision().x;
-	//	auto enemyShipY = iter->getShipCollision().y;
-	//	auto enemyShipRad = iter->getShipCollision().radius;
-	//	auto raderX = this->getShipRaderCollision().x;
-	//	auto raderY = this->getShipRaderCollision().y;
-	//	auto raderRad = this->getShipRaderCollision().radius;
-
-	//	if (MyUtil::circleIncircle(raderX, raderY, raderRad, enemyShipX, enemyShipY, enemyShipRad))
-	//	{
-	//		iter->setDetected(true);
-	//		continue;
-	//	}
-	//}
-#pragma endregion
-	
-
 	//====================================================
 	// Automatic Turret Aiming
 	//====================================================
@@ -877,8 +871,8 @@ void CBattle_Ship::updateSunkenSprite(float frameTime)
 {
 	if (m_bSunkenComplete)
 		return;
-
-	if (m_nSpriteSunkenNum < 4)
+	
+	if (m_nSpriteSunkenNum % 10 < 4)
 	{
 		if (m_fSunkenDeltaTime >= battleShipGeneralNS::SHIP_SUNKEN_SPRITE_CHANGE_TIME_EARLY)
 		{
@@ -898,7 +892,7 @@ void CBattle_Ship::updateSunkenSprite(float frameTime)
 			m_fSunkenDeltaTime = 0.f;
 			m_nSpriteSunkenNum++;
 			m_nSpriteSunkenShadowNum++;
-			if (m_nSpriteSunkenNum >= battleShipTextureNS::SHIP_SUNKEN_MAX_FRAME)
+			if (m_nSpriteSunkenNum >= ((m_nSpriteSunkenNum / 10) + 1) * battleShipTextureNS::SHIP_SUNKEN_MAX_FRAME - 1)
 				m_bSunkenComplete = true;
 		}
 		else
@@ -924,16 +918,42 @@ void CBattle_Ship::updateTurret(float frameTime)
 	}
 }
 
-void CBattle_Ship::renderBeforeSetup()
+void CBattle_Ship::updateUndetectedSound(float frameTime)
 {
+	if (m_bDetectedSound)
+	{
+		if (m_bDetected == false)
+		{
+			m_fUnDetectedTime += frameTime;
+
+			if (m_fUnDetectedTime > battleShipGeneralNS::UNDETECTED_SOUND_TIME)
+			{
+				m_fUnDetectedTime = 0.f;
+				m_bDetectedSound = false;
+			}
+		}
+	}
 }
 
-void CBattle_Ship::renderAfterSetup()
+void CBattle_Ship::updateAttackedSound(float frameTime)
 {
+	if (m_bAttackedSound)
+	{
+		m_fUnattackedTime += frameTime;
+		if (m_fUnattackedTime > battleShipGeneralNS::UNATTACKED_SOUND_TIME)
+		{
+			m_fUnattackedTime = 0.f;
+			m_bAttackedSound = false;
+		}
+	}
 }
 
-void CBattle_Ship::renderShipUI()
+void CBattle_Ship::playSoundDamagedOperator()
 {
+	if (SOUNDMANAGER->isPlaySound("ship_damaged") == false)
+	{
+		SOUNDMANAGER->play("ship_damaged", g_fSoundMasterVolume * g_fSoundEffectVolume);
+	}
 }
 
 void CBattle_Ship::moveX(float fDistance)
@@ -952,6 +972,7 @@ void CBattle_Ship::moveX(float fDistance)
 	m_BattleShipUI_Selected.moveX(fDistance);
 	m_BattleShipUI_FleetMark.moveX(fDistance);
 	m_BattleShipUI_State.moveX(fDistance);
+	m_BattleShipUI_Indicator.moveX(fDistance);
 }
 
 void CBattle_Ship::moveY(float fDistance)
@@ -970,6 +991,56 @@ void CBattle_Ship::moveY(float fDistance)
 	m_BattleShipUI_Selected.moveY(fDistance);
 	m_BattleShipUI_FleetMark.moveY(fDistance);
 	m_BattleShipUI_State.moveY(fDistance);
+	m_BattleShipUI_Indicator.moveY(fDistance);
+}
+
+void CBattle_Ship::HitDamage(float damage)
+{
+	m_fCurrentHealth -= damage;
+	m_BattleShipUI_State.setupProgress(m_fCurrentHealth, m_fMaxHealth);
+
+	if (m_bUnitToolMode == false)
+	{
+		CBattle_DamageDigit* pDigit = new CBattle_DamageDigit;
+		DIGIT_TYPE digitType;
+		if (damage < 300)
+		{
+			digitType = DIGIT_TYPE::DIGIT_TYPE_BLUE;
+		}
+		else if (damage < 500)
+		{
+			digitType = DIGIT_TYPE::DIGIT_TYPE_WHITE;
+		}
+		else
+		{
+			digitType = DIGIT_TYPE::DIGIT_TYPE_RED;
+		}
+		float centerX = m_vEntity[0].second->getCenterX();
+		float centerY = m_vEntity[0].second->getCenterY();
+		pDigit->initialize(m_pGraphics, damage, digitType, centerX, centerY);
+		m_pBattleUnitSystem->addDamageDigit(pDigit);
+	}
+		
+	m_bAttacked = true;
+	if (m_bAttackedSound == false)
+	{
+		m_bAttackedSound = true;
+
+		if (m_bSelected)
+		{
+			playSoundDamagedOperator();
+		}
+	}
+}
+
+void CBattle_Ship::takeRepairBuf(bool bTakeOnOff, float bufSpeed)
+{
+	if (bTakeOnOff)
+	{
+		m_fRepairSpeed = m_fRepairSpeedOriginal + bufSpeed;
+	}
+	else
+		m_fRepairSpeed = m_fRepairSpeedOriginal;
 }
 
 void CBattle_Ship::updateMovement(float frameTime)
@@ -995,6 +1066,26 @@ void CBattle_Ship::updateMovement(float frameTime)
 	m_BattleShipUI_Selected.moveY(-(float)sin(m_fCurrentAngle) * m_fCurrentSpeed * frameTime);
 
 
+	if (m_bUnitToolMode == false)
+	{
+		if (CurrentPos.x <= m_pBattleMapSystem->getMapBorderLeft())
+		{
+			this->setTargetX(CurrentPos.x += battleShipGeneralNS::BATTLEMAP_OUTLINE_REVERSING_DISTANCE);
+		}
+		else if (CurrentPos.x > m_pBattleMapSystem->getMapBorderRight())
+		{
+			this->setTargetX(CurrentPos.x -= battleShipGeneralNS::BATTLEMAP_OUTLINE_REVERSING_DISTANCE);
+		}
+	
+		if (CurrentPos.y <= m_pBattleMapSystem->getMapBorderTop())
+		{
+			this->setTargetX(CurrentPos.y += battleShipGeneralNS::BATTLEMAP_OUTLINE_REVERSING_DISTANCE);
+		}
+		else if (CurrentPos.y > m_pBattleMapSystem->getMapBorderBottom())
+		{
+			this->setTargetX(CurrentPos.y -= battleShipGeneralNS::BATTLEMAP_OUTLINE_REVERSING_DISTANCE);
+		}
+	}
 }
 
 void CBattle_Ship::updateEngine(float frameTime)
@@ -1033,6 +1124,56 @@ void CBattle_Ship::updateEngine(float frameTime)
 
 bool CBattle_Ship::updateRotate(float frameTime)
 {
+	if (m_bDestroy == false)
+	{
+		float degreeAngle = abs(D3DXToDegree(m_fCurrentAngle));
+		if (degreeAngle >= 0 && degreeAngle < 40)
+		{
+			m_nSpriteSunkenNum = 70;
+			m_nSpriteSunkenShadowNum = 70;
+		}
+		else if (degreeAngle >= 40 && degreeAngle < 80)
+		{
+			m_nSpriteSunkenNum = 80;
+			m_nSpriteSunkenShadowNum = 80;
+		}
+		else if (degreeAngle >= 80 && degreeAngle < 120)
+		{
+			m_nSpriteSunkenNum = 0;
+			m_nSpriteSunkenShadowNum = 0;
+		}
+		else if (degreeAngle >= 120 && degreeAngle < 160)
+		{
+			m_nSpriteSunkenNum = 10;
+			m_nSpriteSunkenShadowNum = 10;
+		}
+		else if (degreeAngle >= 160 && degreeAngle < 200)
+		{
+			m_nSpriteSunkenNum = 20;
+			m_nSpriteSunkenShadowNum = 20;
+		}
+		else if (degreeAngle >= 200 && degreeAngle < 240)
+		{
+			m_nSpriteSunkenNum = 30;
+			m_nSpriteSunkenShadowNum = 30;
+		}
+		else if (degreeAngle >= 240 && degreeAngle < 280)
+		{
+			m_nSpriteSunkenNum = 40;
+			m_nSpriteSunkenShadowNum = 40;
+		}
+		else if (degreeAngle >= 280 && degreeAngle < 320)
+		{
+			m_nSpriteSunkenNum = 50;
+			m_nSpriteSunkenShadowNum = 50;
+		}
+		else if (degreeAngle >= 320 && degreeAngle < 360)
+		{
+			m_nSpriteSunkenNum = 60;
+			m_nSpriteSunkenShadowNum = 60;
+		}
+	}
+
 	if (m_bDestroy)
 		return true;
 	
@@ -1150,30 +1291,32 @@ void CBattle_Ship::setupShipDataFormat(std::vector<std::string> vArray)
 
 	int dataNumber = 0;
 	
-	m_nUnitID						= std::stoi(vArray[dataNumber]);
-	m_strTextureKey					= vArray[++dataNumber];
-	m_nSpriteTopCount				= std::stoi(vArray[++dataNumber]);
-	m_nSpriteBodyCount				= std::stoi(vArray[++dataNumber]);
-	m_nSpriteBottomCount			= std::stoi(vArray[++dataNumber]);
-	m_strName						= vArray[++dataNumber];
-	m_strShipType					= vArray[++dataNumber];
-	m_fCurrentHealth = m_fMaxHealth = std::stof(vArray[++dataNumber]);
-	m_fRepairSpeed					= std::stof(vArray[++dataNumber]);
-	m_fRotateSpeed					= std::stof(vArray[++dataNumber]);
-	m_fAccelateSpeed				= std::stof(vArray[++dataNumber]);
-	m_fMaxSpeed						= std::stof(vArray[++dataNumber]);
-	m_fRaderRange					= std::stof(vArray[++dataNumber]);
-	m_nTurretCount					= std::stoi(vArray[++dataNumber]);
-	m_strTurretID					= vArray[++dataNumber];
-	m_nAirCraftCapacity				= std::stoi(vArray[++dataNumber]);
-	m_fPerformance					= std::stof(vArray[++dataNumber]);
-	m_nSailorCount					= std::stoi(vArray[++dataNumber]);
-	m_nAntiAirTurrectCount			= std::stoi(vArray[++dataNumber]);
-	m_fAntiAirRange					= std::stof(vArray[++dataNumber]);
-	m_fAntiAirDamage				= std::stof(vArray[++dataNumber]);
-	m_nCallPhase					= std::stoi(vArray[++dataNumber]);
-	m_fMass							= std::stof(vArray[++dataNumber]);
-	m_fEvasionRange					= std::stof(vArray[++dataNumber]);
+	m_nUnitID								= std::stoi(vArray[dataNumber]);
+	m_strTextureKey							= vArray[++dataNumber];
+	m_nSpriteTopCount						= std::stoi(vArray[++dataNumber]);
+	m_nSpriteBodyCount						= std::stoi(vArray[++dataNumber]);
+	m_nSpriteBottomCount					= std::stoi(vArray[++dataNumber]);
+	m_strName								= vArray[++dataNumber];
+	m_strShipType							= vArray[++dataNumber];
+	m_fCurrentHealth = m_fMaxHealth			= std::stof(vArray[++dataNumber]);
+	m_fRepairSpeedOriginal = m_fRepairSpeed	= std::stof(vArray[++dataNumber]);
+	m_fRotateSpeed							= std::stof(vArray[++dataNumber]);
+	m_fAccelateSpeed						= std::stof(vArray[++dataNumber]);
+	m_fMaxSpeed								= std::stof(vArray[++dataNumber]);
+	m_fRaderRange							= std::stof(vArray[++dataNumber]);
+	m_nTurretCount							= std::stoi(vArray[++dataNumber]);
+	m_strTurretID							= vArray[++dataNumber];
+	m_nAirCraftCapacity						= std::stoi(vArray[++dataNumber]);
+	m_fPerformance							= std::stof(vArray[++dataNumber]);
+	m_nSailorCount							= std::stoi(vArray[++dataNumber]);
+	m_nAntiAirTurrectCount					= std::stoi(vArray[++dataNumber]);
+	m_fAntiAirRange							= std::stof(vArray[++dataNumber]);
+	m_fAntiAirDamage						= std::stof(vArray[++dataNumber]);
+	m_nCallPhase							= std::stoi(vArray[++dataNumber]);
+	m_fMass									= std::stof(vArray[++dataNumber]);
+	m_fEvasionRange							= std::stof(vArray[++dataNumber]);
+	m_strShipRankMark						= vArray[++dataNumber];
+	m_strSukenSoundName						= vArray[++dataNumber];
 }
 
 bool CBattle_Ship::setupEntity(Game * gamePtr, std::string strImageName, bool bPhysics)
@@ -1183,7 +1326,16 @@ bool CBattle_Ship::setupEntity(Game * gamePtr, std::string strImageName, bool bP
 	success = shipParts->initialize(gamePtr, 0, 0, 0, IMAGEMANAGER->getTexture(strImageName));
 	shipParts->setCollisionType(entityNS::PIXEL_PERFECT);
 	shipParts->setScale(battleShipGeneralNS::SHIP_ENTITY_TEXTURE_SCALE);
-
+	if (m_bPlayerShip)
+	{
+		shipParts->setX(-99999);
+		shipParts->setY(-99999);
+	}
+	else
+	{
+		shipParts->setX(100000);
+		shipParts->setY(100000);
+	}
 	m_vEntity.emplace_back(bPhysics, shipParts);
 
 	return success;

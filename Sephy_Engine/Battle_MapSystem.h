@@ -8,9 +8,10 @@ class CBattle_MapSystem;
 #include "mapObject.h"
 #include "mapEventObject.h"
 #include "Battle_MapParser.h"
-#include "Battle_MapUI_StartingArea.h"
-#include "Battle_MapUI_RespawnArea.h"
-#include "Battle_MapUI_CollisionArea.h"
+#include "Battle_MapEventArea_StartingArea.h"
+#include "Battle_MapEventArea_RespawnArea.h"
+#include "Battle_MapEventArea_CollisionArea.h"
+#include "Battle_MapEventArea_RepairArea.h"
 
 namespace battleMapSystemNS
 {
@@ -49,9 +50,10 @@ private: // Battle MapParser
 	CBattle_MapParser* m_pBattleMapDataParser;
 
 private:
-	std::vector<CBattle_MapUI_StartingArea*> m_vStartingAreaFlag;
-	std::vector<CBattle_MapUI_RespawnArea*> m_vRespawnArea;
-	std::vector<CBattle_MapUI_CollisionArea*> m_vCollisionArea;
+	std::vector<CBattle_MapEventArea_StartingArea*> m_vStartingAreaFlag;
+	std::vector<CBattle_MapEventArea_RespawnArea*> m_vRespawnArea;
+	std::vector<CBattle_MapEventArea_CollisionArea*> m_vCollisionArea;
+	std::vector<CBattle_MapEventArea_RepairArea*> m_vRepairArea;
 public:
 	CBattle_MapSystem();
 	~CBattle_MapSystem();
@@ -189,23 +191,43 @@ public:
 	{
 		return m_fMapCellHeight;
 	}
-
-	std::vector<CBattle_MapUI_CollisionArea*> getCollisionAreas() const
+	//=============================================
+	// Get Battle Event Area Object
+	//=============================================
+	
+	std::vector<CBattle_MapEventArea_CollisionArea*> getCollisionAreas() const
 	{
 		return m_vCollisionArea;
 	}
 
-	CBattle_MapUI_RespawnArea* getPlayerRespawnArea() const
+	CBattle_MapEventArea_RespawnArea* getPlayerRespawnArea() const
 	{
 		if (m_vRespawnArea.size() > 0)
 			return m_vRespawnArea[0];
 	}
 
-	CBattle_MapUI_StartingArea* getPlayerStartingArea() const
+	CBattle_MapEventArea_StartingArea* getPlayerStartingArea() const
 	{
 		if(m_vStartingAreaFlag.size() > 0)
 			return m_vStartingAreaFlag[0];
 	}
+
+	std::vector<CBattle_MapEventArea_RepairArea*> getRepairArea() const
+	{
+		return m_vRepairArea;
+	}
+
+	//=============================================
+	// Get Battle Map Border Line Position
+	//=============================================
+
+	float getMapBorderLeft() const;
+
+	float getMapBorderRight() const;
+
+	float getMapBorderTop() const;
+
+	float getMapBorderBottom() const;
 };
 
 #endif // !_BATTLE_MAPSYSTEM_H

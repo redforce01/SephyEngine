@@ -37,11 +37,11 @@ BEGIN ShipData
 	+ Ship_Name		Corvette
 	+ Ship_Type		CC
 	+ Max DP		1800
-	+ Repair_Speed		63
-	+ Rotate_Speed		0.488
-	+ Accelerate_Speed	4.8
-	+ Max_Speed		88
-	+ Rader			150
+	+ Repair_Speed		16.2
+	+ Rotate_Speed		0.837
+	+ Accelerate_Speed	5.25
+	+ Max_Speed		91
+	+ Rader			910
 	+ Turret_Capacity	3
 	+ Turret_ID		Cannon
 	+ Aircraft_Capacity	0
@@ -53,5 +53,7 @@ BEGIN ShipData
 	+ Phase			1
 	+ Mass			10.95
 	+ EvasionRadius		100
+	+ ShipRankMark		1L
+	+ SunkenSound		Sunken_S
 	+ Skill			NULL
 ShipData END

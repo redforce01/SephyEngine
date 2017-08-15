@@ -39,17 +39,17 @@ namespace battleShipUIStateNS
 	const float DP_COLOR_RATE_RED		= 0.f;
 	const float DP_ANIMATION_ACCELATE	= 1.0f;
 	//==============================================================
-	const std::string SHIP_RANK_CHIEF					= "ChifWarrantOfficer";
-	const std::string SHIP_RANK_ENSIGN					= "Ensign";
-	const std::string SHIP_RANK_LIEUTENANT_JUNIORGRADE	= "LieutenantJuniorGrade";
-	const std::string SHIP_RANK_LIEUTENANT				= "Lieutenant";
-	const std::string SHIP_RANK_LIEUTENANT_COMMANDER	= "LieutenantCommander";
-	const std::string SHIP_RANK_COMMANDER				= "Commander";
-	const std::string SHIP_RANK_CAPTAIN					= "Captain";
-	const std::string SHIP_RANK_REAR_ADMIRAL_LOWER		= "RearAdmiralLower";
-	const std::string SHIP_RANK_REAR_ADMIRAL_UP			= "RearAdmiralUp";
-	const std::string SHIP_RANK_VICE_ADMIRAL			= "ViceAdmiral";
-	const std::string SHIP_RANK_ADMIRAL					= "Admiral";
+	const std::string SHIP_RANK_1L		= "1L";
+	const std::string SHIP_RANK_2LS		= "2LS";
+	const std::string SHIP_RANK_3LC		= "3LC";
+	const std::string SHIP_RANK_4CM		= "4CM";
+	const std::string SHIP_RANK_5EN		= "5EN";
+	const std::string SHIP_RANK_6CW		= "6CW";
+	const std::string SHIP_RANK_7CP		= "7CP";
+	const std::string SHIP_RANK_8VA		= "8VA";
+	const std::string SHIP_RANK_9AD		= "9AD";
+	const std::string SHIP_RANK_10RD	= "10RD";
+	const std::string SHIP_RANK_11RA	= "11RA";
 	//==============================================================
 	const char			FONT[] = "Courier New";
 	const int			FONT_HEIGHT = 14;
@@ -99,6 +99,8 @@ public:
 
 	void setupProgress(float currentDP, float maxDP);
 	void updateAnimation(float frametime);
+
+	void setupShipRankMark(std::string rankMarkName);
 
 	//=============================================
 	// Member Functions

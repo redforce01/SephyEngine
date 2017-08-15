@@ -29,29 +29,31 @@
 
 
 BEGIN ShipData
-	+ ShipID		21
+	+ ShipID		22
 	+ TextureKey		Frigate2
 	+ TextureTop		5
 	+ TextureBody		1
 	+ TextureBottom		0
 	+ Ship_Name		Frigate2
 	+ Ship_Type		FF
-	+ Max DP		3960
-	+ Repair_Speed		138.6
-	+ Rotate_Speed		0.384
-	+ Accelerate_Speed	4.1
+	+ Max DP		4180
+	+ Repair_Speed		37.62
+	+ Rotate_Speed		0.785
+	+ Accelerate_Speed	4.5
 	+ Max_Speed		84
-	+ Rader			140
-	+ Turret_Capacity	3
+	+ Rader			860
+	+ Turret_Capacity	4
 	+ Turret_ID		Cannon
 	+ Aircraft_Capacity	0
-	+ Performance		700
-	+ Sailor		56
+	+ Performance		725
+	+ Sailor		58
 	+ AntiAir_Capacity	1
 	+ AntiAir_Range		40
 	+ AntiAir_Damage	20
 	+ Phase			1
-	+ Mass			16.25
+	+ Mass			16.7
 	+ EvasionRadius		100
+	+ ShipRankMark		2LS
+	+ SunkenSound		Sunken_S
 	+ Skill			NULL
 ShipData END

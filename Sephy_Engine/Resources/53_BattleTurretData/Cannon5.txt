@@ -1,0 +1,39 @@
+#-----------------------------
+# Ship Turret Information - Data Format
+#  + Turret ID				터렛 고유 ID
+#  + Turret Name			터렛 이름
+#  + Turret RotateSpeed			터렛 회전 속도	(소수 점 허용 / 라디안 값)
+#  + Turret FireRate			터렛 연사력	(소수 점 허용 / 재장전 시간 초 단위)
+#  + Turret Barrel Count		터렛 연장수
+#  + Turret Sound File Name		함포 발사 소리 파일 이름
+#------------------------------
+#  + Bullet BulletSpeed			포탄 초구탄속	(소수 점 허용)
+#  + Bullet BulletDamage 		포탄 데미지
+#  + Bullet TextureKey_Effect_Hit	Hit Texture 이름
+#  + Bullet TextureKey_Effect_Miss	Miss Texture 이름
+#  + Bullet Texture_Hit_MaxFrame	Hit Texture MaxFrame ex)46 (0~45 = 46개)
+#  + Bullet Texture_Miss_MaxFrame	Miss Texture MaxFrame ex)10 (0~9 = 10개)
+#------------------------------
+#  + Turret LimitToShip		(미사용)
+#  + Turret TextureKey_cylinder	(미사용)
+#  + Turret TextureKey_turret 	(미사용)
+#------------------------------
+
+#------------------------------
+# Sample - Data Format
+#------------------------------
+BEGIN TurretData
+	+ TurretID				1
+	+ TurretName				Cannon5
+	+ TurretRotatedSpeed			1.0
+	+ TurretFireRate			2.35
+	+ TurretBarrelCount			3
+	+ TurretBulletSpeed			1030.0
+	+ TurretBulletDamage			640.0
+	+ TurretBulletTextureKey_Hit		Explosion_3_
+	+ TurretBulletTextureKey_Miss		Miss_5_
+	+ TurretBulletTexture_Hit_MaxFrame 	12
+	+ TurretBulletTexture_Miss_MaxFrame 	30
+	+ TurretSoundFileName_Miss		Misshit_04
+	+ TurretSoundFileName_Fire		ShipBombard_06
+TurretData END

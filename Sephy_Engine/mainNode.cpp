@@ -3,6 +3,8 @@
 #include "Scene_MapTool.h"
 #include "Scene_Battle.h"
 #include "Scene_UnitTool.h"
+#include "Scene_Intro.h"
+#include "Scene_BattleLoading.h"
 
 MainNode::MainNode() : initializedMgr(FALSE)
 {
@@ -24,16 +26,18 @@ HRESULT MainNode::initialize()
 	SOUNDMANAGER->initialize();
 	
 	// Create the game, sets up message handler
+	SCENEMANAGER->addScene("Intro", new CScene_Intro);
 	SCENEMANAGER->addScene("MapTool", new CScene_MapTool);
 	SCENEMANAGER->addScene("Battle", new CScene_Battle);
 	SCENEMANAGER->addScene("UnitTool", new CScene_UnitTool);
+	SCENEMANAGER->addScene("BattleLoading", new CScene_BattleLoading);
+	SCENEMANAGER->addLoadingScene("BattleLoading", new CScene_BattleLoading);
 	
-	SCENEMANAGER->initialize();
-
 	if (g_bDebugMode)
 		SCENEMANAGER->changeScene(g_strDebugSceneName);
 	else
-		SCENEMANAGER->changeScene("Battle");
+		//SCENEMANAGER->changeScene("BattleLoading");
+		SCENEMANAGER->changeSceneWithLoading("Battle", "BattleLoading");
 	
 	return S_OK;
 }
@@ -62,11 +66,6 @@ void MainNode::update()
 	//TIMEMANAGER->UpdateTime(mainNodeNS::maxFrameLimit); // Not Using
 	SCENEMANAGER->update();
 	SOUNDMANAGER->update();
-}
-
-void MainNode::render()
-{
-	SCENEMANAGER->render();
 }
 
 LRESULT MainNode::messageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)

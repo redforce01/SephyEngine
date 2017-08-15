@@ -17,8 +17,10 @@ using namespace FMOD;
 
 namespace soundManagerNS
 {
-	const std::string SOUND_EFFECT_FOLDER_NAME = "80_SoundEffect";
-	const std::string SOUND_BGM_FOLDER_NAME = "81_SoundBGM";
+	const std::string SOUND_EFFECT_FOLDER_NAME = "80_Sound_Effect";
+	const std::string SOUND_BGM_FOLDER_NAME = "81_Sound_BGM";
+	const std::string SOUND_EFFECT_ALERT_FOLDER_NAME = "82_Sound_Battle_Alert";
+	const std::string SOUND_EFFECT_OPERATOR_FOLDER_NAME = "83_Sound_Operator";
 }
 
 class CSoundManager : public cSingletonBase<CSoundManager>

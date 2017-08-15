@@ -47,14 +47,34 @@ public:
 	EngineBootSystem();
 	~EngineBootSystem();
 
+	//====================================================
+	// Engine Boot System Initialize
+	//  + Call Create Boot Window
+	//  + Connect Boot Procedure
+	//====================================================
 	void BootSystemInitialize(HINSTANCE hInst, int nCmdShow);
+
+	//====================================================
+	// Engine Boot System Running Function
+	//  + Loop Update For Engine Log Print
+	//====================================================
 	int BootSystemRun();
-
-
+	
+	//====================================================
+	// Engine Boot Carete Window Function
+	//  + Engine Logo Window Create
+	//====================================================
 	bool CreateMainWindow(HWND &, HINSTANCE, int);
+
+	//====================================================
+	// Engine Boot Window Procedure
+	//====================================================
 	LRESULT EngineProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
-	
+	//====================================================
+	// Engine Boot Function - static void function
+	//  + Work On Boot Thread
+	//====================================================
 	static void EngineBoot();
 
 	bool GetBootFinish() const

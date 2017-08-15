@@ -1,0 +1,59 @@
+#--------------------------------
+# Ship Data Format
+#  + Ship ID		함선 ID
+#  + TextureKey		함선 텍스쳐 키(텍스쳐 이름)
+#  + TextureTop		함선 Top 갯수
+#  + TextureBody	함선 Body 갯수
+#  + TextureBottom	함선 Bottom 갯수
+#  + Ship Name		함선 고유이름
+#  + Ship Type		함선 타입
+#  + Unit Type		유닛 타입
+#  + Max HP(DP)		체력
+#  + Repair_Speed	수리 속도
+#  + Rotate_Speed	회전 속도
+#  + Accelerate_Speed	엔진 가속도
+#  + Max_Speed		최고 속도
+#  + Rader		시야 범위(감지 범위)
+#  + Turret_Capacity	함포 갯수
+#  + Turret_ID		함포 ID
+#  + Aircraft_Capacity	항공기 탑재 갯수
+#  + Performance	퍼포먼스 게이지
+#  + Sailor		수병 숫자
+#  + AntiAir_Capacity	대공포 갯수
+#  + AntiAir_Range	대공포 사거리
+#  + AntiAir_Damage	대공포 공격력
+#  + Phase		함선 전투 Phase Number
+#  + Mass		함선 질량(Weight)
+#  + Skill		함선 스킬
+#--------------------------------
+
+
+BEGIN ShipData
+	+ ShipID		62
+	+ TextureKey		Battleship2
+	+ TextureTop		1
+	+ TextureBody		1
+	+ TextureBottom		1
+	+ Ship_Name		Battleship2
+	+ Ship_Type		BB
+	+ Max DP		25400
+	+ Repair_Speed		635
+	+ Rotate_Speed		0.29
+	+ Accelerate_Speed	3
+	+ Max_Speed		70
+	+ Rader			1020
+	+ Turret_Capacity	4
+	+ Turret_ID		Cannon5
+	+ Aircraft_Capacity	0
+	+ Performance		9375
+	+ Sailor		750
+	+ AntiAir_Capacity	2
+	+ AntiAir_Range		40
+	+ AntiAir_Damage	20
+	+ Phase			3
+	+ Mass			41
+	+ EvasionRadius		76
+	+ ShipRankMark		8VA
+	+ SunkenSound		Sunken_H
+	+ Skill			NULL
+ShipData END

@@ -17,16 +17,25 @@ class CBattle_UnitSystem;
 #include "Battle_UI_FleetMakeViewer.h"
 #include "Battle_UI_StartButton.h"
 #include "Battle_UI_DummyShip.h"
+#include "Battle_UI_UnitControlViewer.h"
+#include "Battle_UI_PhaseAlert.h"
+
 
 namespace battleUnitSystemNS
 {
 	const std::string ERROR_MESSAGE = "Battle Unit System Initialize Failed";
 	const std::string UNIT_BEGIN_KEY = "BEGIN";
 	const std::string UNIT_END_KEY = "END";
-
+	//==========================================================
 	const UINT UNIT_NAME_POS = 0;
 	const UCHAR FLEET_SELECT_CONTROL_KEY = VK_CONTROL;
 	const UCHAR FLEET_SELECT_SHIFT_KEY = VK_SHIFT;
+	const UCHAR MOVETO_OPERATOR_EVENT_POSITION_KEY = VK_SPACE;
+	//==========================================================
+	const std::string FLEET_MOVE_ORDER_SOUND_NAME = "Voice_OK";
+	const std::string SHIP_MOVE_ORDER_SOUND_NAME = "Voice_Confirm";
+	const std::string ENEMY_SHIP_INSIGHT_SOUND_NAME = "Voice_Enemyshipinside";
+	
 }
 
 class CBattle_FogSystem;
@@ -72,13 +81,15 @@ private:
 	std::vector<RECT> m_vWorkableRect; // UI Workable vector<RECT>
 
 private: // Battle Interface 
-	CBattle_UnitParser*			m_pBattleUnitParser;
-	CBattle_UI_Destination*		m_pBattle_UI_Destination;
-	CBattle_UI_FleetListView*	m_pBattle_UI_FleetListView;
-	CBattle_UI_FleetMarkViewer*	m_pBattle_UI_FleetMarkView;
-	CBattle_UI_FleetMakeViewer* m_pBattle_UI_FleetMakeView;
-	CBattle_UI_StartButton*		m_pBattle_UI_StartButton;
-	std::vector<CBattle_UI_DummyShip*> m_vBattle_UI_DummyShip;
+	CBattle_UnitParser*					m_pBattleUnitParser;
+	CBattle_UI_Destination*				m_pBattle_UI_Destination;
+	CBattle_UI_FleetListView*			m_pBattle_UI_FleetListView;
+	CBattle_UI_FleetMarkViewer*			m_pBattle_UI_FleetMarkView;
+	CBattle_UI_FleetMakeViewer*			m_pBattle_UI_FleetMakeView;
+	CBattle_UI_StartButton*				m_pBattle_UI_StartButton;
+	CBattle_UI_UnitControlViewer*		m_pBattle_UI_ControlView;
+	CBattle_UI_PhaseAlert*				m_pBattle_UI_PhaseAlert;
+	std::vector<CBattle_UI_DummyShip*>	m_vBattle_UI_DummyShip;
 
 private:
 	std::vector<CBattle_Ship*>	m_vFleetMakeShips;
@@ -96,6 +107,26 @@ public:
 	{
 		m_vBullets.emplace_back(pBullet);
 	}
+
+private: // Damage Digits
+	std::vector<CBattle_DamageDigit*> m_vDigit;
+public:
+	void addDamageDigit(CBattle_DamageDigit* pDigit)
+	{
+		m_vDigit.emplace_back(pDigit);
+	}
+
+private: // Operator
+	std::vector<CBattle_Operator*> m_vOperator;
+public:
+	void addOperator(CBattle_Operator* pOperator)
+	{
+		m_vOperator.emplace_back(pOperator);
+	}
+
+private: // Phase System Control
+	bool m_bPhaseTwoUp;
+	bool m_bPhaseThreeUp;
 
 public:
 	CBattle_UnitSystem();
@@ -180,6 +211,13 @@ public:
 	{
 		m_vCompterShips.emplace_back(pNewShip);
 	}
+
+public:
+	//==================================================
+	// Sound Functions
+	//==================================================
+	void playSoundEnemyShipInSight();
+
 
 	//==================================================
 	// Setter Functions

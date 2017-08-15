@@ -16,6 +16,11 @@ CBattle_UI_FleetListView::CBattle_UI_FleetListView() : SystemUIDialog()
 	m_pClearButton		= nullptr;
 	m_pCloseButton		= nullptr;
 	//=================================================
+	m_pPageUpButton		= nullptr;
+	m_pPageDownButton	= nullptr;
+	m_nItemStart		= 0;
+	m_nItemEnd			= 0;
+	//=================================================
 	m_nSelectItemPhase	= -1;
 	m_nSelectItemCount	= -1;
 	m_nSelectItemNumber = -1;
@@ -38,7 +43,7 @@ CBattle_UI_FleetListView::CBattle_UI_FleetListView() : SystemUIDialog()
 	m_strGuideShipPhase = battleFleetListViewNS::FLEET_LIST_GUIDE_SHIPPHASE;
 	m_strGuideShipCount = battleFleetListViewNS::FLEET_LIST_GUIDE_SHIPCOUNT;
 	//=================================================
-	backColor			= battleFleetListViewNS::BACK_COLOR_ACTIVE;	
+	backColor			= battleFleetListViewNS::BACK_COLOR_ACTIVE;
 }
 
 
@@ -48,6 +53,8 @@ CBattle_UI_FleetListView::~CBattle_UI_FleetListView()
 	SAFE_DELETE(m_pSendButton);
 	SAFE_DELETE(m_pClearButton);
 	SAFE_DELETE(m_pCloseButton);
+	SAFE_DELETE(m_pPageUpButton);
+	SAFE_DELETE(m_pPageDownButton);
 }
 
 bool CBattle_UI_FleetListView::initialize(Graphics * g, Input * i)
@@ -90,6 +97,20 @@ bool CBattle_UI_FleetListView::initialize(Graphics * g, Input * i)
 			battleFleetListViewNS::CLOSE_BUTTON_Y,
 			battleFleetListViewNS::CLOSE_BUTTON_FILENAME, true);
 		m_pCloseButton->setRegistFunction(std::bind(&CBattle_UI_FleetListView::functionCloseButton));
+
+		m_pPageUpButton = new SystemButton;
+		m_pPageUpButton->initialize(m_pGraphics, m_pInput,
+			this->getDialogX() + this->getDialogWidth() + battleFleetListViewNS::PAGE_UP_BUTTON_RELATE_X,
+			this->getDialogY() + this->getDialogHeight() + battleFleetListViewNS::PAGE_UP_BUTTON_RELATE_Y,
+			battleFleetListViewNS::PAGE_UP_BUTTON_FILENAME, true);
+		m_pPageUpButton->setRegistFunction(std::bind(&CBattle_UI_FleetListView::functionPageUpButton));
+
+		m_pPageDownButton = new SystemButton;
+		m_pPageDownButton->initialize(m_pGraphics, m_pInput,
+			this->getDialogX() + this->getDialogWidth() + battleFleetListViewNS::PAGE_DOWN_BUTTON_RELATE_X,
+			this->getDialogY() + this->getDialogHeight() + battleFleetListViewNS::PAGE_DOWN_BUTTON_RELATE_Y,
+			battleFleetListViewNS::PAGE_DOWN_BUTTON_FILENAME, true);
+		m_pPageDownButton->setRegistFunction(std::bind(&CBattle_UI_FleetListView::functionPageDownButton));
 		//==========================================================================================================
 		float totalRate = battleFleetListViewNS::FLEET_LIST_GUIDE_NAME_WIDTH_RATE 
 			+ battleFleetListViewNS::FLEET_LIST_GUIDE_PHASE_WIDTH_RATE
@@ -141,6 +162,8 @@ void CBattle_UI_FleetListView::update(float frameTime)
 	m_pSendButton->update(frameTime);
 	m_pClearButton->update(frameTime);
 	m_pCloseButton->update(frameTime);
+	m_pPageUpButton->update(frameTime);
+	m_pPageDownButton->update(frameTime);
 
 	if (m_pInput->getMouseLButton())
 	{
@@ -174,6 +197,8 @@ void CBattle_UI_FleetListView::render()
 	m_pSendButton->render();
 	m_pClearButton->render();
 	m_pCloseButton->render();
+	m_pPageUpButton->render();
+	m_pPageDownButton->render();
 
 	m_pGraphics->drawRect(m_rcGuideShipType);
 	m_pGraphics->drawRect(m_rcGuideShipName);
@@ -267,6 +292,18 @@ void CBattle_UI_FleetListView::functionCloseButton()
 	pThis->setDialogWidth(battleFleetListViewNS::FLEET_VIEW_INACTIVE_WIDTH);
 	pThis->setDialogHeight(battleFleetListViewNS::FLEET_VIEW_INACTIVE_HEIGHT);
 	pThis->setDrawBorder(false);
+}
+
+void CBattle_UI_FleetListView::functionPageUpButton()
+{
+	pThis->m_nItemStart++;
+	pThis->m_nItemEnd++;	
+}
+
+void CBattle_UI_FleetListView::functionPageDownButton()
+{
+	pThis->m_nItemStart--;
+	pThis->m_nItemEnd--;
 }
 
 void CBattle_UI_FleetListView::addShipToFleetList(std::string strShipType, std::string strShipName, int nPhase)

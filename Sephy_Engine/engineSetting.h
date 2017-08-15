@@ -59,7 +59,7 @@ namespace engineSettingDefaultNS
 	const std::string DEFAULT_DEBUG_MODE = "MapTool";
 	const std::string DEFAULT_LANGUAGE = "English";
 	const std::string DEFAULT_LANGUAGE_PATH = "Resources\\Language\\English.txt";
-	const float DEFAULT_VOLUME = 1000.0f;
+	const float DEFAULT_VOLUME = 300.f;
 }
 
 struct tagEngineSettingInfo

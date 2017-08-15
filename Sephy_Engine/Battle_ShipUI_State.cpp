@@ -13,7 +13,7 @@ CBattle_ShipUI_State::CBattle_ShipUI_State()
 	m_pShipRank			= nullptr;
 	m_pDPNumberUI		= nullptr;
 	m_strDPProgressKey	= battleShipUIStateNS::DP_GUAGE_GREEN_FILENAME;
-	m_strShipRankKey = battleShipUIStateNS::SHIP_RANK_CHIEF;
+	m_strShipRankKey = battleShipUIStateNS::SHIP_RANK_6CW;
 	//================================================
 	m_maxWidth			= battleShipUIStateNS::DP_MAX_PROGRESS_WIDTH;
 	m_targetWidth		= 0.f;
@@ -186,4 +186,10 @@ void CBattle_ShipUI_State::updateAnimation(float frameTime)
 		else
 			m_bAnimation = false;
 	}
+}
+
+void CBattle_ShipUI_State::setupShipRankMark(std::string rankMarkName)
+{
+	m_strShipRankKey = rankMarkName;
+	m_pShipRank->setTextureManager(IMAGEMANAGER->getTexture(m_strShipRankKey));
 }
