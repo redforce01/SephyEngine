@@ -13,7 +13,8 @@ CBattle_MapEventArea_RepairArea::CBattle_MapEventArea_RepairArea()
 	m_fCaptureRate	= 0.f;
 	m_bPlayerArea	= false;
 	m_bCapturing	= false;
-	
+	//m_bDebug = g_bDebugMode;
+	m_bDebug = true;
 }
 
 

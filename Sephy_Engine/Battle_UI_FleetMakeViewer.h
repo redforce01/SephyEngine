@@ -66,6 +66,7 @@ private:
 private:
 	bool m_bVisibleView;
 	bool m_bFleetMakeMode;
+	bool m_bActive;
 public:
 	CBattle_UI_FleetMakeViewer();
 	~CBattle_UI_FleetMakeViewer();
@@ -106,6 +107,11 @@ public:
 	void setFleetMakeMode(bool bMakeMode)
 	{
 		m_bFleetMakeMode = bMakeMode;
+	}
+
+	void setActive(bool bActive)
+	{
+		m_bActive = bActive;
 	}
 
 	//========================================================

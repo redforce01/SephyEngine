@@ -25,7 +25,7 @@ private:
 
 private:
 	Image* m_pFlag;
-
+	bool m_bDebug;
 private:
 	float m_AreaCenterX, m_AreaCenterY;
 	float m_AreaRadius;

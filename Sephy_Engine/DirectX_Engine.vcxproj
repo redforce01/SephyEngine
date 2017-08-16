@@ -149,7 +149,6 @@
     <ClCompile Include="Battle_FleetSystem.cpp" />
     <ClCompile Include="Battle_FogCell.cpp" />
     <ClCompile Include="Battle_FogSystem.cpp" />
-    <ClCompile Include="Battle_LogSystem.cpp" />
     <ClCompile Include="Battle_MainSystem.cpp" />
     <ClCompile Include="Battle_MapEventArea_RepairArea.cpp" />
     <ClCompile Include="Battle_MapParser.cpp" />
@@ -161,6 +160,7 @@
     <ClCompile Include="Battle_DamageDigit.cpp" />
     <ClCompile Include="Battle_Operator.cpp" />
     <ClCompile Include="Battle_Particle.cpp" />
+    <ClCompile Include="Battle_ShipTailEffect.cpp" />
     <ClCompile Include="Battle_UI_PhaseAlert.cpp" />
     <ClCompile Include="Battle_Ship.cpp" />
     <ClCompile Include="Battle_ShipUI_DPNumber.cpp" />
@@ -333,7 +333,6 @@
     <ClInclude Include="Battle_FleetSystem.h" />
     <ClInclude Include="Battle_FogCell.h" />
     <ClInclude Include="Battle_FogSystem.h" />
-    <ClInclude Include="Battle_LogSystem.h" />
     <ClInclude Include="Battle_MainSystem.h" />
     <ClInclude Include="Battle_MapEventArea_RepairArea.h" />
     <ClInclude Include="Battle_MapParser.h" />
@@ -345,6 +344,7 @@
     <ClInclude Include="Battle_DamageDigit.h" />
     <ClInclude Include="Battle_Operator.h" />
     <ClInclude Include="Battle_Particle.h" />
+    <ClInclude Include="Battle_ShipTailEffect.h" />
     <ClInclude Include="Battle_UI_PhaseAlert.h" />
     <ClInclude Include="Battle_Ship.h" />
     <ClInclude Include="Battle_ShipUI_DPNumber.h" />

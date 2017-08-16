@@ -37,7 +37,7 @@ bool CBattle_Operator::initialize(Graphics * g, Input * i)
 			return false;
 
 		success = SystemUIDialog::initializeDialog(m_pGraphics, m_pInput,
-			g_fScreenWidth + battleOperatorNS::OPERATOR_RELATE_X,
+			g_fScreenWidth + battleOperatorNS::OPERATOR_DIALOG_X,
 			battleOperatorNS::OPERATOR_DIALOG_Y,
 			battleOperatorNS::OPERATOR_DIALOG_WIDTH,
 			battleOperatorNS::OPERATOR_DIALOG_HEIGHT, 0);

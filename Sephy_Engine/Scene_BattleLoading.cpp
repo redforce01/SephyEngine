@@ -47,7 +47,7 @@ void CScene_BattleLoading::initialize(HWND hwnd)
 	m_pProgressBar = new Image;
 	m_pProgressBar->initialize(graphics, 0, 0, 0, IMAGEMANAGER->getTexture(sceneBattleLoadingNS::LOADING_PROGRESS_FILENAME));
 	m_pProgressBar->setX((g_fScreenWidth / 2) - (m_pProgressBar->getWidth() / 2));
-	m_pProgressBar->setY(g_fScreenHeight - (m_pProgressBar->getHeight() / 2) + sceneBattleLoadingNS::LOADING_PROGRESS_BAR_RELATE_Y);	
+	m_pProgressBar->setY(g_fScreenHeight - (m_pProgressBar->getHeight() / 2) + sceneBattleLoadingNS::LOADING_PROGRESS_BAR_RELATE_Y);
 	auto spriteRect = m_pProgressBar->getSpriteDataRect();
 	spriteRect.right = spriteRect.left;
 	m_pProgressBar->setSpriteDataRect(spriteRect);

@@ -245,38 +245,6 @@ void CUnitTool_UIViewer::render()
 	m_dxFont.print(unitToolUIViewerNS::INFO_TITLE_EVASION,				m_vItemGuideRect[++itemStart], DT_LEFT | DT_VCENTER);
 	m_dxFont.print(unitToolUIViewerNS::INFO_TITLE_SKILL,				m_vItemGuideRect[++itemStart], DT_LEFT | DT_VCENTER);
 #pragma endregion
-
-#pragma region PRINT_ITEM
-	//itemStart = 0;
-	//m_dxFont.print(m_ID,				m_vItemRect[itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_TextureKey,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_TopCount,			m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_BodyCount,			m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_BottomCount,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_Name,				m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_ShipType,			m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_UnitType,			m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_MaxDP,				m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_CurrentDP,			m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_RepairSpeed,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_RotateSpeed,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_AccelerateSpeed,	m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_MaxSpeed,			m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_CurrentSpeed,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_RaderRange,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_TurretCapacity,	m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_TurretName,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_AircraftCapacity,	m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_Performance,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_Sailor,			m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_AntiAirCapacity,	m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_AntiAirRange,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_AntiAirDamage,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_Phase,				m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_Mass,				m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_EvasionRadius,		m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-	//m_dxFont.print(m_Skill,				m_vItemRect[++itemStart], DT_LEFT | DT_VCENTER);
-#pragma endregion
 	
 	m_SetPlayerStatus.draw();
 	m_pGraphics->spriteEnd();
@@ -304,6 +272,7 @@ void CUnitTool_UIViewer::funcSetupButton()
 	dummyShip->setShipActive(true);
 	dummyShip->setDetected(true);
 	dummyShip->setDebugMode(true);
+	dummyShip->setUnitToolMode(true);
 	
 	dummyShip->setMaxHealth				(std::stof(pThis->m_vEditControl[8]->getEditText()));			// 09. MaxDP		   	
 	dummyShip->setCurrentHealth			(std::stof(pThis->m_vEditControl[9]->getEditText()));			// 10. CurrentDP		

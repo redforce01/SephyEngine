@@ -38,17 +38,28 @@ void CBattle_UI_StartButton::render()
 void CBattle_UI_StartButton::functionBattleStart()
 {
 	auto ships = pThis->m_pBattleUnitSystem->getPlayerShips();
+	bool success = false;
 	for (auto iter : ships)
 	{
 		if (iter->getShipActive())
 		{
-			pThis->m_pBattleUnitSystem->setBattleStart(true);
-			pThis->m_pBattleUnitSystem->setBattlePhase(1);
-			pThis->m_pBattleUnitSystem->setupActiveForStart();
-			pThis->SystemButton::setActive(false);
+			success = true;
 			break;
 		}
 	}
-
-	SOUNDMANAGER->play(battleStartButtonNS::BATTLE_START_BGM_PHASE_1_NAME, g_fSoundMasterVolume * g_fSoundBGMVolume);
+	if (success)
+	{
+		for (auto iter : ships)
+		{
+			if (iter->getShipActive())
+			{
+				pThis->m_pBattleUnitSystem->setBattleStart(true);
+				pThis->m_pBattleUnitSystem->setBattlePhase(1);
+				pThis->m_pBattleUnitSystem->setupActiveForStart();
+				pThis->SystemButton::setActive(false);
+				break;
+			}
+		}
+		SOUNDMANAGER->play(battleStartButtonNS::BATTLE_START_BGM_PHASE_1_NAME, g_fSoundMasterVolume * g_fSoundBGMVolume);
+	}
 }

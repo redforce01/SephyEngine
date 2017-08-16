@@ -230,6 +230,7 @@ public:
 
 	void setBattleStart(bool bStart)
 	{
+		m_pBattle_UI_FleetMakeView->setActive(false);
 		m_bBattleStart = bStart;
 	}
 

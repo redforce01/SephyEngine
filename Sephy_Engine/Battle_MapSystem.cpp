@@ -59,6 +59,12 @@ CBattle_MapSystem::~CBattle_MapSystem()
 	}
 	m_vRespawnArea.clear();
 
+	for (auto iter : m_vRepairArea)
+	{
+		SAFE_DELETE(iter);
+	}
+	m_vRepairArea.clear();
+
 	SAFE_DELETE(m_pBattleMapDataParser);
 }
 
@@ -119,6 +125,11 @@ void CBattle_MapSystem::update(float frameTime)
 	{
 		iter->update(frameTime);
 	}
+
+	for (auto iter : m_vRepairArea)
+	{
+		iter->update(frameTime);
+	}
 }
 
 void CBattle_MapSystem::render()
@@ -169,6 +180,11 @@ void CBattle_MapSystem::render()
 	{
 		iter->render();
 	}
+	// Render Repair Area
+	for (auto iter : m_vRepairArea)
+	{
+		iter->render();
+	}
 }
 
 void CBattle_MapSystem::moveX(int distance)
@@ -203,6 +219,10 @@ void CBattle_MapSystem::moveX(int distance)
 	{
 		iter->moveX(distance);
 	}
+	for (auto iter : m_vRepairArea)
+	{
+		iter->moveX(distance);
+	}
 }
 
 void CBattle_MapSystem::moveY(int distance)
@@ -233,6 +253,10 @@ void CBattle_MapSystem::moveY(int distance)
 		iter->moveY(distance);
 	}
 	for (auto iter : m_vRespawnArea)
+	{
+		iter->moveY(distance);
+	}
+	for (auto iter : m_vRepairArea)
 	{
 		iter->moveY(distance);
 	}

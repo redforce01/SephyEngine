@@ -1341,6 +1341,7 @@ void CBattle_UnitSystem::setupFleetToFleetSystem()
 	m_vFleetMakeShips[0]->setFleetConnectFlagShip(m_vFleetMakeShips[0]);
 	m_vFleetMakeShips[0]->setFleetIncluded(true);
 	m_vFleetMakeShips[0]->setFleetNumber(nFleetNumber);
+	m_vFleetMakeShips[0]->setShipActive(false);
 
 	// Fleet System->SetFlagShip Throw Parameter(Ship, Selected Fleet Number)
 	m_pBattleFleetSystem->setFlagShip(m_vFleetMakeShips[0], nFleetNumber);
@@ -1361,6 +1362,7 @@ void CBattle_UnitSystem::setupFleetToFleetSystem()
 		iter->setFleetConnectFlagShip(m_vFleetMakeShips[0]);
 		iter->setFleetIncluded(true);
 		iter->setFleetNumber(nFleetNumber);
+		iter->setShipActive(false);
 
 		shipCount++;
 	}

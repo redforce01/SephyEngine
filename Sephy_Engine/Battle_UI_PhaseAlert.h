@@ -11,7 +11,7 @@ namespace battleUIPhaseAlertNS
 	const std::string ERROR_MESSAGE = "Battle Phase Alert Initialize Failed";
 	const std::string ALARM_LAMP_FILENAME = "LampRed_";
 	const UINT ALARM_LAMP_MAX_FRAME = 18;
-	const float ALERT_TIME = 20.f;
+	const float ALERT_TIME = 10.f;
 	const float ALERT_LAMP_RELATE_X = -138;
 	const float ALERT_LAMP_RELATE_Y = 50;
 	const std::string ALERT_SOUND_NAME = "02_AlertEnemy";

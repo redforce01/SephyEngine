@@ -46,15 +46,15 @@ namespace battleOperatorNS
 	const std::string OPERATOR_PILOT_P_KEY = "PilotAttentionP_";
 	//==================================================================
 	const float OPERATOR_MESSAGE_TIME = 5.0f;
-	const float OPERATOR_RELATE_X = -150;
+	const float OPERATOR_RELATE_X = 0;
 	const float OPERATOR_RELATE_Y = 0;
 	//==================================================================
-	const float OPERATOR_DIALOG_X = 0;
+	const float OPERATOR_DIALOG_X = -210.f;
 	const float OPERATOR_DIALOG_Y = 500;
 	const float OPERATOR_DIALOG_WIDTH = 200.f;
 	const float OPERATOR_DIALOG_HEIGHT = 50.f;
-	const float OPERATOR_MESSAGE_BOX_WIDTH = 180;
-	const float OPERATOR_MESSAGE_BOX_HEIGHT = 35;
+	const float OPERATOR_MESSAGE_BOX_WIDTH = 280;
+	const float OPERATOR_MESSAGE_BOX_HEIGHT = 35.f;
 	//==================================================================
 	const char FONT[] = "Courier New";
 	const int FONT_HEIGHT = 14;

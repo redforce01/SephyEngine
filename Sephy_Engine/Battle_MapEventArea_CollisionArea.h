@@ -8,7 +8,7 @@ class CBattle_MapEventArea_CollisionArea;
 
 namespace battleMapUICollisionAreaNS
 {
-	const entityNS::COLLISION_TYPE DEFAULT_COLLISION_TYPE = entityNS::COLLISION_TYPE::BOX;
+	const entityNS::COLLISION_TYPE DEFAULT_COLLISION_TYPE = entityNS::COLLISION_TYPE::PIXEL_PERFECT;
 	const COLOR_ARGB COLLISION_BOX_COLOR = SETCOLOR_ARGB(255, 128, 128, 192);
 }
 

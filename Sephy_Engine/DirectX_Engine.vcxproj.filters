@@ -319,9 +319,6 @@
     <Filter Include="GameCode\Battle\BattleUnitSystem\Unit\Interface">
       <UniqueIdentifier>{f26d1931-973e-4f93-9a83-83545ae365d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Battle\BattleLogSystem">
-      <UniqueIdentifier>{48823a71-61d6-48ad-9caa-b1fa327a63c9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\DummyShip">
       <UniqueIdentifier>{bf3612c7-b20f-472f-b881-853f7891d58e}</UniqueIdentifier>
     </Filter>
@@ -846,9 +843,6 @@
     <ClCompile Include="Battle_ShipUI_Indicator.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Battle_LogSystem.cpp">
-      <Filter>GameCode\Battle\BattleLogSystem</Filter>
-    </ClCompile>
     <ClCompile Include="Scene_TurretTest.cpp">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClCompile>
@@ -974,6 +968,9 @@
     </ClCompile>
     <ClCompile Include="Scene_BattleLoading.cpp">
       <Filter>GameCode\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_ShipTailEffect.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1409,9 +1406,6 @@
     <ClInclude Include="Battle_ShipUI_Indicator.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Unit\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Battle_LogSystem.h">
-      <Filter>GameCode\Battle\BattleLogSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Scene_TurretTest.h">
       <Filter>GameCode\Scenes\GameScene</Filter>
     </ClInclude>
@@ -1537,6 +1531,9 @@
     </ClInclude>
     <ClInclude Include="Scene_BattleLoading.h">
       <Filter>GameCode\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_ShipTailEffect.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\Particle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

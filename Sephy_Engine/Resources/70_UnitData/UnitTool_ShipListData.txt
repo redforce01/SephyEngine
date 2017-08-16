@@ -10,23 +10,9 @@
 #--------------------------------
 +1.	Battleship
 +2.	Battleship2
-+3.	Battleship3
-+4.	Battleship4
-+5.	Battleship5
-+6.	Battleship6
 +7.	Carrier
 +8.	Corvette
-+9.	Corvette2
 +10.	Cruiser
 +11.	Cruiser1
-+12.	Cruiser2
-+13.	Cruiser3
-+14.	Cruiser4
-+15.	Cruiser5
-+16.	Destroyer
-+17.	Destroyer3
-+18.	Destroyer4
-+19.	Frigate
-+20.	Frigate2
 +21.	Frigate3
 +22.	Z1

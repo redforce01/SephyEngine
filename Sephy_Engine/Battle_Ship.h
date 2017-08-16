@@ -16,6 +16,7 @@ class CBattle_Ship;
 #include "Battle_ShipUI_State.h"
 #include "Battle_DamageDigit.h"
 #include "Battle_Operator.h"
+#include "Battle_ShipTailEffect.h"
 
 namespace battleShipTextureNS
 {
@@ -29,6 +30,7 @@ namespace battleShipTextureNS
 	const UINT SHIP_SUNKEN_MAX_FRAME = 10;
 
 	const COLOR_ARGB SHIP_SHADOW_COLOR = SETCOLOR_ARGB(128, 32, 32, 32);
+	const COLOR_ARGB SHIP_SUNKEN_SHADOW_COLOR = SETCOLOR_ARGB(64, 64, 64, 64);
 }
 
 namespace battleShipGeneralNS
@@ -56,6 +58,7 @@ namespace battleShipGeneralNS
 	//===============================================
 	const float UNDETECTED_SOUND_TIME = 10.f;
 	const float UNATTACKED_SOUND_TIME = 3.0f;
+	const UINT SHIP_TAIL_EFFECT_SIZE = 30;
 }
 
 //===============================================
@@ -234,6 +237,8 @@ private:
 	//================================================
 	std::string m_strShipRankMark;			// Ship Rank Mark FileName
 
+private:
+	std::vector<CBattle_ShipTailEffect> m_vTailEffect;
 
 private: // Ship Detected Code - For Ship vs Ship with RaderRange
 	bool m_bDetected;
@@ -1079,6 +1084,11 @@ public:
 	bool getDebugMode() const
 	{
 		return m_bDebug;
+	}
+
+	std::string getShipRankMark() const
+	{
+		return m_strShipRankMark;
 	}
 };
 

@@ -9,7 +9,8 @@ CBattle_MapEventArea_CollisionArea ::CBattle_MapEventArea_CollisionArea ()
 	m_y = 0.f;;
 	m_width = 0.f;
 	m_height = 0.f;
-	m_bDebug = g_bDebugMode;
+	//m_bDebug = g_bDebugMode;
+	m_bDebug = true;
 }
 
 

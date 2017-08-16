@@ -6,6 +6,7 @@ CBattle_UI_UnitControlViewer::CBattle_UI_UnitControlViewer()
 {
 	m_pBackground	= nullptr;
 	m_pShip			= nullptr;
+	m_pShipRankMark = nullptr;
 	m_bNoneData		= true;
 	//==============================================
 	m_rcShipNameGuide			= { 0, };
@@ -58,6 +59,11 @@ bool CBattle_UI_UnitControlViewer::initialize(Graphics * g, Input * i)
 		m_pBackground->setX(SystemUIDialog::getDialogX());
 		m_pBackground->setY(SystemUIDialog::getDialogY());
 		
+		m_pShipRankMark = new Image;
+		m_pShipRankMark->initialize(m_pGraphics, 0, 0, 0, IMAGEMANAGER->getTexture(battleUIUnitControlViewerNS::SHIP_RANK_DEFAULT));
+		m_pShipRankMark->setX(this->getDialogX() + battleUIUnitControlViewerNS::INFO_GUIDE_SHIP_RANK_MARK_RELATE_X);
+		m_pShipRankMark->setY(this->getDialogY() + battleUIUnitControlViewerNS::INFO_GUIDE_SHIP_RANK_MARK_RELATE_Y);
+
 		success = m_dxFont.initialize(m_pGraphics, battleUIUnitControlViewerNS::FONT_HEIGHT, false, false, battleUIUnitControlViewerNS::FONT);
 		//=========================================================
 		m_rcShipNameGuide = RectMake(this->getDialogX() + battleUIUnitControlViewerNS::INFO_GUIDE_START_X,
@@ -73,7 +79,7 @@ bool CBattle_UI_UnitControlViewer::initialize(Graphics * g, Input * i)
 		m_rcShipEngineSpeedGuide = RectMake(m_rcShipRepairSpeedGuide.left, m_rcShipRepairSpeedGuide.bottom,
 			battleUIUnitControlViewerNS::INFO_GUIDE_WIDTH,
 			battleUIUnitControlViewerNS::INFO_GUIDE_HEIGHT);
-		m_rcShipRotateSpeedGuide = RectMake(m_rcShipRepairSpeedGuide.left, m_rcShipRepairSpeedGuide.bottom,
+		m_rcShipRotateSpeedGuide = RectMake(m_rcShipEngineSpeedGuide.left, m_rcShipEngineSpeedGuide.bottom,
 			battleUIUnitControlViewerNS::INFO_GUIDE_WIDTH,
 			battleUIUnitControlViewerNS::INFO_GUIDE_HEIGHT);
 		m_rcShipFleetNameGuide = RectMake(m_rcShipRotateSpeedGuide.left, m_rcShipRotateSpeedGuide.bottom,
@@ -87,13 +93,13 @@ bool CBattle_UI_UnitControlViewer::initialize(Graphics * g, Input * i)
 		m_rcShipDP = RectMake(m_rcShipName.left, m_rcShipName.bottom,
 			battleUIUnitControlViewerNS::INFO_VALUE_WIDTH,
 			battleUIUnitControlViewerNS::INFO_VALUE_HEIGHT);
-		m_rcShipEngineSpeed = RectMake(m_rcShipDP.left, m_rcShipDP.bottom,
+		m_rcShipRepairSpeed = RectMake(m_rcShipDP.left, m_rcShipDP.bottom,
 			battleUIUnitControlViewerNS::INFO_VALUE_WIDTH,
 			battleUIUnitControlViewerNS::INFO_VALUE_HEIGHT);
-		m_rcShipRepairSpeed = RectMake(m_rcShipEngineSpeed.left, m_rcShipEngineSpeed.bottom,
+		m_rcShipEngineSpeed = RectMake(m_rcShipRepairSpeed.left, m_rcShipRepairSpeed.bottom,
 			battleUIUnitControlViewerNS::INFO_VALUE_WIDTH,
 			battleUIUnitControlViewerNS::INFO_VALUE_HEIGHT);
-		m_rcShipRotateSpeed = RectMake(m_rcShipRepairSpeed.left, m_rcShipRepairSpeed.bottom,
+		m_rcShipRotateSpeed = RectMake(m_rcShipEngineSpeed.left, m_rcShipEngineSpeed.bottom,
 			battleUIUnitControlViewerNS::INFO_VALUE_WIDTH,
 			battleUIUnitControlViewerNS::INFO_VALUE_HEIGHT);
 		m_rcShipFleetName = RectMake(m_rcShipRotateSpeed.left, m_rcShipRotateSpeed.bottom,
@@ -148,7 +154,9 @@ void CBattle_UI_UnitControlViewer::update(float frameTime)
 			auto strCurSpeed = std::to_string((int)m_pShip->getCurrentSpeed());
 			auto strMaxSpeed = std::to_string((int)m_pShip->getMaxSpeed());
 			m_strShipEngineSpeed = strCurSpeed + "/" + strMaxSpeed;
-			m_strShipRotateSpeed = std::to_string((int)m_pShip->getRotateSpeed());
+			m_strShipRotateSpeed = std::to_string(m_pShip->getRotateSpeed());
+			auto strShipRankMark = battleUIUnitControlViewerNS::SHIP_RANK_SMALL_KEY + m_pShip->getShipRankMark();
+			m_pShipRankMark->setTextureManager(IMAGEMANAGER->getTexture(strShipRankMark));
 		}
 	}
 }
@@ -162,7 +170,8 @@ void CBattle_UI_UnitControlViewer::render()
 
 	m_pGraphics->spriteBegin();
 	m_pBackground->draw();
-	
+	m_pShipRankMark->draw();
+
 	m_dxFont.print(battleUIUnitControlViewerNS::INFO_GUIDE_SHIP_NAME, m_rcShipNameGuide, DT_LEFT | DT_VCENTER);
 	m_dxFont.print(battleUIUnitControlViewerNS::INFO_GUIDE_SHIP_DP, m_rcShipDPGuide, DT_LEFT | DT_VCENTER);
 	m_dxFont.print(battleUIUnitControlViewerNS::INFO_GUIDE_SHIP_REPAIR_SPPED, m_rcShipRepairSpeedGuide, DT_LEFT | DT_VCENTER);
@@ -170,7 +179,7 @@ void CBattle_UI_UnitControlViewer::render()
 	m_dxFont.print(battleUIUnitControlViewerNS::INFO_GUIDE_SHIP_ROTATE_SPEED, m_rcShipRotateSpeedGuide, DT_LEFT | DT_VCENTER);
 	m_dxFont.print(battleUIUnitControlViewerNS::INFO_GUIDE_SHIP_FLEETNAME, m_rcShipFleetNameGuide, DT_LEFT | DT_VCENTER);
 	
-	m_dxFont.setFontColor(graphicsNS::RED);
+	m_dxFont.setFontColor(graphicsNS::GREEN);
 	m_dxFont.print(m_strShipName, m_rcShipName, DT_LEFT | DT_VCENTER);
 
 	m_dxFont.setFontColor(graphicsNS::WHITE);

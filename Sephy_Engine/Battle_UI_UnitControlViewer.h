@@ -37,6 +37,11 @@ namespace battleUIUnitControlViewerNS
 	const float INFO_VALUE_START_Y	= 36.f;
 	const float INFO_VALUE_WIDTH	= 120.f;
 	const float INFO_VALUE_HEIGHT	= 15.f;
+	//========================================================
+	const float INFO_GUIDE_SHIP_RANK_MARK_RELATE_X = 120.f;
+	const float INFO_GUIDE_SHIP_RANK_MARK_RELATE_Y = 40.f;
+	const std::string SHIP_RANK_DEFAULT = "S_6CW";
+	const std::string SHIP_RANK_SMALL_KEY = "S_";
 }
 
 class CBattle_Ship;
@@ -44,6 +49,7 @@ class CBattle_UI_UnitControlViewer : public SystemUIDialog
 {
 private:
 	Image*			m_pBackground;
+	Image*			m_pShipRankMark;
 	CBattle_Ship*	m_pShip;
 	bool			m_bNoneData;
 	//==========================================

@@ -20,6 +20,7 @@ CBattle_UI_FleetMakeViewer::CBattle_UI_FleetMakeViewer()
 	m_strFlagShipName = battleUIFleetMakeViewerNS::FLEET_FLAG_SHIP_MESSAGE_NA;
 	//==================================================
 	m_bFleetMakeMode		= false;
+	m_bActive				= true;
 	m_strFleetMakeSignKey	= battleUIFleetMakeViewerNS::FLEET_MAKE_OFF_SIGN_KEY;
 }
 
@@ -95,6 +96,30 @@ void CBattle_UI_FleetMakeViewer::update(float frameTime)
 
 	SystemUIDialog::update(frameTime);
 
+	if (m_bActive == false)
+	{
+		if (this->getDialogX() < g_fScreenWidth)
+		{
+			float speed = battleUIFleetMakeViewerNS::FLEET_MAKE_VIEW_SPEED * frameTime;
+			moveDialogX(speed);
+			m_pFleetMakeButton->moveX(speed);
+			m_pFleetRemoveButton->moveX(speed);
+			m_pFleetSetupButton->moveX(speed);
+			m_pFlagShipButton->moveX(speed);
+			m_pFleetMakeSign->moveX(speed);
+			m_rcFlagShipTypeGuide.left += speed;
+			m_rcFlagShipTypeGuide.right += speed;
+			m_rcFlagShipNameGuide.left += speed;
+			m_rcFlagShipNameGuide.right += speed;
+			m_rcFlagShipTypeMessage.left += speed;
+			m_rcFlagShipTypeMessage.right += speed;
+			m_rcFlagShipNameMessage.left += speed;
+			m_rcFlagShipNameMessage.right += speed;
+		}
+
+		return;
+	}
+	
 	if (m_bFleetMakeMode)
 	{
 		m_strFleetMakeSignKey = battleUIFleetMakeViewerNS::FLEET_MAKE_ON_SIGN_KEY;
@@ -178,6 +203,5 @@ void CBattle_UI_FleetMakeViewer::functionSetFlagShip()
 	{
 		pThis->m_bFleetMakeMode = true;
 		pThis->m_pBattleUnitSystem->setSetupFlagShip(true);
-		//pThis->m_pBattleUnitSystem->getFleetMakeShips().clear();
 	}
 }

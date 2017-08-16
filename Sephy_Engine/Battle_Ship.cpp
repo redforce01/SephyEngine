@@ -95,7 +95,8 @@ CBattle_Ship::CBattle_Ship()
 	m_bAttackedSound			= false;
 	m_fUnattackedTime			= 0.f;
 	//===========================================
-	m_bDebug					= g_bDebugMode;
+	//m_bDebug					= g_bDebugMode;
+	m_bDebug					= true;
 	m_bDummy					= false;
 	//===========================================
 	ZeroMemory(&m_stUnitTouch, sizeof(m_stUnitTouch));
@@ -206,7 +207,7 @@ bool CBattle_Ship::initialize(Game * gamePtr, std::string shipName)
 		m_vEntity[waveEntity].second->setColorFilter(SETCOLOR_ARGB(192, 128, 128, 128));
 
 		int sunkenShadowEntity = m_vEntity.size() - 1;
-		m_vEntity[sunkenShadowEntity].second->setColorFilter(battleShipTextureNS::SHIP_SHADOW_COLOR);
+		m_vEntity[sunkenShadowEntity].second->setColorFilter(battleShipTextureNS::SHIP_SUNKEN_SHADOW_COLOR);
 		// End - Ship Entity Initialize
 		//====================================================================
 #pragma endregion	
@@ -260,6 +261,14 @@ bool CBattle_Ship::initialize(Game * gamePtr, std::string shipName)
 		m_stEvasion.radius = m_fEvasionRange;
 #pragma endregion
 
+#pragma region SHIP_TAIL_EFFECT_INITIALIZE
+		for (int i =0 ; i< battleShipGeneralNS::SHIP_TAIL_EFFECT_SIZE; i++)
+		{		
+			CBattle_ShipTailEffect tempTail; 
+			tempTail.initialize(m_pGraphics, this);
+			m_vTailEffect.emplace_back(tempTail);
+		}
+#pragma endregion
 
 		m_bInitialized = true;
 	}
@@ -362,27 +371,76 @@ void CBattle_Ship::update(float frameTime)
 	if (m_bDummy)
 		return;
 
+	//======================================================
+	// Ship Tail Update
+	//  + Update Only Active Tail Effect
+	//======================================================
+	for (auto iter : m_vTailEffect)
+	{
+		iter.update(frameTime);
+	}
+	//======================================================
 	// Not Using This Indicator - Selecting UI
+	//======================================================
 	//m_BattleShipUI_Selected.update(frameTime);
+	
+	//======================================================
+	// Ship UI Update
+	//======================================================
 	m_BattleShipUI_State.update(frameTime);
 	m_BattleShipUI_FleetMark.update(frameTime);
 	m_BattleShipUI_Indicator.update(frameTime);
 
+	//======================================================
+	// Update All Tag Data
+	//  + Rader Data
+	//  + Touch Data
+	//  + Collision Data
+	//  + Evasion Data
+	//======================================================
 	auto shipCenterX = m_vEntity[0].second->getCenterX();
 	auto shipCenterY = m_vEntity[0].second->getCenterY();
 	updateTagDataPos(shipCenterX, shipCenterY);
 
+	//======================================================
+	// Ship Rotate Update
+	//  + Calculate Angle & Each Rotation - Sprite Number
+	//======================================================
 	m_bChangeSprite = updateRotate(frameTime);
+
+	//======================================================
+	// Update Current Sprite Texture
+	//======================================================
 	updateSprite(frameTime);
 
+	//======================================================
+	// Update Repairing
+	//  + Current Health += Repair Speed
+	//======================================================
 	updateRepair(frameTime);
+
+	//======================================================
+	// Ship Engine Update
+	//======================================================
 	updateEngine(frameTime);
+
+	//======================================================
+	// Ship Movement Update
+	//======================================================
 	updateMovement(frameTime);
 
-
+	//======================================================
+	// Ship Turret Update
+	//  + Targetting Update
+	//  + Firing Order
+	//======================================================
 	updateTurret(frameTime);
 
-	
+	//======================================================
+	// Each Sound Update
+	//  + UnDetected Sound
+	//  + Attack Sound
+	//======================================================
 	updateUndetectedSound(frameTime);
 	updateAttackedSound(frameTime);
 }
@@ -446,6 +504,14 @@ void CBattle_Ship::render()
 
 		if(m_bDetected)
 			m_BattleShipUI_State.render();
+	}
+
+	//======================================================
+	// Ship Tail Effect Rendering
+	//======================================================
+	for (auto iter : m_vTailEffect)
+	{
+		iter.render();
 	}
 
 	//======================================================
@@ -963,6 +1029,11 @@ void CBattle_Ship::moveX(float fDistance)
 		iter.second->Image::moveX(fDistance);
 	}
 
+	for (auto iter : m_vTailEffect)
+	{
+		iter.moveX(fDistance);
+	}
+
 	m_fTargetX += fDistance;
 
 	auto shipCenterX = m_vEntity[0].second->getCenterX();
@@ -980,6 +1051,11 @@ void CBattle_Ship::moveY(float fDistance)
 	for (auto iter : m_vEntity)
 	{
 		iter.second->Image::moveY(fDistance);
+	}
+
+	for (auto iter : m_vTailEffect)
+	{
+		iter.moveY(fDistance);
 	}
 
 	m_fTargetY += fDistance;
@@ -1047,6 +1123,15 @@ void CBattle_Ship::updateMovement(float frameTime)
 {
 	if (m_bDestroy)
 		return;
+
+	for (auto iter : m_vTailEffect)
+	{
+		if (iter.getActive() == true)
+			continue;
+
+		iter.setActive();
+		break;
+	}
 
 	VECTOR2 CurrentPos = *m_vEntity[0].second->getCenter();
 	float interRadius = m_vEntity[0].second->getHeight() / 2;
@@ -1280,8 +1365,10 @@ bool CBattle_Ship::updateRotate(float frameTime)
 void CBattle_Ship::updateRepair(float frameTime)
 {
 	if (m_fCurrentHealth < m_fMaxHealth)
+	{
 		m_fCurrentHealth += m_fRepairSpeed * frameTime;
-	m_BattleShipUI_State.setupProgress(m_fCurrentHealth, m_fMaxHealth);
+		m_BattleShipUI_State.setupProgress(m_fCurrentHealth, m_fMaxHealth);
+	}
 }
 
 void CBattle_Ship::setupShipDataFormat(std::vector<std::string> vArray)

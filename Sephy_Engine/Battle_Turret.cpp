@@ -116,30 +116,30 @@ void CBattle_Turret::FireInUnitTool(float targetX, float targetY)
 	bool bPlayerShip = m_pShip->getIsPlayerShip();
 	for (int i = 0; i < m_nTurretBarrelCount; i++)
 	{
-		auto interpolateRand = RANDOM_MAKER->GetInt(0, 20);
-		auto interpolateFlag = RANDOM_MAKER->GetBool();
+		auto interpolateRand = RANDOM_MAKER->GetInt(-20, 20);
 		float startX = m_turretX;
 		float startY = m_turretY;
 		float aimX = targetX;
 		float aimY = targetY;
-		if (interpolateFlag)
-		{
-			startX += interpolateRand;
-			startY += interpolateRand;
-			aimX += interpolateRand;
-			aimY += interpolateRand;
-		}
-		else
-		{
-			startX -= interpolateRand;
-			startY -= interpolateRand;
-			aimX -= interpolateRand;
-			aimY -= interpolateRand;
-		}
+		startX += interpolateRand;
+		startY += interpolateRand;
+		aimX += interpolateRand;
+		aimY += interpolateRand;
+
 		CBattle_Bullet* bullet = new CBattle_Bullet;
 		bullet->initialize(m_pShip, startX, startY, aimX, aimY, m_fBulletSpeed, m_fBulletDamage, bPlayerShip);
 		bullet->initializeSprite(m_strBulletTextureKey_Hit, m_nBulletMaxFrame_Hit, m_strBulletTextureKey_Miss, m_nBulletMaxFrame_Miss);
 		m_pShip->getUnitToolUnitControlSystem()->addBulletInBattle(bullet);
+
+		m_fFireRate = m_fFireReteOriginal;
+		if (RANDOM_MAKER->GetBool())
+		{
+			m_fFireRate += RANDOM_MAKER->GetInt(0, 100) / 1000;
+		}
+		else
+			m_fFireRate -= RANDOM_MAKER->GetInt(0, 100) / 1000;
+
+		SOUNDMANAGER->play(m_strSoundFileName_Fire, g_fSoundMasterVolume * g_fSoundEffectVolume);
 	}
 	m_bReloading = true;
 }

@@ -265,6 +265,9 @@ void CBattle_UI_FleetListView::functionFleetButton()
 
 void CBattle_UI_FleetListView::functionSendButton()
 {
+	if (pThis->m_nSelectItemNumber < 0)
+		return;
+
 	std::string shipName = pThis->m_vFleetListItems[pThis->m_nSelectItemNumber]->shipName;
 	int shipPhase = pThis->m_vFleetListItems[pThis->m_nSelectItemNumber]->shipPhase;
 

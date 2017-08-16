@@ -24,7 +24,7 @@ bool CBattle_MapEventArea_RespawnArea::initialize(Graphics * g)
 void CBattle_MapEventArea_RespawnArea::render()
 {
 	if (MyUtil::getObjInScreen(m_centerX, m_centerY, m_areaRadius, m_areaRadius, g_fScreenWidth, g_fScreenHeight) == false)
-	{
-		m_pGraphics->drawCircle(m_centerX, m_centerY, m_areaRadius, 1.0f, graphicsNS::WHITE);
-	}
+		return;
+
+	m_pGraphics->drawCircle(m_centerX, m_centerY, m_areaRadius, 1.0f, graphicsNS::WHITE);
 }
