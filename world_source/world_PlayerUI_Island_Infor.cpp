@@ -11,6 +11,8 @@ CWorld_PlayerUI_Island_Infor::CWorld_PlayerUI_Island_Infor()
 	delay = 0;
 	delay_infor = 0;
 
+	rt_font = { 0, };
+
 	is_init = false;
 	is_move = false;
 	is_click = false;
@@ -35,6 +37,10 @@ void CWorld_PlayerUI_Island_Infor::initialize(Graphics * g, Input * i, POINT _pt
 	button->setButtonPos(_pt.x - button->getWidth() / 2, _pt.y - button->getHeight() / 2);
 	button->setRegistFunction(std::bind(&CWorld_PlayerUI_Island_Infor::click_event));
 
+	rt_font = RectMake(button->getX(), button->getY(), button->getWidth(), button->getHeight());
+
+	m_dxFont.initialize(g, world_p_island_inforNS::FONT_SIZE, true, false, world_p_island_inforNS::FONT);
+
 	//false, graphicsNS::FILTER, "button_test", 300, 300, 49, 16, 1
 }
 
@@ -48,6 +54,9 @@ void CWorld_PlayerUI_Island_Infor::update(float frameTime)
 		delay += frameTime;
 
 		button->moveX(margin * frameTime / world_p_island_inforNS::APEAR_TIME);
+		
+		rt_font.left = button->getX();
+		rt_font.right = rt_font.left + button->getWidth();
 	}
 	else is_move = true;
 
@@ -82,7 +91,15 @@ void CWorld_PlayerUI_Island_Infor::render()
 		return;
 
 	if (infor_ui == nullptr)
+	{
 		button->render();
+
+		m_pGraphics->spriteBegin();
+
+		m_dxFont.print("Island Infor", rt_font, DT_CENTER | DT_VCENTER);
+
+		m_pGraphics->spriteEnd();
+	}
 
 	if (is_click == true)
 		infor_ui->render();
@@ -91,7 +108,7 @@ void CWorld_PlayerUI_Island_Infor::render()
 void CWorld_PlayerUI_Island_Infor::click_event()
 {
 	//if (SOUNDMANAGER->isPlaySound(world_p_island_inforNS::SOUND_OPEN))
-	SOUNDMANAGER->play(world_p_island_inforNS::SOUND_OPEN, g_fSoundMasterVolume + g_fSoundEffectVolume);
+	SOUNDMANAGER->play(world_p_island_inforNS::SOUND_OPEN, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 	pThis->infor_ui = new CWorld_Island_Infor_UI;
 
@@ -104,9 +121,15 @@ void CWorld_PlayerUI_Island_Infor::click_event()
 void CWorld_PlayerUI_Island_Infor::w_move_ud(float _speed)
 {
 	button->moveY(_speed);
+
+	rt_font.top += (_speed);
+	rt_font.bottom += (_speed);
 }
 
 void CWorld_PlayerUI_Island_Infor::w_move_rl(float _speed)
 {
 	button->moveX(_speed);
+
+	rt_font.left += (_speed);
+	rt_font.right += (_speed);
 }

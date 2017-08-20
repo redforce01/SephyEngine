@@ -287,13 +287,13 @@ void CWorld_ShipList_UI::update(float frameTime)
 		{
 			if (PtInRect(&rt_move, m_pInput->getMousePt()))
 			{
-				SOUNDMANAGER->play(world_all_shiplistNS::SOUND_SELECT, g_fSoundMasterVolume + g_fSoundEffectVolume);
+				SOUNDMANAGER->play(world_all_shiplistNS::SOUND_SELECT, g_fSoundMasterVolume * g_fSoundEffectVolume);
 				event_click();
 			}
 
 			if (PtInRect(&rt_exit, m_pInput->getMousePt()))
 			{
-				SOUNDMANAGER->play(world_all_shiplistNS::SOUND_CLOSE, g_fSoundMasterVolume + g_fSoundEffectVolume);
+				SOUNDMANAGER->play(world_all_shiplistNS::SOUND_CLOSE, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 				for (auto iter : player->get_cur_ship())
 					player->get_select_island()->add_ship(iter);
@@ -312,7 +312,7 @@ void CWorld_ShipList_UI::update(float frameTime)
 
 				if (PtInRect(&iter, m_pInput->getMousePt()))
 				{
-					SOUNDMANAGER->play(world_all_shiplistNS::SOUND_SELECT, g_fSoundMasterVolume + g_fSoundEffectVolume);
+					SOUNDMANAGER->play(world_all_shiplistNS::SOUND_SELECT, g_fSoundMasterVolume * g_fSoundEffectVolume);
 					player->add_cur_ship(player->get_select_island()->get_ship()[count]);
 					player->get_select_island()->remove_ship(count);
 
@@ -327,7 +327,7 @@ void CWorld_ShipList_UI::update(float frameTime)
 			{
 				if (PtInRect(&iter, m_pInput->getMousePt()))
 				{
-					SOUNDMANAGER->play(world_all_shiplistNS::SOUND_CANCEL, g_fSoundMasterVolume + g_fSoundEffectVolume);
+					SOUNDMANAGER->play(world_all_shiplistNS::SOUND_CANCEL, g_fSoundMasterVolume * g_fSoundEffectVolume);
 					player->get_select_island()->add_ship(player->get_cur_ship()[count]);
 					player->remove_cur_ship(count);//player->get_cur_ship().erase(player->get_cur_ship().begin() + count);
 					

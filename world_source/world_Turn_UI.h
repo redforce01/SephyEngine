@@ -5,9 +5,15 @@
 
 namespace worldturnNS
 {
-	const float DELAY = 1.5f;
-	const UINT x = 213;	//Viewer location (cur + pass + distance * 2)
+	const UINT x = 163;	//Viewer location (cur + pass + distance * 2)
 	const UINT y = 15;
+
+	const std::string TURN_NAME = "cur-wait-00";
+	const UINT TURN_MIN = 1;
+	const UINT TURN_MAX = 17;
+
+	const UINT COUNT_LIMIT = 48;	//(17 - 1) * 3 -> 모래시계 3 circle
+	const float DELAY = 0.05f;
 
 	const std::string SOUND_TURN = "Turn_End";
 
@@ -16,8 +22,8 @@ namespace worldturnNS
 	const UINT cur_turn_height = 73;
 	const COLOR_ARGB CUR_BACKGROUND_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);
 
-	const UINT pass_turn_width = 100;
-	const UINT pass_turn_height = 100;
+	const UINT pass_turn_width = 50;	//100
+	const UINT pass_turn_height = 50;	//100
 
 	const UINT distance = 15;
 
@@ -35,16 +41,23 @@ class CWorld_Turn_UI : public SystemUIDialog
 private:
 	CWorld_Player* player;
 	RECT rect_turn;
+	RECT rt_pass;
 
 	Graphics* m_pGraphics;
 	Input* m_pInput;
 
-	SystemButton* button;
+	Image* button;
+	//SystemButton* button;
+
+	int img_count;
 
 	float turn_delay;
 	bool is_turn;
+	bool mouse_up;
 	//std::map<std::string, std::string> m_turnMessage;
 	//Image* img_turn;
+	void click_event();
+	void pass_turn(float frameTime);
 
 public:
 	void SetLoadLinkPlayer(CWorld_Player* _player) { player = _player; }
@@ -55,8 +68,6 @@ public:
 	virtual bool initialize(Graphics* g, Input* i) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
-
-	static void click_event();
 
 	//void addMessage(std::string key, std::string message)
 	//{

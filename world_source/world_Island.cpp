@@ -235,10 +235,10 @@ void CWorld_Island::add_ship(CProduction_Ship * _ship)
 	while (show_ship.size() < ((current_ship.size() < 5 && current_ship.size() > 0) ? 1 : (current_ship.size() / 5)))	//5개당 배 이미지 1
 	{
 		while (true) {
-			POINT rand_pt = {
-				(rand() % tile_rt.right) + tile_rt.left
-				, (rand() % tile_rt.bottom) + tile_rt.top
-			};	//-r ~ r
+			int rand_x = RANDOM_MAKER->GetInt(tile_rt.left, tile_rt.right);
+			int rand_y = RANDOM_MAKER->GetInt(tile_rt.top, tile_rt.bottom);
+
+			POINT rand_pt = { rand_x, rand_y };	//-r ~ r
 
 			if (MyUtil::getIsometricIn(tile_rt, rand_pt) && !MyUtil::getIsometricIn(rt, rand_pt))	//tile_rt = tile size / rt = island size
 			{

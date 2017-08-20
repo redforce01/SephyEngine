@@ -172,7 +172,7 @@ void CWorld_Player::click_island()
 		if (PtInRect(&iter->getRect(), m_pInput->getMousePt()) && m_pInput->getMouseLButton())
 		{
 			//if (SOUNDMANAGER->isPlaySound(world_playerNS::SOUND_ISLAND))
-			SOUNDMANAGER->play(world_playerNS::SOUND_ISLAND, g_fSoundMasterVolume + g_fSoundEffectVolume);
+			SOUNDMANAGER->play(world_playerNS::SOUND_ISLAND, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 			select_island = iter;
 			island_ui->show_UI(iter->getPt(), iter->getWidth(), iter->getHeight());

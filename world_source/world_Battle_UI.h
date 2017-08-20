@@ -7,9 +7,14 @@ namespace worldbattleNS
 {
 	const std::string SOUND_OPEN = "Open_UI";
 
+	const std::string INFOR_MSG = "Battle Info";
+	const std::string START_MSG = "Battle Start";
+	const std::string RETREAT_MSG = "Retreat";
+	const std::string AUTO_MSG = "AUTO Battle";
+
 	// save infor
 	const UINT KINE_RESOURCE = 4;
-	const std::string FILE_PATH = "Resources\\42_WorldData\\World_Save_Data.txt";
+	const std::string FILE_PATH = "Resources\\40_WorldData\\World_Save_Data.txt";
 	const std::string FILE_START = "BEGIN\t";
 	const std::string FILE_FINISH = "\tEND\n";
 
@@ -31,8 +36,8 @@ namespace worldbattleNS
 	const UINT MARGIN = 20;					// text margin from Viewer edge
 
 	const char FONT[] = "Courier New";		// Viewer font
-	const int FONT_SIZE = 30;
-	const int FONT_HEIGHT = 30;				// height of the font in pixels
+	const int FONT_SIZE = 20;
+	const int FONT_HEIGHT = 20;				// height of the font in pixels
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 }
 

@@ -58,6 +58,21 @@ void CWorld_Scene::worldMove()
 		}
 	}
 
+	if (input->isKeyDown(ESC_KEY))
+	{
+		for (auto iter : bgm_list)
+		{
+			if (SOUNDMANAGER->isPlaySound(iter) == false)
+			{
+				SOUNDMANAGER->stop(iter);
+
+				break;
+			}
+		}
+
+		SCENEMANAGER->changeScene("Lobby");
+	}
+
 	//worldmap move speed
 	//if (input->isKeyDown('['))
 	//{
@@ -767,7 +782,7 @@ void CWorld_Scene::initialize(HWND hwnd)
 	data_load();
 
 	if (SOUNDMANAGER->isPlaySound(worldmapNS::SOUND_BGM) == false)
-		SOUNDMANAGER->play(worldmapNS::SOUND_BGM, g_fSoundMasterVolume + g_fSoundBGMVolume);
+		SOUNDMANAGER->play(worldmapNS::SOUND_BGM, g_fSoundMasterVolume * g_fSoundBGMVolume);
 
 	bgm_list.emplace_back(worldmapNS::SOUND_BGM);
 
@@ -790,7 +805,7 @@ void CWorld_Scene::update()
 	}
 
 	if (is_bgm == false)
-		SOUNDMANAGER->play(worldmapNS::SOUND_BGM + std::to_string(rand() % 5), g_fSoundMasterVolume + g_fSoundBGMVolume);
+		SOUNDMANAGER->play(worldmapNS::SOUND_BGM + std::to_string(RANDOM_MAKER->GetInt(0, 4)), g_fSoundMasterVolume * g_fSoundBGMVolume);
 
 	worldMove();
 

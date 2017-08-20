@@ -208,7 +208,7 @@ void CWorld_Island_Infor_Unit_UI::update(float frameTime)
 							player->add_resource(FUEL, ship[i]->get_resource(FUEL));
 							player->add_resource(RESEARCH, ship[i]->get_resource(RESEARCH));
 
-							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_CANCEL, g_fSoundMasterVolume + g_fSoundEffectVolume);
+							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_CANCEL, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 							SAFE_DELETE(ship[i]);
 							current_action = 0;
@@ -225,12 +225,12 @@ void CWorld_Island_Infor_Unit_UI::update(float frameTime)
 					{
 						if (ship[i]->get_is_destroy() == false)
 						{
-							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_SELECT, g_fSoundMasterVolume + g_fSoundEffectVolume);
+							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_SELECT, g_fSoundMasterVolume * g_fSoundEffectVolume);
 							ship[i]->set_is_destroy(true);
 						}
 						else
 						{
-							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_CANCEL, g_fSoundMasterVolume + g_fSoundEffectVolume);
+							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_CANCEL, g_fSoundMasterVolume * g_fSoundEffectVolume);
 							ship[i]->set_is_destroy(false);
 						}
 					}
@@ -404,7 +404,7 @@ void CWorld_Island_Infor_Unit_UI::set_action(CProduction_Ship * _ship)
 		return;
 	}
 
-	SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_SELECT, g_fSoundMasterVolume + g_fSoundEffectVolume);
+	SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_SELECT, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 	CProduction_Ship* obj = new CProduction_Ship;
 

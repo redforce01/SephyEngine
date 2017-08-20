@@ -384,7 +384,7 @@ void CWorld_Battle_UI::update(float frameTime)
 
 			if (PtInRect(&rt_infor, m_pInput->getMousePt()))
 			{
-				SOUNDMANAGER->play(worldbattleNS::SOUND_OPEN, g_fSoundMasterVolume + g_fSoundEffectVolume);
+				SOUNDMANAGER->play(worldbattleNS::SOUND_OPEN, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 				infor_ui->SetLoadLinkPlayer(player);
 				infor_ui->set_battle_island(battle_island);
@@ -453,15 +453,15 @@ void CWorld_Battle_UI::render()
 	shadow_retreat.bottom = rt_retreat.bottom + 2;
 	shadow_battle.bottom = rt_auto.bottom + 2;
 
-	m_test_font.print("전투 정보", shadow_infor, DT_RIGHT);
-	m_test_font.print("전투 돌입", shadow_start, DT_RIGHT);
-	m_test_font.print("전투 후퇴", shadow_retreat, DT_LEFT);
-	m_test_font.print("자동 전투", shadow_battle, DT_LEFT);
+	m_test_font.print(worldbattleNS::INFOR_MSG, shadow_infor, DT_RIGHT | DT_VCENTER);
+	m_test_font.print(worldbattleNS::START_MSG, shadow_start, DT_RIGHT | DT_VCENTER);
+	m_test_font.print(worldbattleNS::RETREAT_MSG, shadow_retreat, DT_LEFT | DT_VCENTER);
+	m_test_font.print(worldbattleNS::AUTO_MSG, shadow_battle, DT_LEFT | DT_VCENTER);
 
-	m_dxFont.print("전투 정보", rt_infor, DT_RIGHT);
-	m_dxFont.print("전투 돌입", rt_start, DT_RIGHT);
-	m_dxFont.print("전투 후퇴", rt_retreat, DT_LEFT);
-	m_dxFont.print("자동 전투", rt_auto, DT_LEFT);
+	m_dxFont.print(worldbattleNS::INFOR_MSG, rt_infor, DT_RIGHT | DT_VCENTER);
+	m_dxFont.print(worldbattleNS::START_MSG, rt_start, DT_RIGHT | DT_VCENTER);
+	m_dxFont.print(worldbattleNS::RETREAT_MSG, rt_retreat, DT_LEFT | DT_VCENTER);
+	m_dxFont.print(worldbattleNS::AUTO_MSG, rt_auto, DT_LEFT | DT_VCENTER);
 
 	m_pGraphics->spriteEnd();
 

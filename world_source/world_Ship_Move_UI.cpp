@@ -66,7 +66,7 @@ void CWorld_Ship_Move_UI::initialize(Graphics * g, Input * i)
 
 void CWorld_Ship_Move_UI::update(float frameTime)
 {
-	if (m_pInput->getMouseLButton())
+	if (m_pInput->getMouseRButton())
 		mouse_up = true;
 	else
 	{

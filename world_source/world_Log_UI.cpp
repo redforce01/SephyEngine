@@ -88,7 +88,7 @@ void CWorld_Log_UI::render()
 void CWorld_Log_UI::print_world_log(const std::string message)
 {
 	if (SOUNDMANAGER->isPlaySound(worldlogNS::SOUND_LOG) == false)
-		SOUNDMANAGER->play(worldlogNS::SOUND_LOG, g_fSoundMasterVolume + g_fSoundEffectVolume);
+		SOUNDMANAGER->play(worldlogNS::SOUND_LOG, g_fSoundMasterVolume * g_fSoundEffectVolume);
 	w_log_message.push_front(message);
 
 	if (w_log_message.size() > worldlogNS::MAX_LINES)

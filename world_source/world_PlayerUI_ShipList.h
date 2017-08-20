@@ -10,6 +10,13 @@ namespace world_p_shiplistNS
 	const UINT width = 108;
 	const UINT height = 46;
 	const float APEAR_TIME = 0.3f;
+
+	const UINT MARGIN = 10;
+
+	const char FONT[] = "Courier New";		// Viewer font
+	const int FONT_SIZE = 10;
+	const int FONT_HEIGHT = 10;				// height of the font in pixels
+	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 }
 
 class CWorld_Player;
@@ -20,10 +27,13 @@ private:
 
 	Graphics* m_pGraphics;
 	Input* m_pInput;
+	TextDX m_dxFont;
 
 	CWorld_ShipList_UI* ship_list;
 
 	SystemButton* button;
+
+	RECT rt_font;
 
 	UINT margin;
 	float delay;	//move complete
@@ -48,7 +58,7 @@ public:
 
 	static void click_event();
 
-	void w_move_ud(float _speed) { button->moveY(_speed); }
-	void w_move_rl(float _speed) { button->moveX(_speed); }
+	void w_move_ud(float _speed);
+	void w_move_rl(float _speed);
 };
 

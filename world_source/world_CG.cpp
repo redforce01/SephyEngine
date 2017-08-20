@@ -151,7 +151,7 @@ void CWorld_CG::update_battle_cg(float frameTime)
 void CWorld_CG::create_move_ship_cg(POINT _pt, POINT _destination, UINT _move)
 {
 	if (SOUNDMANAGER->isPlaySound(worldcgNS::SOUND_MOVE) == false)
-		SOUNDMANAGER->play(worldcgNS::SOUND_MOVE, g_fSoundMasterVolume + g_fSoundEffectVolume);
+		SOUNDMANAGER->play(worldcgNS::SOUND_MOVE, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 	img = new Image;
 
