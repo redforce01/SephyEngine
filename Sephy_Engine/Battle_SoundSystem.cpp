@@ -4,8 +4,8 @@
 
 CBattle_SoundSystem::CBattle_SoundSystem()
 {
-	m_strCurrentBGM = battleSoundSystemNS::BATTLE_BGM_PEACE;
-	m_strNextBGM = battleSoundSystemNS::BATTLE_BGM_PEACE;
+	m_strCurrentBGM = battleSoundSystemNS::BATTLE_BGM_START;
+	m_strNextBGM = battleSoundSystemNS::BATTLE_BGM_START;
 	m_fCurrentVolume = g_fSoundBGMVolume * g_fSoundMasterVolume;
 	m_enSituationType = SOUND_SITUATION_TYPE::BATTLE_SOUND_PEACE;
 }
@@ -20,7 +20,7 @@ bool CBattle_SoundSystem::initialize()
 	bool success = false;
 	try
 	{
-		m_mBGM.try_emplace(battleSoundSystemNS::BATTLE_BGM_PEACE, battleSoundSystemNS::BATTLE_BGM_PEACE);
+		m_mBGM.try_emplace(battleSoundSystemNS::BATTLE_BGM_START, battleSoundSystemNS::BATTLE_BGM_START);
 		m_mBGM.try_emplace(battleSoundSystemNS::BATTLE_BGM_BATTLE, battleSoundSystemNS::BATTLE_BGM_BATTLE);
 		m_mBGM.try_emplace(battleSoundSystemNS::BATTLE_BGM_WINNING, battleSoundSystemNS::BATTLE_BGM_WINNING);
 		m_mBGM.try_emplace(battleSoundSystemNS::BATTLE_BGM_LOSING, battleSoundSystemNS::BATTLE_BGM_LOSING);
@@ -36,7 +36,7 @@ bool CBattle_SoundSystem::initialize()
 
 void CBattle_SoundSystem::update(float frameTime)
 {
-	if (SOUNDMANAGER->isPlaySound(m_strCurrentBGM))
+	if (SOUNDMANAGER->isPlaySound(m_strCurrentBGM) == false)
 	{
 		SOUNDMANAGER->play(m_strCurrentBGM, m_fCurrentVolume);
 	}
@@ -46,7 +46,7 @@ void CBattle_SoundSystem::update(float frameTime)
 		m_fCurrentVolume -= battleSoundSystemNS::SOUND_CHANGE_SPEED;
 		if (m_fCurrentVolume <= 0)
 		{
-			stopBGM(m_strCurrentBGM);
+			pauseBGM(m_strCurrentBGM);
 			m_strCurrentBGM = m_strNextBGM;
 			m_fCurrentVolume = g_fSoundBGMVolume * g_fSoundMasterVolume;
 			SOUNDMANAGER->play(m_strCurrentBGM, m_fCurrentVolume);
@@ -64,7 +64,7 @@ void CBattle_SoundSystem::changeSituation(SOUND_SITUATION_TYPE situation)
 	switch (m_enSituationType)
 	{
 	case SOUND_SITUATION_TYPE::BATTLE_SOUND_PEACE:
-		changeBGM(battleSoundSystemNS::BATTLE_BGM_PEACE);
+		changeBGM(battleSoundSystemNS::BATTLE_BGM_START);
 		break;
 	case SOUND_SITUATION_TYPE::BATTLE_SOUND_BATTLE:
 		changeBGM(battleSoundSystemNS::BATTLE_BGM_BATTLE);
@@ -101,6 +101,19 @@ void CBattle_SoundSystem::stopBGM(std::string bgmKey)
 		if (iter.first == bgmKey)
 		{
 			SOUNDMANAGER->stop(iter.second);
+			return;
+		}
+	}
+	return;
+}
+
+void CBattle_SoundSystem::pauseBGM(std::string bgmKey)
+{
+	for (auto iter : m_mBGM)
+	{
+		if (iter.first == bgmKey)
+		{
+			SOUNDMANAGER->pause(iter.second);
 			return;
 		}
 	}

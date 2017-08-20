@@ -1,5 +1,5 @@
-#ifndef _BATTLE_MAPUI_RESPAWNAREA_H
-#define _BATTLE_MAPUI_RESPAWNAREA_H
+#ifndef _BATTLE_MAP_EVENT_AREA_RESPAWN_H
+#define _BATTLE_MAP_EVENT_AREA_RESPAWN_H
 #define WIN32_LEAN_AND_MEAN
 
 class CBattle_MapEventArea_RespawnArea;
@@ -74,4 +74,4 @@ public:
 	}
 };
 
-#endif // !_BATTLE_MAPUI_RESPAWNAREA_H
+#endif // !_BATTLE_MAP_EVENT_AREA_RESPAWN_H

@@ -85,9 +85,11 @@ CBattle_Ship::CBattle_Ship()
 	m_bChangeSprite				= false;
 	m_bSelected					= false;
 	m_bArrived					= true;
-	m_bFixedEngine				= false;
 	m_bFlagShip					= false;
 	//===========================================
+	m_bFixedEngine				= false;
+	m_bAutoGunOnOff				= true;
+	m_bAutoAAGunOnOff			= true;
 	m_bDetected					= false;
 	m_bDetectedSound			= false;
 	m_fUnDetectedTime			= 0.f;
@@ -768,12 +770,15 @@ void CBattle_Ship::collision()
 
 			POINT target = RANDOM_MAKER->GetPtInCircle(targetEvasionX, targetEvasionY, targetEvasionRad);
 
-			for (auto turretIter : m_vTurret)
+			if (m_bAutoGunOnOff)
 			{
-				if (turretIter->IsReloading())
-					continue;
+				for (auto turretIter : m_vTurret)
+				{
+					if (turretIter->IsReloading())
+						continue;
 
-				turretIter->Fire(target.x, target.y);
+					turretIter->Fire(target.x, target.y);
+				}
 			}
 
 			break;
@@ -1095,6 +1100,15 @@ void CBattle_Ship::HitDamage(float damage)
 		float centerY = m_vEntity[0].second->getCenterY();
 		pDigit->initialize(m_pGraphics, damage, digitType, centerX, centerY);
 		m_pBattleUnitSystem->addDamageDigit(pDigit);
+
+		if (m_bPlayerShip)
+		{
+			m_pBattleUnitSystem->addDamageScoreToComputer(damage);
+		}
+		else
+		{
+			m_pBattleUnitSystem->addDamageScoreToPlayer(damage);
+		}
 	}
 		
 	m_bAttacked = true;

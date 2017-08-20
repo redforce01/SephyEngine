@@ -60,6 +60,6 @@ void CBattle_UI_StartButton::functionBattleStart()
 				break;
 			}
 		}
-		SOUNDMANAGER->play(battleStartButtonNS::BATTLE_START_BGM_PHASE_1_NAME, g_fSoundMasterVolume * g_fSoundBGMVolume);
+		
 	}
 }

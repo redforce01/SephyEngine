@@ -12,6 +12,7 @@ class CBattle_MainSystem;
 #include "Battle_FleetSystem.h"
 #include "Battle_FogSystem.h"
 #include "Battle_SoundSystem.h"
+#include "Battle_ResultSystem.h"
 
 namespace battleMainSystemNS
 {
@@ -28,6 +29,7 @@ private:
 	CBattle_FleetSystem*	m_pBattle_FleetSystem;
 	CBattle_FogSystem*		m_pBattle_FogSystem;
 	CBattle_SoundSystem*	m_pBattle_SoundSystem;
+	CBattle_ResultSystem*	m_pBattle_ResultSystem;
 public:
 	CBattle_MainSystem();
 	~CBattle_MainSystem();

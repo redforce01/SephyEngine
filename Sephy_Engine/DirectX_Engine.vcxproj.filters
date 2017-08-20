@@ -430,6 +430,12 @@
     <Filter Include="GameCode\Battle\BattleUnitSystem\Interface\BattlePhaseAlert">
       <UniqueIdentifier>{cba55bb9-f91f-4ba5-b5bb-4031db5bbfb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameCode\Battle\BattleMenuSystem">
+      <UniqueIdentifier>{f8a809ff-9515-467c-8ac7-4b66dad0bb54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleResultSystem">
+      <UniqueIdentifier>{ebec609e-d7ad-49a0-92e0-bc6af64bcda6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -971,6 +977,21 @@
     </ClCompile>
     <ClCompile Include="Battle_ShipTailEffect.cpp">
       <Filter>GameCode\Battle\BattleUnitSystem\Unit\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MenuSystem.cpp">
+      <Filter>GameCode\Battle\BattleMenuSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapEventArea_ObserverArea.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_MapEventArea_WeatherFogArea.cpp">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_BattleResult.cpp">
+      <Filter>GameCode\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_ResultSystem.cpp">
+      <Filter>GameCode\Battle\BattleResultSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1534,6 +1555,21 @@
     </ClInclude>
     <ClInclude Include="Battle_ShipTailEffect.h">
       <Filter>GameCode\Battle\BattleUnitSystem\Unit\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MenuSystem.h">
+      <Filter>GameCode\Battle\BattleMenuSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapEventArea_ObserverArea.h">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_MapEventArea_WeatherFogArea.h">
+      <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_BattleResult.h">
+      <Filter>GameCode\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_ResultSystem.h">
+      <Filter>GameCode\Battle\BattleResultSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

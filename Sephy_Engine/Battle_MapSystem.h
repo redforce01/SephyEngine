@@ -12,6 +12,8 @@ class CBattle_MapSystem;
 #include "Battle_MapEventArea_RespawnArea.h"
 #include "Battle_MapEventArea_CollisionArea.h"
 #include "Battle_MapEventArea_RepairArea.h"
+#include "Battle_MapEventArea_ObserverArea.h"
+#include "Battle_MapEventArea_WeatherFogArea.h"
 
 namespace battleMapSystemNS
 {
@@ -50,10 +52,12 @@ private: // Battle MapParser
 	CBattle_MapParser* m_pBattleMapDataParser;
 
 private:
-	std::vector<CBattle_MapEventArea_StartingArea*> m_vStartingAreaFlag;
-	std::vector<CBattle_MapEventArea_RespawnArea*> m_vRespawnArea;
-	std::vector<CBattle_MapEventArea_CollisionArea*> m_vCollisionArea;
-	std::vector<CBattle_MapEventArea_RepairArea*> m_vRepairArea;
+	std::vector<CBattle_MapEventArea_StartingArea*>		m_vStartingArea;
+	std::vector<CBattle_MapEventArea_RespawnArea*>		m_vRespawnArea;
+	std::vector<CBattle_MapEventArea_CollisionArea*>	m_vCollisionArea;
+	std::vector<CBattle_MapEventArea_RepairArea*>		m_vRepairArea;
+	std::vector<CBattle_MapEventArea_ObserverArea*>		m_vObserverArea;
+	std::vector<CBattle_MapEventArea_WeatherFogArea*>	m_vWeatherFogArea;
 public:
 	CBattle_MapSystem();
 	~CBattle_MapSystem();
@@ -208,13 +212,28 @@ public:
 
 	CBattle_MapEventArea_StartingArea* getPlayerStartingArea() const
 	{
-		if(m_vStartingAreaFlag.size() > 0)
-			return m_vStartingAreaFlag[0];
+		if(m_vStartingArea.size() > 0)
+			return m_vStartingArea[0];
+	}
+
+	std::vector<CBattle_MapEventArea_StartingArea*> getStartingArea() const
+	{
+		return m_vStartingArea;
 	}
 
 	std::vector<CBattle_MapEventArea_RepairArea*> getRepairArea() const
 	{
 		return m_vRepairArea;
+	}
+
+	std::vector<CBattle_MapEventArea_ObserverArea*> getObserverArea() const
+	{
+		return m_vObserverArea;
+	}
+
+	std::vector<CBattle_MapEventArea_WeatherFogArea*> getWeatherFogArea() const
+	{
+		return m_vWeatherFogArea;
 	}
 
 	//=============================================

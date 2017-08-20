@@ -11,6 +11,7 @@ CBattle_MainSystem::CBattle_MainSystem()
 	m_pBattle_FleetSystem = nullptr;
 	m_pBattle_FogSystem = nullptr;
 	m_pBattle_SoundSystem = nullptr;
+	m_pBattle_ResultSystem = nullptr;
 }
 
 
@@ -23,6 +24,7 @@ CBattle_MainSystem::~CBattle_MainSystem()
 	SAFE_DELETE(m_pBattle_FleetSystem);
 	SAFE_DELETE(m_pBattle_FogSystem);
 	SAFE_DELETE(m_pBattle_SoundSystem);
+	SAFE_DELETE(m_pBattle_ResultSystem);
 }
 
 bool CBattle_MainSystem::initialize(Game * gamePtr)
@@ -49,6 +51,7 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		success = m_pBattle_FogSystem->initialize(gamePtr);
 		m_pBattle_SoundSystem = new CBattle_SoundSystem;
 		success = m_pBattle_SoundSystem->initialize();
+		m_pBattle_ResultSystem = new CBattle_ResultSystem;
 		// End - Battle Map DataParser
 		//=====================================================================
 		// Each System Connect to The Other Systems - Start
@@ -60,7 +63,9 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		m_pBattle_UnitSystem->setMemoryLinkBattleMapSystem(m_pBattle_MapSystem);
 		m_pBattle_UnitSystem->setMemoryLinkBattleFleetSystem(m_pBattle_FleetSystem);
 		m_pBattle_UnitSystem->setMemoryLinkBattleFogSystem(m_pBattle_FogSystem);
+		m_pBattle_UnitSystem->setMemoryLinkBattleResultSystem(m_pBattle_ResultSystem);
 		m_pBattle_FogSystem->setMemoryLinkBattleUnitSystem(m_pBattle_UnitSystem);
+		m_pBattle_ResultSystem->setMemoryLinkBattleUnitSystem(m_pBattle_UnitSystem);
 		// End - Each System Connect to Other Systems
 		//=====================================================================
 		// UnitSystem Workable Add Rect 
@@ -73,7 +78,7 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		auto battleMapName = m_pBattle_DataParser->getBattleMapName();
 		m_pBattle_MapSystem->loadBattleMap(battleMapName);
 		m_pBattle_MapSystem->setupEventObject();
-		
+		m_pBattle_UnitSystem->setWorldIndex(m_pBattle_DataParser->getBattleWorldIndex());
 		auto battlePlayerShipData = m_pBattle_DataParser->getBattlePlayerShipData();
 		m_pBattle_UnitSystem->loadPlayerShipData(battlePlayerShipData);
 		auto battleAIDataShipData = m_pBattle_DataParser->getBattleAIShipData();
@@ -122,6 +127,11 @@ void CBattle_MainSystem::update(float frameTime)
 	m_pBattle_UnitSystem->update(frameTime);
 	m_pBattle_FogSystem->update(frameTime);
 	//m_pBattle_SoundSystem->update(frameTime);
+
+	if (m_pBattle_UnitSystem->getBattleFinish())
+	{
+		SCENEMANAGER->changeSceneWithLoading("BattleResult", "BattleLoading");
+	}
 }
 
 void CBattle_MainSystem::render()

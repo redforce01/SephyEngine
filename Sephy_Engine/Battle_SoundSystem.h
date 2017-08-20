@@ -9,11 +9,11 @@ class CBattle_SoundSystem;
 namespace battleSoundSystemNS
 {
 	const std::string ERROR_MESSAGE = "Battle Sound System Initialize Failed";
-	const std::string BATTLE_BGM_PEACE		= "";
+	const std::string BATTLE_BGM_START		= "battle2";
 	const std::string BATTLE_BGM_BATTLE		= "";
 	const std::string BATTLE_BGM_WINNING	= "";
 	const std::string BATTLE_BGM_LOSING		= "";
-	const float SOUND_CHANGE_SPEED = 1.0f;
+	const float SOUND_CHANGE_SPEED = 1.0f;	
 }
 
 enum class SOUND_SITUATION_TYPE
@@ -42,6 +42,7 @@ public:
 
 	void changeBGM(std::string bgmKey);
 	void stopBGM(std::string bgmKey);
+	void pauseBGM(std::string bgmKey);
 };
 
 #endif // !_BATTLE_SOUNDSYSTEM_H

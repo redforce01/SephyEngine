@@ -22,16 +22,34 @@ void CBattle_DataParser::battleDataRecognize(std::vector<std::string> vArray)
 	if (vArray.size() <= 0)
 		return;
 
-	int recogCount = 0;
+	std::string befWorldIndexName;
 	std::string befMapName;
 	std::vector<std::string> vbefPlayerData;
 	std::vector<std::string> vbefAIData;
 	
+	bool bRecogWorld = false;
 	bool bRecogMap = false;
 	bool bRecogPlayerShip = false;
 	bool bRecogAIShip = false;
 	for (auto iter : vArray)
 	{
+		if (iter.compare(battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + battleDataParserNS::BATTLE_DATA_WORLD_INDEX_KEY) == false)
+		{
+			bRecogWorld = true;
+			continue;
+		}
+		else if (iter.compare(battleDataParserNS::BATTLE_DATA_WORLD_INDEX_KEY + " " + battleDataParserNS::DATA_FORMAT_END_KEY) == false)
+		{
+			bRecogWorld = false;
+			continue;
+		}
+
+		if (bRecogWorld)
+		{
+			befWorldIndexName = iter;
+			continue;
+		}
+
 		if (iter.compare(battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + battleDataParserNS::BATTLE_MAP_KEY) == false)
 		{
 			bRecogMap = true;
@@ -84,9 +102,22 @@ void CBattle_DataParser::battleDataRecognize(std::vector<std::string> vArray)
 		}
 	}
 
+	battleWorldIndexRecognize(befWorldIndexName);
 	battleMapDataRecognize(befMapName);
 	battlePlayerDataRecognize(vbefPlayerData);
 	battleAIDataRecognize(vbefAIData);
+}
+
+void CBattle_DataParser::battleWorldIndexRecognize(std::string worldIndex)
+{
+	int startKeyPos = worldIndex.rfind(battleDataParserNS::DATA_FORMAT_BEGIN_KEY);
+	int endKeyPos = worldIndex.rfind(battleDataParserNS::DATA_FORMAT_END_KEY);
+
+	std::string strMapName = worldIndex.substr(
+		startKeyPos + battleDataParserNS::DATA_FORMAT_BEGIN_KEY.length() + 1,
+		endKeyPos - (battleDataParserNS::DATA_FORMAT_END_KEY.length() * 2) - 2);
+
+	m_strWorldIndex = strMapName;
 }
 
 void CBattle_DataParser::battleMapDataRecognize(std::string mapName)

@@ -16,7 +16,7 @@ CBattle_MapSystem::CBattle_MapSystem()
 CBattle_MapSystem::~CBattle_MapSystem()
 {
 	//=======================================
-	// Original Object Datas  
+	// Original Object Datas SAFE DELETE
 	//  + [Cell / Object / Event Object]
 	//=======================================
 	for (auto iter : m_vCells)
@@ -39,7 +39,7 @@ CBattle_MapSystem::~CBattle_MapSystem()
 
 
 	//=======================================
-	// Reocgnized + Replace Event Objects
+	// Event Area SAFE DELETE
 	//=======================================
 	for (auto iter : m_vCollisionArea)
 	{
@@ -47,11 +47,11 @@ CBattle_MapSystem::~CBattle_MapSystem()
 	}
 	m_vCollisionArea.clear();
 
-	for (auto iter : m_vStartingAreaFlag)
+	for (auto iter : m_vStartingArea)
 	{
 		SAFE_DELETE(iter);
 	}
-	m_vStartingAreaFlag.clear();
+	m_vStartingArea.clear();
 
 	for (auto iter : m_vRespawnArea)
 	{
@@ -64,6 +64,12 @@ CBattle_MapSystem::~CBattle_MapSystem()
 		SAFE_DELETE(iter);
 	}
 	m_vRepairArea.clear();
+
+	for (auto iter : m_vObserverArea)
+	{
+		SAFE_DELETE(iter);
+	}
+	m_vObserverArea.clear();
 
 	SAFE_DELETE(m_pBattleMapDataParser);
 }
@@ -121,12 +127,22 @@ void CBattle_MapSystem::update(float frameTime)
 	}
 
 	// Update All Starting Area Flag UI
-	for (auto iter : m_vStartingAreaFlag)
+	for (auto iter : m_vStartingArea)
 	{
 		iter->update(frameTime);
 	}
-
+	// Update All Repair Area
 	for (auto iter : m_vRepairArea)
+	{
+		iter->update(frameTime);
+	}
+	// Update All Observer Area
+	for (auto iter : m_vObserverArea)
+	{
+		iter->update(frameTime);
+	}
+	// Update All Weather - Fog Area
+	for (auto iter : m_vWeatherFogArea)
 	{
 		iter->update(frameTime);
 	}
@@ -171,7 +187,7 @@ void CBattle_MapSystem::render()
 	}
 
 	// Render Starting Area Flag
-	for (auto iter : m_vStartingAreaFlag)
+	for (auto iter : m_vStartingArea)
 	{
 		iter->render();
 	}
@@ -182,6 +198,16 @@ void CBattle_MapSystem::render()
 	}
 	// Render Repair Area
 	for (auto iter : m_vRepairArea)
+	{
+		iter->render();
+	}
+	// Render Observer Area
+	for (auto iter : m_vObserverArea)
+	{
+		iter->render();
+	}
+	// Render Weather - Fog Area
+	for (auto iter : m_vWeatherFogArea)
 	{
 		iter->render();
 	}
@@ -211,7 +237,7 @@ void CBattle_MapSystem::moveX(int distance)
 	{
 		iter->moveX(distance);
 	}
-	for (auto iter : m_vStartingAreaFlag)
+	for (auto iter : m_vStartingArea)
 	{
 		iter->moveX(distance);
 	}
@@ -220,6 +246,14 @@ void CBattle_MapSystem::moveX(int distance)
 		iter->moveX(distance);
 	}
 	for (auto iter : m_vRepairArea)
+	{
+		iter->moveX(distance);
+	}
+	for (auto iter : m_vObserverArea)
+	{
+		iter->moveX(distance);
+	}
+	for (auto iter : m_vWeatherFogArea)
 	{
 		iter->moveX(distance);
 	}
@@ -248,7 +282,7 @@ void CBattle_MapSystem::moveY(int distance)
 	{
 		iter->moveY(distance);
 	}
-	for (auto iter : m_vStartingAreaFlag)
+	for (auto iter : m_vStartingArea)
 	{
 		iter->moveY(distance);
 	}
@@ -257,6 +291,14 @@ void CBattle_MapSystem::moveY(int distance)
 		iter->moveY(distance);
 	}
 	for (auto iter : m_vRepairArea)
+	{
+		iter->moveY(distance);
+	}
+	for (auto iter : m_vObserverArea)
+	{
+		iter->moveY(distance);
+	}
+	for (auto iter : m_vWeatherFogArea)
 	{
 		iter->moveY(distance);
 	}
@@ -297,16 +339,26 @@ void CBattle_MapSystem::setupEventObject()
 				break;
 			}
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_OBSERVER:
+			{
+				CBattle_MapEventArea_ObserverArea* observerArea = new CBattle_MapEventArea_ObserverArea;
+				observerArea->initialize(m_pGraphics, iter->getCenterPosX(), iter->getCenterPosY());
+				m_vObserverArea.emplace_back(observerArea);
+			}
 			break;
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_BUILDING_REFUEL:
 			break;
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_WEATHER_FOG:
-			break;
+			{
+				CBattle_MapEventArea_WeatherFogArea* weatherFogArea = new CBattle_MapEventArea_WeatherFogArea;
+				weatherFogArea->initialize(m_pGraphics, iter->getCenterPosX(), iter->getCenterPosY());
+				m_vWeatherFogArea.emplace_back(weatherFogArea);
+				break;
+			}
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_WEATHER_RAIN:
 			break;
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_RESPAWN:
 			{
-			CBattle_MapEventArea_RespawnArea* tempArea = new CBattle_MapEventArea_RespawnArea;
+				CBattle_MapEventArea_RespawnArea* tempArea = new CBattle_MapEventArea_RespawnArea;
 				tempArea->initialize(m_pGraphics);
 				tempArea->setRespawnAreaCenterX(iter->getCenterPosX());
 				tempArea->setRespawnAreaCenterY(iter->getCenterPosY());
@@ -316,13 +368,14 @@ void CBattle_MapSystem::setupEventObject()
 			}
 		case EVENT_OBJECT_TYPE::EVENT_OBJECT_GAME_STARTING:
 			{
-			CBattle_MapEventArea_StartingArea* tempFlag = new CBattle_MapEventArea_StartingArea;
-				if (m_vStartingAreaFlag.size() > 0)
+				CBattle_MapEventArea_StartingArea* tempFlag = new CBattle_MapEventArea_StartingArea;
+				if (m_vStartingArea.size() > 0)
 				{
-					// Size > 0? Enemy Area
+					// Enemy Area
 					tempFlag->initialize(m_pGraphics, 1);
 					tempFlag->setFlagCenterX(iter->getCenterPosX());
 					tempFlag->setFlagCenterY(iter->getCenterPosY());
+					tempFlag->setPlayerArea(false);
 				}
 				else
 				{
@@ -330,9 +383,10 @@ void CBattle_MapSystem::setupEventObject()
 					tempFlag->initialize(m_pGraphics, 0);
 					tempFlag->setFlagCenterX(iter->getCenterPosX());
 					tempFlag->setFlagCenterY(iter->getCenterPosY());
+					tempFlag->setPlayerArea(true);
 				}
 
-				m_vStartingAreaFlag.emplace_back(tempFlag);
+				m_vStartingArea.emplace_back(tempFlag);
 				break;
 			}
 		}

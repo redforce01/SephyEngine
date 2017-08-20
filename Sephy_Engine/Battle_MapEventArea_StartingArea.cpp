@@ -7,7 +7,15 @@ CBattle_MapEventArea_StartingArea::CBattle_MapEventArea_StartingArea()
 	m_nSpriteNumber = 0;
 	m_nAreaType		= 0;
 	m_fAreaRadius	= battleMapUIStartingAreaNS::STARTING_AREA_RADIUS;
-	m_centerX = m_centerY = 0.f;
+	m_centerX		= 0.f;
+	m_centerY		= 0.f;
+	//=======================================
+	m_pProgressback		= nullptr;
+	m_pProgress			= nullptr;
+	m_bPlayerArea		= false;
+	m_bCapturing		= false;
+	m_bCaptureToPlayer	= false;
+	m_fCaptureTime		= 0.f;
 }
 
 
@@ -15,6 +23,8 @@ CBattle_MapEventArea_StartingArea::~CBattle_MapEventArea_StartingArea()
 {
 	SAFE_DELETE(m_pAreaFlag);
 	SAFE_DELETE(m_pAreaFlagShadow);	
+	SAFE_DELETE(m_pProgressback);
+	SAFE_DELETE(m_pProgress);
 }
 
 bool CBattle_MapEventArea_StartingArea::initialize(Graphics * g, int nAreaType)
@@ -57,6 +67,11 @@ bool CBattle_MapEventArea_StartingArea::initialize(Graphics * g, int nAreaType)
 		m_pAreaFlagShadow = new Image;
 		success = m_pAreaFlagShadow->initialize(m_pGraphics, 0, 0, 0, IMAGEMANAGER->getTexture(m_strFlagShadowKey));
 		m_pAreaFlagShadow->setColorFilter(graphicsNS::UNIT_LIGHT_SHADOW);
+		//=========================================================================
+		m_pProgressback = new Image;
+		m_pProgressback->initialize(m_pGraphics, 0, 0, 0, IMAGEMANAGER->getTexture(battleMapUIStartingAreaNS::PROGRESS_BACK));
+		m_pProgress = new Image;
+		m_pProgress->initialize(m_pGraphics, 0, 0, 0, IMAGEMANAGER->getTexture(battleMapUIStartingAreaNS::PROGRESS_BLUE));
 	}
 	catch (...)
 	{
@@ -75,6 +90,41 @@ void CBattle_MapEventArea_StartingArea::update(float frameTime)
 	float height = m_pAreaFlag->getHeight();
 	m_centerX = m_pAreaFlag->getCenterX();
 	m_centerY = m_pAreaFlag->getCenterY();
+
+	if (m_bCapturing)
+	{
+		if (m_bCaptureToPlayer)
+		{
+			m_fCaptureTime += frameTime;
+			float rate = (m_fCaptureTime / battleMapUIStartingAreaNS::CAPTURE_TIME) * 100.f;
+			auto rc = m_pProgress->getSpriteDataRect();
+			rc.right = rc.left + (rate / 100) * battleMapUIStartingAreaNS::PROGRESS_WIDTH;
+			m_pProgress->setSpriteDataRect(rc);
+			if (m_fCaptureTime >= battleMapUIStartingAreaNS::CAPTURE_TIME)
+			{
+				m_fCaptureTime = 0.f;
+				m_bCapturing = false;
+				m_bPlayerArea = true;
+			}
+		}
+		else
+		{
+			if (m_fCaptureTime > 0)
+			{
+				m_fCaptureTime -= frameTime;
+				float rate = (m_fCaptureTime / battleMapUIStartingAreaNS::CAPTURE_TIME) * 100.f;
+				auto rc = m_pProgress->getSpriteDataRect();
+				rc.right = rc.left + (rate / 100) * battleMapUIStartingAreaNS::PROGRESS_WIDTH;
+				m_pProgress->setSpriteDataRect(rc);
+			}
+			else
+			{
+				m_bCapturing = false;
+				m_bPlayerArea = false;
+				m_fCaptureTime = 0.f;
+			}
+		}
+	}
 
 	if (MyUtil::getObjInScreen(x, y, width, height, g_fScreenWidth, g_fScreenHeight) == false)
 		return;
@@ -134,6 +184,12 @@ void CBattle_MapEventArea_StartingArea::render()
 	m_pGraphics->spriteBegin();
 	m_pAreaFlag->draw();
 	m_pAreaFlagShadow->draw();
+
+	if (m_fCaptureTime > 0)
+	{
+		m_pProgressback->draw();
+		m_pProgress->draw();
+	}
 	m_pGraphics->spriteEnd();
 }
 
@@ -142,6 +198,8 @@ void CBattle_MapEventArea_StartingArea::moveX(float fDistance)
 	m_pAreaFlag->moveX(fDistance);
 	m_pAreaFlagShadow->moveX(fDistance);
 	m_centerX += fDistance;
+	m_pProgressback->moveX(fDistance);
+	m_pProgress->moveX(fDistance);
 }
 
 void CBattle_MapEventArea_StartingArea::moveY(float fDistance)
@@ -149,6 +207,14 @@ void CBattle_MapEventArea_StartingArea::moveY(float fDistance)
 	m_pAreaFlag->moveY(fDistance);
 	m_pAreaFlagShadow->moveY(fDistance);
 	m_centerY += fDistance;
+	m_pProgressback->moveY(fDistance);
+	m_pProgress->moveY(fDistance);
+}
+
+void CBattle_MapEventArea_StartingArea::capturing(bool bPlayerTo)
+{
+	m_bCapturing = true;
+	m_bCaptureToPlayer = bPlayerTo;
 }
 
 void CBattle_MapEventArea_StartingArea::setFlagCenterX(float fCenterX)
@@ -156,6 +222,8 @@ void CBattle_MapEventArea_StartingArea::setFlagCenterX(float fCenterX)
 	m_pAreaFlag->setX(fCenterX - m_pAreaFlag->getWidth() / 2);
 	m_pAreaFlagShadow->setX(fCenterX - m_pAreaFlag->getWidth() / 2);
 	m_centerX = fCenterX;
+	m_pProgressback->setX(m_centerX + battleMapUIStartingAreaNS::PROGRESS_RELATE_X);
+	m_pProgress->setX(m_centerX + battleMapUIStartingAreaNS::PROGRESS_RELATE_X + 1);
 }
 
 void CBattle_MapEventArea_StartingArea::setFlagCenterY(float fCenterY)
@@ -163,4 +231,6 @@ void CBattle_MapEventArea_StartingArea::setFlagCenterY(float fCenterY)
 	m_pAreaFlag->setY(fCenterY - m_pAreaFlag->getHeight() / 2);
 	m_pAreaFlagShadow->setY(fCenterY - m_pAreaFlag->getHeight() / 2);
 	m_centerY = fCenterY;
+	m_pProgressback->setY(m_centerY + battleMapUIStartingAreaNS::PROGRESS_RELATE_Y);
+	m_pProgress->setY(m_centerY + battleMapUIStartingAreaNS::PROGRESS_RELATE_Y + 1);
 }

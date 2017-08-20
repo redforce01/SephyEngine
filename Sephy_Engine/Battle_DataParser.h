@@ -12,6 +12,7 @@ namespace battleDataParserNS
 {
 	const std::string BATTLE_DATA_FOLDER = "51_Battle";
 	const std::string BATTLE_DATA_FILENAME = "Battle_Data";
+	const std::string BATTLE_DATA_WORLD_INDEX_KEY = "WorldIndex";
 	const std::string BATTLE_MAP_KEY = "MapData";
 	const std::string BATTLE_PLAYER_KEY = "PlayerData";
 	const std::string BATTLE_AI_KEY = "AIData";
@@ -22,6 +23,7 @@ namespace battleDataParserNS
 class CBattle_DataParser
 {
 private:
+	std::string m_strWorldIndex;
 	std::string m_strMapName;
 	std::vector<std::string> m_vPlayerShipData;
 	std::vector<std::string> m_vAIShipData;
@@ -40,6 +42,7 @@ public:
 private:
 	// Recognize Battle Data
 	void battleDataRecognize(std::vector<std::string> vArray);
+	void battleWorldIndexRecognize(std::string worldIndex);
 	void battleMapDataRecognize(std::string mapName);
 	void battlePlayerDataRecognize(std::vector<std::string> vArray);
 	void battleAIDataRecognize(std::vector<std::string> vArray);
@@ -47,6 +50,10 @@ public:
 	//============================================
 	// Getter Functions
 	//============================================
+	std::string getBattleWorldIndex() const
+	{
+		return m_strWorldIndex;
+	}
 	std::string getBattleMapName() const
 	{
 		return m_strMapName;

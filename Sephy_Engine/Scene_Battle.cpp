@@ -19,13 +19,11 @@ void CScene_Battle::initialize(HWND hwnd)
 	
 	m_pBattleMainSystem = new CBattle_MainSystem;
 	m_pBattleMainSystem->initialize(this);
-
 }
 
 void CScene_Battle::update()
 {
 	m_pBattleMainSystem->update(frameTime);
-
 }
 
 void CScene_Battle::release()

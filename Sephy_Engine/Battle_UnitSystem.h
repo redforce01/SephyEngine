@@ -35,13 +35,14 @@ namespace battleUnitSystemNS
 	const std::string FLEET_MOVE_ORDER_SOUND_NAME = "Voice_OK";
 	const std::string SHIP_MOVE_ORDER_SOUND_NAME = "Voice_Confirm";
 	const std::string ENEMY_SHIP_INSIGHT_SOUND_NAME = "Voice_Enemyshipinside";
-	
+	const std::string BATTLE_START_BGM_PHASE_1_NAME = "battle2";
 }
 
 class CBattle_FogSystem;
 class CBattle_FleetSystem;
 class CBattle_MapSystem;
 class CBattle_CameraSystem;
+class CBattle_ResultSystem;
 class CBattle_UnitSystem : public SystemBase
 {
 private: // Forward Declaration
@@ -49,6 +50,7 @@ private: // Forward Declaration
 	CBattle_MapSystem*		m_pBattleMapSystem;
 	CBattle_FleetSystem*	m_pBattleFleetSystem;
 	CBattle_FogSystem*		m_pBattleFogSystem;
+	CBattle_ResultSystem*	m_pBattleResultSystem;
 private:
 	typedef std::vector<CBattle_Ship*> arrShips;
 	Game* m_pGamePtr;
@@ -65,6 +67,8 @@ private:
 	bool m_bRePlaceShip;
 	bool m_bSetupShip;
 	bool m_bBattleStart;
+	bool m_bBattleFinish;
+	bool m_bPlayerWin;
 	bool m_bCreateFleet;
 	bool m_bSetUpFlagShip;
 private:
@@ -99,7 +103,37 @@ private: // Variables For Setup Unique ID to Ship
 	int m_nLoad_Player_ShipUniqueID;
 	int m_nLoad_AI_ShipUniqueID;
 
-
+private:
+	std::string m_strWorldIndex;
+public:
+	void setWorldIndex(std::string strWorldIndex)
+	{
+		m_strWorldIndex = strWorldIndex;
+	}
+	std::string getWorldIndex() const
+	{
+		return m_strWorldIndex;
+	}
+private:
+	float m_fPlayerDamageScore;
+	float m_fComputerDamageScore;
+public:
+	void addDamageScoreToPlayer(float score)
+	{
+		m_fPlayerDamageScore += score;
+	}
+	void addDamageScoreToComputer(float score)
+	{
+		m_fComputerDamageScore += score;
+	}
+	float getDamageScoreFromPlayer() const
+	{
+		return m_fPlayerDamageScore;
+	}
+	float getDamageScoreFromComputer() const
+	{
+		return m_fComputerDamageScore;
+	}
 private: // Bullet
 	std::vector<CBattle_Bullet*> m_vBullets;
 public:
@@ -234,6 +268,11 @@ public:
 		m_bBattleStart = bStart;
 	}
 
+	void setBattleFinish(bool bFinish)
+	{
+		m_bBattleFinish = bFinish;
+	}
+
 	void setCreateFleet(bool bCreateFleet)
 	{
 		m_bCreateFleet = bCreateFleet;
@@ -256,6 +295,11 @@ public:
 	bool getBattleStart() const
 	{
 		return m_bBattleStart;
+	}
+
+	bool getBattleFinish() const
+	{
+		return m_bBattleFinish;
 	}
 
 	std::vector<CBattle_Ship*> getPlayerShips() const
@@ -282,6 +326,11 @@ public:
 		return m_vFleetMakeShips;
 	}
 
+	bool getPlayerWin() const
+	{
+		return m_bPlayerWin;
+	}
+
 	//==================================================
 	// Forward Declaration MemoryLink Functions
 	//==================================================
@@ -300,6 +349,10 @@ public:
 	void setMemoryLinkBattleFogSystem(CBattle_FogSystem* pBattleFogSystem)
 	{
 		m_pBattleFogSystem = pBattleFogSystem;
+	}
+	void setMemoryLinkBattleResultSystem(CBattle_ResultSystem* pBattleResultSystem)
+	{
+		m_pBattleResultSystem = pBattleResultSystem;
 	}
 };
 

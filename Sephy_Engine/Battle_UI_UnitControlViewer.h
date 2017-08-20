@@ -5,6 +5,7 @@
 class CBattle_UnitControlViewer;
 
 #include "systemUIDialog.h"
+#include "systemButton.h"
 
 namespace battleUIUnitControlViewerNS
 {
@@ -42,6 +43,40 @@ namespace battleUIUnitControlViewerNS
 	const float INFO_GUIDE_SHIP_RANK_MARK_RELATE_Y = 40.f;
 	const std::string SHIP_RANK_DEFAULT = "S_6CW";
 	const std::string SHIP_RANK_SMALL_KEY = "S_";
+	//========================================================
+	const std::string AAGUN_BUTTON_NAME = "AAGun";
+	const std::string GUN_BUTTON_NAME = "Gun";
+	const float GUN_BUTTON_RELATE_X = 210.f;
+	const float GUN_BUTTON_RELATE_Y = 140.f;
+	const float AAGUN_BUTTON_RELATE_X = 210.f;
+	const float AAGUN_BUTTON_RELATE_Y = 160.f;
+	const std::string GUN_STATE_ON		= "GUN ON";
+	const std::string GUN_STATE_OFF		= "GUN OFF";
+	const std::string AAGUN_STATE_ON	= "AA ON";
+	const std::string AAGUN_STATE_OFF	= "AA OFF";
+	const float GUN_STATE_MESSAGE_RELATE_X	= 150.f;
+	const float GUN_STATE_MESSAGE_RELATE_Y	= 140.f;
+	const float GUN_STATE_MESSAGE_WIDTH		= 80.f;
+	const float GUN_STATE_MESSAGE_HEIGHT	= 17.f;
+	const float AAGUN_STATE_MESSAGE_RELATE_X	= 150.f;
+	const float AAGUN_STATE_MESSAGE_RELATE_Y	= 160.f;
+	const float AAGUN_STATE_MESSAGE_WIDTH		= 80.f;
+	const float AAGUN_STATE_MESSAGE_HEIGHT		= 17.f;
+	//========================================================
+	const std::string ENGINE_STATE_SIGN_NAME_ON		= "onSign";
+	const std::string ENGINE_STATE_SIGN_NAME_OFF	= "offSign";
+	const std::string ENGINE_BUTTON_NAME			= "Engine_";
+	const UINT ENGINE_BUTTON_MAX_FRAME				= 3;
+	const std::string ENGINE_BUTTON_STATE_ON		= "EngineFix ON";
+	const std::string ENGINE_BUTTON_STATE_OFF		= "EngineFix OFF";
+	const float ENGINE_BUTTON_RELATE_X	= 120.f;
+	const float ENGINE_BUTTON_RELATE_Y	= 140.f;
+	const float ENGINE_STATE_SIGN_RELATE_X	= 90.f;
+	const float ENGINE_STATE_SIGN_RELATE_Y	= 155.f;
+	const float ENGINE_STATE_MESSAGE_RELATE_X = 17.f;
+	const float ENGINE_STATE_MESSAGE_RELATE_Y = 135.f;
+	const float ENGINE_STATE_MESSAGE_WIDTH = 100.f;
+	const float ENGINE_STATE_MESSAGE_HEIGHT = 17.f;
 }
 
 class CBattle_Ship;
@@ -77,7 +112,23 @@ private:
 	RECT m_rcShipRepairSpeedGuide;
 	RECT m_rcShipRotateSpeedGuide;
 	RECT m_rcShipFleetNameGuide;
-	
+private:
+	SystemButton* m_pGunButton;
+	SystemButton* m_pAAGunButton;
+	bool m_bAutoGunOnOff;
+	bool m_bAutoAAGunOnOff;
+	RECT m_rcAutoGunStateMessage;
+	RECT m_rcAutoAAGunStateMessage;
+	std::string m_strAutoGunStateMessage;
+	std::string m_strAutoAAGunStateMessage;
+private:
+	Image*		m_pEngineButton;
+	Image*		m_pEngineState;
+	int			m_nEngineBtnSpriteNumber;
+	bool		m_bFixedEngineOnOff;
+	std::string m_strEngineStateMessage;
+	RECT		m_rcEngineStateMessage;
+
 public:
 	CBattle_UI_UnitControlViewer();
 	~CBattle_UI_UnitControlViewer();
@@ -86,6 +137,10 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render() override;
 
+	//================================================
+	// Member Functions
+	//================================================
+
 	void setupShip(CBattle_Ship* pShip)
 	{
 		m_pShip = pShip;
@@ -93,8 +148,17 @@ public:
 	}
 	void setupNone(bool bNone)
 	{
-		m_bNoneData = bNone;
+		m_bNoneData = bNone;	
 	}
+
+	void setupShipEngineOnOff();
+
+	//================================================
+	// Button Static Functions
+	//================================================
+
+	static void functionGunButton();
+	static void functionAAGunButton();
 };
 
 #endif // !_BATTLE_UI_UNITCONTROL_VIEWER_H

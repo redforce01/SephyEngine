@@ -14,24 +14,24 @@ BEGIN MapData
 MapData END
 
 BEGIN PlayerData
-	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
-	BEGIN Cruiser count 30 END
-	BEGIN Cruiser count 30 END
-	BEGIN Cruiser count 30 END
-	BEGIN Cruiser count 30 END
-	BEGIN Battleship count 30 END
-	BEGIN Battleship count 30 END
-	BEGIN Battleship count 30 END
-	BEGIN Battleship count 30 END
+	BEGIN Z1 END
+	BEGIN Z1 END
+	BEGIN Z1 END
+	BEGIN Z1 END
+	BEGIN Z1 END
+	BEGIN Z1 END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
+	BEGIN Battleship END
+	BEGIN Battleship END
+	BEGIN Battleship END
+	BEGIN Battleship END
 PlayerData END
 
 BEGIN AIData
-	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
-	BEGIN Z1 count 30 END
+	BEGIN Z1 END
+	BEGIN Z1 END
+	BEGIN Z1 END
 AIData END

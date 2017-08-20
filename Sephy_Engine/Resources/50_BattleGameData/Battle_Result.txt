@@ -3,15 +3,17 @@ BEGIN WorldIndex
 WorldIndex END
 
 BEGIN PlayerData
-	BEGIN Corvette Count 1820 END
-	BEGIN Corvette Count 720 END
-	BEGIN Corvette Count 291 END
-	BEGIN Corvette Count 1920 END
+	BEGIN DamageScore 10000 END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
 PlayerData END
 
 BEGIN AIData
-	BEGIN Corvette Count 1820 END
-	BEGIN Corvette Count 1820 END
-	BEGIN Corvette Count 1820 END
-	BEGIN Corvette Count 1920 END
+	BEGIN DamageScore 10000 END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
 AIData END

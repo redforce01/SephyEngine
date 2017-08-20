@@ -236,9 +236,40 @@ private:
 	float			m_fFleetMaxSpeed;		// Fleet Max Speed ( Top Slowly Ship Speed In Fleet : ex) cv speed - 20, ff speed - 44 == FleetMaxSpeed : 20 )
 	//================================================
 	std::string m_strShipRankMark;			// Ship Rank Mark FileName
-
+	
 private:
 	std::vector<CBattle_ShipTailEffect> m_vTailEffect;
+private:
+	bool m_bFixedEngine;
+public:
+	void setFixedEngineOnOff(bool bOnOff)
+	{
+		m_bFixedEngine = bOnOff;
+	}
+	bool getFixedEngineOnOff() const
+	{
+		return m_bFixedEngine;
+	}
+private:
+	bool m_bAutoGunOnOff;
+	bool m_bAutoAAGunOnOff;
+public:
+	void setAutoGunOnOff(bool bGunOnOff)
+	{
+		m_bAutoGunOnOff = bGunOnOff;
+	}
+	bool getAutoGunOnOff() const
+	{
+		return m_bAutoGunOnOff;
+	}
+	void setAutoAAGunOnOff(bool bAAGunOnOff)
+	{
+		m_bAutoAAGunOnOff = bAAGunOnOff;
+	}
+	bool getAutoAAGunOnOff() const
+	{
+		return m_bAutoAAGunOnOff;
+	}
 
 private: // Ship Detected Code - For Ship vs Ship with RaderRange
 	bool m_bDetected;
@@ -420,7 +451,6 @@ private:
 	bool m_bSelected;
 	bool m_bArrived;
 	bool m_bIntersect;
-	bool m_bFixedEngine;
 	bool m_bFlagShip;
 	//===============================================
 	bool m_bDebug;
