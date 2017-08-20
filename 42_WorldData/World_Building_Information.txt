@@ -1,0 +1,16 @@
+### Building Data -> name / id / spend turn / need building / need money / need iron / produce money / produce iron / produce fuel / produce research / produce ship
++ Command_Center		0	1	0	0	0	50	50	50	50
++ Basic_Shipyard		1	2	0	100	100	0	0	0	0	11	12	21	22	23	31
++ Ship_Science_Facility		2	2	0	150	150	0	0	0	50
++ Heavy_Shipyard		3	3	1	200	200	0	0	0	0	41	42	51	52	53
++ Torpedo_Laboratory		4	3	3	300	300	0	0	0	50
++ Aircraft_Carrier_Factory	5	6	3	400	400	0	0	0	0	81	82	91	92	93
++ BattleShip_Factory		6	4	3	300	300	0	0	0	0	61	62	63	71	72	73
++ Battleship_Armory		7	6	6	400	400	0	0	0	50
++ Aircraft_Carrier_Facility	8	8	5	500	500	0	0	0	50
++ Destroyer_Factory		9	3	4	400	400	0	0	0	0	32	33	34
++ Submarine_Factory		10	6	4	400	400	0	0	0	0
++ Money_Building		11	2	0	300	300	10	0	0	0
++ Iron_Building			11	2	0	300	300	0	10	0	0
++ Fuel_Building			11	2	0	300	300	0	0	20	0
++
