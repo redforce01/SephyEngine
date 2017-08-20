@@ -6,6 +6,8 @@
 #include "Scene_Intro.h"
 #include "Scene_BattleLoading.h"
 #include "Scene_BattleResult.h"
+#include "world_Scene.h"
+#include "lobby_Scene.h"
 
 MainNode::MainNode() : initializedMgr(FALSE)
 {
@@ -33,13 +35,15 @@ HRESULT MainNode::initialize()
 	SCENEMANAGER->addScene("UnitTool", new CScene_UnitTool);
 	SCENEMANAGER->addScene("BattleLoading", new CScene_BattleLoading);
 	SCENEMANAGER->addScene("BattleResult", new CScene_BattleResult);
+	SCENEMANAGER->addScene("World", new CWorld_Scene);
+	SCENEMANAGER->addScene("Lobby", new CLobby_Scene);
 	SCENEMANAGER->addLoadingScene("BattleLoading", new CScene_BattleLoading);
 	
 	if (g_bDebugMode)
 		SCENEMANAGER->changeScene(g_strDebugSceneName);
 	else
 		//SCENEMANAGER->changeScene("BattleLoading");
-		SCENEMANAGER->changeSceneWithLoading("BattleResult", "BattleLoading");
+		SCENEMANAGER->changeSceneWithLoading("Intro", "BattleLoading");
 	
 	return S_OK;
 }

@@ -17,6 +17,13 @@ void CBattle_DataParser::loadBattleData()
 	battleDataRecognize(vData);
 }
 
+void CBattle_DataParser::saveBattleData(std::string worldIndex, std::string battleMap, std::vector<std::string> vPlayerShip, std::vector<std::string> vEnemyShip)
+{
+
+
+	TXTDATA_PARSER->saveDataFromArray("Resources")
+}
+
 void CBattle_DataParser::battleDataRecognize(std::vector<std::string> vArray)
 {
 	if (vArray.size() <= 0)

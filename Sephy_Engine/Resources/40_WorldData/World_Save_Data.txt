@@ -1,0 +1,46 @@
+BEGIN	Base 200 200 200 200 1	END
+BEGIN	LOG
+	END
+BEGIN	Player
+	BEGIN	Island Alpha 1
+		BEGIN	Building Command_Center 0 1 1 0	END
+		BEGIN	Building Basic_Shipyard 0 1 1 0	END
+	END
+	END
+
+BEGIN	Computer
+	BEGIN	Island Brabo 1
+	END
+	BEGIN	Island Charlie 1
+	END
+	BEGIN	Island Delta 1
+	END
+	BEGIN	Island Echo 1
+	END
+	BEGIN	Island Foxtrot 1
+	END
+	BEGIN	Island Golf 1
+	END
+	BEGIN	Island Hotel 1
+	END
+	BEGIN	Island India 1
+	END
+	BEGIN	Island Juliet 1
+	END
+	BEGIN	Island Kilo 1
+	END
+	BEGIN	Island Lima 1
+	END
+	BEGIN	Island Mike 1
+	END
+	BEGIN	Island November 1
+	END
+	BEGIN	Island Oscae 1
+	END
+	BEGIN	Island Papa 1
+	END
+	BEGIN	Island Quebec 1
+	END
+	BEGIN	Island Romeo 1
+	END
+	END

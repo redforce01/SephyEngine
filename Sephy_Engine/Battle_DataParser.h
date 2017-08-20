@@ -18,6 +18,8 @@ namespace battleDataParserNS
 	const std::string BATTLE_AI_KEY = "AIData";
 	const std::string DATA_FORMAT_BEGIN_KEY = "BEGIN";
 	const std::string DATA_FORMAT_END_KEY = "END";
+
+	//const std::string SAVE_DATA_PATH = "Resources\\"
 }
 
 class CBattle_DataParser
@@ -39,6 +41,8 @@ public:
 	// Load Battle Data
 	void loadBattleData();
 
+	// Save Battle Data
+	void saveBattleData(std::string worldIndex, std::string battleMap, std::vector<std::string> vPlayerShip, std::vector<std::string> vEnemyShip);
 private:
 	// Recognize Battle Data
 	void battleDataRecognize(std::vector<std::string> vArray);
