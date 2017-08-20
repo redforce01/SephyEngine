@@ -6,20 +6,31 @@
 
 void CWorld_Island_Infor_Build_UI::rect_initialize(RECT _rt)
 {
+	int next_line = -1;
+
 	for (int i = 0; i < world_island_infor_buildNS::MAX_BOX; i++)
 	{
-		if (i >= world_island_infor_buildNS::MAX_BOX / 2)
+		if (i % 5 == 0)
+			next_line++;
+
+		if (next_line > 0)
 		{
-			rt_box[i] = rt_box[i - world_island_infor_buildNS::MAX_BOX / 2];
-			rt_box[i].top = rt_box[i - world_island_infor_buildNS::MAX_BOX / 2].top + world_island_infor_buildNS::BOX_HEIGHT + world_island_infor_buildNS::MARGIN / 2;
-			rt_box[i].bottom = rt_box[i - world_island_infor_buildNS::MAX_BOX / 2].bottom + world_island_infor_buildNS::BOX_HEIGHT + world_island_infor_buildNS::MARGIN / 2;
+			rt_box[i] = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3];
+			rt_box[i].top = rt_box[i].bottom + world_island_infor_buildNS::MARGIN / 2;
+			rt_box[i].bottom = rt_box[i].top + world_island_infor_buildNS::BOX_HEIGHT;
+			//rt_box[i].top = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3].top +
+			//	world_island_infor_buildNS::BOX_HEIGHT +
+			//	world_island_infor_buildNS::MARGIN / 2;
+			//rt_box[i].bottom = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3].bottom +
+			//	world_island_infor_buildNS::BOX_HEIGHT +
+			//	world_island_infor_buildNS::MARGIN / 2;
 
 			continue;
 		}
 
 		rt_box[i] = RectMake(
-			_rt.left + world_island_infor_buildNS::MARGIN + (world_island_infor_buildNS::BOX_WIDTH + world_island_infor_buildNS::MARGIN / 2) * i,
-			_rt.top + world_island_infor_buildNS::MARGIN, world_island_infor_buildNS::BOX_WIDTH, world_island_infor_buildNS::BOX_HEIGHT
+			_rt.left + world_island_infor_buildNS::MARGIN + (world_island_infor_buildNS::BOX_WIDTH + world_island_infor_buildNS::MARGIN) * i,
+			_rt.top + world_island_infor_buildNS::MARGIN / 2, world_island_infor_buildNS::BOX_WIDTH, world_island_infor_buildNS::BOX_HEIGHT
 		);
 	}
 }
@@ -45,6 +56,8 @@ CWorld_Island_Infor_Build_UI::CWorld_Island_Infor_Build_UI()
 
 CWorld_Island_Infor_Build_UI::~CWorld_Island_Infor_Build_UI()
 {
+	for (auto iter : img_list)
+		SAFE_DELETE(iter);
 }
 
 void CWorld_Island_Infor_Build_UI::initialize(Graphics * g, Input * i, UINT _index, RECT _rt)
@@ -103,6 +116,10 @@ void CWorld_Island_Infor_Build_UI::update(float frameTime)
 
 void CWorld_Island_Infor_Build_UI::render()
 {
+	for (auto iter : img_list)
+		SAFE_DELETE(iter);
+	img_list.clear();
+
 	m_pGraphics->spriteBegin();
 
 	for (int i = 0; i < player->get_data()->get_Building_Size(); i++)
@@ -111,8 +128,24 @@ void CWorld_Island_Infor_Build_UI::render()
 			continue;
 
 		if (is_build(player->get_data()->get_Building()[i]) == true)
-			m_dxFont.print(player->get_data()->get_Building()[i]->getName(), rt_box[i - 1], DT_CENTER + DT_VCENTER);
+		{
+			Image* img = new Image;
+
+			img->initialize(
+				m_pGraphics, world_island_infor_buildNS::BUILDING_SIZE,
+				world_island_infor_buildNS::BUILDING_SIZE, 0,
+				IMAGEMANAGER->getTexture(player->get_data()->get_Building()[i]->getName())
+			);
+			img->setScale(world_island_infor_buildNS::BOX_WIDTH / world_island_infor_buildNS::BUILDING_SIZE);
+			img->setX(rt_box[i - 1].left);
+			img->setY(rt_box[i - 1].top);
+
+			img->draw();
+			img_list.emplace_back(img);
+
+			m_dxFont.print(player->get_data()->get_Building()[i]->getName(), rt_box[i - 1], DT_CENTER + DT_BOTTOM);
 			//m_dxFont.print(player->get_data()->get_Building()[i]->getName(), rt_box[i], DT_CENTER + DT_VCENTER);
+		}
 	}
 
 	m_pGraphics->spriteEnd();
@@ -121,4 +154,18 @@ void CWorld_Island_Infor_Build_UI::render()
 		m_pGraphics->drawRect(rt_box[i]);
 
 	buy_infor->render();
+}
+
+void CWorld_Island_Infor_Build_UI::w_move_rl(float _speed)
+{
+	for (int i = 0; i < world_island_infor_buildNS::MAX_BOX; i++)
+	{
+		rt_box[i].left += _speed;
+		rt_box[i].right += _speed;
+	}
+	
+	for (auto iter : img_list)
+		iter->moveX(_speed);
+
+	buy_infor->w_move_rl(_speed);
 }

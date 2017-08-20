@@ -111,6 +111,9 @@ void CBuilding::turn_end()
 {
 	if (is_destroy == true)
 	{
+		if (SOUNDMANAGER->isPlaySound(worldbuildingNS::SOUND_DESTROY) == false)
+			SOUNDMANAGER->play(worldbuildingNS::SOUND_DESTROY, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 		user->destroy_cur_building(id);
 		user->print_world_log("Destroy Building : " + name);
 		for (int i = 0; i < worldbuildingNS::MAX_ACTION; i++)

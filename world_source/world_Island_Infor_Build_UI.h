@@ -7,9 +7,10 @@ namespace world_island_infor_buildNS
 	const UINT MARGIN = 10;
 
 	//build infor
-	const UINT MAX_BOX = 12;
-	const UINT BOX_WIDTH = 80;
-	const UINT BOX_HEIGHT = 80;
+	const UINT MAX_BOX = 15;
+	const float BOX_WIDTH = 80;
+	const float BOX_HEIGHT = 80;
+	const float BUILDING_SIZE = 150;
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE = 10;
@@ -32,6 +33,8 @@ private:
 
 	RECT rt_box[world_island_infor_buildNS::MAX_BOX];
 
+	std::vector<Image*> img_list;
+
 	UINT index;
 
 	bool mouse_up;
@@ -49,5 +52,7 @@ public:
 	void initialize(Graphics* g, Input* i, UINT _index, RECT _rt);
 	void update(float frameTime);
 	void render();
+
+	void w_move_rl(float _speed);
 };
 

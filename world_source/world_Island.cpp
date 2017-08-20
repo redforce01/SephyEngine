@@ -13,9 +13,9 @@ void CWorld_Island::add_Child()
 	CChild_Island* obj2 = new CChild_Island;
 	CChild_Island* obj3 = new CChild_Island;
 
-	obj1->initialize(MONEY, 0);	//money increase 10
-	obj2->initialize(IRON, 0);		//iron increase 10
-	obj3->initialize(FUEL, 0);		//fuel increase 10
+	obj1->initialize(MONEY, 5);		//money increase 10
+	obj2->initialize(IRON, 5);		//iron increase 10
+	obj3->initialize(FUEL, 5);		//fuel increase 10
 
 	child_node.emplace_back(obj1);
 	child_node.emplace_back(obj2);
@@ -25,28 +25,44 @@ void CWorld_Island::add_Child()
 	obj2->SetLoadLinkUser(user);
 	obj3->SetLoadLinkUser(user);
 
-	//switch (id)
-	//{
-	//case 0:
-	//case 1:
-	//case 2:
-	//case 3:
-	//case 4:
-	//case 5:
-	//case 6:
-	//case 7:
-	//case 8:
-	//case 9:
-	//case 10:
-	//case 11:
-	//case 12:
-	//case 13:
-	//case 14:
-	//case 15:
-	//case 16:
-	//case 17:
-	//default:
-	//}
+	switch (id)
+	{
+	case 0:
+	case 13:
+		obj1->initialize(MONEY, 0);		//money increase 10
+		obj2->initialize(IRON, 0);		//iron increase 10
+		obj3->initialize(FUEL, 0);		//fuel increase 10
+		break;
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 10:
+	case 11:
+	case 12:
+		//+1 ÇÏ³ª
+		break;
+	case 5:
+	case 8:
+		obj1->initialize(MONEY, 7);		//money increase 10
+		break;
+	case 6:
+	case 9:
+		obj2->initialize(IRON, 7);		//money increase 10
+		break;
+	case 7:
+		obj1->initialize(MONEY, 7);		//money increase 10
+		obj2->initialize(IRON, 7);		//iron increase 10
+		break;
+	case 14:
+	case 15:
+	case 16:
+	case 17:
+		obj3->initialize(FUEL, 15);		//fuel increase 10
+		break;
+	default:
+		break;
+	}
 }
 
 CWorld_Island::CWorld_Island()
@@ -65,7 +81,10 @@ void CWorld_Island::turn_end()
 	if (c_turn > 0)
 	{
 		for (auto iter : child_node)
+		{
+			iter->SetLoadLinkUser(user);
 			iter->turn_end();
+		}
 
 		for (auto iter : current_ship)
 		{

@@ -23,7 +23,7 @@ bool CWorld_Building_Buy_Infor::initialize(Graphics * g, Input * i)
 	m_pInput = i;
 
 	SystemUIDialog::initializeDialog(
-		g, i, i->getMouseX(), i->getMouseY(),
+		g, i, i->getMouseX() - world_building_buyNS::WIDTH, i->getMouseY(),
 		world_building_buyNS::WIDTH,
 		world_building_buyNS::HEIGHT,
 		world_building_buyNS::MARGIN
@@ -31,7 +31,7 @@ bool CWorld_Building_Buy_Infor::initialize(Graphics * g, Input * i)
 	SystemUIDialog::setDialogBackColor(world_building_buyNS::BACK_COLOR);
 
 	rt_name = RectMake(
-		i->getMouseX() + world_building_buyNS::MARGIN, 
+		i->getMouseX() - world_building_buyNS::WIDTH + world_building_buyNS::MARGIN,
 		i->getMouseY() + world_building_buyNS::MARGIN,
 		world_building_buyNS::RT_WIDTH, 
 		world_building_buyNS::RT_HEIGHT
@@ -62,9 +62,9 @@ void CWorld_Building_Buy_Infor::update(float frameTime)
 
 	SystemUIDialog::update(frameTime);
 
-	SystemUIDialog::setDialogPos(m_pInput->getMouseX(), m_pInput->getMouseY());
+	SystemUIDialog::setDialogPos(m_pInput->getMouseX() - world_building_buyNS::WIDTH, m_pInput->getMouseY());
 
-	rt_name.left = m_pInput->getMouseX() + world_building_buyNS::MARGIN;
+	rt_name.left = m_pInput->getMouseX() - world_building_buyNS::WIDTH + world_building_buyNS::MARGIN;
 	rt_name.right = rt_name.left + world_building_buyNS::RT_WIDTH;
 	rt_name.top = m_pInput->getMouseY() + world_building_buyNS::MARGIN;
 	rt_name.bottom = rt_name.top + world_building_buyNS::RT_HEIGHT;
@@ -170,4 +170,23 @@ void CWorld_Building_Buy_Infor::buy_draw()
 	//m_dxFont.print(str, rt_resource[RESEARCH], DT_VCENTER + DT_RIGHT);
 	//str = std::to_string(building->get_turn());
 	//m_dxFont.print(str, rt_turn, DT_VCENTER + DT_RIGHT);
+}
+
+void CWorld_Building_Buy_Infor::w_move_rl(float _speed)
+{
+	SystemUIDialog::moveDialogX(_speed);
+
+	rt_name.left += _speed;
+	rt_name.right += _speed;
+	rt_turn.left += _speed;
+	rt_turn.right += _speed;
+
+	for (int i = 0; i < world_building_buyNS::KIND_RESOURCE; i++)
+	{
+		rt_resource[i].left += _speed;
+		rt_resource[i].right += _speed;
+	}
+
+	for (auto iter : list_number)
+		iter->moveX(_speed);
 }

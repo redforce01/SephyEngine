@@ -10,7 +10,10 @@ namespace worldresourceNS
 	const UINT x = 10;	//Viewer location
 	const UINT y = 10;
 
-	const std::string icon_name = "CloseButton";	//resource img * 4
+	const std::string MONEY = "Money";	//resource img * 4
+	const std::string IRON = "Iron";
+	const std::string FUEL = "Fuel";
+	const std::string RESEARCH = "Research";
 	const UINT icon_width = 24;
 	const UINT icon_height = 24;
 

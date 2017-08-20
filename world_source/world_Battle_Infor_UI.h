@@ -2,6 +2,8 @@
 
 namespace world_battle_infor_uiNS
 {
+	const std::string SOUND_CLOSE = "Close";
+
 	const std::string BACK_NAME = "ShipList";
 
 	const UINT WIDTH = 395;

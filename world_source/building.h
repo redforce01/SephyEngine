@@ -9,6 +9,8 @@ enum E_RESOURCE
 
 namespace worldbuildingNS
 {
+	const std::string SOUND_DESTROY = "Destroy_Building";
+
 	const UINT KIND_RESOURCE = 4;
 	const UINT MAX_ACTION = 3;
 }

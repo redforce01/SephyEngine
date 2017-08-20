@@ -5,8 +5,11 @@
 
 namespace worldturnNS
 {
+	const float DELAY = 1.5f;
 	const UINT x = 213;	//Viewer location (cur + pass + distance * 2)
 	const UINT y = 15;
+
+	const std::string SOUND_TURN = "Turn_End";
 
 	const std::string img_name = "Turn_Button_";	//turn img
 	const UINT cur_turn_width = 73;
@@ -38,6 +41,8 @@ private:
 
 	SystemButton* button;
 
+	float turn_delay;
+	bool is_turn;
 	//std::map<std::string, std::string> m_turnMessage;
 	//Image* img_turn;
 

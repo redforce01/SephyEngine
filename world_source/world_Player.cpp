@@ -2,37 +2,14 @@
 #include "world_Player.h"
 #include "world_Island_Data.h"
 
-CWorld_Player::CWorld_Player()
+void CWorld_Player::new_player()
 {
-	island_ui = new CWorld_Player_Island_UI;
-
-	select_island = nullptr;
-	//show_ui = false;
-	turn = 1;
-
-	for (int i = 0; i < world_userNS::KIND_RESOURCE; i++)
-	{
-		increase_resource[i] = 0;
-		decrease_resource[i] = 0;
-	}
-}
-
-
-CWorld_Player::~CWorld_Player()
-{
-}
-
-void CWorld_Player::initialize(Graphics * g, Input * i, int _money, int _iron, int _fuel, int _research)
-{
-	CWorld_User::initialize(g, i, _money, _iron, _fuel, _research);
-
-	island_ui->SetLoadLinkPlayer(this);
-	island_ui->initialize(g, i);
-
 	//initialize comandcenter
 	CBuilding* command_center = new CBuilding;
+	CBuilding* basic = new CBuilding;
 
 	command_center->SetLoadLinkUser(this);
+	command_center->SetLoadLinkIsland(get_data()->get_Island()[0]);
 	command_center->initialize(
 		get_data()->get_Building()[0]->getName(),
 		get_data()->get_Building()[0]->getID(),
@@ -47,7 +24,66 @@ void CWorld_Player::initialize(Graphics * g, Input * i, int _money, int _iron, i
 	);
 	command_center->command_center();
 
+	basic->SetLoadLinkUser(this);
+	basic->SetLoadLinkIsland(get_data()->get_Island()[0]);
+	basic->initialize(
+		get_data()->get_Building()[1]->getName(),
+		get_data()->get_Building()[1]->getID(),
+		get_data()->get_Building()[1]->get_turn(),
+		get_data()->get_Building()[1]->get_building(),
+		get_data()->get_Building()[1]->get_need_resource()[MONEY],
+		get_data()->get_Building()[1]->get_need_resource()[IRON],
+		get_data()->get_Building()[1]->get_produce_resource()[MONEY],
+		get_data()->get_Building()[1]->get_produce_resource()[IRON],
+		get_data()->get_Building()[1]->get_produce_resource()[FUEL],
+		get_data()->get_Building()[1]->get_produce_resource()[RESEARCH]
+	);
+
+	for (int i = 0; i < get_data()->get_Building()[1]->get_ship_size(); i++)
+		basic->add_Ship(get_data()->get_Building()[1]->get_ship()[i]);
+	basic->load(true, true, false, 0);
+
+	add_cur_building(basic->getID());
+
 	get_island()[0]->add_building(0, command_center);
+	get_island()[0]->add_building(1, basic);
+}
+
+CWorld_Player::CWorld_Player()
+{
+	island_ui = new CWorld_Player_Island_UI;
+
+	detail_ui = nullptr;
+	select_island = nullptr;
+	//show_ui = false;
+	turn = 1;
+
+	for (int i = 0; i < world_userNS::KIND_RESOURCE; i++)
+	{
+		increase_resource[i] = 0;
+		decrease_resource[i] = 0;
+	}
+}
+
+
+CWorld_Player::~CWorld_Player()
+{
+	if (island_ui != nullptr)
+		SAFE_DELETE(island_ui);
+
+	if (detail_ui != nullptr)
+		SAFE_DELETE(detail_ui);
+}
+
+void CWorld_Player::initialize(Graphics * g, Input * i, int _money, int _iron, int _fuel, int _research)
+{
+	m_pGraphics = g;
+	m_pInput = i;
+
+	CWorld_User::initialize(g, i, _money, _iron, _fuel, _research);
+
+	island_ui->SetLoadLinkPlayer(this);
+	island_ui->initialize(g, i);
 }
 
 void CWorld_Player::update(float frameTime)
@@ -87,6 +123,31 @@ void CWorld_Player::render()
 		img_list.emplace_back(img);
 
 		iter->render();
+
+		if (island_ui->get_show() == false)
+		{
+			for (auto iter : island_node)
+			{
+				if (PtInRect(&iter->getRect(), m_pInput->getMousePt()))
+				{
+					if (detail_ui == nullptr)
+					{
+						detail_ui = new CWorld_Island_Detail_UI;
+						detail_ui->initialize(m_pGraphics, m_pInput, iter);
+						detail_ui->render();
+					}
+					else
+						detail_ui->render();
+
+					break;
+				}
+			}
+		}
+		else
+		{
+			if (detail_ui != nullptr)
+				SAFE_DELETE(detail_ui);
+		}
 	}
 
 	m_pGraphics->spriteBegin();
@@ -110,6 +171,9 @@ void CWorld_Player::click_island()
 	{
 		if (PtInRect(&iter->getRect(), m_pInput->getMousePt()) && m_pInput->getMouseLButton())
 		{
+			//if (SOUNDMANAGER->isPlaySound(world_playerNS::SOUND_ISLAND))
+			SOUNDMANAGER->play(world_playerNS::SOUND_ISLAND, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 			select_island = iter;
 			island_ui->show_UI(iter->getPt(), iter->getWidth(), iter->getHeight());
 			//show_ui = true;
@@ -124,6 +188,10 @@ void CWorld_Player::click_island()
 
 void CWorld_Player::turn_end()
 {
+	std::string _message = "======== " + std::to_string(turn) + " Turn End ========";
+
+	print_world_log(_message);
+
 	for (int i = 0; i < world_userNS::KIND_RESOURCE; i++)
 	{
 		increase_resource[i] = 0;
@@ -137,6 +205,10 @@ void CWorld_Player::turn_end()
 
 	for (auto iter : current_ship)	//all ship
 		iter->turn_end();
+
+	_message = "======== Start " + std::to_string(turn) + " Turn ========";
+
+	print_world_log(_message);
 }
 
 
@@ -187,6 +259,9 @@ void CWorld_Player::w_move_ud(float _speed)
 	
 	for (auto iter : img_list)
 		iter->moveY(_speed);
+
+	if (detail_ui != nullptr)
+		detail_ui->w_move_ud(_speed);
 }
 
 void CWorld_Player::w_move_rl(float _speed)
@@ -198,4 +273,7 @@ void CWorld_Player::w_move_rl(float _speed)
 
 	for (auto iter : img_list)
 		iter->moveX(_speed);
+
+	if (detail_ui != nullptr)
+		detail_ui->w_move_rl(_speed);
 }

@@ -184,7 +184,11 @@ void CWorld_Battle_Infor_UI::update(float frameTime)
 		if (mouse_up == true)
 		{
 			if (PtInRect(&rt_exit, m_pInput->getMousePt()))
+			{
+				SOUNDMANAGER->play(world_battle_infor_uiNS::SOUND_CLOSE, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 				is_show = false;
+			}
 		}
 
 		mouse_up = false;

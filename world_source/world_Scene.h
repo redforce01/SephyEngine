@@ -18,6 +18,9 @@
 
 namespace worldmapNS
 {
+	const UINT SOUND_LIST = 5;
+	const std::string SOUND_BGM = "world_theme";
+
 	const std::string IS_STATE_NAME = "World_Game_State";
 	const std::string LOAD_NAME = "World_Save_Data";
 
@@ -53,6 +56,8 @@ private:
 	//CWorld_Action_Ship* w_action_ship;	//배들 관리
 
 	std::vector<CWorld_CG*> w_cg;
+	std::vector<std::string> save;
+	std::vector<std::string> bgm_list;
 
 	//std::vector<CWorld_Island*> w_current_island;	//my island (점령한 섬)
 	//건물 건설하는 것 코딩하기
@@ -66,6 +71,7 @@ private:
 	void worldMove();	//worldmap move key & limit area
 	void init_position();	//atapt margin
 	void data_load();
+	void save_data();
 
 public:
 	CWorld_Scene();

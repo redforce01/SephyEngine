@@ -5,6 +5,7 @@
 
 namespace world_p_shiplistNS
 {
+	const std::string SOUND_UI = "Open_UI";
 	const std::string img_name = "Island_UI_";
 	const UINT width = 108;
 	const UINT height = 46;

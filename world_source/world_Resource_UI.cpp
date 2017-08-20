@@ -92,10 +92,10 @@ bool CWorld_Resource_UI::initialize(Graphics * g, Input * i)
 
 	//dxfont_increase.initialize(m_pGraphics, worldresourceNS::FONT_SIZE_increase, true, false, worldresourceNS::FONT);
 
-	resource_initialize(0, worldresourceNS::icon_name);
-	resource_initialize(1, worldresourceNS::icon_name);
-	resource_initialize(2, worldresourceNS::icon_name);
-	resource_initialize(3, worldresourceNS::icon_name);
+	resource_initialize(0, worldresourceNS::MONEY);
+	resource_initialize(1, worldresourceNS::IRON);
+	resource_initialize(2, worldresourceNS::FUEL);
+	resource_initialize(3, worldresourceNS::RESEARCH);
 
 	resource_detail->initialize(g, i);
 	resource_detail->SetLoadLinkPlyaer(player);

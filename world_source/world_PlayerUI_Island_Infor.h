@@ -5,6 +5,7 @@
 
 namespace world_p_island_inforNS
 {
+	const std::string SOUND_OPEN = "Open_Slide";
 	const std::string img_name = "Island_UI_";
 	const UINT width = 108;
 	const UINT height = 46;
@@ -25,9 +26,11 @@ private:
 
 	UINT margin;
 	float delay;	//move complete time
+	float delay_infor;
 
 	bool is_init;	//initialize
-	bool is_move;	//move complete
+	bool is_move;	//move complete (Island Infor)
+	bool is_move_infor;	//infor_ui
 	bool is_click;	//click (show ui)
 
 public:

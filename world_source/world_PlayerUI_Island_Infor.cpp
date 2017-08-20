@@ -9,10 +9,12 @@ CWorld_PlayerUI_Island_Infor::CWorld_PlayerUI_Island_Infor()
 	button = new SystemButton;
 
 	delay = 0;
+	delay_infor = 0;
 
 	is_init = false;
 	is_move = false;
 	is_click = false;
+	is_move_infor = false;
 }
 
 
@@ -54,12 +56,21 @@ void CWorld_PlayerUI_Island_Infor::update(float frameTime)
 
 	if (is_click == true)
 	{
-		infor_ui->update(frameTime);
+		if (delay_infor < world_p_shiplistNS::APEAR_TIME)	//Button apear time
+		{
+			delay_infor += frameTime;
+			
+			infor_ui->w_move_rl(-(infor_ui->getDialogWidth() * frameTime / world_p_shiplistNS::APEAR_TIME));
+		}
+		else is_move_infor = true;
+
+		if (is_move_infor == true)
+			infor_ui->update(frameTime);
 
 		if (infor_ui->get_show() == false)
 		{
 			is_click = false;
-
+			delay_infor = 0;
 			SAFE_DELETE(infor_ui);
 		}
 	}
@@ -70,7 +81,8 @@ void CWorld_PlayerUI_Island_Infor::render()
 	if (is_init == false)
 		return;
 
-	button->render();
+	if (infor_ui == nullptr)
+		button->render();
 
 	if (is_click == true)
 		infor_ui->render();
@@ -78,6 +90,9 @@ void CWorld_PlayerUI_Island_Infor::render()
 
 void CWorld_PlayerUI_Island_Infor::click_event()
 {
+	//if (SOUNDMANAGER->isPlaySound(world_p_island_inforNS::SOUND_OPEN))
+	SOUNDMANAGER->play(world_p_island_inforNS::SOUND_OPEN, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 	pThis->infor_ui = new CWorld_Island_Infor_UI;
 
 	pThis->infor_ui->SetLoadLinkIsland(pThis->player);

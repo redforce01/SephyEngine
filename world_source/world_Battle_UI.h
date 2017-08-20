@@ -5,6 +5,8 @@
 
 namespace worldbattleNS
 {
+	const std::string SOUND_OPEN = "Open_UI";
+
 	// save infor
 	const UINT KINE_RESOURCE = 4;
 	const std::string FILE_PATH = "Resources\\42_WorldData\\World_Save_Data.txt";

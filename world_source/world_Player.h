@@ -2,9 +2,12 @@
 
 #include "world_User.h"
 #include "world_Player_Island_UI.h"
+#include "world_Island_Detail_UI.h"
 
 namespace world_playerNS
 {
+	const std::string SOUND_ISLAND = "Click_Island";
+
 	const std::string FLAG_NAME = "Player_Flag";
 	const UINT FLAG_WIDTH = 30;
 	const UINT FLAG_HEIGHT = 30;
@@ -15,6 +18,7 @@ class CWorld_Island_Data;
 class CWorld_Player : public CWorld_User
 {
 private:
+	CWorld_Island_Detail_UI* detail_ui;
 	CWorld_Player_Island_UI* island_ui;
 	CWorld_Island* select_island;
 
@@ -50,6 +54,7 @@ public:
 	void setTurn(int _turn) { turn = _turn; }
 	void cancel_ui();
 	void click_island();
+	void new_player();
 
 	void turn_end();
 

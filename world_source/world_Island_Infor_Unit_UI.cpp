@@ -9,68 +9,77 @@ void CWorld_Island_Infor_Unit_UI::rect_initialize(RECT _rtM, RECT _rtR)
 	for (int i = 0; i < world_island_infor_unitNS::MAX_UNIT; i++)
 	{
 		rt_unit[i] = RectMake(
-			_rtM.left + world_island_infor_unitNS::MARGIN + (world_island_infor_unitNS::UNIT_WIDTH + world_island_infor_unitNS::MARGIN / 2) * i,
+			_rtM.left + world_island_infor_unitNS::MARGIN + (world_island_infor_unitNS::BUILDING_MARGIN + world_island_infor_unitNS::MARGIN) * i,
 			_rtM.top + world_island_infor_unitNS::MARGIN, world_island_infor_unitNS::UNIT_WIDTH, world_island_infor_unitNS::UNIT_HEIGHT
 		);
 
 		rt_turn[i] = RectMake(
-			rt_unit[i].left, rt_unit[i].bottom + world_island_infor_unitNS::MARGIN / 2,
+			rt_unit[i].left, rt_unit[i].bottom + world_island_infor_unitNS::MARGIN,
 			world_island_infor_unitNS::TURN_WIDTH, world_island_infor_unitNS::TURN_HEIGHT
 		);
 	}
+	
+	int next_line = -1;
 
 	for (int i = 0; i < world_island_infor_unitNS::MAX_BOX; i++)
 	{
-		if (i >= world_island_infor_unitNS::MAX_BOX / 2)
+		if (i % 5 == 0)
+			next_line++;
+
+		if (next_line > 0)
 		{
-			//rt_box[i][j].left = rt_box[i][j - world_island_inforNS::MAX_BOX].left;
-			//rt_box[i][j].right = rt_box[i][j - world_island_inforNS::MAX_BOX].right;
-			rt_box[i] = rt_box[i - world_island_infor_unitNS::MAX_BOX / 2];
-			rt_box[i].top = rt_box[i - world_island_infor_unitNS::MAX_BOX / 2].top + world_island_infor_unitNS::BOX_HEIGHT + world_island_infor_unitNS::MARGIN / 2;
-			rt_box[i].bottom = rt_box[i - world_island_infor_unitNS::MAX_BOX / 2].bottom + world_island_infor_unitNS::BOX_HEIGHT + world_island_infor_unitNS::MARGIN / 2;
+			rt_box[i] = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3];
+			rt_box[i].top = rt_box[i].bottom + world_island_infor_buildNS::MARGIN / 2;
+			rt_box[i].bottom = rt_box[i].top + world_island_infor_buildNS::BOX_HEIGHT;
+			//rt_box[i].top = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3].top +
+			//	world_island_infor_buildNS::BOX_HEIGHT +
+			//	world_island_infor_buildNS::MARGIN / 2;
+			//rt_box[i].bottom = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3].bottom +
+			//	world_island_infor_buildNS::BOX_HEIGHT +
+			//	world_island_infor_buildNS::MARGIN / 2;
 
 			continue;
 		}
 
 		rt_box[i] = RectMake(
-			_rtR.left + world_island_infor_unitNS::MARGIN / 2 + (world_island_infor_unitNS::BOX_WIDTH + world_island_infor_unitNS::MARGIN / 2) * i,
-			_rtR.top + world_island_infor_unitNS::MARGIN, world_island_infor_unitNS::BOX_WIDTH, world_island_infor_unitNS::BOX_HEIGHT
+			_rtR.left + world_island_infor_unitNS::MARGIN + (world_island_infor_unitNS::BOX_WIDTH + world_island_infor_unitNS::MARGIN) * i,
+			_rtR.top + world_island_infor_unitNS::MARGIN / 2, world_island_infor_unitNS::BOX_WIDTH, world_island_infor_unitNS::BOX_HEIGHT
 		);
 	}
 }
 
-void CWorld_Island_Infor_Unit_UI::build_destroy_render()
-{
-	if (player->get_select_island()->get_Building(index)->get_is_destroy() == true)	//show destroy
-	{
-		m_pGraphics->drawLine(
-			rt_unit[0].left, rt_unit[0].top, 
-			rt_turn[world_island_infor_unitNS::MAX_UNIT - 1].right,
-			rt_turn[world_island_infor_unitNS::MAX_UNIT - 1].bottom, 
-			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-		);
-		m_pGraphics->drawLine(
-			rt_turn[0].left, rt_turn[0].bottom,
-			rt_unit[world_island_infor_unitNS::MAX_UNIT - 1].right,
-			rt_unit[world_island_infor_unitNS::MAX_UNIT - 1].top, 
-			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-		);
-
-		m_pGraphics->drawLine(
-			rt_box[0].left, rt_box[0].top,
-			rt_box[world_island_infor_unitNS::MAX_BOX - 1].right, 
-			rt_box[world_island_infor_unitNS::MAX_BOX - 1].bottom, 
-			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-		);
-		m_pGraphics->drawLine(
-			rt_box[world_island_infor_unitNS::MAX_BOX / 2].left, 
-			rt_box[world_island_infor_unitNS::MAX_BOX / 2].bottom,
-			rt_box[world_island_infor_unitNS::MAX_BOX / 2 - 1].right, 
-			rt_box[world_island_infor_unitNS::MAX_BOX / 2 - 1].top, 
-			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-		);
-	}
-}
+//void CWorld_Island_Infor_Unit_UI::build_destroy_render()
+//{
+//	if (player->get_select_island()->get_Building(index)->get_is_destroy() == true)	//show destroy
+//	{
+//		m_pGraphics->drawLine(
+//			rt_unit[0].left, rt_unit[0].top, 
+//			rt_turn[world_island_infor_unitNS::MAX_UNIT - 1].right,
+//			rt_turn[world_island_infor_unitNS::MAX_UNIT - 1].bottom, 
+//			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
+//		);
+//		m_pGraphics->drawLine(
+//			rt_turn[0].left, rt_turn[0].bottom,
+//			rt_unit[world_island_infor_unitNS::MAX_UNIT - 1].right,
+//			rt_unit[world_island_infor_unitNS::MAX_UNIT - 1].top, 
+//			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
+//		);
+//
+//		m_pGraphics->drawLine(
+//			rt_box[0].left, rt_box[0].top,
+//			rt_box[world_island_infor_unitNS::MAX_BOX - 1].right, 
+//			rt_box[world_island_infor_unitNS::MAX_BOX - 1].bottom, 
+//			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
+//		);
+//		m_pGraphics->drawLine(
+//			rt_box[world_island_infor_unitNS::MAX_BOX / 2].left, 
+//			rt_box[world_island_infor_unitNS::MAX_BOX / 2].bottom,
+//			rt_box[world_island_infor_unitNS::MAX_BOX / 2 - 1].right, 
+//			rt_box[world_island_infor_unitNS::MAX_BOX / 2 - 1].top, 
+//			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
+//		);
+//	}
+//}
 
 void CWorld_Island_Infor_Unit_UI::destroy_button_render(UINT _index)
 {
@@ -120,6 +129,8 @@ CWorld_Island_Infor_Unit_UI::CWorld_Island_Infor_Unit_UI()
 
 CWorld_Island_Infor_Unit_UI::~CWorld_Island_Infor_Unit_UI()
 {
+	for (auto iter : img_list)
+		SAFE_DELETE(iter);
 }
 
 void CWorld_Island_Infor_Unit_UI::initialize(Graphics * g, Input * i, UINT _index, RECT _rtM, RECT _rtR)
@@ -197,6 +208,8 @@ void CWorld_Island_Infor_Unit_UI::update(float frameTime)
 							player->add_resource(FUEL, ship[i]->get_resource(FUEL));
 							player->add_resource(RESEARCH, ship[i]->get_resource(RESEARCH));
 
+							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_CANCEL, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 							SAFE_DELETE(ship[i]);
 							current_action = 0;
 						}
@@ -211,9 +224,15 @@ void CWorld_Island_Infor_Unit_UI::update(float frameTime)
 					if (ship[i] != nullptr)
 					{
 						if (ship[i]->get_is_destroy() == false)
+						{
+							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_SELECT, g_fSoundMasterVolume + g_fSoundEffectVolume);
 							ship[i]->set_is_destroy(true);
+						}
 						else
+						{
+							SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_CANCEL, g_fSoundMasterVolume + g_fSoundEffectVolume);
 							ship[i]->set_is_destroy(false);
+						}
 					}
 				}
 			}
@@ -222,7 +241,7 @@ void CWorld_Island_Infor_Unit_UI::update(float frameTime)
 	}
 
 	bool flag = false;
-	for (int i = 0; i < world_island_infor_unitNS::MAX_BOX; i++)
+	for (int i = 0; i < player->get_select_island()->get_Building(index)->get_ship_size(); i++)
 	{
 		if (PtInRect(&rt_box[i], m_pInput->getMousePt()))
 		{
@@ -308,6 +327,14 @@ void CWorld_Island_Infor_Unit_UI::render()
 
 				m_dxFont.print(temp, rt_turn[i], DT_CENTER + DT_VCENTER);
 			}
+			else
+			{
+				std::string temp = "D - ";
+				temp += std::to_string(ship[i]->getTurn());
+				temp += " turn";
+
+				m_dxFont.print(temp, rt_turn[i], DT_CENTER + DT_VCENTER);
+			}
 		}
 	}
 
@@ -330,7 +357,7 @@ void CWorld_Island_Infor_Unit_UI::render()
 		m_pGraphics->drawRect(rt_box[i], 0.1f);
 	}
 
-	build_destroy_render();
+	//build_destroy_render();
 	ship_infor->render();
 }
 
@@ -377,6 +404,8 @@ void CWorld_Island_Infor_Unit_UI::set_action(CProduction_Ship * _ship)
 		return;
 	}
 
+	SOUNDMANAGER->play(world_island_infor_unitNS::SOUND_SELECT, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 	CProduction_Ship* obj = new CProduction_Ship;
 
 	obj->initialize(
@@ -396,5 +425,27 @@ void CWorld_Island_Infor_Unit_UI::set_action(CProduction_Ship * _ship)
 		obj->add_building(iter);
 
 	ship[current_action] = obj;
+}
+
+void CWorld_Island_Infor_Unit_UI::w_move_rl(float _speed)
+{
+	for (int i = 0; i < world_island_infor_unitNS::MAX_UNIT; i++)
+	{
+		rt_unit[i].left += _speed;
+		rt_unit[i].right += _speed;
+		rt_turn[i].left += _speed;
+		rt_turn[i].right += _speed;
+	}
+
+	for (int i = 0; i < world_island_infor_unitNS::MAX_BOX; i++)
+	{
+		rt_box[i].left += _speed;
+		rt_box[i].right += _speed;
+	}
+
+	for (auto iter : img_list)
+		iter->moveX(_speed);
+
+	ship_infor->w_move_rl(_speed);
 }
 

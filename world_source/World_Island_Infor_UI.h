@@ -7,10 +7,26 @@
 //780 x 185
 namespace world_island_inforNS
 {
-	const UINT WIDTH = 1200;
+	const COLOR_ARGB BACKGROUND_COLOR = SETCOLOR_ARGB(255, 26, 32, 44);
+
+	const std::string MONEY = "Money";	//resource img * 4
+	const std::string IRON = "Iron";
+	const std::string FUEL = "Fuel";
+	const std::string RESEARCH = "Research";
+
+	const UINT ICON_WIDTH = 24;
+	const UINT ICON_HEIGHT = 24;
+
+	const std::string SOUND_SAVE = "Save";
+	const std::string SOUND_SELECT = "Select";
+	const std::string SOUND_BUILD = "Build";
+	const std::string SOUND_CANCEL = "Cancel";
+	const std::string SOUND_CLOSE = "Close";
+
+	const UINT WIDTH = 500;	//1200
 	const UINT HEIGHT = 600;
-	const UINT RESOURCE_WIDTH = 180;
-	const UINT RESOURCE_HEIGHT = 50;
+	const UINT RESOURCE_WIDTH = 100;
+	const UINT RESOURCE_HEIGHT = 30;
 
 	const UINT MARGIN = 10;
 
@@ -20,19 +36,21 @@ namespace world_island_inforNS
 	const UINT IMG_NUMBER_HEIGHT = 13;
 
 	//exit infor
-	const UINT EXIT_WIDTH = 50;
-	const UINT EXIT_HEIGHT = 50;
+	const UINT EXIT_WIDTH = 55;
+	const UINT EXIT_HEIGHT = 30;
 	const float EXIT_WEIGHT = 2.0f;
 	const COLOR_ARGB EXIT_COLOR = graphicsNS::RED;
 
 	//destroy infor
-	const UINT DESTROY_WIDTH = 185;
-	const UINT DESTROY_HEIGHT = 185;
+	const std::string DESTROY_IMG = "Destroy_Overlap";
+	const UINT DESTROY_WIDTH = 150;		//185
+	const UINT DESTROY_HEIGHT = 150;	//185
+	const COLOR_ARGB DESTROY_COLOR = SETCOLOR_ARGB(180, 255, 255, 255);
 
 	//building img infor
 	const UINT MAX_BUILDING = 3;
-	const UINT BUILDING_WIDTH = 185;
-	const UINT BUILDING_HEIGHT = 185;
+	const UINT BUILDING_WIDTH = 150;	//185
+	const UINT BUILDING_HEIGHT = 150;	//185
 
 	//margin between building img & unit (all sum create building img margin)
 	const UINT MID_MARGIN = 545;
@@ -63,7 +81,8 @@ private:
 	TextDX m_dxFont;
 
 	//show resource
-	RECT rt_title;
+	//RECT rt_title;
+	RECT rt_vertex;
 	RECT rt_money;
 	RECT rt_iron;
 	RECT rt_fuel;
@@ -75,11 +94,17 @@ private:
 
 	//after replace building img
 	RECT rt_building[world_island_inforNS::MAX_BUILDING];
-	RECT rt_box_border[world_island_inforNS::MAX_BUILDING];
-	RECT rt_build_border[world_island_inforNS::MAX_BUILDING];	//가장 우측 이동시키기
+	RECT rt_box_border;
+	RECT rt_build_border;
+	//RECT rt_box_border[world_island_inforNS::MAX_BUILDING];
+	//RECT rt_build_border[world_island_inforNS::MAX_BUILDING];	//가장 우측 이동시키기
 	//RECT rt_box[world_island_inforNS::MAX_BUILDING][world_island_inforNS::MAX_BOX];
 
 	std::vector<Image*> list_number;
+	std::vector<Image*> building_image;
+	std::vector<Image*> img_list;
+
+	int cur_building;
 
 	bool is_show;
 	bool mouse_up;
@@ -109,5 +134,5 @@ public:
 	bool get_show() { return is_show; }
 
 	//void w_move_ud(float _speed);
-	//void w_move_rl(float _speed);
+	void w_move_rl(float _speed);
 };

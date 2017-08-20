@@ -32,11 +32,29 @@ void CWorld_ShipList_UI::rt_make_list()
 	int count_scroll = 0;
 	int count_line = 0;
 
+	std::map<std::string, int> _ship;
+	
 	for (auto iter : player->get_select_island()->get_ship())
 	{
 		if (iter->get_is_move() == true || iter->get_is_fuel() == false)	//이동 한 배 -> 다른 색 처리
 			continue;
 
+		bool is_ship = false;
+
+		auto mIter = _ship.find(iter->getName());
+
+		if (mIter != _ship.end())
+		{
+			mIter->second++;
+			is_ship = true;
+		}
+
+		if (is_ship == false)
+			_ship.emplace(iter->getName(), 1);
+	}
+
+	for (auto iter : _ship)
+	{
 		if (count_scroll++ < scroll_mount_island)
 			continue;
 
@@ -50,16 +68,43 @@ void CWorld_ShipList_UI::rt_make_list()
 		);
 
 		if (PtInRect(&rt, m_pInput->getMousePt()))
-			m_dxFont_over.print(iter->getName(), rt, DT_LEFT + DT_VCENTER);
-		else m_dxFont.print(iter->getName(), rt, DT_LEFT + DT_VCENTER);
+		{
+			m_dxFont_over.print(iter.first, rt, DT_LEFT + DT_VCENTER);
+			m_dxFont_over.print(std::to_string(iter.second), rt, DT_RIGHT + DT_VCENTER);
+		}
+		else
+		{
+			m_dxFont.print(iter.first, rt, DT_LEFT + DT_VCENTER);
+			m_dxFont.print(std::to_string(iter.second), rt, DT_RIGHT + DT_VCENTER);
+		}
 
 		rt_island.emplace_back(rt);
 	}
+	_ship.clear();
 
 	count_scroll = 0;
 	count_line = 0;
 
 	for (auto iter : player->get_cur_ship())
+	{
+		if (iter->get_is_move() == true || iter->get_is_fuel() == false)	//이동 한 배 -> 다른 색 처리
+			continue;
+
+		bool is_ship = false;
+
+		auto mIter = _ship.find(iter->getName());
+
+		if (mIter != _ship.end())
+		{
+			mIter->second++;
+			is_ship = true;
+		}
+
+		if (is_ship == false)
+			_ship.emplace(iter->getName(), 1);
+	}
+
+	for (auto iter : _ship)
 	{
 		if (count_scroll++ < scroll_mount_current)
 			continue;
@@ -74,9 +119,16 @@ void CWorld_ShipList_UI::rt_make_list()
 		);
 
 		if (PtInRect(&rt, m_pInput->getMousePt()))
-			m_dxFont_over.print(iter->getName(), rt, DT_LEFT + DT_VCENTER);
-		else m_dxFont.print(iter->getName(), rt, DT_LEFT + DT_VCENTER);
-		
+		{
+			m_dxFont_over.print(iter.first, rt, DT_LEFT + DT_VCENTER);
+			m_dxFont_over.print(std::to_string(iter.second), rt, DT_RIGHT + DT_VCENTER);
+		}
+		else
+		{
+			m_dxFont.print(iter.first, rt, DT_LEFT + DT_VCENTER);
+			m_dxFont.print(std::to_string(iter.second), rt, DT_RIGHT + DT_VCENTER);
+		}
+
 		rt_current.emplace_back(rt);
 	}
 }
@@ -234,10 +286,21 @@ void CWorld_ShipList_UI::update(float frameTime)
 		if (mouse_up == true)
 		{
 			if (PtInRect(&rt_move, m_pInput->getMousePt()))
+			{
+				SOUNDMANAGER->play(world_all_shiplistNS::SOUND_SELECT, g_fSoundMasterVolume + g_fSoundEffectVolume);
 				event_click();
+			}
 
 			if (PtInRect(&rt_exit, m_pInput->getMousePt()))
+			{
+				SOUNDMANAGER->play(world_all_shiplistNS::SOUND_CLOSE, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
+				for (auto iter : player->get_cur_ship())
+					player->get_select_island()->add_ship(iter);
+				player->clear_cur_ship();
+
 				is_show = false;
+			}
 
 			int count = 0;
 
@@ -249,6 +312,7 @@ void CWorld_ShipList_UI::update(float frameTime)
 
 				if (PtInRect(&iter, m_pInput->getMousePt()))
 				{
+					SOUNDMANAGER->play(world_all_shiplistNS::SOUND_SELECT, g_fSoundMasterVolume + g_fSoundEffectVolume);
 					player->add_cur_ship(player->get_select_island()->get_ship()[count]);
 					player->get_select_island()->remove_ship(count);
 
@@ -263,6 +327,7 @@ void CWorld_ShipList_UI::update(float frameTime)
 			{
 				if (PtInRect(&iter, m_pInput->getMousePt()))
 				{
+					SOUNDMANAGER->play(world_all_shiplistNS::SOUND_CANCEL, g_fSoundMasterVolume + g_fSoundEffectVolume);
 					player->get_select_island()->add_ship(player->get_cur_ship()[count]);
 					player->remove_cur_ship(count);//player->get_cur_ship().erase(player->get_cur_ship().begin() + count);
 					

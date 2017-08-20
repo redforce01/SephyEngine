@@ -117,10 +117,17 @@ void CWorld_Battle_UI::save_data()
 
 	save.emplace_back(worldbattleNS::FILE_START);
 	save.emplace_back("LOG\n");
+
+	std::deque<std::string> reverse;
+
 	for (auto iter : player->get_log_message())
+		reverse.emplace_front(iter);
+
+	for (auto iter : reverse)
 	{
+		save.emplace_back(worldbattleNS::FILE_START);
 		save.emplace_back(iter);
-		save.emplace_back("\n");
+		save.emplace_back(worldbattleNS::FILE_FINISH);
 	}
 	save.emplace_back(worldbattleNS::FILE_FINISH);
 
@@ -377,6 +384,8 @@ void CWorld_Battle_UI::update(float frameTime)
 
 			if (PtInRect(&rt_infor, m_pInput->getMousePt()))
 			{
+				SOUNDMANAGER->play(worldbattleNS::SOUND_OPEN, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 				infor_ui->SetLoadLinkPlayer(player);
 				infor_ui->set_battle_island(battle_island);
 				infor_ui->initialize(m_pGraphics, m_pInput);

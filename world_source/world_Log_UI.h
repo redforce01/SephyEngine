@@ -4,6 +4,8 @@
 
 namespace worldlogNS
 {
+	const std::string SOUND_LOG = "Print_Log";
+
 	const std::string img_log = "LogBox";
 	const std::string img_log_top = "LogTop";
 

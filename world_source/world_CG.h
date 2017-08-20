@@ -15,6 +15,7 @@ enum class e_direct
 
 namespace worldcgNS
 {
+	const std::string SOUND_MOVE = "Move_Ship";
 	const std::string img_battle = "HarborBattle_0";
 	const std::string img_move = "HarborMove_";
 	const std::string MOVE_LT = "LT";

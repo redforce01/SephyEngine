@@ -4,19 +4,23 @@
 
 namespace world_island_infor_unitNS
 {
+	const std::string SOUND_SELECT = "Select";
+	const std::string SOUND_CANCEL = "Cancel";
+
 	const UINT MARGIN = 10;
+	const UINT BUILDING_MARGIN = 150;
 
 	//build infor
 	const std::string UNIT_NAME = "_create";
 	const UINT MAX_UNIT = 3;
-	const UINT UNIT_WIDTH = 165;
-	const UINT UNIT_HEIGHT = 130;
+	const UINT UNIT_WIDTH = 40;		//165
+	const UINT UNIT_HEIGHT = 40;	//130
 
-	const UINT TURN_WIDTH = 165;
+	const UINT TURN_WIDTH = 130;	//165
 	const UINT TURN_HEIGHT = 30;
 
 	const std::string BOX_NAME = "_make";
-	const UINT MAX_BOX = 6;
+	const UINT MAX_BOX = 15;
 	const UINT BOX_WIDTH = 80;
 	const UINT BOX_HEIGHT = 80;
 
@@ -57,7 +61,7 @@ private:
 	bool mouse_up;
 
 	void rect_initialize(RECT _rtM, RECT _rtR);
-	void build_destroy_render();
+	//void build_destroy_render();
 	void destroy_button_render(UINT _index);
 	bool is_build(CProduction_Ship* _ship);
 
@@ -75,5 +79,7 @@ public:
 	void set_action(CProduction_Ship* _ship);
 	CProduction_Ship* get_action(UINT _index) { return ship[_index]; }
 	UINT get_action_size() { return world_island_infor_unitNS::MAX_UNIT; }
+
+	void w_move_rl(float _speed);
 };
 

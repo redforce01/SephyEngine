@@ -54,5 +54,7 @@ public:
 	void replace_number_img(RECT rect, UINT _number);
 	void set_ship(CProduction_Ship* _ship) { ship = _ship; }
 	void buy_draw();
+
+	void w_move_rl(float _speed);
 };
 

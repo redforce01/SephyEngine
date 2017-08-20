@@ -9,6 +9,8 @@ CWorld_Turn_UI::CWorld_Turn_UI()
 	pThis = this;
 	button = new SystemButton;
 	backColor = worldturnNS::CUR_BACKGROUND_COLOR;
+	is_turn = false;
+	turn_delay = 0;
 	//img_turn = new Image;
 	//rect_turn = { 0, };
 }
@@ -59,7 +61,23 @@ void CWorld_Turn_UI::update(float frameTime)
 {
 	//setMessage("turn", "1 ео");
 
-	button->update(frameTime);
+	if (is_turn == true)
+	{
+		if (turn_delay >= worldturnNS::DELAY)
+		{
+			SOUNDMANAGER->play(worldturnNS::SOUND_TURN, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
+			is_turn = false;
+			turn_delay = 0;
+
+			return;
+		}
+
+		turn_delay += frameTime;
+	}
+
+	if (is_turn == false)
+		button->update(frameTime);
 }
 
 void CWorld_Turn_UI::render()
@@ -82,5 +100,10 @@ void CWorld_Turn_UI::render()
 
 void CWorld_Turn_UI::click_event()
 {
+	//if (SOUNDMANAGER->isPlaySound(worldturnNS::SOUND_TURN))
+	//SOUNDMANAGER->play(worldturnNS::SOUND_TURN, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 	pThis->player->turn_end();
+
+	pThis->is_turn = true;
 }

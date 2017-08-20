@@ -70,7 +70,8 @@ void CWorld_PlayerUI_ShipList::render()
 	if (is_init == false)
 		return;
 
-	button->render();
+	if (ship_list == nullptr)
+		button->render();
 
 	if (is_click == true)
 		ship_list->render();
@@ -78,6 +79,9 @@ void CWorld_PlayerUI_ShipList::render()
 
 void CWorld_PlayerUI_ShipList::click_event()
 {
+	//if (SOUNDMANAGER->isPlaySound(world_p_shiplistNS::SOUND_UI))
+	SOUNDMANAGER->play(world_p_shiplistNS::SOUND_UI, g_fSoundMasterVolume + g_fSoundEffectVolume);
+
 	pThis->ship_list = new CWorld_ShipList_UI;
 
 	pThis->ship_list->SetLoadLinkPlayer(pThis->player);

@@ -22,7 +22,7 @@ bool CWorld_Ship_Buy_Infor::initialize(Graphics * g, Input * i)
 	m_pInput = i;
 
 	SystemUIDialog::initializeDialog(
-		g, i, i->getMouseX(), i->getMouseY(),
+		g, i, i->getMouseX() - world_ship_buyNS::WIDTH, i->getMouseY(),
 		world_ship_buyNS::WIDTH,
 		world_ship_buyNS::HEIGHT,
 		world_ship_buyNS::MARGIN
@@ -30,7 +30,7 @@ bool CWorld_Ship_Buy_Infor::initialize(Graphics * g, Input * i)
 	SystemUIDialog::setDialogBackColor(world_ship_buyNS::BACK_COLOR);
 
 	rt_name = RectMake(
-		i->getMouseX() + world_ship_buyNS::MARGIN,
+		i->getMouseX() - world_ship_buyNS::WIDTH + world_ship_buyNS::MARGIN,
 		i->getMouseY() + world_ship_buyNS::MARGIN,
 		world_ship_buyNS::RT_WIDTH,
 		world_ship_buyNS::RT_HEIGHT
@@ -56,30 +56,30 @@ bool CWorld_Ship_Buy_Infor::initialize(Graphics * g, Input * i)
 
 void CWorld_Ship_Buy_Infor::update(float frameTime)
 {
-if (ship == nullptr)
-return;
+	if (ship == nullptr)
+	return;
 
-SystemUIDialog::update(frameTime);
+	SystemUIDialog::update(frameTime);
 
-SystemUIDialog::setDialogPos(m_pInput->getMouseX(), m_pInput->getMouseY());
+	SystemUIDialog::setDialogPos(m_pInput->getMouseX() - world_ship_buyNS::WIDTH, m_pInput->getMouseY());
 
-rt_name.left = m_pInput->getMouseX() + world_ship_buyNS::MARGIN;
-rt_name.right = rt_name.left + world_ship_buyNS::RT_WIDTH;
-rt_name.top = m_pInput->getMouseY() + world_ship_buyNS::MARGIN;
-rt_name.bottom = rt_name.top + world_ship_buyNS::RT_HEIGHT;
+	rt_name.left = m_pInput->getMouseX() - world_ship_buyNS::WIDTH + world_ship_buyNS::MARGIN;
+	rt_name.right = rt_name.left + world_ship_buyNS::RT_WIDTH;
+	rt_name.top = m_pInput->getMouseY() + world_ship_buyNS::MARGIN;
+	rt_name.bottom = rt_name.top + world_ship_buyNS::RT_HEIGHT;
 
-for (int i = 0; i < world_ship_buyNS::KIND_RESOURCE; i++)
-{
-	rt_resource[i].left = rt_name.left;
-	rt_resource[i].right = rt_name.right;
-	rt_resource[i].top = rt_name.bottom + world_ship_buyNS::RT_HEIGHT * i;
-	rt_resource[i].bottom = rt_resource[i].top + world_ship_buyNS::RT_HEIGHT;
-}
+	for (int i = 0; i < world_ship_buyNS::KIND_RESOURCE; i++)
+	{
+		rt_resource[i].left = rt_name.left;
+		rt_resource[i].right = rt_name.right;
+		rt_resource[i].top = rt_name.bottom + world_ship_buyNS::RT_HEIGHT * i;
+		rt_resource[i].bottom = rt_resource[i].top + world_ship_buyNS::RT_HEIGHT;
+	}
 
-rt_turn.left = rt_resource[world_ship_buyNS::KIND_RESOURCE - 1].left;
-rt_turn.right = rt_resource[world_ship_buyNS::KIND_RESOURCE - 1].right;
-rt_turn.top = rt_resource[world_ship_buyNS::KIND_RESOURCE - 1].bottom;
-rt_turn.bottom = rt_turn.top + world_ship_buyNS::RT_HEIGHT;
+	rt_turn.left = rt_resource[world_ship_buyNS::KIND_RESOURCE - 1].left;
+	rt_turn.right = rt_resource[world_ship_buyNS::KIND_RESOURCE - 1].right;
+	rt_turn.top = rt_resource[world_ship_buyNS::KIND_RESOURCE - 1].bottom;
+	rt_turn.bottom = rt_turn.top + world_ship_buyNS::RT_HEIGHT;
 }
 
 void CWorld_Ship_Buy_Infor::render()
@@ -158,4 +158,23 @@ void CWorld_Ship_Buy_Infor::buy_draw()
 	replace_number_img(rt_resource[FUEL], ship->get_resource(FUEL));
 	replace_number_img(rt_resource[RESEARCH], ship->get_resource(RESEARCH));
 	replace_number_img(rt_turn, ship->getTurn());
+}
+
+void CWorld_Ship_Buy_Infor::w_move_rl(float _speed)
+{
+	SystemUIDialog::moveDialogX(_speed);
+
+	rt_name.left += _speed;
+	rt_name.right += _speed;
+	rt_turn.left += _speed;
+	rt_turn.right += _speed;
+
+	for (int i = 0; i < world_ship_buyNS::KIND_RESOURCE; i++)
+	{
+		rt_resource[i].left += _speed;
+		rt_resource[i].right += _speed;
+	}
+
+	for (auto iter : list_number)
+		iter->moveX(_speed);
 }

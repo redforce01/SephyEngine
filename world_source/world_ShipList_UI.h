@@ -4,6 +4,10 @@
 
 namespace world_all_shiplistNS
 {
+	const std::string SOUND_SELECT = "Select";
+	const std::string SOUND_CANCEL = "Cancel";
+	const std::string SOUND_CLOSE = "Close";
+
 	const std::string BACK_NAME = "ShipList";
 
 	const UINT WIDTH = 395;
