@@ -8,17 +8,19 @@ CWorld_Log_UI::CWorld_Log_UI()
 	rect_scroll = { 0, };
 	scroll_mount = 0;
 	line = 0;
-	img_log = new Image;
-	img_log_top = new Image;
 }
 
 CWorld_Log_UI::~CWorld_Log_UI()
 {
+	m_eventMessage.clear();
+	w_log_message.clear();
 }
 
 bool CWorld_Log_UI::initialize(Graphics * g, Input * i)
 {
 	//w_log_message.clear();
+	img_log = new Image;
+	img_log_top = new Image;
 
 	m_pGraphics = g;
 	m_pInput = i;

@@ -56,6 +56,7 @@ CWorld_Ship_Move_UI::CWorld_Ship_Move_UI()
 
 CWorld_Ship_Move_UI::~CWorld_Ship_Move_UI()
 {
+	can_island.clear();
 }
 
 void CWorld_Ship_Move_UI::initialize(Graphics * g, Input * i)

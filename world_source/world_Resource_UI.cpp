@@ -37,54 +37,68 @@ void CWorld_Resource_UI::calcu_resource()
 		decrease_resource[i] = 0;
 	}
 
-	for (auto iter : player->get_island())
-	{
-		for (int i = 0; i < iter->get_Building_Size(); i++)
-		{
-			if (iter->get_Building(i) != nullptr)
-			{
-				if (iter->get_Building(i)->get_is_complete() == true)
-				{
-					increase_resource[MONEY] += iter->get_Building(i)->get_produce_resource()[MONEY];
-					increase_resource[IRON] += iter->get_Building(i)->get_produce_resource()[IRON];
-					increase_resource[FUEL] += iter->get_Building(i)->get_produce_resource()[FUEL];
-					increase_resource[RESEARCH] += iter->get_Building(i)->get_produce_resource()[RESEARCH];
-				}
-			}
-		}
+	increase_resource[MONEY] = player->get_increase_resource(MONEY);
+	increase_resource[IRON] = player->get_increase_resource(IRON);
+	increase_resource[FUEL] = player->get_increase_resource(FUEL);
+	increase_resource[RESEARCH] = player->get_increase_resource(RESEARCH);
 
-		for (auto cIter : iter->get_child())
-			increase_resource[cIter->get_type()] += cIter->get_resource();
-	}
+	decrease_resource[MONEY] = player->get_decrease_resource(MONEY);
+	decrease_resource[IRON] = player->get_decrease_resource(IRON);
+	decrease_resource[FUEL] = player->get_decrease_resource(FUEL);
+	decrease_resource[RESEARCH] = player->get_decrease_resource(RESEARCH);
 
-	for (auto iter : player->get_ship())
-		decrease_resource[FUEL] -= iter->getCost();
+	//for (auto iter : player->get_island())
+	//{
+	//	for (int i = 0; i < iter->get_Building_Size(); i++)
+	//	{
+	//		if (iter->get_Building(i) != nullptr)
+	//		{
+	//			if (iter->get_Building(i)->get_is_complete() == true)
+	//			{
+	//				increase_resource[MONEY] += iter->get_Building(i)->get_produce_resource()[MONEY];
+	//				increase_resource[IRON] += iter->get_Building(i)->get_produce_resource()[IRON];
+	//				increase_resource[FUEL] += iter->get_Building(i)->get_produce_resource()[FUEL];
+	//				increase_resource[RESEARCH] += iter->get_Building(i)->get_produce_resource()[RESEARCH];
+	//			}
+	//		}
+	//	}
+
+	//	for (auto cIter : iter->get_child())
+	//		increase_resource[cIter->get_type()] += cIter->get_resource();
+	//}
+
+	//for (auto iter : player->get_ship())
+	//	decrease_resource[FUEL] -= iter->getCost();
 }
 
 CWorld_Resource_UI::CWorld_Resource_UI()
 {
 	for (int i = 0; i < worldresourceNS::num; i++)
 	{
-		icon_resource[i] = new Image;
-		img_resource[i] = new Image;
-
 		rect_save[i] = { 0, };
 		rect_increase[i] = { 0, };
 
 		increase_resource[i] = 0;
 		decrease_resource[i] = 0;
 	}
-
-	resource_detail = new CWorld_Resource_Detail;
 }
 
 CWorld_Resource_UI::~CWorld_Resource_UI()
 {
 	SAFE_DELETE(resource_detail);
+	list_number.clear();
 }
 
 bool CWorld_Resource_UI::initialize(Graphics * g, Input * i)
 {
+	for (int i = 0; i < worldresourceNS::num; i++)
+	{
+		icon_resource[i] = new Image;
+		img_resource[i] = new Image;
+	}
+
+	resource_detail = new CWorld_Resource_Detail;
+
 	m_pGraphics = g;
 	m_pInput = i;
 
@@ -155,7 +169,7 @@ void CWorld_Resource_UI::render()
 
 	for (int i = 0; i < worldresourceNS::num; i++)
 	{
-		int amount = increase_resource[i] + decrease_resource[i];
+		int amount = increase_resource[i] - decrease_resource[i];
 
 		std::string str = std::to_string(fabs(amount));
 		
@@ -166,21 +180,6 @@ void CWorld_Resource_UI::render()
 
 		replace_number_img(rect_increase[i], amount, false);
 	}
-
-	//for (auto iter : m_increaseMessage)
-	//{
-	//	dxfont_increase.print(iter.second, rect_increase[index], DT_VCENTER + DT_CENTER);
-
-	//	index++;
-	//}
-
-	// =============== 생산될 자원 추가하기 ===============
-	//for (auto iter : m_increaseMessage)
-	//{
-	//	replace_number_img(rect_increase[index], iter.second, false);
-
-	//	index++;
-	//}
 
 	for (auto iter : list_number)
 		iter->draw();

@@ -9,12 +9,16 @@ CWorld_Computer::CWorld_Computer()
 
 CWorld_Computer::~CWorld_Computer()
 {
+	img_list.clear();
 }
 
 void CWorld_Computer::update(float frameTime)
 {
 	for (auto iter : island_node)
-		iter->update(frameTime);
+	{
+		if (iter != nullptr)
+			iter->update(frameTime);
+	}
 }
 
 void CWorld_Computer::render()

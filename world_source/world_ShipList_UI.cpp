@@ -219,8 +219,6 @@ CWorld_ShipList_UI::CWorld_ShipList_UI()
 	mouse_up = false;
 	is_show = true;
 
-	background = new Image;
-
 	scroll_mount_island = 0;
 	scroll_mount_current = 0;
 
@@ -231,10 +229,14 @@ CWorld_ShipList_UI::CWorld_ShipList_UI()
 CWorld_ShipList_UI::~CWorld_ShipList_UI()
 {
 	SAFE_DELETE(background);
+	rt_current.clear();
+	rt_island.clear();
 }
 
 bool CWorld_ShipList_UI::initialize(Graphics * g, Input * i)
 {
+	background = new Image;
+
 	m_pGraphics = g;
 	m_pInput = i;
 

@@ -239,6 +239,26 @@ CWorld_Island_Data::CWorld_Island_Data()
 
 CWorld_Island_Data::~CWorld_Island_Data()
 {
+	for (auto iter : ship_node)
+	{
+		if (iter != nullptr)
+			SAFE_DELETE(iter);
+	}
+	ship_node.clear();
+
+	for (auto iter : building_node)
+	{
+		if (iter != nullptr)
+			SAFE_DELETE(iter);
+	}
+	building_node.clear();
+	island_node.clear();
+
+	//for (auto iter : island_node)
+	//{
+	//	if (iter != nullptr)
+	//		SAFE_DELETE(iter);
+	//}
 }
 
 bool CWorld_Island_Data::initialize(Graphics* g, Input* i)

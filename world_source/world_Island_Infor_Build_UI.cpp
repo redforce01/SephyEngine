@@ -49,8 +49,6 @@ CWorld_Island_Infor_Build_UI::CWorld_Island_Infor_Build_UI()
 		rt_box[i] = { 0, };
 
 	mouse_up = false;
-
-	buy_infor = new CWorld_Building_Buy_Infor;
 }
 
 
@@ -58,10 +56,13 @@ CWorld_Island_Infor_Build_UI::~CWorld_Island_Infor_Build_UI()
 {
 	for (auto iter : img_list)
 		SAFE_DELETE(iter);
+	img_list.clear();
 }
 
 void CWorld_Island_Infor_Build_UI::initialize(Graphics * g, Input * i, UINT _index, RECT _rt)
 {
+	buy_infor = new CWorld_Building_Buy_Infor;
+
 	m_pGraphics = g;
 	m_pInput = i;
 	index = _index;

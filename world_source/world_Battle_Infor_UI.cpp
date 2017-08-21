@@ -126,8 +126,6 @@ CWorld_Battle_Infor_UI::CWorld_Battle_Infor_UI()
 	mouse_up = false;
 	is_show = false;
 
-	background = new Image;
-
 	scroll_mount_island = 0;
 	scroll_mount_current = 0;
 }
@@ -135,11 +133,16 @@ CWorld_Battle_Infor_UI::CWorld_Battle_Infor_UI()
 
 CWorld_Battle_Infor_UI::~CWorld_Battle_Infor_UI()
 {
+	rt_island.clear();
+	rt_current.clear();
+
 	SAFE_DELETE(background);
 }
 
 bool CWorld_Battle_Infor_UI::initialize(Graphics * g, Input * i)
 {
+	background = new Image;
+
 	m_pGraphics = g;
 	m_pInput = i;
 

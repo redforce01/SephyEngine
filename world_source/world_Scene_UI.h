@@ -18,8 +18,6 @@ private:
 	CWorld_Log_UI*			w_log_ui;
 	CWorld_Minimap_UI*		w_minimap_ui;
 
-	bool is_update;
-
 public:
 	void SetLoadLinkPlayer(CWorld_Player* _player) { player = _player; }
 
@@ -30,7 +28,7 @@ public:
 	void update(float frameTime);
 	void render();
 
-	void set_is_update(bool _is) { is_update = _is; }
+	void set_is_update(bool _is) { w_turn_ui->set_is_update(_is); }
 	void print_world_log(const std::string message) { w_log_ui->print_world_log(message); }
 
 	std::deque<std::string> get_log_message() { return w_log_ui->get_log_message(); }

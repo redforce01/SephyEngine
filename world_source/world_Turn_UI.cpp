@@ -5,11 +5,10 @@
 
 CWorld_Turn_UI::CWorld_Turn_UI()
 {
-	button = new Image;
-
 	backColor = worldturnNS::CUR_BACKGROUND_COLOR;
 	img_count = worldturnNS::TURN_MIN;
 
+	is_update = true;
 	is_turn = false;
 	mouse_up = false;
 
@@ -27,6 +26,8 @@ CWorld_Turn_UI::~CWorld_Turn_UI()
 
 bool CWorld_Turn_UI::initialize(Graphics * g, Input * i)
 {
+	button = new Image;
+
 	m_pGraphics = g;
 	m_pInput = i;
 
@@ -70,6 +71,9 @@ void CWorld_Turn_UI::update(float frameTime)
 {
 	//setMessage("turn", "1 ео");
 	pass_turn(frameTime);
+
+	if (is_update == false)
+		return;
 
 	if (m_pInput->getMouseLButton())
 		mouse_up = true;

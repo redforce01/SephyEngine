@@ -14,6 +14,21 @@ CWorld_User::CWorld_User()
 
 CWorld_User::~CWorld_User()
 {
+	//for (auto iter : island_node)
+	//{
+	//	if (iter != nullptr)
+	//		SAFE_DELETE(iter);
+	//}
+
+	//for (auto iter : ship_node)
+	//	SAFE_DELETE(iter);
+
+	for (auto iter : current_ship)
+		SAFE_DELETE(iter);
+
+	current_ship.clear();
+	ship_node.clear();
+	island_node.clear();
 }
 
 void CWorld_User::initialize(Graphics* g, Input* i, int _money, int _iron, int _fuel, int _research)
@@ -72,7 +87,7 @@ void CWorld_User::print_world_log(const std::string message)
 
 std::deque<std::string> CWorld_User::get_log_message()
 {
-	return scene->get_log_message();;
+	return scene->get_log_message();
 }
 
 int CWorld_User::get_resource(E_RESOURCE _type)

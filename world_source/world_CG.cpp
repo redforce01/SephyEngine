@@ -17,7 +17,8 @@ CWorld_CG::CWorld_CG()
 
 CWorld_CG::~CWorld_CG()
 {
-	SAFE_DELETE(img);
+	if(img != nullptr)
+		SAFE_DELETE(img);
 
 	if (battle_ui != nullptr)
 		SAFE_DELETE(battle_ui);

@@ -48,39 +48,6 @@ void CWorld_Island_Infor_Unit_UI::rect_initialize(RECT _rtM, RECT _rtR)
 	}
 }
 
-//void CWorld_Island_Infor_Unit_UI::build_destroy_render()
-//{
-//	if (player->get_select_island()->get_Building(index)->get_is_destroy() == true)	//show destroy
-//	{
-//		m_pGraphics->drawLine(
-//			rt_unit[0].left, rt_unit[0].top, 
-//			rt_turn[world_island_infor_unitNS::MAX_UNIT - 1].right,
-//			rt_turn[world_island_infor_unitNS::MAX_UNIT - 1].bottom, 
-//			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-//		);
-//		m_pGraphics->drawLine(
-//			rt_turn[0].left, rt_turn[0].bottom,
-//			rt_unit[world_island_infor_unitNS::MAX_UNIT - 1].right,
-//			rt_unit[world_island_infor_unitNS::MAX_UNIT - 1].top, 
-//			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-//		);
-//
-//		m_pGraphics->drawLine(
-//			rt_box[0].left, rt_box[0].top,
-//			rt_box[world_island_infor_unitNS::MAX_BOX - 1].right, 
-//			rt_box[world_island_infor_unitNS::MAX_BOX - 1].bottom, 
-//			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-//		);
-//		m_pGraphics->drawLine(
-//			rt_box[world_island_infor_unitNS::MAX_BOX / 2].left, 
-//			rt_box[world_island_infor_unitNS::MAX_BOX / 2].bottom,
-//			rt_box[world_island_infor_unitNS::MAX_BOX / 2 - 1].right, 
-//			rt_box[world_island_infor_unitNS::MAX_BOX / 2 - 1].top, 
-//			world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-//		);
-//	}
-//}
-
 void CWorld_Island_Infor_Unit_UI::destroy_button_render(UINT _index)
 {
 	m_pGraphics->drawLine(
@@ -122,8 +89,6 @@ CWorld_Island_Infor_Unit_UI::CWorld_Island_Infor_Unit_UI()
 
 	//mouse_up_unit = false;
 	mouse_up = false;
-
-	ship_infor = new CWorld_Ship_Buy_Infor;
 }
 
 
@@ -131,10 +96,13 @@ CWorld_Island_Infor_Unit_UI::~CWorld_Island_Infor_Unit_UI()
 {
 	for (auto iter : img_list)
 		SAFE_DELETE(iter);
+	img_list.clear();
 }
 
 void CWorld_Island_Infor_Unit_UI::initialize(Graphics * g, Input * i, UINT _index, RECT _rtM, RECT _rtR)
 {
+	ship_infor = new CWorld_Ship_Buy_Infor;
+
 	m_pGraphics = g;
 	m_pInput = i;
 	index = _index;

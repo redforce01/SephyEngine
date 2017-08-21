@@ -70,7 +70,8 @@ private:
 
 	void worldMove();	//worldmap move key & limit area
 	void init_position();	//atapt margin
-	void data_load();
+	bool data_load();
+	void battle_result_load();
 	void save_data();
 
 public:

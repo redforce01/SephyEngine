@@ -15,6 +15,7 @@ CWorld_Resource_Detail::CWorld_Resource_Detail()
 
 CWorld_Resource_Detail::~CWorld_Resource_Detail()
 {
+	list_number.clear();
 }
 
 bool CWorld_Resource_Detail::initialize(Graphics * g, Input * i)

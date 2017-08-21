@@ -51,8 +51,6 @@ void CWorld_Player::new_player()
 
 CWorld_Player::CWorld_Player()
 {
-	island_ui = new CWorld_Player_Island_UI;
-
 	detail_ui = nullptr;
 	select_island = nullptr;
 	//show_ui = false;
@@ -63,20 +61,31 @@ CWorld_Player::CWorld_Player()
 		increase_resource[i] = 0;
 		decrease_resource[i] = 0;
 	}
+
+	island_ui = new CWorld_Player_Island_UI;
 }
 
 
 CWorld_Player::~CWorld_Player()
 {
 	if (island_ui != nullptr)
-		SAFE_DELETE(island_ui);
+		island_ui->release();
+
+	//if (island_ui != nullptr)
+	//	SAFE_DELETE(island_ui);
 
 	if (detail_ui != nullptr)
 		SAFE_DELETE(detail_ui);
+
+	img_list.clear();
 }
 
 void CWorld_Player::initialize(Graphics * g, Input * i, int _money, int _iron, int _fuel, int _research)
 {
+	//if (island_ui == nullptr)
+	//	island_ui = new CWorld_Player_Island_UI;
+	detail_ui = new CWorld_Island_Detail_UI;
+
 	m_pGraphics = g;
 	m_pInput = i;
 
@@ -88,6 +97,9 @@ void CWorld_Player::initialize(Graphics * g, Input * i, int _money, int _iron, i
 
 void CWorld_Player::update(float frameTime)
 {
+	if (m_pInput->isKeyDown(ESC_KEY))
+		SCENEMANAGER->changeScene("Lobby");
+
 	if (is_update == false)
 		return;
 
@@ -130,9 +142,8 @@ void CWorld_Player::render()
 			{
 				if (PtInRect(&iter->getRect(), m_pInput->getMousePt()))
 				{
-					if (detail_ui == nullptr)
+					if (detail_ui->get_is_show() == false)
 					{
-						detail_ui = new CWorld_Island_Detail_UI;
 						detail_ui->initialize(m_pGraphics, m_pInput, iter);
 						detail_ui->render();
 					}
@@ -141,12 +152,9 @@ void CWorld_Player::render()
 
 					break;
 				}
+				else 
+					detail_ui->set_is_show(false);
 			}
-		}
-		else
-		{
-			if (detail_ui != nullptr)
-				SAFE_DELETE(detail_ui);
 		}
 	}
 
@@ -260,7 +268,7 @@ void CWorld_Player::w_move_ud(float _speed)
 	for (auto iter : img_list)
 		iter->moveY(_speed);
 
-	if (detail_ui != nullptr)
+	if (detail_ui->get_is_show())
 		detail_ui->w_move_ud(_speed);
 }
 
@@ -274,6 +282,6 @@ void CWorld_Player::w_move_rl(float _speed)
 	for (auto iter : img_list)
 		iter->moveX(_speed);
 
-	if (detail_ui != nullptr)
+	if (detail_ui->get_is_show())
 		detail_ui->w_move_rl(_speed);
 }

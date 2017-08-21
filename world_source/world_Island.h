@@ -9,7 +9,7 @@ namespace worldislandNS
 	const UINT TILE_WIDTH = 767;
 	const UINT TILE_HEIGHT = 325;
 
-	const UINT MAX_BUILDING = 3;
+	const int MAX_BUILDING = 3;
 }
 
 class CWorld_User;
@@ -40,12 +40,11 @@ private:
 	//bool u_island;	//can go island
 	std::vector<CProduction_Ship*> current_ship;
 	std::vector<CWorld_Ship*> show_ship;
-
-	std::vector<UINT> delete_node;
-
-	std::vector<UINT> nextnode;	//island connect nodes
 	std::vector<CChild_Island*> child_node;	//island's near neighborhood island
 	CBuilding* building_node[worldislandNS::MAX_BUILDING];	//island's build building
+
+	std::vector<UINT> delete_node;
+	std::vector<UINT> nextnode;	//island connect nodes
 	//CBuilding* building[3]->최대 3개의 건물이라면 이런식으로
 
 	void add_Child();	//about to island's id -> add child island

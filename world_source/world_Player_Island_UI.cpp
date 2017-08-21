@@ -5,10 +5,6 @@
 
 CWorld_Player_Island_UI::CWorld_Player_Island_UI()
 {
-	ship_list = nullptr;
-	island_infor = nullptr;
-
-	is_show = false;
 }
 
 
@@ -16,8 +12,19 @@ CWorld_Player_Island_UI::~CWorld_Player_Island_UI()
 {
 }
 
+void CWorld_Player_Island_UI::release()
+{
+	SAFE_DELETE(ship_list);
+	SAFE_DELETE(island_infor);
+}
+
 bool CWorld_Player_Island_UI::initialize(Graphics * g, Input * i)
 {
+	ship_list = nullptr;
+	island_infor = nullptr;
+
+	is_show = false;
+
 	m_pGraphics = g;
 	m_pInput = i;
 	

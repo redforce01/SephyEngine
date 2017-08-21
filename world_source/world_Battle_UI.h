@@ -2,6 +2,7 @@
 
 #include "systemUIDialog.h"
 #include "world_Battle_Infor_UI.h"
+#include "Battle_DataParser.h"
 
 namespace worldbattleNS
 {
@@ -15,8 +16,10 @@ namespace worldbattleNS
 	// save infor
 	const UINT KINE_RESOURCE = 4;
 	const std::string FILE_PATH = "Resources\\40_WorldData\\World_Save_Data.txt";
+	const std::string FILE_STATE_PATH = "Resources\\40_WorldData\\World_Game_State.txt";
+	const std::string STATE_PLAY = "Play";
 	const std::string FILE_START = "BEGIN\t";
-	const std::string FILE_FINISH = "\tEND\n";
+	const std::string FILE_FINISH = "END";
 
 	const UINT ACTION_SIZE = 3;
 

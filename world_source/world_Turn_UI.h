@@ -54,6 +54,8 @@ private:
 	float turn_delay;
 	bool is_turn;
 	bool mouse_up;
+
+	bool is_update;
 	//std::map<std::string, std::string> m_turnMessage;
 	//Image* img_turn;
 	void click_event();
@@ -68,6 +70,8 @@ public:
 	virtual bool initialize(Graphics* g, Input* i) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
+
+	void set_is_update(bool _is) { is_update = _is; }
 
 	//void addMessage(std::string key, std::string message)
 	//{

@@ -141,7 +141,7 @@ void CWorld_Island_Infor_UI::rect_initialize()
 void CWorld_Island_Infor_UI::resource_render()
 {
 	//m_dxFont.print("Produce Resource", rt_title, DT_CENTER + DT_VCENTER);
-	m_dxFont.print(" Save ", rt_exit, DT_CENTER + DT_VCENTER);
+	m_dxFont.print("Save", rt_exit, DT_CENTER | DT_VCENTER);
 	//m_dxFont.print(" Money: ", rt_money, DT_LEFT + DT_VCENTER);
 	//m_dxFont.print(" Iron: ", rt_iron, DT_LEFT + DT_VCENTER);
 	//m_dxFont.print(" Fuel: ", rt_fuel, DT_LEFT + DT_VCENTER);
@@ -248,12 +248,15 @@ CWorld_Island_Infor_UI::~CWorld_Island_Infor_UI()
 {
 	for (auto iter : list_number)
 		SAFE_DELETE(iter);
+	list_number.clear();
 
 	for (auto iter : img_list)
 		SAFE_DELETE(iter);
+	img_list.clear();
 
 	for (auto iter : building_image)
 		SAFE_DELETE(iter);
+	building_image.clear();
 
 	for (int i = 0; i < world_island_inforNS::MAX_BUILDING; i++)
 	{

@@ -44,10 +44,6 @@ void CWorld_Ship::move()
 
 CWorld_Ship::CWorld_Ship()
 {
-	top = new Image;
-	body = new Image;
-	middle = new Image;
-
 	//speed = worldshipNS::speed;
 	degree = worldshipNS::degree;
 }
@@ -55,10 +51,17 @@ CWorld_Ship::CWorld_Ship()
 
 CWorld_Ship::~CWorld_Ship()
 {
+	SAFE_DELETE(top);
+	SAFE_DELETE(body);
+	SAFE_DELETE(middle);
 }
 
 void CWorld_Ship::initialize(Graphics * _g, Input * _i, std::string _name, int _x, int _y, POINT _pt)
 {
+	top = new Image;
+	body = new Image;
+	middle = new Image;
+
 	m_pGraphics = _g;
 	m_pInput = _i;
 	name = _name;

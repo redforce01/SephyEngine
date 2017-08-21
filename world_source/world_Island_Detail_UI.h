@@ -31,6 +31,8 @@ private :
 	RECT rt_fuel;
 	RECT rt_research;
 
+	bool is_show;
+
 	int money;
 	int iron;
 	int fuel;
@@ -44,6 +46,9 @@ public:
 	void update(float frameTime);
 	void render();
 
+	bool get_is_show() { return is_show; }
+
+	void set_is_show(bool _is) { is_show = _is; }
 	void w_move_ud(float _speed);
 	void w_move_rl(float _speed);
 };

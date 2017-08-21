@@ -7,7 +7,6 @@ CWorld_PlayerUI_ShipList* pThis = nullptr;
 CWorld_PlayerUI_ShipList::CWorld_PlayerUI_ShipList()
 {
 	pThis = this;
-	button = new SystemButton;
 
 	delay = 0;
 
@@ -24,6 +23,8 @@ CWorld_PlayerUI_ShipList::~CWorld_PlayerUI_ShipList()
 
 void CWorld_PlayerUI_ShipList::initialize(Graphics* g, Input* i, POINT _pt, UINT _width, UINT _height)
 {
+	button = new SystemButton;
+
 	is_init = true;
 
 	m_pGraphics = g;
@@ -88,7 +89,7 @@ void CWorld_PlayerUI_ShipList::render()
 
 		m_pGraphics->spriteBegin();
 
-		m_dxFont.print("Island Info", rt_font, DT_CENTER | DT_VCENTER);
+		m_dxFont.print(world_p_shiplistNS::BUTTON_MSG, rt_font, DT_CENTER | DT_VCENTER);
 
 		m_pGraphics->spriteEnd();
 	}

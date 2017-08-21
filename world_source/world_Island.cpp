@@ -74,6 +74,34 @@ CWorld_Island::CWorld_Island()
 
 CWorld_Island::~CWorld_Island()
 {
+	for (auto iter : current_ship)
+	{
+		if (iter != nullptr)
+			SAFE_DELETE(iter);
+	}
+	current_ship.clear();
+
+	for (auto iter : show_ship)
+	{
+		if (iter != nullptr)
+			SAFE_DELETE(iter);
+	}
+	show_ship.clear();
+
+	for (auto iter : child_node)
+	{
+		if (iter != nullptr)
+			SAFE_DELETE(iter);
+	}
+	child_node.clear();
+	delete_node.clear();
+	nextnode.clear();
+
+	for (int i = 0; i < worldislandNS::MAX_BUILDING; i++)
+	{
+		if (building_node[i] != nullptr)
+			SAFE_DELETE(building_node[i]);
+	}
 }
 
 void CWorld_Island::turn_end()
@@ -194,7 +222,10 @@ void CWorld_Island::initialize(Graphics* g, Input* i, std::string _name, UINT _i
 void CWorld_Island::update(float frameTime)
 {
 	for (auto iter : show_ship)
-		iter->update(frameTime);
+	{
+		if (iter != nullptr)
+			iter->update(frameTime);
+	}
 }
 
 void CWorld_Island::render()

@@ -6,8 +6,7 @@ CWorld_PlayerUI_Island_Infor* pThis = nullptr;
 CWorld_PlayerUI_Island_Infor::CWorld_PlayerUI_Island_Infor()
 {
 	pThis = this;
-	button = new SystemButton;
-
+	
 	delay = 0;
 	delay_infor = 0;
 
@@ -26,6 +25,8 @@ CWorld_PlayerUI_Island_Infor::~CWorld_PlayerUI_Island_Infor()
 
 void CWorld_PlayerUI_Island_Infor::initialize(Graphics * g, Input * i, POINT _pt, UINT _width, UINT _height)
 {
+	button = new SystemButton;
+
 	is_init = true;
 
 	m_pGraphics = g;
@@ -96,7 +97,7 @@ void CWorld_PlayerUI_Island_Infor::render()
 
 		m_pGraphics->spriteBegin();
 
-		m_dxFont.print("Island Infor", rt_font, DT_CENTER | DT_VCENTER);
+		m_dxFont.print(world_p_island_inforNS::BUTTON_MSG, rt_font, DT_CENTER | DT_VCENTER);
 
 		m_pGraphics->spriteEnd();
 	}

@@ -15,6 +15,7 @@ CWorld_Building_Buy_Infor::CWorld_Building_Buy_Infor()
 
 CWorld_Building_Buy_Infor::~CWorld_Building_Buy_Infor()
 {
+	list_number.clear();
 }
 
 bool CWorld_Building_Buy_Infor::initialize(Graphics * g, Input * i)

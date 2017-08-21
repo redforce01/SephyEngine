@@ -31,6 +31,7 @@ public:
 	virtual bool initialize(Graphics* g, Input* i) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
+	void release();
 
 	void show_UI(POINT _pt, UINT _width, UINT _height);
 	void hide_UI();

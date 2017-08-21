@@ -4,12 +4,7 @@
 
 CWorld_Island_Detail_UI::CWorld_Island_Detail_UI()
 {
-	background = new Image;
-
-	money = 0;
-	iron = 0;
-	fuel = 0;
-	research = 0;
+	is_show = false;
 }
 
 
@@ -20,6 +15,16 @@ CWorld_Island_Detail_UI::~CWorld_Island_Detail_UI()
 
 void CWorld_Island_Detail_UI::initialize(Graphics * g, Input * i, CWorld_Island* _island)
 {
+	if (background == nullptr)
+		background = new Image;
+
+	money = 0;
+	iron = 0;
+	fuel = 0;
+	research = 0;
+
+	is_show = true;
+
 	m_pGraphics = g;
 	m_pInput = i;
 	island = _island;
@@ -94,6 +99,9 @@ void CWorld_Island_Detail_UI::update(float frameTime)
 
 void CWorld_Island_Detail_UI::render()
 {
+	if (is_show == false)
+		return;
+
 	m_pGraphics->spriteBegin();
 
 	background->draw();
