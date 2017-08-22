@@ -4,13 +4,6 @@
 
 CLobby_Scene::CLobby_Scene()
 {
-	background_back = new Image;
-	background = new Image;
-
-	l_map = new CLobby_Change_MapTool;
-	l_unit = new CLobby_Change_UnitTool;
-	l_world = new CLobby_Change_World;
-	l_menu = new CLobby_Menu;
 }
 
 
@@ -27,6 +20,14 @@ CLobby_Scene::~CLobby_Scene()
 void CLobby_Scene::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
+
+	background_back = new Image;
+	background = new Image;
+
+	l_map = new CLobby_Change_MapTool;
+	l_unit = new CLobby_Change_UnitTool;
+	l_world = new CLobby_Change_World;
+	l_menu = new CLobby_Menu;
 
 	background_back->initialize(this->graphics, 0, 0, 0, IMAGEMANAGER->getTexture("1080p_WHITE"));
 	background_back->setColorFilter(SETCOLOR_ARGB(255, 1, 1, 1));
@@ -45,7 +46,7 @@ void CLobby_Scene::initialize(HWND hwnd)
 void CLobby_Scene::update()
 {
 	if (SOUNDMANAGER->isPlaySound(lobby_sceneNS::SOUNE_BGM) == false)
-		SOUNDMANAGER->play(lobby_sceneNS::SOUNE_BGM, g_fSoundMasterVolume + g_fSoundBGMVolume);
+		SOUNDMANAGER->play(lobby_sceneNS::SOUNE_BGM, g_fSoundMasterVolume * g_fSoundBGMVolume);
 
 	l_map->update(Game::getTimeDelta());
 	l_unit->update(Game::getTimeDelta());
@@ -55,6 +56,15 @@ void CLobby_Scene::update()
 
 void CLobby_Scene::release()
 {
+	if (SOUNDMANAGER->isPlaySound(lobby_menuNS::SOUNE_BGM) == true)
+		SOUNDMANAGER->stop(lobby_menuNS::SOUNE_BGM);
+
+	SAFE_DELETE(background_back);
+	SAFE_DELETE(background);
+	SAFE_DELETE(l_map);
+	SAFE_DELETE(l_unit);
+	SAFE_DELETE(l_world);
+	SAFE_DELETE(l_menu);
 }
 
 void CLobby_Scene::ai()

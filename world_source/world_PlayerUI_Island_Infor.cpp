@@ -21,6 +21,7 @@ CWorld_PlayerUI_Island_Infor::CWorld_PlayerUI_Island_Infor()
 
 CWorld_PlayerUI_Island_Infor::~CWorld_PlayerUI_Island_Infor()
 {
+	SAFE_DELETE(button);
 }
 
 void CWorld_PlayerUI_Island_Infor::initialize(Graphics * g, Input * i, POINT _pt, UINT _width, UINT _height)

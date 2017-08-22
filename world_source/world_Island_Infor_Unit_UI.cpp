@@ -50,14 +50,29 @@ void CWorld_Island_Infor_Unit_UI::rect_initialize(RECT _rtM, RECT _rtR)
 
 void CWorld_Island_Infor_Unit_UI::destroy_button_render(UINT _index)
 {
-	m_pGraphics->drawLine(
-		rt_unit[_index].left, rt_unit[_index].top, rt_turn[_index].right, rt_turn[_index].bottom,
-		world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
+	Image* img = new Image;
+	img->initialize(
+		m_pGraphics, world_island_infor_unitNS::DESTROY_WIDTH
+		, world_island_infor_unitNS::DESTROY_HEIGHT, 0,
+		IMAGEMANAGER->getTexture(world_island_infor_unitNS::DESTROY_IMG)
 	);
-	m_pGraphics->drawLine(
-		rt_turn[_index].left, rt_turn[_index].bottom, rt_unit[_index].right, rt_unit[_index].top,
-		world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-	);
+	img->setX(rt_box[_index].left);
+	img->setY(rt_box[_index].top);
+	img->setColorFilter(world_island_infor_unitNS::DESTROY_COLOR);
+
+	m_pGraphics->spriteBegin();
+	img->draw();
+	m_pGraphics->spriteEnd();
+
+	img_list.emplace_back(img);
+	//m_pGraphics->drawLine(
+	//	rt_unit[_index].left, rt_unit[_index].top, rt_turn[_index].right, rt_turn[_index].bottom,
+	//	world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
+	//);
+	//m_pGraphics->drawLine(
+	//	rt_turn[_index].left, rt_turn[_index].bottom, rt_unit[_index].right, rt_unit[_index].top,
+	//	world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
+	//);
 }
 
 bool CWorld_Island_Infor_Unit_UI::is_build(CProduction_Ship * _ship)

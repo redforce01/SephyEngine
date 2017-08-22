@@ -48,7 +48,7 @@ public:
 	//CWorld_Island_Data* get_data() { return island_data; }
 	//CWorld_Island* click_island();
 	CWorld_Island* get_select_island() { return select_island; }
-	CWorld_Scene* get_scene() { return scene; }
+	CWorld_MainSystem* get_scene() { return scene; }
 	UINT get_turn() { return turn; }
 
 	void setTurn(int _turn) { turn = _turn; }

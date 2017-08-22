@@ -19,25 +19,21 @@ CWorld_PlayerUI_ShipList::CWorld_PlayerUI_ShipList()
 
 CWorld_PlayerUI_ShipList::~CWorld_PlayerUI_ShipList()
 {
+	SAFE_DELETE(button);
 }
 
 void CWorld_PlayerUI_ShipList::initialize(Graphics* g, Input* i, POINT _pt, UINT _width, UINT _height)
 {
 	button = new SystemButton;
-
 	is_init = true;
-
 	m_pGraphics = g;
 	m_pInput = i;
-	margin = _width;
-	
+	margin = _width;	
 	button->initialize(g, i, world_p_shiplistNS::img_name, true);
 	//button->setButtonPos(_pt.x - _width / 2, _pt.y - _height / 2);
 	button->setButtonPos(_pt.x - button->getWidth() / 2, _pt.y - button->getHeight() / 2);
 	button->setRegistFunction(std::bind(&CWorld_PlayerUI_ShipList::click_event));
-
 	rt_font = RectMake(button->getX(),	button->getY(),	button->getWidth(),	button->getHeight());
-
 	m_dxFont.initialize(g, world_p_island_inforNS::FONT_SIZE, true, false, world_p_island_inforNS::FONT);
 
 	//false, graphicsNS::FILTER, "button_test", 300, 300, 49, 16, 1
@@ -86,11 +82,8 @@ void CWorld_PlayerUI_ShipList::render()
 	if (ship_list == nullptr)
 	{
 		button->render();
-
 		m_pGraphics->spriteBegin();
-
 		m_dxFont.print(world_p_shiplistNS::BUTTON_MSG, rt_font, DT_CENTER | DT_VCENTER);
-
 		m_pGraphics->spriteEnd();
 	}
 

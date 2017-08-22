@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "lobby_Menu.h"
 
-
 bool CLobby_Menu::initialize(Graphics * g, Input * i)
 {
 	return false;
@@ -9,6 +8,8 @@ bool CLobby_Menu::initialize(Graphics * g, Input * i)
 
 CLobby_Menu::CLobby_Menu()
 {
+	SystemUIDialog::backColor = lobby_menuNS::BACK_COLOR;
+	
 	mouse_up = false;
 
 	rt_campagin = { 0, };
@@ -26,7 +27,6 @@ bool CLobby_Menu::initialize(Graphics * g, Input * i, int _x, int _y)
 	m_pInput = i;
 
 	SystemUIDialog::initializeDialog(g, i, _x, _y, lobby_menuNS::WIDTH, lobby_menuNS::HEIGHT, lobby_menuNS::MARGIN);
-	SystemUIDialog::backColor = lobby_menuNS::BACK_COLOR;
 
 	rt_campagin = RectMake(
 		_x + lobby_menuNS::MARGIN,
@@ -64,25 +64,16 @@ void CLobby_Menu::update(float frameTime)
 
 				TXTDATA_PARSER->saveDataFromArray(lobby_menuNS::FILE_PATH, temp);
 
-				if (SOUNDMANAGER->isPlaySound(lobby_menuNS::SOUNE_BGM) == true)
-					SOUNDMANAGER->stop(lobby_menuNS::SOUNE_BGM);
-
 				SCENEMANAGER->changeScene("World");
 			}
 			if (PtInRect(&rt_option, m_pInput->getMousePt()))
 			{
-				if (SOUNDMANAGER->isPlaySound(lobby_menuNS::SOUNE_BGM) == true)
-					SOUNDMANAGER->stop(lobby_menuNS::SOUNE_BGM);
 			}
 			if (PtInRect(&rt_credit, m_pInput->getMousePt()))
 			{
-				if (SOUNDMANAGER->isPlaySound(lobby_menuNS::SOUNE_BGM) == true)
-					SOUNDMANAGER->stop(lobby_menuNS::SOUNE_BGM);
 			}
 			if (PtInRect(&rt_exit, m_pInput->getMousePt()))
 			{
-				if (SOUNDMANAGER->isPlaySound(lobby_menuNS::SOUNE_BGM) == true)
-					SOUNDMANAGER->stop(lobby_menuNS::SOUNE_BGM);
 				PostQuitMessage(0);
 			}
 		}

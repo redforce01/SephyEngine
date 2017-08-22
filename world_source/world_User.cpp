@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "world_User.h"
-#include "world_Scene.h"
+#include "world_MainSystem.h"
 
 
 CWorld_User::CWorld_User()

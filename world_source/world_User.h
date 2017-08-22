@@ -8,14 +8,14 @@ namespace world_userNS
 	const UINT KIND_RESOURCE = 4;
 }
 
-class CWorld_Scene;
+class CWorld_MainSystem;
 class CWorld_User
 {
 protected:
 	Graphics* m_pGraphics;
 	Input* m_pInput;
 
-	CWorld_Scene* scene;
+	CWorld_MainSystem* scene;
 	CWorld_Island_Data* island_data;
 
 	std::vector<CWorld_Island*> island_node;	//ÇöÀç º¸À¯ ¼¶
@@ -36,7 +36,7 @@ protected:
 
 public:
 	void SetLoadLinkData(CWorld_Island_Data* _data) { island_data = _data; }
-	void SetLoadLinkScene(CWorld_Scene* _scene) { scene = _scene; }
+	void SetLoadLinkScene(CWorld_MainSystem* _scene) { scene = _scene; }
 
 	CWorld_User();
 	~CWorld_User();

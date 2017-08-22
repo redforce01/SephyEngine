@@ -4,8 +4,6 @@
 
 namespace lobby_unittoolNS
 {
-	const std::string SOUNE_BGM = "wating_room";
-
 	const UINT WIDTH = 150;
 	const UINT HEIGHT = 40;
 

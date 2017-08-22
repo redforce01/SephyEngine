@@ -363,9 +363,9 @@ void CWorld_Battle_UI::update(float frameTime)
 					c_shipList.emplace_back(iter->getName());
 
 				battleParser.saveBattleData(worldIndex, battleMap, p_shipList, c_shipList);
-				//SCENEMANAGER->changeSceneWithLoading("Battle", "BattleLoading");
 
 				SCENEMANAGER->changeScene("Battle");
+				//SCENEMANAGER->changeSceneWithLoading("Battle", "BattleLoading");
 			}
 
 			if (PtInRect(&rt_retreat, m_pInput->getMousePt()))	//Retreat

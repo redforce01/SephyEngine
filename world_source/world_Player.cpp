@@ -98,7 +98,10 @@ void CWorld_Player::initialize(Graphics * g, Input * i, int _money, int _iron, i
 void CWorld_Player::update(float frameTime)
 {
 	if (m_pInput->isKeyDown(ESC_KEY))
+	{
 		SCENEMANAGER->changeScene("Lobby");
+		return;
+	}
 
 	if (is_update == false)
 		return;

@@ -69,13 +69,13 @@ void CWorld_ShipList_UI::rt_make_list()
 
 		if (PtInRect(&rt, m_pInput->getMousePt()))
 		{
-			m_dxFont_over.print(iter.first, rt, DT_LEFT + DT_VCENTER);
-			m_dxFont_over.print(std::to_string(iter.second), rt, DT_RIGHT + DT_VCENTER);
+			m_dxFont_over.print(iter.first, rt, DT_LEFT | DT_VCENTER);
+			m_dxFont_over.print(std::to_string(iter.second), rt, DT_RIGHT | DT_VCENTER);
 		}
 		else
 		{
-			m_dxFont.print(iter.first, rt, DT_LEFT + DT_VCENTER);
-			m_dxFont.print(std::to_string(iter.second), rt, DT_RIGHT + DT_VCENTER);
+			m_dxFont.print(iter.first, rt, DT_LEFT | DT_VCENTER);
+			m_dxFont.print(std::to_string(iter.second), rt, DT_RIGHT | DT_VCENTER);
 		}
 
 		rt_island.emplace_back(rt);
@@ -182,6 +182,14 @@ void CWorld_ShipList_UI::scroll()
 
 void CWorld_ShipList_UI::event_click()
 {
+	if (rt_current.size() <= 0)
+	{
+		delete_move();
+		return;
+	}
+
+	SOUNDMANAGER->play(world_all_shiplistNS::SOUND_SELECT, g_fSoundMasterVolume * g_fSoundEffectVolume);
+
 	move = new CWorld_Ship_Move_UI;
 
 	move->SetLoadLinkListUI(this);
@@ -228,6 +236,9 @@ CWorld_ShipList_UI::CWorld_ShipList_UI()
 
 CWorld_ShipList_UI::~CWorld_ShipList_UI()
 {
+	if (move != nullptr)
+		SAFE_DELETE(move);
+
 	SAFE_DELETE(background);
 	rt_current.clear();
 	rt_island.clear();
@@ -288,10 +299,7 @@ void CWorld_ShipList_UI::update(float frameTime)
 		if (mouse_up == true)
 		{
 			if (PtInRect(&rt_move, m_pInput->getMousePt()))
-			{
-				SOUNDMANAGER->play(world_all_shiplistNS::SOUND_SELECT, g_fSoundMasterVolume * g_fSoundEffectVolume);
 				event_click();
-			}
 
 			if (PtInRect(&rt_exit, m_pInput->getMousePt()))
 			{
@@ -301,7 +309,8 @@ void CWorld_ShipList_UI::update(float frameTime)
 					player->get_select_island()->add_ship(iter);
 				player->clear_cur_ship();
 
-				is_show = false;
+				delete_move();
+				//is_show = false;
 			}
 
 			int count = 0;
@@ -389,7 +398,7 @@ void CWorld_ShipList_UI::render()
 	background->draw();
 
 	rt_make_list();
-	m_dxFont.print("Move", rt_move, DT_VCENTER + DT_CENTER);
+	m_dxFont.print("Move", rt_move, DT_VCENTER | DT_CENTER);
 
 	m_pGraphics->spriteEnd();
 
@@ -403,6 +412,7 @@ void CWorld_ShipList_UI::delete_move()
 	//	player->get_select_island()->add_ship(iter);
 
 	//player->clear_cur_ship();
+	SOUNDMANAGER->play(world_all_shiplistNS::SOUND_CLOSE, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 	SAFE_DELETE(move);
 

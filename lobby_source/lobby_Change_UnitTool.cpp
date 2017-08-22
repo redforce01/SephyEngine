@@ -9,6 +9,8 @@ bool CLobby_Change_UnitTool::initialize(Graphics * g, Input * i)
 
 CLobby_Change_UnitTool::CLobby_Change_UnitTool()
 {
+	SystemUIDialog::backColor = lobby_unittoolNS::BACK_COLOR;
+
 	mouse_up = false;
 	is_over = false;
 
@@ -26,7 +28,6 @@ bool CLobby_Change_UnitTool::initialize(Graphics * g, Input * i, int _x, int _y)
 	m_pInput = i;
 
 	SystemUIDialog::initializeDialog(g, i, _x, _y, lobby_unittoolNS::WIDTH, lobby_unittoolNS::HEIGHT, lobby_unittoolNS::MARGIN);
-	SystemUIDialog::backColor = lobby_unittoolNS::BACK_COLOR;
 
 	rt_font = RectMake(
 		_x + lobby_unittoolNS::MARGIN,
@@ -60,8 +61,6 @@ void CLobby_Change_UnitTool::update(float frameTime)
 		{
 			if (PtInRect(&SystemUIDialog::getDialogRECT(), m_pInput->getMousePt()))
 			{
-				if (SOUNDMANAGER->isPlaySound(lobby_unittoolNS::SOUNE_BGM) == true)
-					SOUNDMANAGER->stop(lobby_unittoolNS::SOUNE_BGM);
 				//SCENEMANAGER->addScene("UnitTool", new CScene_UnitTool);
 			}
 		}

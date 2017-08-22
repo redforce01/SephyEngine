@@ -24,8 +24,11 @@ namespace world_island_infor_unitNS
 	const UINT BOX_WIDTH = 80;
 	const UINT BOX_HEIGHT = 80;
 
-	const float DESTROY_WEIGHT = 2.0f;
-	const COLOR_ARGB DESTROY_COLOR = graphicsNS::RED;
+	//destroy infor
+	const std::string DESTROY_IMG = "Destroy_Overlap";
+	const UINT DESTROY_WIDTH = 40;		//185
+	const UINT DESTROY_HEIGHT = 40;		//185
+	const COLOR_ARGB DESTROY_COLOR = SETCOLOR_ARGB(180, 255, 255, 255);
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE = 10;

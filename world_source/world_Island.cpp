@@ -119,64 +119,12 @@ void CWorld_Island::turn_end()
 			iter->SetLoadLinkUser(user);
 			iter->turn_end();
 		}
-		//int count = 0;
 
-		//for (auto iter = current_ship.begin(); iter != current_ship.end(); )
-		//{
-		//	(*iter)->turn_end();
-		//	if ((*iter)->getMove() != (*iter)->getIsland())
-		//	{
-		//		user->get_data()->get_Island()[(*iter)->getMove()]->add_ship((*iter));	//Island data
-		//		(*iter)->setIsland((*iter)->getMove());
-
-		//		current_ship.erase(iter);
-
-		//		remove_ship_img();	//Delete Image Ship
-		//	}
-		//	else
-		//		iter++;
-		//}
-
-
-		//for (auto iter : current_ship)
-		//{
-		//	iter->turn_end();
-		//	
-		//	if (iter->getMove() != iter->getIsland())	//다음 섬이 현재 섬이 아닌 경우 이동 실행 (이동할 섬이 있다면)
-		//	{
-		//		user->get_data()->get_Island()[iter->getMove()]->add_ship(iter);	//Island data
-		//		iter->setIsland(iter->getMove());
-
-		//		//for (auto iIter : user->get_data()->get_Island())
-		//		//{
-		//		//	if (iter->getMove() == iIter->getID())
-		//		//	{
-		//		//		iter->setIsland(iter->getMove());
-		//		//		iIter->add_ship(iter);
-		//		//		break;
-		//		//	}
-		//		//}
-		//		
-		//		current_ship.erase(current_ship.begin() + count);
-		//		iter--;
-
-		//		continue;
-		//		//delete_node.emplace_back(count);
-		//	}
-
-		//	count++;
-		//}
-
-		//for (int i = delete_node.size() - 1; i >= 0; i--)
-		//	current_ship.erase(current_ship.begin() + i);
-		//delete_node.clear();
-
-		//for (auto iter : building_node)
-		//	iter->turn_end();
 		for (int i = 0; i < worldislandNS::MAX_BUILDING; i++)
 		{
 			if (building_node[i] != nullptr)
 			{
+				building_node[i]->SetLoadLinkUser(user);
 				building_node[i]->turn_end();
 
 				if (building_node[i]->get_is_destroy() == true)
