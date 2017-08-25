@@ -29,8 +29,12 @@ namespace world_ship_buyNS
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 }
 
+class CWorld_Player;
 class CWorld_Ship_Buy_Infor : public SystemUIDialog
 {
+private :
+	CWorld_Player* player;
+
 private :
 	CProduction_Ship* ship;
 	Graphics* m_pGraphics;
@@ -44,6 +48,8 @@ private :
 	RECT rt_resource[world_ship_buyNS::KIND_RESOURCE];
 
 public:
+	void SetLoadLinkPlayer(CWorld_Player* _player) { player = _player; }
+
 	CWorld_Ship_Buy_Infor();
 	~CWorld_Ship_Buy_Infor();
 
@@ -51,7 +57,7 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render() override;
 
-	void replace_number_img(RECT rect, UINT _number);
+	void replace_number_img(RECT rect, int _number);
 	void set_ship(CProduction_Ship* _ship) { ship = _ship; }
 	void buy_draw();
 

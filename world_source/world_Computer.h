@@ -5,8 +5,8 @@
 namespace world_computerNS
 {
 	const std::string FLAG_NAME = "Computer_Flag";
-	const UINT FLAG_WIDTH = 30;
-	const UINT FLAG_HEIGHT = 30;
+	const int FLAG_WIDTH = 30;
+	const int FLAG_HEIGHT = 30;
 }
 
 class CWorld_Computer : public CWorld_User
@@ -20,6 +20,7 @@ public:
 
 	void update(float frameTime);
 	void render();
+	void relase();
 
 	void w_move_ud(float _speed);
 	void w_move_rl(float _speed);

@@ -2,11 +2,11 @@
 
 namespace world_island_detailNS
 {
-	const UINT MARGIN = 10;
+	const int MARGIN = 10;
 
 	const std::string DETAIL_NAME = "Island_Detail_bg";
-	const UINT DETAIL_WIDTH = 120;
-	const UINT DETAIL_HEIGHT = 80;
+	const int DETAIL_WIDTH = 120;
+	const int DETAIL_HEIGHT = 80;
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE = 15;
@@ -45,6 +45,7 @@ public:
 	void initialize(Graphics* g, Input* i, CWorld_Island* _island);
 	void update(float frameTime);
 	void render();
+	void release();
 
 	bool get_is_show() { return is_show; }
 

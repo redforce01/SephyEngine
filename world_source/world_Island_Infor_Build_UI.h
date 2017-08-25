@@ -4,10 +4,10 @@
 
 namespace world_island_infor_buildNS
 {
-	const UINT MARGIN = 10;
+	const int MARGIN = 10;
 
 	//build infor
-	const UINT MAX_BOX = 15;
+	const int MAX_BOX = 15;
 	const float BOX_WIDTH = 80;
 	const float BOX_HEIGHT = 80;
 	const float BUILDING_SIZE = 150;
@@ -22,9 +22,11 @@ class CWorld_Player;
 class CWorld_Island_Infor_UI;
 class CWorld_Island_Infor_Build_UI
 {
-private:
+private :
 	CWorld_Player* player;
 	CWorld_Island_Infor_UI* infor_ui;
+
+private:
 	CWorld_Building_Buy_Infor* buy_infor;
 
 	Graphics* m_pGraphics;
@@ -35,12 +37,12 @@ private:
 
 	std::vector<Image*> img_list;
 
-	UINT index;
+	int index;
 
 	bool mouse_up;
 
-	void rect_initialize(RECT _rt);
 	bool is_build(CBuilding* _building);	//current player have building
+	void rect_initialize(RECT _rt);
 
 public:
 	void SetLoadLinkPlayer(CWorld_Player* _player) { player = _player; }
@@ -49,7 +51,7 @@ public:
 	CWorld_Island_Infor_Build_UI();
 	~CWorld_Island_Infor_Build_UI();
 
-	void initialize(Graphics* g, Input* i, UINT _index, RECT _rt);
+	void initialize(Graphics* g, Input* i, int _index, RECT _rt);
 	void update(float frameTime);
 	void render();
 

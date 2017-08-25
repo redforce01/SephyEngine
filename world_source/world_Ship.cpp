@@ -2,52 +2,21 @@
 #include "world_Ship.h"
 
 
+//**********	calcul degree	**********//
 void CWorld_Ship::move()
 {
-	//float posx = pt.x - top->getX();
-	//float posy = pt.y - top->getY();
-	//float distance = sqrt(posx*posx + posy*posy);
 	float posx = pt.x - top->getCenterX();
 	float posy = top->getCenterY() - pt.y;
 	float distance = sqrt(posx*posx + posy*posy);
 	float pt_degree = (atan2(posx, posy) * 180) / PI;
 	
 	degree = pt_degree + 180;	//해당 지점의 반대편 각
-
-	// ====================== 해당 지점으로 이동 ==========================
-	//float targetPtRad = 1.0f;   // 타겟지점으로부터의 반지름 For Circle   
-	//float objectRad = top->getWidth() / 4;   // 오브젝트의 반지름
-
-	////Double ang = RadianToDegree(Math.Atan2(ydf, xdf));
-	////return ang + 90;
-	//
-	//if (distance < targetPtRad + objectRad)
-	//{
-	//	// ================= 그자리에 멈춤 ======================
-	//	//top->setX(pt.x - top->getWidth() * top->getScale() / 2);
-	//	//top->setY(pt.y - top->getHeight() * top->getScale() / 2);
-	//	//body->setX(pt.x - body->getWidth() * body->getScale() / 2);
-	//	//body->setY(pt.y - body->getHeight() * body->getScale() / 2);
-	//	//middle->setX(pt.x - middle->getWidth() * middle->getScale() / 2);
-	//	//middle->setY(pt.y - middle->getHeight() * middle->getScale() / 2);
-
-	//	return;
-	//}
-	//
-	//top->moveX(cos(pt_degree) * speed);
-	//top->moveY(sin(pt_degree) * speed);
-	//body->moveX(cos(pt_degree) * speed);
-	//body->moveY(sin(pt_degree) * speed);
-	//middle->moveX(cos(pt_degree) * speed);
-	//middle->moveY(sin(pt_degree) * speed);
 }
 
 CWorld_Ship::CWorld_Ship()
 {
-	//speed = worldshipNS::speed;
 	degree = worldshipNS::degree;
 }
-
 
 CWorld_Ship::~CWorld_Ship()
 {
@@ -89,7 +58,6 @@ void CWorld_Ship::initialize(Graphics * _g, Input * _i, std::string _name, int _
 		top->getHeight() * top->getScale()
 	);
 
-	//pt = { _x - top->getWidth() * (int)top->getScale() / 2, _y - top->getHeight() * (int)top->getScale() / 2 };
 	pt = _pt;
 }
 
@@ -161,6 +129,11 @@ void CWorld_Ship::render()
 	middle->draw();
 
 	m_pGraphics->spriteEnd();
-	//m_pGraphics->drawLine(pt.x, pt.y, top->getCenterX(), top->getCenterY(), 3.0f, graphicsNS::RED);
-	//m_pGraphics->drawRect(rt, 3.0f, graphicsNS::RED);
+}
+
+void CWorld_Ship::release()
+{
+	SAFE_DELETE(top);
+	SAFE_DELETE(body);
+	SAFE_DELETE(middle);
 }

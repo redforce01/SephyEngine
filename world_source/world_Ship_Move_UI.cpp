@@ -24,35 +24,12 @@ void CWorld_Ship_Move_UI::click_event(CWorld_Island* _island)
 
 	for (auto iter : player->get_cur_ship())
 		iter->set_is_move(true);
-
-
-	//for (auto iter : player->get_cur_ship())
-	//{
-		//get_cur_ship 데이터 저장하기(spend battle scene)
-
-		//(*iter)->turn_end();
-
-		//if ((*iter)->getMove() != (*iter)->getIsland())
-		//{
-		//	user->get_data()->get_Island()[(*iter)->getMove()]->add_ship((*iter));	//Island data
-		//	(*iter)->setIsland((*iter)->getMove());
-
-		//	current_ship.erase(iter);
-
-		//	remove_ship_img();	//Delete Image Ship
-		//}
-		//else
-		//	iter++;
-	//}
-	//for (auto iter : player->get_cur_ship())
-	//	iter->set_move_island(_island->getID());
 }
 
 CWorld_Ship_Move_UI::CWorld_Ship_Move_UI()
 {
 	mouse_up = false;
 }
-
 
 CWorld_Ship_Move_UI::~CWorld_Ship_Move_UI()
 {

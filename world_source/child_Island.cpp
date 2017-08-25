@@ -17,3 +17,7 @@ void CChild_Island::turn_end()
 	user->add_resource(type, resource);
 	user->add_increase_resource(type, resource);
 }
+
+void CChild_Island::release()
+{
+}

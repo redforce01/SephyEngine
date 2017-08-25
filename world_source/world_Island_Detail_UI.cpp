@@ -118,6 +118,11 @@ void CWorld_Island_Detail_UI::render()
 	m_pGraphics->spriteEnd();
 }
 
+void CWorld_Island_Detail_UI::release()
+{
+	SAFE_DELETE(background);
+}
+
 void CWorld_Island_Detail_UI::w_move_ud(float _speed)
 {
 	background->moveY(_speed);

@@ -3,8 +3,8 @@
 #include "world_User.h"
 #include "world_Scene.h"
 
-#include "iostream"
 
+//**********	load island data	**********//
 void CWorld_Island_Data::island_data()
 {
 	//divide player & computer
@@ -18,11 +18,11 @@ void CWorld_Island_Data::island_data()
 	CWorld_Island* obj;
 
 	std::string name = "";
-	UINT id;
+	int id;
 	int x;
 	int y;
-	UINT width;
-	UINT height;
+	int width;
+	int height;
 	int tile_x;
 	int tile_y;
 
@@ -54,7 +54,6 @@ void CWorld_Island_Data::island_data()
 				island_node.emplace_back(obj);
 
 				obj->initialize(m_pGraphics, m_pInput, name, id, x, y, width, height, tile_x, tile_y);
-				//obj->set_rt(x, y, width, height);
 				for (auto nIter : nodeList)
 					obj->add_node(nIter);
 				nodeList.clear();
@@ -89,6 +88,7 @@ void CWorld_Island_Data::island_data()
 	}
 }
 
+//**********	load building data	**********//
 void CWorld_Island_Data::building_data()
 {
 	std::vector<std::string> ship_data = loadObjectData(world_island_dataNS::BUILDING_NAME);
@@ -99,8 +99,8 @@ void CWorld_Island_Data::building_data()
 	CBuilding* obj;
 
 	std::string name = "";
-	UINT id;
-	UINT turn;
+	int id;
+	int turn;
 	int n_building;
 	int n_money;
 	int n_iron;
@@ -166,6 +166,7 @@ void CWorld_Island_Data::building_data()
 		std::cout << i << " : " << building_node[i]->getName() << std::endl;
 }
 
+//**********	load ship data		**********//
 void CWorld_Island_Data::ship_data()
 {
 	std::vector<std::string> ship_data = loadObjectData(world_island_dataNS::SHIP_NAME);
@@ -176,7 +177,7 @@ void CWorld_Island_Data::ship_data()
 	CProduction_Ship* obj;
 
 	std::string name = "";
-	UINT id;
+	int id;
 	int turn;
 	int money;
 	int iron;
@@ -252,13 +253,13 @@ CWorld_Island_Data::~CWorld_Island_Data()
 			SAFE_DELETE(iter);
 	}
 	building_node.clear();
-	island_node.clear();
 
-	//for (auto iter : island_node)
-	//{
-	//	if (iter != nullptr)
-	//		SAFE_DELETE(iter);
-	//}
+	for (auto iter : island_node)
+	{
+		if (iter != nullptr)
+			SAFE_DELETE(iter);
+	}
+	island_node.clear();
 }
 
 bool CWorld_Island_Data::initialize(Graphics* g, Input* i)
@@ -266,15 +267,9 @@ bool CWorld_Island_Data::initialize(Graphics* g, Input* i)
 	m_pGraphics = g;
 	m_pInput = i;
 	
-	//load 데이터가 없으면 이거 island_data() 실행
 	island_data();	//load island data
 	building_data();	//load building data
 	ship_data();	//load ship data
-
-	//로드 데이터 있으면 실행
-	//바로 데이터 내용 추가
-	//player->initialize(g, i, money, iron, fuel, research);
-	//player & computer initialize 하기
 
 	return true;
 }
@@ -283,7 +278,33 @@ void CWorld_Island_Data::update(float frameTime)
 {
 }
 
-std::string CWorld_Island_Data::ship_IdtoName(UINT _id)
+void CWorld_Island_Data::release()
+{
+	for (auto iter : ship_node)
+	{
+		if (iter != nullptr)
+		{
+			iter->release();
+			SAFE_DELETE(iter);
+		}
+	}
+	ship_node.clear();
+
+	for (auto iter : building_node)
+	{
+		if (iter != nullptr)
+		{
+			iter->release();
+			SAFE_DELETE(iter);
+		}
+	}
+	building_node.clear();
+
+	island_node.clear();
+}
+
+//**********	change ship id -> name		**********//
+std::string CWorld_Island_Data::ship_IdtoName(int _id)
 {
 	for (auto iter : ship_node)
 	{
@@ -292,7 +313,8 @@ std::string CWorld_Island_Data::ship_IdtoName(UINT _id)
 	}
 }
 
-UINT CWorld_Island_Data::ship_NametoId(std::string _name)
+//**********	change ship name -> id		**********//
+int CWorld_Island_Data::ship_NametoId(std::string _name)
 {
 	for (auto iter : ship_node)
 	{
@@ -321,39 +343,6 @@ std::vector<std::string> CWorld_Island_Data::loadObjectData(std::string name)
 
 	return vRecogData;
 }
-
-//CWorld_Island* CWorld_Island_Data::get_Island(int _index)
-//{
-//	int index = 0;
-//
-//	for (auto iter : island_node)
-//	{
-//		if (index++ == _index)
-//			return iter;
-//	}
-//}
-
-//CBuilding * CWorld_Island_Data::get_Building(int _index)
-//{
-//	int index = 0;
-//
-//	for (auto iter : building_node)
-//	{
-//		if (index++ == _index)
-//			return iter;
-//	}
-//}
-//
-//CProduction_Ship * CWorld_Island_Data::get_Ship(int _index)
-//{
-//	int index = 0;
-//
-//	for (auto iter : ship_node)
-//	{
-//		if (index++ == _index)
-//			return iter;
-//	}
-//}
 
 void CWorld_Island_Data::ReplaceStringInPlace(std::string & subject, const std::string & search, const std::string & replace)
 {

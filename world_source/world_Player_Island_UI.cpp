@@ -49,11 +49,6 @@ void CWorld_Player_Island_UI::update(float frameTime)
 		island_infor->update(frameTime);
 		scene_ui->set_is_update(false);
 	}
-
-	//if (island_infor->get_show() == false || ship_list->get_show() == false)
-	//	scene_ui->set_is_update(false);
-	//else
-	//	scene_ui->set_is_update(true);
 }
 
 void CWorld_Player_Island_UI::render()
@@ -68,7 +63,8 @@ void CWorld_Player_Island_UI::render()
 		island_infor->render();
 }
 
-void CWorld_Player_Island_UI::show_UI(POINT _pt, UINT _width, UINT _height)
+//**********	show button ship list & island infor ui		**********//
+void CWorld_Player_Island_UI::show_UI(POINT _pt, int _width, int _height)
 {
 	if (is_show == true)
 		return;
@@ -78,7 +74,6 @@ void CWorld_Player_Island_UI::show_UI(POINT _pt, UINT _width, UINT _height)
 	ship_list = new CWorld_PlayerUI_ShipList;
 	island_infor = new CWorld_PlayerUI_Island_Infor;
 
-	//island_infor->SetLoadLinkIsland(player->get_select_island());
 	island_infor->SetLoadLinkIsland(player);
 	ship_list->SetLoadLinkPlayer(player);
 	
@@ -86,6 +81,7 @@ void CWorld_Player_Island_UI::show_UI(POINT _pt, UINT _width, UINT _height)
 	island_infor->initialize(m_pGraphics, m_pInput, _pt, _width, _height);
 }
 
+//**********	hide button ship list & island infor ui	**********//
 void CWorld_Player_Island_UI::hide_UI()
 {
 	if (is_show == false)

@@ -16,6 +16,7 @@ CProduction_Ship::CProduction_Ship()
 
 CProduction_Ship::~CProduction_Ship()
 {
+	building.clear();
 }
 
 void CProduction_Ship::turn_end()
@@ -25,8 +26,6 @@ void CProduction_Ship::turn_end()
 
 	if (start_turn == turn)
 	{
-
-		//자원 감소 및 자원 부족한거 체크
 		user->print_world_log("Create Start Ship : " + name);
 		is_create = true;
 	}
@@ -62,7 +61,7 @@ void CProduction_Ship::turn_end()
 	turn--;
 }
 
-void CProduction_Ship::initialize(std::string _name, UINT _id, int _turn, int _money, int _iron, int _fuel, int _research, int _cost)
+void CProduction_Ship::initialize(std::string _name, int _id, int _turn, int _money, int _iron, int _fuel, int _research, int _cost)
 {
 	name = _name;
 	id = _id;
@@ -74,13 +73,18 @@ void CProduction_Ship::initialize(std::string _name, UINT _id, int _turn, int _m
 	fuel_cost = _cost;
 }
 
+void CProduction_Ship::release()
+{
+	building.clear();
+}
+
 void CProduction_Ship::load(bool _move, bool _fuel)
 {
 	is_move = _move;
 	is_fuel = _fuel;
 }
 
-int CProduction_Ship::get_resource(UINT _type)
+int CProduction_Ship::get_resource(int _type)
 {
 	switch (_type)
 	{

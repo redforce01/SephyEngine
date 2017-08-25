@@ -24,7 +24,7 @@ CWorld_PlayerUI_Island_Infor::~CWorld_PlayerUI_Island_Infor()
 	SAFE_DELETE(button);
 }
 
-void CWorld_PlayerUI_Island_Infor::initialize(Graphics * g, Input * i, POINT _pt, UINT _width, UINT _height)
+void CWorld_PlayerUI_Island_Infor::initialize(Graphics * g, Input * i, POINT _pt, int _width, int _height)
 {
 	button = new SystemButton;
 
@@ -35,15 +35,12 @@ void CWorld_PlayerUI_Island_Infor::initialize(Graphics * g, Input * i, POINT _pt
 	margin = _width;
 
 	button->initialize(g, i, world_p_island_inforNS::img_name, true);
-	//button->setButtonPos(_pt.x - _width / 2, _pt.y - _height / 2);
 	button->setButtonPos(_pt.x - button->getWidth() / 2, _pt.y - button->getHeight() / 2);
 	button->setRegistFunction(std::bind(&CWorld_PlayerUI_Island_Infor::click_event));
 
 	rt_font = RectMake(button->getX(), button->getY(), button->getWidth(), button->getHeight());
 
 	m_dxFont.initialize(g, world_p_island_inforNS::FONT_SIZE, true, false, world_p_island_inforNS::FONT);
-
-	//false, graphicsNS::FILTER, "button_test", 300, 300, 49, 16, 1
 }
 
 void CWorld_PlayerUI_Island_Infor::update(float frameTime)
@@ -109,7 +106,6 @@ void CWorld_PlayerUI_Island_Infor::render()
 
 void CWorld_PlayerUI_Island_Infor::click_event()
 {
-	//if (SOUNDMANAGER->isPlaySound(world_p_island_inforNS::SOUND_OPEN))
 	SOUNDMANAGER->play(world_p_island_inforNS::SOUND_OPEN, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 	pThis->infor_ui = new CWorld_Island_Infor_UI;

@@ -4,6 +4,7 @@
 #include "World_Island_Data.h"
 #include "World_Island_Infor_UI.h"
 
+
 void CWorld_Island_Infor_Unit_UI::rect_initialize(RECT _rtM, RECT _rtR)
 {
 	for (int i = 0; i < world_island_infor_unitNS::MAX_UNIT; i++)
@@ -31,12 +32,6 @@ void CWorld_Island_Infor_Unit_UI::rect_initialize(RECT _rtM, RECT _rtR)
 			rt_box[i] = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3];
 			rt_box[i].top = rt_box[i].bottom + world_island_infor_buildNS::MARGIN / 2;
 			rt_box[i].bottom = rt_box[i].top + world_island_infor_buildNS::BOX_HEIGHT;
-			//rt_box[i].top = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3].top +
-			//	world_island_infor_buildNS::BOX_HEIGHT +
-			//	world_island_infor_buildNS::MARGIN / 2;
-			//rt_box[i].bottom = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3].bottom +
-			//	world_island_infor_buildNS::BOX_HEIGHT +
-			//	world_island_infor_buildNS::MARGIN / 2;
 
 			continue;
 		}
@@ -48,7 +43,8 @@ void CWorld_Island_Infor_Unit_UI::rect_initialize(RECT _rtM, RECT _rtR)
 	}
 }
 
-void CWorld_Island_Infor_Unit_UI::destroy_button_render(UINT _index)
+//**********	destroy ship (red square img)	**********//
+void CWorld_Island_Infor_Unit_UI::destroy_button_render(int _index)
 {
 	Image* img = new Image;
 	img->initialize(
@@ -56,8 +52,8 @@ void CWorld_Island_Infor_Unit_UI::destroy_button_render(UINT _index)
 		, world_island_infor_unitNS::DESTROY_HEIGHT, 0,
 		IMAGEMANAGER->getTexture(world_island_infor_unitNS::DESTROY_IMG)
 	);
-	img->setX(rt_box[_index].left);
-	img->setY(rt_box[_index].top);
+	img->setX(rt_unit[_index].left);
+	img->setY(rt_unit[_index].top);
 	img->setColorFilter(world_island_infor_unitNS::DESTROY_COLOR);
 
 	m_pGraphics->spriteBegin();
@@ -65,16 +61,9 @@ void CWorld_Island_Infor_Unit_UI::destroy_button_render(UINT _index)
 	m_pGraphics->spriteEnd();
 
 	img_list.emplace_back(img);
-	//m_pGraphics->drawLine(
-	//	rt_unit[_index].left, rt_unit[_index].top, rt_turn[_index].right, rt_turn[_index].bottom,
-	//	world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-	//);
-	//m_pGraphics->drawLine(
-	//	rt_turn[_index].left, rt_turn[_index].bottom, rt_unit[_index].right, rt_unit[_index].top,
-	//	world_island_infor_unitNS::DESTROY_WEIGHT, world_island_infor_unitNS::DESTROY_COLOR
-	//);
 }
 
+//**********	check player's building	**********//
 bool CWorld_Island_Infor_Unit_UI::is_build(CProduction_Ship * _ship)
 {
 	for (int i = 0; i < _ship->get_building_size(); i++)
@@ -102,7 +91,6 @@ CWorld_Island_Infor_Unit_UI::CWorld_Island_Infor_Unit_UI()
 
 	current_action = 0;
 
-	//mouse_up_unit = false;
 	mouse_up = false;
 }
 
@@ -114,7 +102,7 @@ CWorld_Island_Infor_Unit_UI::~CWorld_Island_Infor_Unit_UI()
 	img_list.clear();
 }
 
-void CWorld_Island_Infor_Unit_UI::initialize(Graphics * g, Input * i, UINT _index, RECT _rtM, RECT _rtR)
+void CWorld_Island_Infor_Unit_UI::initialize(Graphics * g, Input * i, int _index, RECT _rtM, RECT _rtR)
 {
 	ship_infor = new CWorld_Ship_Buy_Infor;
 
@@ -132,6 +120,7 @@ void CWorld_Island_Infor_Unit_UI::initialize(Graphics * g, Input * i, UINT _inde
 			ship[a] = player->get_select_island()->get_Building(_index)->get_action(a);
 	}
 
+	ship_infor->SetLoadLinkPlayer(player);
 	ship_infor->initialize(g, i);
 }
 
@@ -139,21 +128,6 @@ void CWorld_Island_Infor_Unit_UI::update(float frameTime)
 {
 	if (player->get_select_island()->get_Building(index)->get_is_destroy() == true)
 		return;
-	//for (int i = 0; i < world_island_infor_unitNS::MAX_UNIT; i++)
-	//{
-	//	if (m_pInput->getMouseLButton())
-	//		mouse_up_unit = true;
-	//	else
-	//	{
-	//		if (mouse_up_unit == true)
-	//		{
-	//			if (PtInRect(&rt_unit[i], m_pInput->getMousePt()))
-	//				current_action = i;
-	//		}
-	//		if (i == world_island_infor_unitNS::MAX_UNIT - 1)
-	//			mouse_up_unit = false;
-	//	}
-	//}
 
 	//지어진 건물에 배가 있는지 확인 후 배가 있다면 그 배를 추가
 	if (m_pInput->getMouseLButton())
@@ -344,6 +318,7 @@ void CWorld_Island_Infor_Unit_UI::render()
 	ship_infor->render();
 }
 
+//**********	set create ship		**********//
 void CWorld_Island_Infor_Unit_UI::set_action(CProduction_Ship * _ship)
 {
 	for (int i = current_action; i < world_island_infor_unitNS::MAX_UNIT; i++)
@@ -356,9 +331,6 @@ void CWorld_Island_Infor_Unit_UI::set_action(CProduction_Ship * _ship)
 	if (current_action >= world_island_infor_unitNS::MAX_UNIT)
 		return ;
 
-	//if (ship[current_action] != nullptr)
-	//	SAFE_DELETE(ship[current_action]);
-
 	if (player->spend_resource(MONEY, _ship->get_resource(MONEY)) == false)
 	{
 		player->print_world_log("Not Create Ship : Short supply money");
@@ -368,7 +340,7 @@ void CWorld_Island_Infor_Unit_UI::set_action(CProduction_Ship * _ship)
 	{
 		player->add_resource(IRON, _ship->get_resource(IRON));
 		player->print_world_log("Not Create Ship : Short supply IRON");
-		//imposible build;
+
 		return;
 	}
 	if (player->spend_resource(FUEL, _ship->get_resource(FUEL)) == false)
@@ -401,6 +373,9 @@ void CWorld_Island_Infor_Unit_UI::set_action(CProduction_Ship * _ship)
 		_ship->get_resource(RESEARCH),
 		_ship->getCost()
 	);
+
+	if (player->get_buf_type() == 2)
+		obj->set_turn(obj->getTurn() - 1);
 
 	obj->SetLoadLinkUser(player);
 

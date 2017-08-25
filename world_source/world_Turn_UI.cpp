@@ -13,7 +13,6 @@ CWorld_Turn_UI::CWorld_Turn_UI()
 	mouse_up = false;
 
 	turn_delay = 0;
-	//img_turn = new Image;
 	rect_turn = { 0, };
 	rt_pass = { 0, };
 }
@@ -45,31 +44,19 @@ bool CWorld_Turn_UI::initialize(Graphics * g, Input * i)
 		worldturnNS::cur_turn_height
 	);	//right - start
 
-	//img_turn->initialize(g, worldturnNS::pass_turn_width, worldturnNS::pass_turn_height, 0, IMAGEMANAGER->getTexture(worldturnNS::img_name));
-	//img_turn->setX(rect_turn.right + worldturnNS::distance);
-	//img_turn->setY(rect_turn.top);
-
 	button->initialize(g, worldturnNS::pass_turn_width, worldturnNS::pass_turn_height, 0, IMAGEMANAGER->getTexture(worldturnNS::TURN_NAME + "01"));
 	button->setX(rect_turn.right + worldturnNS::distance);
 	button->setY(rect_turn.top + ((rect_turn.bottom - rect_turn.top) / 2 - worldturnNS::pass_turn_height / 2));
 
 	rt_pass = RectMake(button->getX(), button->getY(), button->getWidth(), button->getHeight());
 
-	//button->initialize(g, i, worldturnNS::img_name, true);
-	//button->setButtonPos(rect_turn.right + worldturnNS::distance, rect_turn.top);
-
-	//button->setRegistFunction(std::bind(&CWorld_Turn_UI::click_event));
-
 	m_dxFont.initialize(m_pGraphics, worldturnNS::FONT_SIZE, true, false, worldturnNS::FONT);
-
-	//addMessage("turn", "");
 
 	return true;
 }
 
 void CWorld_Turn_UI::update(float frameTime)
 {
-	//setMessage("turn", "1 ео");
 	pass_turn(frameTime);
 
 	if (is_update == false)
@@ -101,23 +88,23 @@ void CWorld_Turn_UI::render()
 	m_dxFont.print(_turn, rect_turn, DT_VCENTER + DT_CENTER);
 	
 	button->draw();
-	//img_turn->draw();
 
 	m_pGraphics->spriteEnd();
+}
 
-	//button->render();
+void CWorld_Turn_UI::release()
+{
+	SAFE_DELETE(button);
 }
 
 void CWorld_Turn_UI::click_event()
 {
-	//if (SOUNDMANAGER->isPlaySound(worldturnNS::SOUND_TURN))
-	//SOUNDMANAGER->play(worldturnNS::SOUND_TURN, g_fSoundMasterVolume + g_fSoundEffectVolume);
-
 	player->turn_end();
 
 	is_turn = true;
 }
 
+//**********	turn button animation	**********//
 void CWorld_Turn_UI::pass_turn(float frameTime)
 {
 	std::string temp = "";

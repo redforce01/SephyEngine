@@ -12,13 +12,12 @@ CWorld_MainSystem::CWorld_MainSystem()
 
 CWorld_MainSystem::~CWorld_MainSystem()
 {
+	SAFE_DELETE(worldImage);
+
 	for (auto iter : w_cg)
 		SAFE_DELETE(iter);
 	w_cg.clear();
 	save.clear();
-
-	for (auto iter : player->get_data()->get_Island())
-		SAFE_DELETE(iter);
 
 	for (auto iter : bgm_list)
 	{
@@ -44,6 +43,7 @@ CWorld_MainSystem::~CWorld_MainSystem()
 		SAFE_DELETE(w_scene_ui);
 }
 
+//**********	world camera move	***********//
 void CWorld_MainSystem::worldMove()
 {
 	if (m_pInput->isKeyDown('W'))
@@ -92,6 +92,7 @@ void CWorld_MainSystem::worldMove()
 	}
 }
 
+//**********	image initialize	***********//
 void CWorld_MainSystem::init_position()
 {
 	worldImage->moveY(-world_systemNS::margin);
@@ -105,6 +106,7 @@ void CWorld_MainSystem::init_position()
 		iter->w_move_lr(-world_systemNS::margin);
 }
 
+//**********	player & computer data load		**********//
 bool CWorld_MainSystem::data_load()
 {
 	std::vector<std::string> data = loadObjectData(world_systemNS::IS_STATE_NAME);
@@ -113,6 +115,15 @@ bool CWorld_MainSystem::data_load()
 	{
 		player->initialize(m_pGraphics, m_pInput, 200, 200, 200, 200);
 		player->new_player();
+
+		CBattle_DataParser battleParser;
+
+		std::string worldIndex;
+		std::string battleMap;
+		std::vector<std::string> p_shipList;
+		std::vector<std::string> c_shipList;
+
+		battleParser.saveBattleData(worldIndex, battleMap, p_shipList, c_shipList);
 
 		save_data();
 
@@ -195,7 +206,6 @@ bool CWorld_MainSystem::data_load()
 					}
 
 					str += (*iter++) + " ";
-					//player->print_world_log((*iter++));
 				}
 			}
 			if ((*iter).compare("Player") == false)
@@ -256,8 +266,6 @@ bool CWorld_MainSystem::data_load()
 
 				continue;
 			}
-
-			//if ((*iter).compare("Child") == false);	//no need
 
 			if ((*iter).compare("Building") == false)
 			{
@@ -332,8 +340,6 @@ bool CWorld_MainSystem::data_load()
 											sIter->getCost()
 										);
 
-										//sObj->SetLoadLinkUser(bObj->get_user());
-
 										for (auto aIter : sIter->get_building())
 											sObj->add_building(aIter);
 
@@ -406,6 +412,7 @@ bool CWorld_MainSystem::data_load()
 	return true;
 }
 
+//**********	computer ship data load	**********//
 void CWorld_MainSystem::computer_data(CWorld_Island* _island)
 {
 	std::vector<std::string> data = loadObjectData(world_systemNS::COMPUTER_NAME);
@@ -467,6 +474,7 @@ void CWorld_MainSystem::computer_data(CWorld_Island* _island)
 	}
 }
 
+//**********	battle area data load 	***********//
 void CWorld_MainSystem::battle_result_load()
 {
 	CBattle_ResultSystem parser;
@@ -583,11 +591,13 @@ void CWorld_MainSystem::battle_result_load()
 	}
 }
 
+//**********	save world's (player & computer) data	***********//
 void CWorld_MainSystem::save_data()
 {
 	std::vector<std::string> temp;
-	temp.emplace_back(worldbattleNS::STATE_PLAY);
 
+	TXTDATA_PARSER->saveDataFromArray(world_systemNS::FILE_PATH, temp);
+	temp.emplace_back(worldbattleNS::STATE_PLAY);
 	TXTDATA_PARSER->saveDataFromArray(worldbattleNS::FILE_STATE_PATH, temp);
 
 	save.clear();
@@ -620,18 +630,6 @@ void CWorld_MainSystem::save_data()
 	{
 		save.emplace_back("\t" + worldbattleNS::FILE_START + "Island " + iter->getName() + " " + std::to_string(iter->getTurn()));
 
-		//for (auto cIter : iter->get_child())
-		//{
-		//	save.emplace_back("\t\t");
-		//	save.emplace_back(worldbattleNS::FILE_START);
-		//	save.emplace_back("Child");
-		//	save.emplace_back(" ");
-		//	save.emplace_back(std::to_string(cIter->get_type()));
-		//	save.emplace_back(" ");
-		//	save.emplace_back(std::to_string(cIter->get_resource()));
-		//	save.emplace_back(worldbattleNS::FILE_FINISH);
-		//}
-
 		for (int i = 0; i < iter->get_Building_Size(); i++)
 		{
 			if (iter->get_Building(i) == nullptr)
@@ -642,11 +640,9 @@ void CWorld_MainSystem::save_data()
 			if (iter->get_Building(i)->get_is_building() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(iter->get_Building(i)->get_is_building()));
 			if (iter->get_Building(i)->get_is_complete() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(iter->get_Building(i)->get_is_complete()));
 			if (iter->get_Building(i)->get_is_destroy() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
@@ -679,26 +675,21 @@ void CWorld_MainSystem::save_data()
 			if (sIter->get_is_move() == true)
 				ship_info.emplace_back(std::to_string(1));
 			else ship_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(sIter->get_is_move()));
 			if (sIter->get_is_fuel() == true)
 				ship_info.emplace_back(std::to_string(1));
 			else ship_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(sIter->get_is_fuel()));
 
 			save.emplace_back(
 				"\t\t" + worldbattleNS::FILE_START + "Ship " +
 				sIter->getName() + " " + ship_info[0] + " " +
 				ship_info[1] + " " + worldbattleNS::FILE_FINISH
 			);
-			//save.emplace_back(std::to_string(sIter->get_is_fuel()));
 		}
 
 		save.emplace_back("\t" + worldbattleNS::FILE_FINISH);
 	}
 
 	save.emplace_back(worldbattleNS::FILE_FINISH);
-
-	//////////////////////////////////////////////////
 
 	save.emplace_back(worldbattleNS::FILE_START + "Computer");
 
@@ -720,18 +711,6 @@ void CWorld_MainSystem::save_data()
 
 		save.emplace_back("\t" + worldbattleNS::FILE_START + "Island " + iter->getName() + " " + std::to_string(iter->getTurn()));
 
-		//for (auto cIter : iter->get_child())
-		//{
-		//	save.emplace_back("\t\t");
-		//	save.emplace_back(worldbattleNS::FILE_START);
-		//	save.emplace_back("Child");
-		//	save.emplace_back(" ");
-		//	save.emplace_back(std::to_string(cIter->get_type()));
-		//	save.emplace_back(" ");
-		//	save.emplace_back(std::to_string(cIter->get_resource()));
-		//	save.emplace_back(worldbattleNS::FILE_FINISH);
-		//}
-
 		for (int i = 0; i < iter->get_Building_Size(); i++)
 		{
 			if (iter->get_Building(i) == nullptr)
@@ -742,11 +721,9 @@ void CWorld_MainSystem::save_data()
 			if (iter->get_Building(i)->get_is_building() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(iter->get_Building(i)->get_is_building()));
 			if (iter->get_Building(i)->get_is_complete() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(iter->get_Building(i)->get_is_complete()));
 			if (iter->get_Building(i)->get_is_destroy() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
@@ -783,14 +760,12 @@ void CWorld_MainSystem::save_data()
 			if (sIter->get_is_fuel() == true)
 				ship_info.emplace_back(std::to_string(1));
 			else ship_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(sIter->get_is_fuel()));
 
 			save.emplace_back(
 				"\t\t" + worldbattleNS::FILE_START + "Ship " +
 				sIter->getName() + " " + ship_info[0] + " " +
 				ship_info[1] + " " + worldbattleNS::FILE_FINISH
 			);
-			//save.emplace_back(std::to_string(sIter->get_is_fuel()));
 		}
 
 		save.emplace_back(worldbattleNS::FILE_FINISH);
@@ -802,6 +777,7 @@ void CWorld_MainSystem::save_data()
 }
 
 
+//**********	txt file load	***********//
 std::vector<std::string> CWorld_MainSystem::loadObjectData(std::string name)
 {
 	std::vector<std::string> vData = TXTDATA_PARSER->loadDataToArray(name);
@@ -823,24 +799,35 @@ std::vector<std::string> CWorld_MainSystem::loadObjectData(std::string name)
 	return vRecogData;
 }
 
-void CWorld_MainSystem::setSpeed(float speed)
+//**********	camera location move	***********//
+void CWorld_MainSystem::jump_camera(float _x, float _y)
 {
-	worldSpeed = speed;
+	int distance_x = g_fScreenWidth / 2 - _x;
+	int distance_y = g_fScreenHeight / 2 - _y;
+
+	if (worldImage->getX() + distance_x >= 0 - world_systemNS::margin)
+		distance_x = 0 - world_systemNS::margin - worldImage->getX();
+	if (worldImage->getX() + distance_x <= g_fScreenWidth - worldImage->getWidth() + world_systemNS::margin)
+		distance_x = g_fScreenWidth - worldImage->getWidth() + world_systemNS::margin - worldImage->getX();
+	if (worldImage->getY() + distance_y >= 0 - world_systemNS::margin)
+		distance_y = 0 - world_systemNS::margin - worldImage->getY();
+	if (worldImage->getY() + distance_y <= g_fScreenHeight - worldImage->getHeight() + world_systemNS::margin)
+		distance_y = g_fScreenHeight - worldImage->getHeight() + world_systemNS::margin - worldImage->getY();
+
+	worldImage->moveX(distance_x);
+	player->w_move_rl(distance_x);
+	computer->w_move_rl(distance_x);
+	for (auto iter : w_cg)
+		iter->w_move_lr(distance_x);
+
+	worldImage->moveY(distance_y);
+	player->w_move_ud(distance_y);
+	computer->w_move_ud(distance_y);
+	for (auto iter : w_cg)
+		iter->w_move_ud(distance_y);
 }
 
-float CWorld_MainSystem::getSpeed()
-{
-	return worldSpeed;
-}
-
-void CWorld_MainSystem::turn_end()
-{
-	//for (auto iter : w_current_island)
-	//	iter->turn_end();
-
-	//Player & Computer turn_end(); -> island -> building & child & ship
-}
-
+//**********	load file character replace the other character		***********//
 void CWorld_MainSystem::ReplaceStringInPlace(std::string & subject, const std::string & search, const std::string & replace)
 {
 	size_t pos = 0;
@@ -869,7 +856,6 @@ bool CWorld_MainSystem::initialize(Game * gamePtr)
 		w_scene_ui->initialize(m_pGraphics, m_pInput);
 		player->SetLoadLinkUI(w_scene_ui);
 		player->SetLoadLinkScene(this);
-		//w_battle_ui->initialize(this->graphics, this->input, 1865, 1497);
 
 		data_island->SetLoadLinkPlayer(player);	//player & computer -> data_island
 		data_island->SetLoadLinkComputer(computer);
@@ -878,16 +864,14 @@ bool CWorld_MainSystem::initialize(Game * gamePtr)
 																//w_action_ship->initialize(this->graphics, this->input);
 
 		player->SetLoadLinkData(data_island);	//data_island -> player & computer
+		player->SetLoadLinkComputer(computer);
 
 		worldImage->initialize(m_pGraphics, world_systemNS::width, world_systemNS::height, 0, IMAGEMANAGER->getTexture(world_systemNS::img_name));
-		//worldImage->setX(-worldmapNS::margin);	//margin value
-		//worldImage->setY(-worldmapNS::margin);
 		worldImage->setX(0);	//margin value
 		worldImage->setY(0);
 
 		computer->initialize(m_pGraphics, m_pInput, 0, 0, 0, 0);
 		computer->SetLoadLinkScene(this);
-		///////////////////////////////////////////////////
 
 		init_position();
 
@@ -900,7 +884,6 @@ bool CWorld_MainSystem::initialize(Game * gamePtr)
 		if (SOUNDMANAGER->isPlaySound(world_systemNS::SOUND_BGM + std::to_string(0)) == false)
 			SOUNDMANAGER->play(world_systemNS::SOUND_BGM + std::to_string(0), g_fSoundMasterVolume * g_fSoundBGMVolume);
 
-		//bgm_list.emplace_back(worldmapNS::SOUND_BGM + );
 
 		for (int i = 0; i < world_systemNS::SOUND_LIST; i++)
 			bgm_list.emplace_back(world_systemNS::SOUND_BGM + std::to_string(i));
@@ -964,4 +947,52 @@ void CWorld_MainSystem::render()
 		iter->render();
 	player->render();
 	w_scene_ui->render();
+}
+
+void CWorld_MainSystem::release()
+{
+	SAFE_DELETE(worldImage);
+
+	for (auto iter : w_cg)
+	{
+		iter->release();
+		SAFE_DELETE(iter);
+	}
+	w_cg.clear();
+	save.clear();
+
+	for (auto iter : bgm_list)
+	{
+		if (SOUNDMANAGER->isPlaySound(iter) == true)
+		{
+			SOUNDMANAGER->stop(iter);
+
+			break;
+		}
+	}
+	bgm_list.clear();
+
+	if (player != nullptr)
+	{
+		player->release();
+		SAFE_DELETE(player);
+	}
+
+	if (computer != nullptr)
+	{
+		computer->release();
+		SAFE_DELETE(computer);
+	}
+
+	if (data_island != nullptr)
+	{
+		data_island->release();
+		SAFE_DELETE(data_island);
+	}
+
+	if (w_scene_ui != nullptr)
+	{
+		w_scene_ui->release();
+		SAFE_DELETE(w_scene_ui);
+	}
 }

@@ -1,74 +1,19 @@
-BEGIN	Base 110 110 283 450 6 END
+BEGIN	Base 200 200 200 200 1 END
 BEGIN	LOG
-BEGIN		 ======== 1 Turn End ========  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 ======== Start 2 Turn ========  END
-BEGIN		 ======== 2 Turn End ========  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 Create Start Building : Basic_Shipyard  END
-BEGIN		 ======== Start 3 Turn ========  END
-BEGIN		 ======== 3 Turn End ========  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 Create Start Ship : Corvette  END
-BEGIN		 Complete Ship : Corvette  END
-BEGIN		 Complete Building : Basic_Shipyard  END
-BEGIN		 ======== Start 4 Turn ========  END
-BEGIN		 END
-BEGIN		======== 4 Turn End ======== END
-BEGIN		Create Start Building : Basic_Shipyard END
-BEGIN		======== Start 5 Turn ======== END
-BEGIN		======== 5 Turn End ======== END
-BEGIN		Create Start Ship : Corvette END
-BEGIN		Complete Ship : Corvette END
-BEGIN		Create Start Ship : Corvette END
-BEGIN		Complete Ship : Corvette END
-BEGIN		Create Start Ship : Corvette END
-BEGIN		Complete Ship : Corvette END
-BEGIN		Create Start Ship : Corvette END
-BEGIN		Complete Ship : Corvette END
-BEGIN		Create Start Ship : Corvette END
-BEGIN		Complete Ship : Corvette END
-BEGIN		Create Start Ship : Corvette END
-BEGIN		Complete Ship : Corvette END
-BEGIN		Complete Building : Basic_Shipyard END
-BEGIN		======== Start 6 Turn ======== END
 END
 BEGIN	Player
-	BEGIN	Island Alpha 6
-		BEGIN	Building Command_Center -5 1 1 0
+	BEGIN	Island Alpha 1
+		BEGIN	Building Command_Center 0 1 1 0
 		END
-		BEGIN	Building Basic_Shipyard -5 1 1 0
-		END
-		BEGIN	Building Basic_Shipyard -2 1 1 0
-		END
-		BEGIN	Ship Corvette 0 1 END
-		BEGIN	Ship Corvette 0 1 END
-		BEGIN	Ship Corvette 0 1 END
-		BEGIN	Ship Corvette 0 1 END
-		BEGIN	Ship Corvette 0 1 END
-		BEGIN	Ship Corvette 0 1 END
-	END
-	BEGIN	Island Brabo 3
 		BEGIN	Building Basic_Shipyard 0 1 1 0
 		END
-		BEGIN	Ship Corvette 0 1 END
-		BEGIN	Ship Corvette 0 1 END
 	END
 END
 BEGIN	Computer
+	BEGIN	Island Bravo 1
+END
+	BEGIN	Island Charlie 1
+END
 	BEGIN	Island Delta 1
 END
 	BEGIN	Island Echo 1

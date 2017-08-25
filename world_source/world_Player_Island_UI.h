@@ -8,10 +8,11 @@ class CWorld_Player;
 class CWorld_Scene_UI;
 class CWorld_Player_Island_UI : public SystemUIDialog
 {
-private:
+private :
 	CWorld_Player* player;
 	CWorld_Scene_UI* scene_ui;
 
+private:
 	Graphics* m_pGraphics;
 	Input* m_pInput;
 	TextDX m_dxFont;
@@ -33,8 +34,10 @@ public:
 	virtual void render() override;
 	void release();
 
-	void show_UI(POINT _pt, UINT _width, UINT _height);
+	void show_UI(POINT _pt, int _width, int _height);
 	void hide_UI();
+	void w_move_ud(float _speed);
+	void w_move_rl(float _speed);
 
 	bool get_show()
 	{ 
@@ -52,8 +55,5 @@ public:
 
 		return is_show; 
 	}
-
-	void w_move_ud(float _speed);
-	void w_move_rl(float _speed);
 };
 

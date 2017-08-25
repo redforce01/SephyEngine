@@ -14,29 +14,29 @@ namespace worldbattleNS
 	const std::string AUTO_MSG = "AUTO Battle";
 
 	// save infor
-	const UINT KINE_RESOURCE = 4;
+	const int KINE_RESOURCE = 4;
 	const std::string FILE_PATH = "Resources\\40_WorldData\\World_Save_Data.txt";
 	const std::string FILE_STATE_PATH = "Resources\\40_WorldData\\World_Game_State.txt";
 	const std::string STATE_PLAY = "Play";
 	const std::string FILE_START = "BEGIN\t";
 	const std::string FILE_FINISH = "END";
 
-	const UINT ACTION_SIZE = 3;
+	const int ACTION_SIZE = 3;
 
 	const std::string INFOR = "UILine_LT";
 	const std::string START = "UILine_LB";
 	const std::string RETREAT = "UILine_RT";
 	const std::string AUTO = "UILine_RB";
 
-	const UINT width = 140;	//image
-	const UINT height = 20;
-	const UINT x = 100;	//move point
-	const UINT y = 20;
+	const int width = 140;	//image
+	const int height = 20;
+	const int x = 100;	//move point
+	const int y = 20;
 	
-	const UINT text_width = 140;
-	const UINT text_height = 30;
+	const int text_width = 140;
+	const int text_height = 30;
 
-	const UINT MARGIN = 20;					// text margin from Viewer edge
+	const int MARGIN = 20;					// text margin from Viewer edge
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE = 20;
@@ -68,20 +68,19 @@ private:
 	RECT rt_start;
 	RECT rt_retreat;
 	RECT rt_auto;
-
 	RECT rt_total;
 
-	UINT battle_island;
-
-	std::vector<std::string> save;
+	int battle_island;
 
 	bool visible;
 	bool mouse_up;
 
+	std::vector<std::string> save;
+
 	virtual bool initialize(Graphics* g, Input* i) override;
 
+	void auto_battle_cacul();
 	void save_data();
-	void back_island();
 
 public:
 	void SetLoadLinkPlayer(CWorld_Player* _player) { player = _player; }
@@ -94,11 +93,11 @@ public:
 	
 	virtual void update(float frameTime) override;
 	virtual void render() override;
+	void release();
 
 	bool get_visible() { return visible; }
 	
-	void set_battle_island(UINT _island) { battle_island = _island; }
-
+	void set_battle_island(int _island) { battle_island = _island; }
 	void w_move_ud(float _speed);
 	void w_move_rl(float _speed);
 };

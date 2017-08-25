@@ -29,6 +29,8 @@ void CWorld_Scene::update()
 
 void CWorld_Scene::release()
 {
+	m_pWorldMainSystem->release();
+
 	SAFE_DELETE(m_pWorldMainSystem);
 }
 

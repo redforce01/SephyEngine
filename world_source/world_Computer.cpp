@@ -9,6 +9,8 @@ CWorld_Computer::CWorld_Computer()
 
 CWorld_Computer::~CWorld_Computer()
 {
+	for (auto iter : img_list)
+		SAFE_DELETE(iter);
 	img_list.clear();
 }
 
@@ -45,6 +47,16 @@ void CWorld_Computer::render()
 		iter->draw();
 
 	m_pGraphics->spriteEnd();
+}
+
+void CWorld_Computer::relase()
+{
+	for (auto iter : img_list)
+	{
+		if (iter != nullptr)
+			SAFE_DELETE(iter);
+	}
+	img_list.clear();
 }
 
 void CWorld_Computer::w_move_ud(float _speed)

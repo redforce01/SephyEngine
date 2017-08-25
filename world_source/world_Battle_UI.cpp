@@ -55,15 +55,6 @@ bool CWorld_Battle_UI::initialize(Graphics * g, Input * i, int _x, int _y)
 	auto_battle->setX(_x + worldbattleNS::x);
 	auto_battle->setY(_y + (worldbattleNS::y + worldbattleNS::height / 2));
 
-	//battle_infor->setX(_x - worldbattleNS::x + worldbattleNS::width / 2);
-	//battle_infor->setY(_y - worldbattleNS::y + worldbattleNS::height / 2);
-	//battle_start->setX(_x - worldbattleNS::x + worldbattleNS::width / 2);
-	//battle_start->setY(_y + worldbattleNS::y + worldbattleNS::height / 2);
-	//battle_retreat->setX(_x + worldbattleNS::x + worldbattleNS::width / 2);
-	//battle_retreat->setY(_y - worldbattleNS::y + worldbattleNS::height / 2);
-	//auto_battle->setX(_x + worldbattleNS::x + worldbattleNS::width / 2);
-	//auto_battle->setY(_y + worldbattleNS::y + worldbattleNS::height / 2);
-
 	rt_infor = RectMake(
 		battle_infor->getX() - worldbattleNS::MARGIN, 
 		battle_infor->getY() - worldbattleNS::text_height,
@@ -99,6 +90,97 @@ bool CWorld_Battle_UI::initialize(Graphics * g, Input * i, int _x, int _y)
 bool CWorld_Battle_UI::initialize(Graphics * g, Input * i)
 {
 	return false;
+}
+
+//**********	calculater auto battle		**********//
+void CWorld_Battle_UI::auto_battle_cacul()
+{
+	int distance;
+	int p_n = 0;
+	int c_n = 0;
+
+	for (auto iter : player->get_cur_ship())
+		p_n += iter->getCost();
+
+	for (auto iter : player->get_data()->get_Island()[battle_island]->get_ship())
+		c_n += iter->getCost();
+
+	distance = p_n - c_n;
+
+	if (distance < 0)
+	{
+		int remain = c_n + distance;
+
+		while (remain - player->get_data()->get_Island()[battle_island]->get_ship()[0]->getCost() >= 0)
+		{
+			remain -= player->get_data()->get_Island()[battle_island]->get_ship()[0]->getCost();
+
+			SAFE_DELETE(player->get_data()->get_Island()[battle_island]->get_ship()[0]);
+			player->get_data()->get_Island()[battle_island]->remove_ship(0);
+		}
+
+		for (auto iter : player->get_cur_ship())
+			SAFE_DELETE(iter);
+		player->clear_cur_ship();
+	}
+	else if (distance == 0)
+	{
+		int remain = c_n / 2;
+
+		while (remain - player->get_data()->get_Island()[battle_island]->get_ship()[0]->getCost() >= 0)
+		{
+			remain -= player->get_data()->get_Island()[battle_island]->get_ship()[0]->getCost();
+
+			SAFE_DELETE(player->get_data()->get_Island()[battle_island]->get_ship()[0]);
+			player->get_data()->get_Island()[battle_island]->remove_ship(0);
+		}
+
+		remain = p_n / 2;
+
+		while (remain - player->get_cur_ship()[0]->getCost() >= 0)
+		{
+			remain -= player->get_cur_ship()[0]->getCost();
+
+			SAFE_DELETE(player->get_cur_ship()[0]);
+			player->remove_cur_ship(0);
+		}
+
+		cg->create_move_ship_cg(
+			player->get_data()->get_Island()[battle_island]->getPt(),
+			player->get_data()->get_Island()[player->get_select_island()->getID()]->getPt(),
+			player->get_select_island()->getID()	//player->get_cur_ship()[0]->getIsland()
+		);
+
+		cg->set_is_complete(false);
+	}
+	else 
+	{
+		int remain = p_n - distance;
+
+		while (player->get_data()->get_Island()[battle_island]->get_Ship_Size() > 0)
+		{
+			SAFE_DELETE(player->get_data()->get_Island()[battle_island]->get_ship()[0]);
+			player->get_data()->get_Island()[battle_island]->remove_ship(0);
+		}
+		player->get_data()->get_Island()[battle_island]->clear_ship();
+
+		while (remain - player->get_cur_ship()[0]->getCost() >= 0)
+		{
+			remain -= player->get_cur_ship()[0]->getCost();
+
+			SAFE_DELETE(player->get_cur_ship()[0]);
+			player->remove_cur_ship(0);
+		}
+
+		for (auto iter : player->get_cur_ship())
+			player->get_data()->get_Island()[battle_island]->add_ship(iter);
+		player->clear_cur_ship();
+
+		player->get_data()->get_Island()[battle_island]->SetLoadLinkUser(player);
+		player->add_island(player->get_data()->get_Island()[battle_island]);
+		player->get_computer()->remove_island(battle_island);
+	}
+	player->get_data()->get_Island()[battle_island]->remove_ship_img();
 }
 
 void CWorld_Battle_UI::save_data()
@@ -140,18 +222,6 @@ void CWorld_Battle_UI::save_data()
 			continue;
 
 		save.emplace_back("\t" + worldbattleNS::FILE_START + "Island " + iter->getName() + " " + std::to_string(iter->getTurn()));
-		
-		//for (auto cIter : iter->get_child())
-		//{
-		//	save.emplace_back("\t\t");
-		//	save.emplace_back(worldbattleNS::FILE_START);
-		//	save.emplace_back("Child");
-		//	save.emplace_back(" ");
-		//	save.emplace_back(std::to_string(cIter->get_type()));
-		//	save.emplace_back(" ");
-		//	save.emplace_back(std::to_string(cIter->get_resource()));
-		//	save.emplace_back(worldbattleNS::FILE_FINISH);
-		//}
 
 		for (int i = 0; i < iter->get_Building_Size(); i++)
 		{
@@ -163,11 +233,11 @@ void CWorld_Battle_UI::save_data()
 			if (iter->get_Building(i)->get_is_building() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(iter->get_Building(i)->get_is_building()));
+
 			if (iter->get_Building(i)->get_is_complete() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(iter->get_Building(i)->get_is_complete()));
+
 			if (iter->get_Building(i)->get_is_destroy() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
@@ -200,18 +270,16 @@ void CWorld_Battle_UI::save_data()
 			if (sIter->get_is_move() == true)
 				ship_info.emplace_back(std::to_string(1));
 			else ship_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(sIter->get_is_move()));
+
 			if (sIter->get_is_fuel() == true)
 				ship_info.emplace_back(std::to_string(1));
 			else ship_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(sIter->get_is_fuel()));
 
 			save.emplace_back(
 				"\t\t" + worldbattleNS::FILE_START + "Ship " + 
 				sIter->getName() + " " + ship_info[0] + " " + 
 				ship_info[1] + " " + worldbattleNS::FILE_FINISH
 			);
-			//save.emplace_back(std::to_string(sIter->get_is_fuel()));
 		}
 
 		save.emplace_back("\t" + worldbattleNS::FILE_FINISH);
@@ -244,18 +312,6 @@ void CWorld_Battle_UI::save_data()
 
 		save.emplace_back("\t" + worldbattleNS::FILE_START + "Island " + iter->getName() + " " + std::to_string(iter->getTurn()));
 
-		//for (auto cIter : iter->get_child())
-		//{
-		//	save.emplace_back("\t\t");
-		//	save.emplace_back(worldbattleNS::FILE_START);
-		//	save.emplace_back("Child");
-		//	save.emplace_back(" ");
-		//	save.emplace_back(std::to_string(cIter->get_type()));
-		//	save.emplace_back(" ");
-		//	save.emplace_back(std::to_string(cIter->get_resource()));
-		//	save.emplace_back(worldbattleNS::FILE_FINISH);
-		//}
-
 		for (int i = 0; i < iter->get_Building_Size(); i++)
 		{
 			if (iter->get_Building(i) == nullptr)
@@ -266,11 +322,11 @@ void CWorld_Battle_UI::save_data()
 			if (iter->get_Building(i)->get_is_building() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(iter->get_Building(i)->get_is_building()));
+
 			if (iter->get_Building(i)->get_is_complete() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(iter->get_Building(i)->get_is_complete()));
+
 			if (iter->get_Building(i)->get_is_destroy() == true)
 				build_info.emplace_back(std::to_string(1));
 			else build_info.emplace_back(std::to_string(0));
@@ -303,18 +359,16 @@ void CWorld_Battle_UI::save_data()
 			if (sIter->get_is_move() == true)
 				ship_info.emplace_back(std::to_string(1));
 			else ship_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(sIter->get_is_move()));
+
 			if (sIter->get_is_fuel() == true)
 				ship_info.emplace_back(std::to_string(1));
 			else ship_info.emplace_back(std::to_string(0));
-			//save.emplace_back(std::to_string(sIter->get_is_fuel()));
 
 			save.emplace_back(
 				"\t\t" + worldbattleNS::FILE_START + "Ship " +
 				sIter->getName() + " " + ship_info[0] + " " +
 				ship_info[1] + " " + worldbattleNS::FILE_FINISH
 			);
-			//save.emplace_back(std::to_string(sIter->get_is_fuel()));
 		}
 
 		save.emplace_back(worldbattleNS::FILE_FINISH);
@@ -323,11 +377,6 @@ void CWorld_Battle_UI::save_data()
 	save.emplace_back(worldbattleNS::FILE_FINISH);
 
 	TXTDATA_PARSER->saveDataFromArray(worldbattleNS::FILE_PATH, save);
-}
-
-void CWorld_Battle_UI::back_island()
-{
-
 }
 
 void CWorld_Battle_UI::update(float frameTime)
@@ -389,24 +438,13 @@ void CWorld_Battle_UI::update(float frameTime)
 				infor_ui->set_is_show(true);
 			}
 
-			//if (PtInRect(&rt_total, m_pInput->getMousePt()))
-			//{
-			//	visible = false;
+			if (PtInRect(&rt_auto, m_pInput->getMousePt()))
+			{
+				cg->set_is_complete(true);
+				auto_battle_cacul();
 
-			//	//전투 하기
-			//	//데이터 세이브 및 전투씬 전환
-			//	//player->get_cur_ship();
-			//	//cur_ship->move->true
-
-			//	//전투 정보
-			//	//현재 함대 출력
-
-			//	//후퇴하기
-			//	//다시 이전섬으로 이동
-
-			//	//자동전투
-			//	//미구현
-			//}
+				visible = false;
+			}
 		}
 
 		mouse_up = false;
@@ -463,12 +501,19 @@ void CWorld_Battle_UI::render()
 	m_pGraphics->spriteEnd();
 
 	infor_ui->render();
+}
 
-	//m_pGraphics->drawRect(rt_total);
-	//m_pGraphics->drawRect(rt_infor);
-	//m_pGraphics->drawRect(rt_start);
-	//m_pGraphics->drawRect(rt_retreat);
-	//m_pGraphics->drawRect(rt_auto);
+void CWorld_Battle_UI::release()
+{
+	infor_ui->release();
+
+	SAFE_DELETE(infor_ui);
+	SAFE_DELETE(battle_infor);
+	SAFE_DELETE(battle_start);
+	SAFE_DELETE(battle_retreat);
+	SAFE_DELETE(auto_battle);
+
+	save.clear();
 }
 
 void CWorld_Battle_UI::w_move_ud(float _speed)
