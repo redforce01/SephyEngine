@@ -1,0 +1,91 @@
+#	Battleship
+#	Battleship2
+#	Battleship3
+#	Battleship4
+#	Battleship5
+#	Battleship6
+#	Carrier
+#	Carrier2
+#	Carrier3
+#	Carrier4
+#	Carrier5
+#	Corvette
+#	Corvette2
+#	Crusier
+#	Crusier2
+#	Crusier3
+#	Crusier4
+#	Crusier5
+#	Frigate
+#	Frigate2
+#	Frigate3
+#	Destroyer
+#	Destroyer3
+#	Destroyer4
+#	Z1
+
+BEGIN	Computer
+	BEGIN	Island Alpha
+		Corvette 10
+	END
+
+	BEGIN	Island Bravo
+		Corvette 10
+	END
+
+	BEGIN	Island Charlie
+		Corvette 10
+	END
+
+	BEGIN	Island Foxtrot
+		Corvette 10
+	END
+
+	BEGIN	Island Golf
+		Corvette 10
+	END
+
+	BEGIN	Island Hotel
+		Corvette 10
+	END
+
+	BEGIN	Island India
+		Corvette 10
+	END
+
+	BEGIN	Island Juliet
+		Corvette 10
+	END
+
+	BEGIN	Island Kilo
+		Corvette 10
+	END
+
+	BEGIN	Island Lima
+		Corvette 10
+	END
+
+	BEGIN	Island Mike
+		Corvette 10
+	END
+
+	BEGIN	Island November
+		Corvette 10
+	END
+
+	BEGIN	Island Oscae
+		Corvette 10
+	END
+
+	BEGIN	Island Papa
+		Corvette 10
+	END
+
+	BEGIN	Island Quebec
+		Corvette 10
+	END
+
+	BEGIN	Island Romeo
+		Corvette 10
+	END
+END
