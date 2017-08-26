@@ -17,7 +17,7 @@ namespace battleMapUIStartingAreaNS
 	const UINT STARTING_AREA_FLAG_MAX_FRAME			= 46; // 0 ~ 45	
 	const float STARTING_AREA_RADIUS = 500.f;
 	const float STARTING_AREA_SMOOTHNESS = 0.1f;
-	const float CAPTURE_TIME = 120.f;
+	const float CAPTURE_TIME = 20.f;
 	//======================================================
 	const std::string PROGRESS_BACK = "ProgressBack";
 	const std::string PROGRESS_BLUE = "ProgressBlue";

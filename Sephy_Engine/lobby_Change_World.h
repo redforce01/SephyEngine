@@ -14,9 +14,7 @@ namespace lobby_worldNS
 	const std::string CLICK = "MoveToBattleClick_0";
 	const std::string SHADOW = "MoveToBattleShdw_0";
 
-	const std::string SOUNE_BGM = "wating_room";
-
-	const std::string FILE_PATH = "Resources\\42_WorldData\\World_Game_State.txt";
+	const std::string FILE_PATH = "Resources\\40_WorldData\\World_Game_State.txt";
 	const std::string PLAY = "Play";
 
 	const UINT MIN_IMG = 0;

@@ -19,7 +19,7 @@ namespace consoleNS
     const char FONT[] = "Courier New";  // console font
     const int FONT_HEIGHT = 14;         // height of the font in pixels
     const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
-    const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192,128,128,128);    // backdrop color
+    const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192,26,32,44);    // backdrop color
     const int MAX_LINES = 256;          // maximun number of lines in text buffer
 }
 

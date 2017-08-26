@@ -22,6 +22,7 @@ HWND g_hWndScene		= nullptr;
 HWND g_hWndGame			= nullptr;
 HINSTANCE g_hInst		= nullptr;
 Graphics* g_Graphics	= nullptr;
+Input* g_Input			= nullptr;
 MainNode* g_MainNode	= nullptr;
 WNDCLASSEX g_wcx;
 bool g_EngineShutDown	= false;

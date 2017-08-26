@@ -65,6 +65,11 @@ void CUnitTool_MainSystem::update(float frameTime)
 	m_pUnitControlSystem->update(frameTime);
 	m_pSceneControlSystem->update(frameTime);
 	m_pUISystem->update(frameTime);
+
+	if (m_pInput->isKeyDown(unitToolMainSystemNS::CHANGE_SCENE_TO_LOBBY_KEY))
+	{
+		SCENEMANAGER->changeScene("Lobby");
+	}
 }
 
 void CUnitTool_MainSystem::render()

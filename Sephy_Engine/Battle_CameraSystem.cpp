@@ -89,7 +89,7 @@ void CBattle_CameraSystem::moveLeft()
 		m_fCameraX -= m_fCameraSpeed;
 		m_pBattleMapSystem->moveX(m_fCameraSpeed);
 		m_pBattleUnitSystem->moveX(m_fCameraSpeed);
-		m_pBattleFogSystem->moveX(m_fCameraSpeed);
+		//m_pBattleFogSystem->moveX(m_fCameraSpeed);
 		m_pBattleMinimapView->setUpCam(m_fCameraX, m_fCameraY);
 	}
 }
@@ -101,7 +101,7 @@ void CBattle_CameraSystem::moveRight()
 		m_fCameraX += m_fCameraSpeed;
 		m_pBattleMapSystem->moveX(-m_fCameraSpeed);
 		m_pBattleUnitSystem->moveX(-m_fCameraSpeed);
-		m_pBattleFogSystem->moveX(-m_fCameraSpeed);
+		//m_pBattleFogSystem->moveX(-m_fCameraSpeed);
 		m_pBattleMinimapView->setUpCam(m_fCameraX, m_fCameraY);
 	}
 }
@@ -113,7 +113,7 @@ void CBattle_CameraSystem::moveUp()
 		m_fCameraY -= m_fCameraSpeed;
 		m_pBattleMapSystem->moveY(m_fCameraSpeed);
 		m_pBattleUnitSystem->moveY(m_fCameraSpeed);
-		m_pBattleFogSystem->moveY(m_fCameraSpeed);
+		//m_pBattleFogSystem->moveY(m_fCameraSpeed);
 		m_pBattleMinimapView->setUpCam(m_fCameraX, m_fCameraY);
 	}
 }
@@ -125,7 +125,7 @@ void CBattle_CameraSystem::moveDown()
 		m_fCameraY += m_fCameraSpeed;
 		m_pBattleMapSystem->moveY(-m_fCameraSpeed);
 		m_pBattleUnitSystem->moveY(-m_fCameraSpeed);
-		m_pBattleFogSystem->moveY(-m_fCameraSpeed);
+		//m_pBattleFogSystem->moveY(-m_fCameraSpeed);
 		m_pBattleMinimapView->setUpCam(m_fCameraX, m_fCameraY);
 	}
 }
@@ -136,10 +136,10 @@ void CBattle_CameraSystem::setCameraPos(float x, float y)
 	oldX = m_fCameraX, oldY = m_fCameraY;
 	m_pBattleMapSystem->moveX(oldX - x);
 	m_pBattleUnitSystem->moveX(oldX - x);
-	m_pBattleFogSystem->moveX(oldX - x);
+	//m_pBattleFogSystem->moveX(oldX - x);
 	m_pBattleMapSystem->moveY(oldY - y);
 	m_pBattleUnitSystem->moveY(-oldY - y);
-	m_pBattleFogSystem->moveY(-oldY - y);
+	//m_pBattleFogSystem->moveY(-oldY - y);
 	m_fCameraX = x, m_fCameraY = y;
 	m_pBattleMinimapView->setUpCam(m_fCameraX, m_fCameraY);
 }

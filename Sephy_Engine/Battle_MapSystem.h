@@ -216,6 +216,12 @@ public:
 			return m_vStartingArea[0];
 	}
 
+	CBattle_MapEventArea_StartingArea* getEnemyStartingArea() const
+	{
+		if (m_vStartingArea.size() > 0)
+			return m_vStartingArea[1];
+	}
+
 	std::vector<CBattle_MapEventArea_StartingArea*> getStartingArea() const
 	{
 		return m_vStartingArea;

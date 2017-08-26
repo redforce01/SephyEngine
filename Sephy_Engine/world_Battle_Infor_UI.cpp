@@ -27,12 +27,33 @@ void CWorld_Battle_Infor_UI::rt_make_list()
 	rt_island.clear();
 	rt_current.clear();
 
-	UINT line = world_battle_infor_uiNS::LINE;	//(world_all_shiplistNS::RT_HEIGHT - world_all_shiplistNS::MARGIN) / world_all_shiplistNS::LIST_HEIGHT;
+	m_dxFont.print(world_battle_infor_uiNS::ATK_MSG, rt_island_title, DT_CENTER | DT_VCENTER);
+	m_dxFont.print(world_battle_infor_uiNS::DEF_MSG, rt_current_title, DT_CENTER | DT_VCENTER);
+
+	int line = world_battle_infor_uiNS::LINE;
 
 	int count_scroll = 0;
 	int count_line = 0;
 
+	std::map<std::string, int> _ship;
+
 	for (auto iter : player->get_cur_ship())
+	{
+		bool is_ship = false;
+
+		auto mIter = _ship.find(iter->getName());
+
+		if (mIter != _ship.end())
+		{
+			mIter->second++;
+			is_ship = true;
+		}
+
+		if (is_ship == false)
+			_ship.emplace(iter->getName(), 1);
+	}
+
+	for (auto iter : _ship)
 	{
 		if (count_scroll++ < scroll_mount_island)
 			continue;
@@ -46,15 +67,33 @@ void CWorld_Battle_Infor_UI::rt_make_list()
 			world_battle_infor_uiNS::LIST_WIDTH, world_battle_infor_uiNS::LIST_HEIGHT
 		);
 
-		m_dxFont.print(iter->getName(), rt, DT_LEFT + DT_VCENTER);
+		m_dxFont.print(iter.first, rt, DT_LEFT | DT_VCENTER);
+		m_dxFont.print(std::to_string(iter.second), rt, DT_RIGHT | DT_VCENTER);
 
 		rt_island.emplace_back(rt);
 	}
+	_ship.clear();
 
 	count_scroll = 0;
 	count_line = 0;
 
 	for (auto iter : player->get_data()->get_Island()[battle_island]->get_ship())
+	{
+		bool is_ship = false;
+
+		auto mIter = _ship.find(iter->getName());
+
+		if (mIter != _ship.end())
+		{
+			mIter->second++;
+			is_ship = true;
+		}
+
+		if (is_ship == false)
+			_ship.emplace(iter->getName(), 1);
+	}
+
+	for (auto iter : _ship)
 	{
 		if (count_scroll++ < scroll_mount_current)
 			continue;
@@ -68,7 +107,8 @@ void CWorld_Battle_Infor_UI::rt_make_list()
 			world_battle_infor_uiNS::LIST_WIDTH, world_battle_infor_uiNS::LIST_HEIGHT
 		);
 
-		m_dxFont.print(iter->getName(), rt, DT_LEFT + DT_VCENTER);
+		m_dxFont.print(iter.first, rt, DT_LEFT + DT_VCENTER);
+		m_dxFont.print(std::to_string(iter.second), rt, DT_RIGHT + DT_VCENTER);
 
 		rt_current.emplace_back(rt);
 	}
@@ -107,9 +147,6 @@ void CWorld_Battle_Infor_UI::scroll()
 			else scroll_mount_current--;
 
 			m_pInput->mouseWheelIn(0);
-
-			//if (scroll_mount >= w_log_message.size() - worldlogNS::LINE)
-			//	scroll_mount = w_log_message.size() - worldlogNS::LINE;
 		}
 		if (m_pInput->isMouseWheelDown())
 		{
@@ -126,8 +163,6 @@ CWorld_Battle_Infor_UI::CWorld_Battle_Infor_UI()
 	mouse_up = false;
 	is_show = false;
 
-	background = new Image;
-
 	scroll_mount_island = 0;
 	scroll_mount_current = 0;
 }
@@ -135,11 +170,16 @@ CWorld_Battle_Infor_UI::CWorld_Battle_Infor_UI()
 
 CWorld_Battle_Infor_UI::~CWorld_Battle_Infor_UI()
 {
+	rt_island.clear();
+	rt_current.clear();
+
 	SAFE_DELETE(background);
 }
 
 bool CWorld_Battle_Infor_UI::initialize(Graphics * g, Input * i)
 {
+	background = new Image;
+
 	m_pGraphics = g;
 	m_pInput = i;
 
@@ -165,6 +205,18 @@ bool CWorld_Battle_Infor_UI::initialize(Graphics * g, Input * i)
 		rt_ship_island.top,
 		world_battle_infor_uiNS::RT_WIDTH,
 		world_battle_infor_uiNS::RT_HEIGHT
+	);
+	rt_island_title = RectMake(
+		rt_ship_island.left,
+		rt_ship_island.top - world_battle_infor_uiNS::TITLE_HEIGHT,
+		world_battle_infor_uiNS::TITLE_WIDTH,
+		world_battle_infor_uiNS::TITLE_HEIGHT
+	);
+	rt_current_title = RectMake(
+		rt_ship_battle.left,
+		rt_ship_battle.top - world_battle_infor_uiNS::TITLE_HEIGHT,
+		world_battle_infor_uiNS::TITLE_WIDTH,
+		world_battle_infor_uiNS::TITLE_HEIGHT
 	);
 
 	m_dxFont.initialize(g, world_battle_infor_uiNS::FONT_SIZE, true, false, world_battle_infor_uiNS::FONT);
@@ -211,4 +263,12 @@ void CWorld_Battle_Infor_UI::render()
 	m_pGraphics->spriteEnd();
 
 	exit_button_render();
+}
+
+void CWorld_Battle_Infor_UI::release()
+{
+	rt_island.clear();
+	rt_current.clear();
+
+	SAFE_DELETE(background);
 }

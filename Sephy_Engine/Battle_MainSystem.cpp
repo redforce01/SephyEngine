@@ -12,6 +12,7 @@ CBattle_MainSystem::CBattle_MainSystem()
 	m_pBattle_FogSystem = nullptr;
 	m_pBattle_SoundSystem = nullptr;
 	m_pBattle_ResultSystem = nullptr;
+	m_pBattleFinishDialog = nullptr;
 }
 
 
@@ -25,6 +26,7 @@ CBattle_MainSystem::~CBattle_MainSystem()
 	SAFE_DELETE(m_pBattle_FogSystem);
 	SAFE_DELETE(m_pBattle_SoundSystem);
 	SAFE_DELETE(m_pBattle_ResultSystem);
+	SAFE_DELETE(m_pBattleFinishDialog);
 }
 
 bool CBattle_MainSystem::initialize(Game * gamePtr)
@@ -32,6 +34,8 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 	bool success = false;
 	try
 	{
+		m_pGraphics = gamePtr->getGraphics();
+		m_pInput = gamePtr->getInput();
 		//=====================================================================
 		// Battle Map DataParser - Start
 		m_pBattle_DataParser = new CBattle_DataParser;
@@ -64,6 +68,7 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		m_pBattle_UnitSystem->setMemoryLinkBattleFleetSystem(m_pBattle_FleetSystem);
 		m_pBattle_UnitSystem->setMemoryLinkBattleFogSystem(m_pBattle_FogSystem);
 		m_pBattle_UnitSystem->setMemoryLinkBattleResultSystem(m_pBattle_ResultSystem);
+		m_pBattle_FogSystem->setMemoryLinkBattleMapSysten(m_pBattle_MapSystem);
 		m_pBattle_FogSystem->setMemoryLinkBattleUnitSystem(m_pBattle_UnitSystem);
 		m_pBattle_ResultSystem->setMemoryLinkBattleUnitSystem(m_pBattle_UnitSystem);
 		// End - Each System Connect to Other Systems
@@ -104,13 +109,12 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 		// End - Set Camera Min/Max Position
 		//=====================================================================
 		// Battle Fog System Setup All Basic(FULL BLACK) Fog - Start
-		m_pBattle_FogSystem->setupAllFog(totalMapWidth, totalMapHeight);
+
 		
-
-
-
 		// End - Battle Fog System Setup All Basic(FULL BLACK) Fog
 		//=====================================================================
+		m_pBattleFinishDialog = new CBattle_FinishDialog;
+		m_pBattleFinishDialog->initialize(m_pGraphics, m_pInput);
 	}
 	catch (...)
 	{
@@ -122,24 +126,34 @@ bool CBattle_MainSystem::initialize(Game * gamePtr)
 
 void CBattle_MainSystem::update(float frameTime)
 {
-	m_pBattle_CameraSystem->update(frameTime);
-	m_pBattle_MapSystem->update(frameTime);
-	m_pBattle_UnitSystem->update(frameTime);
-	m_pBattle_FogSystem->update(frameTime);
-	//m_pBattle_SoundSystem->update(frameTime);
-
 	if (m_pBattle_UnitSystem->getBattleFinish())
 	{
-		SCENEMANAGER->changeSceneWithLoading("BattleResult", "BattleLoading");
+		m_pBattleFinishDialog->setupWinLose(m_pBattle_UnitSystem->getBattleFinish());
+		m_pBattleFinishDialog->update(frameTime);
 	}
+	else
+	{
+		m_pBattle_CameraSystem->update(frameTime);
+		m_pBattle_MapSystem->update(frameTime);
+		m_pBattle_UnitSystem->update(frameTime);
+		m_pBattle_FogSystem->update(frameTime);
+		//m_pBattle_SoundSystem->update(frameTime);
+	}
+
 }
 
 void CBattle_MainSystem::render()
 {
 	m_pBattle_MapSystem->render();
-	//m_pBattle_FogSystem->render();
+	m_pBattle_FogSystem->render();
 	m_pBattle_UnitSystem->render();
 	m_pBattle_CameraSystem->render();
+
+	if (m_pBattle_UnitSystem->getBattleFinish())
+	{
+		m_pBattleFinishDialog->render();		
+	}
+
 }
 
 void CBattle_MainSystem::ai()

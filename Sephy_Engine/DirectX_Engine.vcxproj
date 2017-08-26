@@ -146,6 +146,7 @@
     <ClCompile Include="Battle_Bullet.cpp" />
     <ClCompile Include="Battle_CameraSystem.cpp" />
     <ClCompile Include="Battle_DataParser.cpp" />
+    <ClCompile Include="Battle_FinishDialog.cpp" />
     <ClCompile Include="Battle_FleetSystem.cpp" />
     <ClCompile Include="Battle_FogCell.cpp" />
     <ClCompile Include="Battle_FogSystem.cpp" />
@@ -163,7 +164,11 @@
     <ClCompile Include="Battle_DamageDigit.cpp" />
     <ClCompile Include="Battle_Operator.cpp" />
     <ClCompile Include="Battle_Particle.cpp" />
+    <ClCompile Include="Battle_ResultEnemyView.cpp" />
+    <ClCompile Include="Battle_ResultMainSystem.cpp" />
+    <ClCompile Include="Battle_ResultPlayerView.cpp" />
     <ClCompile Include="Battle_ResultSystem.cpp" />
+    <ClCompile Include="Battle_ShipHitEvent.cpp" />
     <ClCompile Include="Battle_ShipTailEffect.cpp" />
     <ClCompile Include="Battle_UI_PhaseAlert.cpp" />
     <ClCompile Include="Battle_Ship.cpp" />
@@ -337,12 +342,15 @@
     <ClCompile Include="weatherFog_Button.cpp" />
     <ClCompile Include="weatherRain_Button.cpp" />
     <ClCompile Include="winmain.cpp" />
+    <ClCompile Include="world_Atk_List_UI.cpp" />
     <ClCompile Include="world_Battle_Infor_UI.cpp" />
     <ClCompile Include="world_Battle_UI.cpp" />
     <ClCompile Include="world_Building_Buy_Infor.cpp" />
     <ClCompile Include="world_Buy_Infor.cpp" />
     <ClCompile Include="world_CG.cpp" />
     <ClCompile Include="world_Computer.cpp" />
+    <ClCompile Include="world_Computer_Atk_UI.cpp" />
+    <ClCompile Include="world_Event_Log.cpp" />
     <ClCompile Include="world_Island.cpp" />
     <ClCompile Include="World_Island_Data.cpp" />
     <ClCompile Include="world_Island_Detail_UI.cpp" />
@@ -350,6 +358,7 @@
     <ClCompile Include="World_Island_Infor_UI.cpp" />
     <ClCompile Include="world_Island_Infor_Unit_UI.cpp" />
     <ClCompile Include="world_Log_UI.cpp" />
+    <ClCompile Include="World_MainSystem.cpp" />
     <ClCompile Include="world_Minimap_UI.cpp" />
     <ClCompile Include="world_Player.cpp" />
     <ClCompile Include="world_PlayerUI_Island_Infor.cpp" />
@@ -370,6 +379,7 @@
     <ClInclude Include="Battle_Bullet.h" />
     <ClInclude Include="Battle_CameraSystem.h" />
     <ClInclude Include="Battle_DataParser.h" />
+    <ClInclude Include="Battle_FinishDialog.h" />
     <ClInclude Include="Battle_FleetSystem.h" />
     <ClInclude Include="Battle_FogCell.h" />
     <ClInclude Include="Battle_FogSystem.h" />
@@ -387,7 +397,11 @@
     <ClInclude Include="Battle_DamageDigit.h" />
     <ClInclude Include="Battle_Operator.h" />
     <ClInclude Include="Battle_Particle.h" />
+    <ClInclude Include="Battle_ResultEnemyView.h" />
+    <ClInclude Include="Battle_ResultMainSystem.h" />
+    <ClInclude Include="Battle_ResultPlayerView.h" />
     <ClInclude Include="Battle_ResultSystem.h" />
+    <ClInclude Include="Battle_ShipHitEvent.h" />
     <ClInclude Include="Battle_ShipTailEffect.h" />
     <ClInclude Include="Battle_UI_PhaseAlert.h" />
     <ClInclude Include="Battle_Ship.h" />
@@ -566,12 +580,15 @@
     <ClInclude Include="viewerSystem.h" />
     <ClInclude Include="weatherFog_Button.h" />
     <ClInclude Include="weatherRain_Button.h" />
+    <ClInclude Include="world_Atk_List_UI.h" />
     <ClInclude Include="world_Battle_Infor_UI.h" />
     <ClInclude Include="world_Battle_UI.h" />
     <ClInclude Include="world_Building_Buy_Infor.h" />
     <ClInclude Include="world_Buy_Infor.h" />
     <ClInclude Include="world_CG.h" />
     <ClInclude Include="world_Computer.h" />
+    <ClInclude Include="world_Computer_Atk_UI.h" />
+    <ClInclude Include="world_Event_Log.h" />
     <ClInclude Include="world_Island.h" />
     <ClInclude Include="World_Island_Data.h" />
     <ClInclude Include="world_Island_Detail_UI.h" />
@@ -579,6 +596,7 @@
     <ClInclude Include="World_Island_Infor_UI.h" />
     <ClInclude Include="world_Island_Infor_Unit_UI.h" />
     <ClInclude Include="world_Log_UI.h" />
+    <ClInclude Include="World_MainSystem.h" />
     <ClInclude Include="world_Minimap_UI.h" />
     <ClInclude Include="world_Player.h" />
     <ClInclude Include="world_PlayerUI_Island_Infor.h" />
@@ -594,6 +612,9 @@
     <ClInclude Include="world_Ship_Move_UI.h" />
     <ClInclude Include="world_Turn_UI.h" />
     <ClInclude Include="world_User.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

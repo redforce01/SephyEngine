@@ -9,12 +9,18 @@ CWorld_Computer::CWorld_Computer()
 
 CWorld_Computer::~CWorld_Computer()
 {
+	for (auto iter : img_list)
+		SAFE_DELETE(iter);
+	img_list.clear();
 }
 
 void CWorld_Computer::update(float frameTime)
 {
 	for (auto iter : island_node)
-		iter->update(frameTime);
+	{
+		if (iter != nullptr)
+			iter->update(frameTime);
+	}
 }
 
 void CWorld_Computer::render()
@@ -41,6 +47,16 @@ void CWorld_Computer::render()
 		iter->draw();
 
 	m_pGraphics->spriteEnd();
+}
+
+void CWorld_Computer::relase()
+{
+	for (auto iter : img_list)
+	{
+		if (iter != nullptr)
+			SAFE_DELETE(iter);
+	}
+	img_list.clear();
 }
 
 void CWorld_Computer::w_move_ud(float _speed)

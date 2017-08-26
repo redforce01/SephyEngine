@@ -364,12 +364,6 @@
     <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit Setter">
       <UniqueIdentifier>{97f80c71-ebca-4904-ac26-3260d0360d11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit Make">
-      <UniqueIdentifier>{b71d4be9-915f-4c93-a163-4f74b2370dce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit Make\Parser">
-      <UniqueIdentifier>{672999b8-26bf-4025-a06e-4a276c992cb5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\OverLabShip">
       <UniqueIdentifier>{b3ad7dbf-2ace-4da0-9e10-e11826b8e7d0}</UniqueIdentifier>
     </Filter>
@@ -438,6 +432,30 @@
     </Filter>
     <Filter Include="GameCode\Lobby\LobbySystem">
       <UniqueIdentifier>{9f2dea49-d482-4dc8-9ed0-246200c67d2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleResultSystem\Interface">
+      <UniqueIdentifier>{dc56811c-bf5e-4245-ab1f-73fc08c46b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleResultSystem\ResultSystem">
+      <UniqueIdentifier>{aa597c7b-7856-4011-ba9c-4d8b6ace7bb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\World\World_MainSystem">
+      <UniqueIdentifier>{8f5c4d48-98cb-4738-9284-bf6e42345ec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\World\Etc">
+      <UniqueIdentifier>{6a54398d-530a-4df4-8310-32ffbf264691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleMainSystem\Interface">
+      <UniqueIdentifier>{dbcd98e3-347a-4822-bfe2-15c67caa0568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit ListViewer">
+      <UniqueIdentifier>{b71d4be9-915f-4c93-a163-4f74b2370dce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\UnitTool\Tools\UnitToolViewer\Unit ListViewer\Parser">
+      <UniqueIdentifier>{672999b8-26bf-4025-a06e-4a276c992cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\Battle\BattleUnitSystem\Unit\HitRandomEvent">
+      <UniqueIdentifier>{9592c8cf-f13a-4f89-8834-64549aded965}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -895,10 +913,10 @@
       <Filter>GameCode\UnitTool\CameraSystem</Filter>
     </ClCompile>
     <ClCompile Include="UnitTool_UnitMakeViewer.cpp">
-      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Make</Filter>
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit ListViewer</Filter>
     </ClCompile>
     <ClCompile Include="UnitTool_UnitListParser.cpp">
-      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Make\Parser</Filter>
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit ListViewer\Parser</Filter>
     </ClCompile>
     <ClCompile Include="UnitTool_RespawnListViewer.cpp">
       <Filter>GameCode\UnitTool\Tools\UnitRespawnListViewer</Filter>
@@ -987,12 +1005,6 @@
     <ClCompile Include="Battle_MapEventArea_WeatherFogArea.cpp">
       <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_BattleResult.cpp">
-      <Filter>GameCode\Battle</Filter>
-    </ClCompile>
-    <ClCompile Include="Battle_ResultSystem.cpp">
-      <Filter>GameCode\Battle\BattleResultSystem</Filter>
-    </ClCompile>
     <ClCompile Include="lobby_Scene.cpp">
       <Filter>GameCode\Lobby</Filter>
     </ClCompile>
@@ -1008,98 +1020,131 @@
     <ClCompile Include="lobby_Menu.cpp">
       <Filter>GameCode\Lobby\LobbySystem</Filter>
     </ClCompile>
-    <ClCompile Include="world_Battle_Infor_UI.cpp">
-      <Filter>GameCode\World</Filter>
+    <ClCompile Include="Scene_BattleResult.cpp">
+      <Filter>GameCode\Battle</Filter>
     </ClCompile>
-    <ClCompile Include="world_Battle_UI.cpp">
-      <Filter>GameCode\World</Filter>
+    <ClCompile Include="Battle_ResultMainSystem.cpp">
+      <Filter>GameCode\Battle\BattleResultSystem</Filter>
     </ClCompile>
-    <ClCompile Include="world_Building_Buy_Infor.cpp">
-      <Filter>GameCode\World</Filter>
+    <ClCompile Include="Battle_ResultPlayerView.cpp">
+      <Filter>GameCode\Battle\BattleResultSystem\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="world_Buy_Infor.cpp">
-      <Filter>GameCode\World</Filter>
+    <ClCompile Include="Battle_ResultSystem.cpp">
+      <Filter>GameCode\Battle\BattleResultSystem\ResultSystem</Filter>
     </ClCompile>
-    <ClCompile Include="world_CG.cpp">
-      <Filter>GameCode\World</Filter>
+    <ClCompile Include="Battle_ResultEnemyView.cpp">
+      <Filter>GameCode\Battle\BattleResultSystem\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="world_Computer.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Island.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="World_Island_Data.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Island_Detail_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Island_Infor_Build_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="World_Island_Infor_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Island_Infor_Unit_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Log_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Minimap_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Player.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Player_Island_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_PlayerUI_Island_Infor.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_PlayerUI_ShipList.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Resource_Detail.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Resource_UI.cpp">
-      <Filter>GameCode\World</Filter>
+    <ClCompile Include="World_MainSystem.cpp">
+      <Filter>GameCode\World\World_MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="world_Scene.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Scene_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Ship.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Ship_Buy_Infor.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Ship_Move_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_ShipList_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_Turn_UI.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="world_User.cpp">
-      <Filter>GameCode\World</Filter>
-    </ClCompile>
-    <ClCompile Include="production_Ship.cpp">
-      <Filter>GameCode\World</Filter>
+      <Filter>GameCode\World\World_MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="building.cpp">
-      <Filter>GameCode\World</Filter>
+      <Filter>GameCode\World\Etc</Filter>
     </ClCompile>
     <ClCompile Include="child_Island.cpp">
-      <Filter>GameCode\World</Filter>
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="production_Ship.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Battle_Infor_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Battle_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Building_Buy_Infor.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Buy_Infor.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_CG.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Computer.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Island.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="World_Island_Data.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Island_Detail_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Island_Infor_Build_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="World_Island_Infor_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Island_Infor_Unit_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Log_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Minimap_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Player.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Player_Island_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_PlayerUI_Island_Infor.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_PlayerUI_ShipList.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Resource_Detail.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Resource_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Scene_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Ship.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Ship_Buy_Infor.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Ship_Move_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_ShipList_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Turn_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_User.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_FinishDialog.cpp">
+      <Filter>GameCode\Battle\BattleMainSystem\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle_ShipHitEvent.cpp">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\HitRandomEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Atk_List_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Computer_Atk_UI.cpp">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="world_Event_Log.cpp">
+      <Filter>GameCode\World\Etc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1578,10 +1623,10 @@
       <Filter>GameCode\UnitTool\CameraSystem</Filter>
     </ClInclude>
     <ClInclude Include="UnitTool_UnitMakeViewer.h">
-      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Make</Filter>
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit ListViewer</Filter>
     </ClInclude>
     <ClInclude Include="UnitTool_UnitListParser.h">
-      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit Make\Parser</Filter>
+      <Filter>GameCode\UnitTool\Tools\UnitToolViewer\Unit ListViewer\Parser</Filter>
     </ClInclude>
     <ClInclude Include="UnitTool_RespawnListViewer.h">
       <Filter>GameCode\UnitTool\Tools\UnitRespawnListViewer</Filter>
@@ -1670,12 +1715,6 @@
     <ClInclude Include="Battle_MapEventArea_WeatherFogArea.h">
       <Filter>GameCode\Battle\BattleMapSystem\MapEventArea</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_BattleResult.h">
-      <Filter>GameCode\Battle</Filter>
-    </ClInclude>
-    <ClInclude Include="Battle_ResultSystem.h">
-      <Filter>GameCode\Battle\BattleResultSystem</Filter>
-    </ClInclude>
     <ClInclude Include="lobby_Scene.h">
       <Filter>GameCode\Lobby</Filter>
     </ClInclude>
@@ -1691,98 +1730,134 @@
     <ClInclude Include="lobby_Menu.h">
       <Filter>GameCode\Lobby\LobbySystem</Filter>
     </ClInclude>
-    <ClInclude Include="world_Battle_Infor_UI.h">
-      <Filter>GameCode\World</Filter>
+    <ClInclude Include="Scene_BattleResult.h">
+      <Filter>GameCode\Battle</Filter>
     </ClInclude>
-    <ClInclude Include="world_Battle_UI.h">
-      <Filter>GameCode\World</Filter>
+    <ClInclude Include="Battle_ResultMainSystem.h">
+      <Filter>GameCode\Battle\BattleResultSystem</Filter>
     </ClInclude>
-    <ClInclude Include="world_Building_Buy_Infor.h">
-      <Filter>GameCode\World</Filter>
+    <ClInclude Include="Battle_ResultPlayerView.h">
+      <Filter>GameCode\Battle\BattleResultSystem\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="world_Buy_Infor.h">
-      <Filter>GameCode\World</Filter>
+    <ClInclude Include="Battle_ResultSystem.h">
+      <Filter>GameCode\Battle\BattleResultSystem\ResultSystem</Filter>
     </ClInclude>
-    <ClInclude Include="world_CG.h">
-      <Filter>GameCode\World</Filter>
+    <ClInclude Include="Battle_ResultEnemyView.h">
+      <Filter>GameCode\Battle\BattleResultSystem\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="world_Computer.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Island.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="World_Island_Data.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Island_Detail_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Island_Infor_Build_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="World_Island_Infor_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Island_Infor_Unit_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Log_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Minimap_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Player.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Player_Island_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_PlayerUI_Island_Infor.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_PlayerUI_ShipList.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Resource_Detail.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Resource_UI.h">
-      <Filter>GameCode\World</Filter>
+    <ClInclude Include="World_MainSystem.h">
+      <Filter>GameCode\World\World_MainSystem</Filter>
     </ClInclude>
     <ClInclude Include="world_Scene.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Scene_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Ship.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Ship_Buy_Infor.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Ship_Move_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_ShipList_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_Turn_UI.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="world_User.h">
-      <Filter>GameCode\World</Filter>
-    </ClInclude>
-    <ClInclude Include="production_Ship.h">
-      <Filter>GameCode\World</Filter>
+      <Filter>GameCode\World\World_MainSystem</Filter>
     </ClInclude>
     <ClInclude Include="building.h">
-      <Filter>GameCode\World</Filter>
+      <Filter>GameCode\World\Etc</Filter>
     </ClInclude>
     <ClInclude Include="child_Island.h">
-      <Filter>GameCode\World</Filter>
+      <Filter>GameCode\World\Etc</Filter>
     </ClInclude>
+    <ClInclude Include="production_Ship.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Battle_Infor_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Battle_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Building_Buy_Infor.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Buy_Infor.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_CG.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Computer.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Island.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="World_Island_Data.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Island_Detail_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Island_Infor_Build_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="World_Island_Infor_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Island_Infor_Unit_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Log_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Minimap_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Player.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Player_Island_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_PlayerUI_Island_Infor.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_PlayerUI_ShipList.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Resource_Detail.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Resource_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Scene_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Ship.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Ship_Buy_Infor.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Ship_Move_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_ShipList_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Turn_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_User.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_FinishDialog.h">
+      <Filter>GameCode\Battle\BattleMainSystem\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle_ShipHitEvent.h">
+      <Filter>GameCode\Battle\BattleUnitSystem\Unit\HitRandomEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Atk_List_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Computer_Atk_UI.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="world_Event_Log.h">
+      <Filter>GameCode\World\Etc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

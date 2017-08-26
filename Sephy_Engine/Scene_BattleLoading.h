@@ -34,7 +34,6 @@ private:
 	float m_fBackAlpha;
 	float m_fLoadingTime;
 	bool m_bLoadingStart;
-
 	bool m_bVisible;
 public:
 	CScene_BattleLoading();

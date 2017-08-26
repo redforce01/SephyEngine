@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "world_Ship_Buy_Infor.h"
+#include "world_Player.h"
 
 CWorld_Ship_Buy_Infor::CWorld_Ship_Buy_Infor()
 {
@@ -11,9 +12,9 @@ CWorld_Ship_Buy_Infor::CWorld_Ship_Buy_Infor()
 	ship = nullptr;
 }
 
-
 CWorld_Ship_Buy_Infor::~CWorld_Ship_Buy_Infor()
 {
+	list_number.clear();
 }
 
 bool CWorld_Ship_Buy_Infor::initialize(Graphics * g, Input * i)
@@ -103,7 +104,7 @@ void CWorld_Ship_Buy_Infor::render()
 	list_number.clear();
 }
 
-void CWorld_Ship_Buy_Infor::replace_number_img(RECT rect, UINT _number)
+void CWorld_Ship_Buy_Infor::replace_number_img(RECT rect, int _number)
 {
 	//Add kind of number image
 	std::string number = std::to_string(_number);
@@ -141,6 +142,7 @@ void CWorld_Ship_Buy_Infor::replace_number_img(RECT rect, UINT _number)
 	rect = rc_temp;
 }
 
+//**********	ship's detail info		**********//
 void CWorld_Ship_Buy_Infor::buy_draw()
 {
 	std::string str = "";
@@ -157,7 +159,11 @@ void CWorld_Ship_Buy_Infor::buy_draw()
 	replace_number_img(rt_resource[IRON], ship->get_resource(IRON));
 	replace_number_img(rt_resource[FUEL], ship->get_resource(FUEL));
 	replace_number_img(rt_resource[RESEARCH], ship->get_resource(RESEARCH));
-	replace_number_img(rt_turn, ship->getTurn());
+	
+	if (player->get_buf_type() == 2 && ship->getTurn() - 1 > 0)
+		replace_number_img(rt_turn, ship->getTurn() - 1);
+	else
+		replace_number_img(rt_turn, ship->getTurn());
 }
 
 void CWorld_Ship_Buy_Infor::w_move_rl(float _speed)

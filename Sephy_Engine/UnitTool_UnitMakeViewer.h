@@ -27,8 +27,8 @@ namespace unitToolUnitMakeViewerNS
 	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;
 	const COLOR_ARGB BACK_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);
 
-	const std::string OK_BUTTON_FILENAME = "OK";
-	const std::string CANCEL_BUTTON_FILENAME = "Cancel";
+	const std::string OK_BUTTON_FILENAME = "UnitTool_OK";
+	const std::string CANCEL_BUTTON_FILENAME = "UnitTool_Cancel";
 	const UINT OK_BUTTON_X = 20;
 	const UINT OK_BUTTON_Y = 270;
 	const UINT CANCEL_BUTTON_X = 110;

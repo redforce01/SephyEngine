@@ -10,31 +10,31 @@ namespace world_all_shiplistNS
 
 	const std::string BACK_NAME = "ShipList";
 
-	const UINT WIDTH = 395;
-	const UINT HEIGHT = 595;
+	const int WIDTH = 395;
+	const int HEIGHT = 595;
 
-	const UINT MARGIN = 10;
+	const int MARGIN = 10;
 
-	const UINT X = 17;
-	const UINT Y = 54;
+	const int X = 17;
+	const int Y = 54;
 
 	//exit infor
-	const UINT EXIT_WIDTH = 20;
-	const UINT EXIT_HEIGHT = 20;
+	const int EXIT_WIDTH = 20;
+	const int EXIT_HEIGHT = 20;
 	const float EXIT_WEIGHT = 2.0f;
 	const COLOR_ARGB EXIT_COLOR = graphicsNS::RED;
 
-	const UINT MID_MARGIN = 45;
+	const int MID_MARGIN = 45;
 
-	const UINT RT_WIDTH = 158;
-	const UINT RT_HEIGHT = 484;
+	const int RT_WIDTH = 158;
+	const int RT_HEIGHT = 484;
 
-	const UINT LIST_WIDTH = 130;
-	const UINT LIST_HEIGHT = 20;
+	const int LIST_WIDTH = 130;
+	const int LIST_HEIGHT = 20;
 	const int LINE = 22;
 
-	const UINT MOVE_WIDTH = 200;
-	const UINT MOVE_HEIGHT = 30;
+	const int MOVE_WIDTH = 200;
+	const int MOVE_HEIGHT = 30;
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE = 17;
@@ -46,12 +46,15 @@ namespace world_all_shiplistNS
 class CWorld_Player;
 class CWorld_ShipList_UI
 {
-private :
+private:
 	CWorld_Player* player;
+
+private :
 	CWorld_Ship_Move_UI* move;
 
 	Graphics* m_pGraphics;
 	Input* m_pInput;
+
 	TextDX m_dxFont;
 	TextDX m_dxFont_over;
 
@@ -64,6 +67,8 @@ private :
 
 	std::vector<RECT> rt_island;
 	std::vector<RECT> rt_current;
+	std::vector<std::string> island_ship_name;
+	std::vector<std::string> current_ship_name;
 
 	int scroll_mount_island;
 	int scroll_mount_current;
@@ -75,7 +80,6 @@ private :
 	void rt_make_list();
 	void scroll();
 	void event_click();
-	//void exit();
 
 public:
 	void SetLoadLinkPlayer(CWorld_Player* _player) { player = _player; }

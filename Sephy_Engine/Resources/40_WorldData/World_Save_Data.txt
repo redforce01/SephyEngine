@@ -1,46 +1,271 @@
-BEGIN	Base 200 200 200 200 1	END
+BEGIN	Base 110 110 204 600 9 END
 BEGIN	LOG
-	END
+BEGIN		  Not Create Building : Short supply money   END
+BEGIN		  ======== 1 Turn End ========   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Building : Basic_Shipyard   END
+BEGIN		  ======== Start 2 Turn ========   END
+BEGIN		  ======== 2 Turn End ========   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Complete Building : Basic_Shipyard   END
+BEGIN		  ======== Start 3 Turn ========   END
+BEGIN		  ======== 3 Turn End ========   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  ======== Start 4 Turn ========   END
+BEGIN		  ======== 4 Turn End ========   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  ======== Start 5 Turn ========   END
+BEGIN		  ======== 5 Turn End ========   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Building : Basic_Shipyard   END
+BEGIN		  ======== Start 6 Turn ========   END
+BEGIN		  Not Create Ship : Short supply money   END
+BEGIN		  Not Create Ship : Short supply money   END
+BEGIN		  Not Create Ship : Short supply money   END
+BEGIN		  Not Create Ship : Short supply money   END
+BEGIN		  ======== 6 Turn End ========   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Create Start Ship : Corvette   END
+BEGIN		  Complete Ship : Corvette   END
+BEGIN		  Complete Building : Basic_Shipyard   END
+BEGIN		  ======== Start 7 Turn ========   END
+BEGIN		  ======== 7 Turn End ========   END
+BEGIN		  ======== Start 8 Turn ========   END
+BEGIN		   END
+BEGIN		 ======== 8 Turn End ========  END
+BEGIN		 Create Start Ship : Corvette  END
+BEGIN		 Complete Ship : Corvette  END
+BEGIN		 Create Start Ship : Corvette  END
+BEGIN		 Complete Ship : Corvette  END
+BEGIN		 Create Start Ship : Corvette  END
+BEGIN		 Complete Ship : Corvette  END
+BEGIN		 Create Start Ship : Corvette  END
+BEGIN		 Complete Ship : Corvette  END
+BEGIN		 Create Start Ship : Corvette  END
+BEGIN		 Complete Ship : Corvette  END
+BEGIN		 Create Start Ship : Corvette  END
+BEGIN		 Complete Ship : Corvette  END
+BEGIN		 ======== Start 9 Turn ========  END
+BEGIN		 END
+END
 BEGIN	Player
-	BEGIN	Island Alpha 1
-		BEGIN	Building Command_Center 0 1 1 0	END
-		BEGIN	Building Basic_Shipyard 0 1 1 0	END
+	BEGIN	Island Alpha 9
+		BEGIN	Building Command_Center -8 1 1 0
+		END
+		BEGIN	Building Basic_Shipyard -8 1 1 0
+		END
+		BEGIN	Building Basic_Shipyard -6 1 1 0
+		END
 	END
+	BEGIN	Island Charlie 5
+		BEGIN	Building Basic_Shipyard -2 1 1 0
+		END
+		BEGIN	Ship Corvette 0 1 END
+		BEGIN	Ship Corvette 0 1 END
+		BEGIN	Ship Corvette 0 1 END
 	END
-
+END
 BEGIN	Computer
-	BEGIN	Island Brabo 1
-	END
-	BEGIN	Island Charlie 1
-	END
 	BEGIN	Island Delta 1
-	END
+END
 	BEGIN	Island Echo 1
-	END
+END
 	BEGIN	Island Foxtrot 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Golf 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Hotel 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island India 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Juliet 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Kilo 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Lima 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Mike 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island November 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Oscae 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Papa 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Quebec 1
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
 	BEGIN	Island Romeo 1
-	END
-	END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+		BEGIN	Ship Corvette 1 1 END
+END
+END

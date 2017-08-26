@@ -4,7 +4,6 @@
 #include "world_Island.h"
 
 
-
 void CBuilding::load(bool _building, bool _complete, bool _destroy, int _turn)
 {
 	is_building = _building;
@@ -27,32 +26,11 @@ void CBuilding::command_center()
 	user->add_increase_resource(RESEARCH, produce_resource[RESEARCH]);
 }
 
+//**********	asort set building		**********//
 void CBuilding::asort_action()
 {
-	//int null_count = 0;
-
-	//for (int i = 0; i < worldbuildingNS::MAX_ACTION; i++)
-	//{
-	//	if (action[i] != nullptr)
-	//		continue;
-
-	//	for (int j = i + 1; j < worldbuildingNS::MAX_ACTION; j++)
-	//	{
-	//		action[j - 1] = action[j];
-	//	}
-
-	//	null_count++;
-	//}
-
-	//for (int i = worldbuildingNS::MAX_ACTION - null_count; i < worldbuildingNS::MAX_ACTION; i++)
-	//{
-	//	action[i] = nullptr;
-	//}
-
 	for (int i = 0; i < worldbuildingNS::MAX_ACTION; i++)
 	{
-		//if (action[i] == nullptr)
-		//	break;
 
 		for (int j = i + 1; j < worldbuildingNS::MAX_ACTION; j++)
 		{
@@ -105,6 +83,13 @@ CBuilding::CBuilding()
 
 CBuilding::~CBuilding()
 {
+	ship.clear();
+
+	for (int i = 0; i < worldbuildingNS::MAX_ACTION; i++)
+	{
+		if (action[i] != nullptr)
+			SAFE_DELETE(action[i]);
+	}
 }
 
 void CBuilding::turn_end()
@@ -112,7 +97,7 @@ void CBuilding::turn_end()
 	if (is_destroy == true)
 	{
 		if (SOUNDMANAGER->isPlaySound(worldbuildingNS::SOUND_DESTROY) == false)
-			SOUNDMANAGER->play(worldbuildingNS::SOUND_DESTROY, g_fSoundMasterVolume + g_fSoundEffectVolume);
+			SOUNDMANAGER->play(worldbuildingNS::SOUND_DESTROY, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
 		user->destroy_cur_building(id);
 		user->print_world_log("Destroy Building : " + name);
@@ -150,14 +135,13 @@ void CBuilding::turn_end()
 		user->add_increase_resource(IRON, produce_resource[IRON]);
 		user->add_increase_resource(FUEL, produce_resource[FUEL]);
 		user->add_increase_resource(RESEARCH, produce_resource[RESEARCH]);
-		//사용 가능 및 자원 생산
-		//배 생산
 	}
 
 	for (int i = 0; i < worldbuildingNS::MAX_ACTION; i++)
 	{
 		if (action[i] != nullptr)
 		{
+			action[i]->SetLoadLinkUser(user);
 			action[i]->turn_end();
 
 			if (action[i]->get_is_destroy() == true)
@@ -171,7 +155,7 @@ void CBuilding::turn_end()
 	turn--;
 }
 
-void CBuilding::initialize(std::string _name, UINT _id, int _turn, UINT _nBuilding, UINT _nMoney, UINT _nIron, UINT _pMoney, UINT _pIron, UINT _pFuel, UINT _pResearch)
+void CBuilding::initialize(std::string _name, int _id, int _turn, int _nBuilding, int _nMoney, int _nIron, int _pMoney, int _pIron, int _pFuel, int _pResearch)
 {
 	name = _name;
 	id = _id;
@@ -187,14 +171,19 @@ void CBuilding::initialize(std::string _name, UINT _id, int _turn, UINT _nBuildi
 	produce_resource[IRON] = _pIron;
 	produce_resource[FUEL] = _pFuel;
 	produce_resource[RESEARCH] = _pResearch;
+}
 
-	//std::cout << "=================================" << std::endl;
-	//std::cout << "Name : " << name << std::endl;
-	//std::cout << "ID : " << id << std::endl;
-	//std::cout << "Turn : " << turn << std::endl;
-	//std::cout << "=================================" << std::endl;
-	
-	//printf("%s\t\n%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t \n", name, id, turn, n_building, need_resource[MONEY], need_resource[IRON], 
-	//	produce_resource[MONEY], produce_resource[IRON], produce_resource[FUEL], produce_resource[RESEARCH]);
+void CBuilding::release()
+{
+	ship.clear();
+
+	for (int i = 0; i < worldbuildingNS::MAX_ACTION; i++)
+	{
+		if (action[i] != nullptr)
+		{
+			action[i]->release();
+			SAFE_DELETE(action[i]);
+		}
+	}
 }
 

@@ -211,11 +211,14 @@ private:
 	float		m_fRotateSpeed;				// Unit Rotate Speed
 	float		m_fCurrentSpeed;			// Unit Move Speed
 	float		m_fMaxSpeed;				// Unit Max Speed
+	float		m_fMaxSpeedOriginal;		// Unit Original Max Speed
 	float		m_fAccelateSpeed;			// Unit Accelerate Speed
 	float		m_fRaderRange;				// Unit Sight Range
+	float		m_fRaderRangeOriginal;		// Unit Original Sight Range
 	float		m_fPerformance;				// Unit Performance Count (mean : battle power)
 	int			m_nSailorCount;				// Unit Sailor Count
 	int			m_nTurretCount;				// Unit Turret Count
+	int			m_nTurretCountOriginal;		// Unit Original Turret Count
 	std::string m_strTurretID;				// Unit Turret ID
 	vTurrets	m_vTurret;					// Unit Turret Vector
 	float		m_nAntiAirTurrectCount;		// Unit AntiAir Turret Count
@@ -535,7 +538,6 @@ private:
 private:
 	void setupShipDataFormat(std::vector<std::string> vArray);
 	bool setupEntity(Game* gamePtr, std::string strImageName, bool bPhysics);
-
 public:
 	//===============================================
 	// Member Functions
@@ -573,9 +575,12 @@ public:
 	//===============================================
 	// Take Buff Functions
 	//===============================================
-		
-	void takeRepairBuf(bool bTakeOnOff, float bufSpeed = 0.f);
 	
+	void takeRepairBuf(bool bTakeOnOff, float bufSpeed = 0.f);
+	void takeBrokenControlTower(bool bTakeOnOff);
+	void takeEngineBroken(bool bTakeOnOff);
+	void takeTurretBroken(bool bTakeOnOff);
+	void takeSailorDead(int nDeadSailorCount);
 	
 	//===============================================
 	// Setter Functions

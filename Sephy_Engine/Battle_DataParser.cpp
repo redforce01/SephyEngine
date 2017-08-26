@@ -19,9 +19,43 @@ void CBattle_DataParser::loadBattleData()
 
 void CBattle_DataParser::saveBattleData(std::string worldIndex, std::string battleMap, std::vector<std::string> vPlayerShip, std::vector<std::string> vEnemyShip)
 {
+	std::vector<std::string> vResult;
 
+	//==============================================
+	// World Index Data Save To BattleData File
+	//==============================================
+	vResult.emplace_back(battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + battleDataParserNS::BATTLE_DATA_WORLD_INDEX_KEY);
+	vResult.emplace_back('\t' + battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + worldIndex + " " + battleDataParserNS::DATA_FORMAT_END_KEY);
+	vResult.emplace_back(battleDataParserNS::BATTLE_DATA_WORLD_INDEX_KEY + " " + battleDataParserNS::DATA_FORMAT_END_KEY);
 
-	TXTDATA_PARSER->saveDataFromArray("Resources")
+	//==============================================
+	// Map Data Save To BattleData File
+	//==============================================
+	vResult.emplace_back(battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + battleDataParserNS::BATTLE_MAP_KEY);
+	vResult.emplace_back('\t' + battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + battleMap + " " + battleDataParserNS::DATA_FORMAT_END_KEY);
+	vResult.emplace_back(battleDataParserNS::BATTLE_MAP_KEY + " " + battleDataParserNS::DATA_FORMAT_END_KEY);
+
+	//==============================================
+	// Player Ship Data Save To BattleData File
+	//==============================================
+	vResult.emplace_back(battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + battleDataParserNS::BATTLE_PLAYER_KEY);
+	for (auto iter : vPlayerShip)
+	{
+		vResult.emplace_back('\t' + battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + iter + " " + battleDataParserNS::DATA_FORMAT_END_KEY);
+	}
+	vResult.emplace_back(battleDataParserNS::BATTLE_PLAYER_KEY + " " + battleDataParserNS::DATA_FORMAT_END_KEY);
+
+	//==============================================
+	// Computer Ship Data Save To BattleData File	
+	//==============================================
+	vResult.emplace_back(battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + battleDataParserNS::BATTLE_AI_KEY);
+	for (auto iter : vEnemyShip)
+	{
+		vResult.emplace_back('\t' + battleDataParserNS::DATA_FORMAT_BEGIN_KEY + " " + iter + " " + battleDataParserNS::DATA_FORMAT_END_KEY);
+	}
+	vResult.emplace_back(battleDataParserNS::BATTLE_AI_KEY + " " + battleDataParserNS::DATA_FORMAT_END_KEY);
+
+	TXTDATA_PARSER->saveDataFromArray(battleDataParserNS::SAVE_DATA_PATH, vResult);
 }
 
 void CBattle_DataParser::battleDataRecognize(std::vector<std::string> vArray)

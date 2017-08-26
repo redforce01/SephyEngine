@@ -7,8 +7,8 @@
 
 namespace battleFogCellNS
 {
-	const std::string FOG_NONE_CELL_FILENAME = "FOG_BLACK_FULL";
-	const std::string FOG_FULL_CELL_FILENAME = "FOG_WHITE_FULL";
+	const std::string FOG_NONE_CELL_FILENAME = "FOG_BLACK_FULL";	// NONE FOG
+	const std::string FOG_FULL_CELL_FILENAME = "FOG_WHITE_FULL";	// FULL FOG
 	const std::string FOG_BASIC_KEY = "FOG_";
 	const UINT FOG_WIDTH = 100;
 	const UINT FOG_HEIGHT = 86;
@@ -35,9 +35,6 @@ public:
 	~CBattle_FogCell();
 
 	bool initialize(Graphics* g, float x, float y);
-	void update(float frameTime);
-	void render();
-
 	void setFogKey(std::string spriteKey)
 	{
 		m_fogKey = spriteKey;

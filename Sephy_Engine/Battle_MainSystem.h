@@ -13,6 +13,7 @@ class CBattle_MainSystem;
 #include "Battle_FogSystem.h"
 #include "Battle_SoundSystem.h"
 #include "Battle_ResultSystem.h"
+#include "Battle_FinishDialog.h"
 
 namespace battleMainSystemNS
 {
@@ -21,6 +22,8 @@ namespace battleMainSystemNS
 
 class CBattle_MainSystem : public SystemBase
 {
+private:
+	CBattle_FinishDialog* m_pBattleFinishDialog;
 private:
 	CBattle_DataParser*		m_pBattle_DataParser;
 	CBattle_CameraSystem*	m_pBattle_CameraSystem;

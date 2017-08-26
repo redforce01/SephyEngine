@@ -30,9 +30,15 @@ int RandomMaker::GetInt(int rangeMin, int rangeMax) const
 	return range(rand);
 }
 
+int RandomMaker::GetInt(int seed) const
+{
+	std::mt19937 rand(seed);
+	return rand();
+}
+
 void RandomMaker::GetVectorInt(std::vector<int>& vec, int size)
 {
-	std::mt19937 rand;
+	std::random_device rand;
 	for (int i = 0; i < size; i++)
 	{
 		vec.push_back(rand());

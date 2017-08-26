@@ -5,26 +5,41 @@
 
 namespace world_p_island_inforNS
 {
+	const std::string BUTTON_MSG = "Island Info";
+
 	const std::string SOUND_OPEN = "Open_Slide";
 	const std::string img_name = "Island_UI_";
-	const UINT width = 108;
-	const UINT height = 46;
+	const int width = 108;
+	const int height = 46;
 	const float APEAR_TIME = 0.3f;
+
+	const int MARGIN = 10;
+
+	const char FONT[] = "Courier New";		// Viewer font
+	const int FONT_SIZE = 14;
+	const int FONT_HEIGHT = 14;				// height of the font in pixels
+	const COLOR_ARGB FONT_COLOR = graphicsNS::WHITE;    // color of console text
 }
 
 class CWorld_Player;
 class CWorld_PlayerUI_Island_Infor
 {
+private :
+	CWorld_Player* player;
+
 private:
 	Graphics* m_pGraphics;
 	Input* m_pInput;
+	TextDX m_dxFont;
 
 	CWorld_Island_Infor_UI* infor_ui;
-	CWorld_Player* player;
 
 	SystemButton* button;
 
-	UINT margin;
+	RECT rt_font;
+
+	int margin;
+
 	float delay;	//move complete time
 	float delay_infor;
 
@@ -39,7 +54,7 @@ public:
 	CWorld_PlayerUI_Island_Infor();
 	~CWorld_PlayerUI_Island_Infor();
 
-	void initialize(Graphics* g, Input* i, POINT _pt, UINT _width, UINT _height);
+	void initialize(Graphics* g, Input* i, POINT _pt, int _width, int _height);
 	void update(float frameTime);
 	void render();
 
@@ -47,7 +62,7 @@ public:
 
 	static void click_event();
 	void set_init(bool _is) { is_init = _is; }
-
 	void w_move_ud(float _speed);
 	void w_move_rl(float _speed);
+
 };

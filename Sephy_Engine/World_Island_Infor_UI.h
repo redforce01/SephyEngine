@@ -14,8 +14,8 @@ namespace world_island_inforNS
 	const std::string FUEL = "Fuel";
 	const std::string RESEARCH = "Research";
 
-	const UINT ICON_WIDTH = 24;
-	const UINT ICON_HEIGHT = 24;
+	const int ICON_WIDTH = 24;
+	const int ICON_HEIGHT = 24;
 
 	const std::string SOUND_SAVE = "Save";
 	const std::string SOUND_SELECT = "Select";
@@ -23,43 +23,43 @@ namespace world_island_inforNS
 	const std::string SOUND_CANCEL = "Cancel";
 	const std::string SOUND_CLOSE = "Close";
 
-	const UINT WIDTH = 500;	//1200
-	const UINT HEIGHT = 600;
-	const UINT RESOURCE_WIDTH = 100;
-	const UINT RESOURCE_HEIGHT = 30;
+	const int WIDTH = 500;	//1200
+	const int HEIGHT = 600;
+	const int RESOURCE_WIDTH = 100;
+	const int RESOURCE_HEIGHT = 30;
 
-	const UINT MARGIN = 10;
+	const int MARGIN = 10;
 
 	//number img infor
 	const std::string IMG_NUMBER = "Score";
-	const UINT IMG_NUMBER_WIDTH = 9;		//Score -> Image Size
-	const UINT IMG_NUMBER_HEIGHT = 13;
+	const int IMG_NUMBER_WIDTH = 9;		//Score -> Image Size
+	const int IMG_NUMBER_HEIGHT = 13;
 
 	//exit infor
-	const UINT EXIT_WIDTH = 55;
-	const UINT EXIT_HEIGHT = 30;
+	const int EXIT_WIDTH = 55;
+	const int EXIT_HEIGHT = 30;
 	const float EXIT_WEIGHT = 2.0f;
 	const COLOR_ARGB EXIT_COLOR = graphicsNS::RED;
 
 	//destroy infor
 	const std::string DESTROY_IMG = "Destroy_Overlap";
-	const UINT DESTROY_WIDTH = 150;		//185
-	const UINT DESTROY_HEIGHT = 150;	//185
+	const int DESTROY_WIDTH = 150;		//185
+	const int DESTROY_HEIGHT = 150;	//185
 	const COLOR_ARGB DESTROY_COLOR = SETCOLOR_ARGB(180, 255, 255, 255);
 
 	//building img infor
-	const UINT MAX_BUILDING = 3;
-	const UINT BUILDING_WIDTH = 150;	//185
-	const UINT BUILDING_HEIGHT = 150;	//185
+	const int MAX_BUILDING = 3;
+	const int BUILDING_WIDTH = 150;	//185
+	const int BUILDING_HEIGHT = 150;	//185
 
 	//margin between building img & unit (all sum create building img margin)
-	const UINT MID_MARGIN = 545;
+	const int MID_MARGIN = 545;
 	const COLOR_ARGB BORDER_COLOR = graphicsNS::BLUE;
 
 	//research & unit infor
-	const UINT MAX_BOX = 6;
-	const UINT BOX_WIDTH = 80;
-	const UINT BOX_HEIGHT = 80;
+	const int MAX_BOX = 6;
+	const int BOX_WIDTH = 80;
+	const int BOX_HEIGHT = 80;
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE = 17;
@@ -80,8 +80,6 @@ private:
 	Input* m_pInput;
 	TextDX m_dxFont;
 
-	//show resource
-	//RECT rt_title;
 	RECT rt_vertex;
 	RECT rt_money;
 	RECT rt_iron;
@@ -96,9 +94,6 @@ private:
 	RECT rt_building[world_island_inforNS::MAX_BUILDING];
 	RECT rt_box_border;
 	RECT rt_build_border;
-	//RECT rt_box_border[world_island_inforNS::MAX_BUILDING];
-	//RECT rt_build_border[world_island_inforNS::MAX_BUILDING];	//가장 우측 이동시키기
-	//RECT rt_box[world_island_inforNS::MAX_BUILDING][world_island_inforNS::MAX_BOX];
 
 	std::vector<Image*> list_number;
 	std::vector<Image*> building_image;
@@ -111,10 +106,9 @@ private:
 	bool is_destroy[world_island_inforNS::MAX_BUILDING];
 
 	void rect_initialize();
-
 	void resource_render();
 	void exit_button_render();
-	void destroy_button_render(UINT _index);
+	void destroy_button_render(int _index);
 
 public:
 	void SetLoadLinkIsland(CWorld_Player* _player) { player = _player; }
@@ -126,13 +120,10 @@ public:
 	virtual void update(float frameTime) override;
 	virtual void render() override;
 
-	void set_building(int _index, CBuilding* _building);
-	void replace_number_img(RECT rect, UINT _number);
-
-	void save();	//save & close ui
-
 	bool get_show() { return is_show; }
 
-	//void w_move_ud(float _speed);
+	void set_building(int _index, CBuilding* _building);
+	void replace_number_img(RECT rect, int _number);
+	void save();	//save & close ui
 	void w_move_rl(float _speed);
 };

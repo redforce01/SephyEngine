@@ -19,7 +19,7 @@ namespace battleDataParserNS
 	const std::string DATA_FORMAT_BEGIN_KEY = "BEGIN";
 	const std::string DATA_FORMAT_END_KEY = "END";
 
-	//const std::string SAVE_DATA_PATH = "Resources\\"
+	const std::string SAVE_DATA_PATH = "Resources\\50_BattleGameData\\Battle_Data.txt";
 }
 
 class CBattle_DataParser

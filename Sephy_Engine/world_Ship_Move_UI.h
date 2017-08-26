@@ -8,15 +8,14 @@ class CWorld_ShipList_UI;
 class CWorld_Ship_Move_UI
 {
 private :
-	Graphics* m_pGraphics;
-	Input* m_pInput;
-
 	CWorld_Player* player;
 	CWorld_ShipList_UI* list_ui;
 
-	std::vector<CWorld_Island*> can_island;
+private :
+	Graphics* m_pGraphics;
+	Input* m_pInput;
 
-	//Image* click;
+	std::vector<CWorld_Island*> can_island;
 
 	bool mouse_up;
 

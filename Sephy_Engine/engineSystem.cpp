@@ -31,6 +31,7 @@ EngineSystem::~EngineSystem()
 	SAFE_DELETE(engineResourceView);
 	SAFE_DELETE(engineInspectorView);
 	SAFE_DELETE(g_Graphics);
+	SAFE_DELETE(g_Input);
 	SAFE_DELETE(g_MainNode);
 	SAFE_DELETE(pEngineInput);
 	SAFE_DELETE(engineSetting);	
@@ -47,10 +48,10 @@ bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 	//FILEMANAGER->initialize();
 
 	engineSetting = new EngineSetting;
-	//engineSetting->LoadEngineSetting();
+	engineSetting->LoadEngineSetting();
 
-	//m_EngineSettingInfo = engineSetting->GetEngineSettings();
-	//engineSetting->RealEngineSetup();
+	m_EngineSettingInfo = engineSetting->GetEngineSettings();
+	engineSetting->RealEngineSetup();
 
 	bool success = false;
 	
@@ -66,21 +67,21 @@ bool EngineSystem::engineStart(HINSTANCE hInstance, int nCmdShow)
 		if (CreateMainWindow(g_hWndEngine, hInstance, nCmdShow) == false)
 			throw(EngineError(engineErrorNS::ENGINE_CORE_ERROR, "Engine Main Window Create Failed"));
 
+#pragma region NOT USED ENGINE SYSTEMS
+		//RECT rc;
+		//GetClientRect(g_hWndEngine, &rc);
+		//int height = (rc.bottom - rc.top) / 2;
 		//if (engineMenubar.initialize() == false)
 		//	throw(EngineError(engineErrorNS::ENGINE_SYSTEM_MENU_ERROR, "EngineMenubar Create Failed"));
-
-		RECT rc;
-		GetClientRect(g_hWndEngine, &rc);
-		int height = (rc.bottom - rc.top) / 2;
-
 		//engineSceneView = new EngineSceneView;
 		//engineSceneView->initialize(new EngineInput, g_hWndEngine, (HMENU)1, 0, 0, 1280, 720);
 		//engineResourceView = new EngineResourceView;
 		//engineResourceView->initialize(new EngineInput, g_hWndEngine, (HMENU)2, engineSceneView->getRect().right, 0, 250, rc.bottom - rc.top / 2);
 		//engineInspectorView = new EngineInspectorView;
 		//engineInspectorView->initialize(new EngineInput, g_hWndEngine, (HMENU)3, engineResourceView->getRect().right, 0, 400, rc.bottom - rc.top);
-
 		//g_hWndScene = engineSceneView->getHwnd();
+#pragma endregion
+
 
 		success = true;
 	}
@@ -106,6 +107,8 @@ int EngineSystem::run()
 	//Graphics Initialize
 	g_Graphics = new Graphics;
 	g_Graphics->initialize(g_hWndEngine, g_fScreenWidth, g_fScreenHeight, g_bWindowed);
+	g_Input = new Input;
+	g_Input->initialize(g_hWndEngine, false);
 
 	//Main Node Initialize
 	g_MainNode = new MainNode;

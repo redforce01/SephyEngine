@@ -61,7 +61,7 @@ void CScene_MapTool::update()
 
 	if (input->isKeyDown(MapToolNS::ESCAPE_KEY))
 	{
-		PostQuitMessage(0);
+		SCENEMANAGER->changeScene("Lobby");
 	}
 }
 

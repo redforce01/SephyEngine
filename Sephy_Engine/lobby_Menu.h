@@ -16,7 +16,7 @@ namespace lobby_menuNS
 	const std::string CREDIT = "Credit";
 	const std::string EXIT = "Exit";
 
-	const std::string FILE_PATH = "Resources\\42_WorldData\\World_Game_State.txt";
+	const std::string FILE_PATH = "Resources\\40_WorldData\\World_Game_State.txt";
 	const std::string NEW = "New";
 
 	const UINT RT_WIDTH = lobby_menuNS::WIDTH - lobby_menuNS::MARGIN * 2;

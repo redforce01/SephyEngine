@@ -1,6 +1,13 @@
 #include "stdafx.h"
 #include "sceneManager.h"
-
+#include "Scene_MapTool.h"
+#include "Scene_Battle.h"
+#include "Scene_UnitTool.h"
+#include "Scene_Intro.h"
+#include "Scene_BattleLoading.h"
+#include "Scene_BattleResult.h"
+#include "world_Scene.h"
+#include "lobby_Scene.h"
 
 SceneManager::SceneManager()
 	: m_pCurrentScene(nullptr)
@@ -16,10 +23,31 @@ SceneManager::SceneManager()
 SceneManager::~SceneManager()
 {
 	loadingThread.join();
+	for (auto iter : arrScene)
+	{
+		SAFE_DELETE(iter.second);
+	}
+	arrScene.clear();
+	for (auto iter : arrLoadingScene)
+	{
+		SAFE_DELETE(iter.second);
+	}
+	arrLoadingScene.clear();
+}
+
+bool SceneManager::initialize()
+{
+	return false;
 }
 
 void SceneManager::update()
 {
+	if (m_pReleaseScene != nullptr)
+	{
+		m_pReleaseScene->release();
+		m_pReleaseScene = nullptr;
+	}
+
 	if (m_pCurrentScene != nullptr)
 	{
 		m_pCurrentScene->run(g_hWndEngine);
@@ -47,7 +75,7 @@ void SceneManager::addScene(std::string sceneName, Game * pScene)
 			return;
 	}
 
-	arrScene.emplace(make_pair(sceneName, pScene));
+	arrScene.try_emplace(sceneName, pScene);
 }
 
 void SceneManager::addLoadingScene(std::string sceneName, Game * pScene)
@@ -58,7 +86,7 @@ void SceneManager::addLoadingScene(std::string sceneName, Game * pScene)
 			return;
 	}
 
-	arrLoadingScene.emplace(make_pair(sceneName, pScene));
+	arrLoadingScene.try_emplace(sceneName, pScene);
 }
 
 bool SceneManager::changeScene(std::string sceneName)
@@ -67,7 +95,7 @@ bool SceneManager::changeScene(std::string sceneName)
 	try
 	{
 		auto iter = arrScene.find(sceneName);
-
+		
 		if (iter == arrScene.end())
 			return false;
 
@@ -78,10 +106,12 @@ bool SceneManager::changeScene(std::string sceneName)
 			success = true;
 		}
 		else
-		{
+		{			
 			m_pNextScene = iter->second;
 			m_pNextScene->initialize(g_hWndEngine);
+			m_pReleaseScene = m_pCurrentScene;
 			m_pCurrentScene = m_pNextScene;
+			
 			success = true;
 		}
 	}
@@ -104,11 +134,12 @@ bool SceneManager::changeSceneWithLoading(std::string sceneName, std::string loa
 			return false;
 
 		m_pLoadingScene = iter->second;
-		m_pLoadingScene->setInitialized(false);
-
+		
 		auto iterNextScene = arrScene.find(sceneName);		
+		if (iterNextScene == arrScene.end())
+			return false;
+
 		m_pNextScene = iterNextScene->second;
-		m_pNextScene->setInitialized(false);
 
 		//loadingThread = std::thread([&]() { SceneChangeWithLoading(); });
 		loadingThread = std::thread(sceneChangeThreadFunction);
@@ -129,5 +160,6 @@ void SceneManager::sceneChangeThreadFunction()
 	SCENEMANAGER->m_pLoadingScene->initialize(g_hWndEngine);
 	SCENEMANAGER->m_pCurrentScene = SCENEMANAGER->m_pLoadingScene;
 	SCENEMANAGER->m_pNextScene->initialize(g_hWndEngine);
+	SCENEMANAGER->m_pReleaseScene = SCENEMANAGER->m_pCurrentScene;
 	SCENEMANAGER->m_pCurrentScene = SCENEMANAGER->m_pNextScene;
 }

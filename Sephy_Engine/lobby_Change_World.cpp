@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "lobby_Change_World.h"
 
-
 void CLobby_Change_World::animation(E_lobby_world _state)
 {
 	std::string img;
@@ -97,10 +96,9 @@ void CLobby_Change_World::update(float frameTime)
 
 				TXTDATA_PARSER->saveDataFromArray(lobby_worldNS::FILE_PATH, temp);
 
-				if (SOUNDMANAGER->isPlaySound(lobby_worldNS::SOUNE_BGM) == true)
-					SOUNDMANAGER->stop(lobby_worldNS::SOUNE_BGM);
-
 				SCENEMANAGER->changeScene("World");
+
+				return;
 			}
 		}
 
@@ -108,7 +106,6 @@ void CLobby_Change_World::update(float frameTime)
 	}
 
 	delay += frameTime;
-
 	if (delay >= lobby_worldNS::DELAY)
 	{
 		sprite_number++;

@@ -31,8 +31,8 @@ namespace unitToolUIViewerNS
 	//================================================================
 	const std::string UP_BUTTON_FILENAME		= "Up";
 	const std::string DOWN_BUTTON_FILENAME		= "Down";
-	const std::string OK_BUTTON_FILENAME		= "OK";
-	const std::string CANCEL_BUTTON_FILENAME	= "Cancel";
+	const std::string OK_BUTTON_FILENAME		= "UnitTool_OK";
+	const std::string CANCEL_BUTTON_FILENAME	= "UnitTool_Cancel";
 	const UINT UP_BUTTON_MARGIN_BETWEEN_ITEM = 5;
 	const UINT DOWN_BUTTON_MARGIN_BETWEEN_ITEM = 20;
 	//================================================================

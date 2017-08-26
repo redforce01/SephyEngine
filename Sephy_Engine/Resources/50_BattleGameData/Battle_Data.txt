@@ -1,25 +1,25 @@
-#-----------------------------
-# Battle Data Format
-#  - Battle Map Name
-#  - Battle Player Ship Information List
-#  - Battle AI Ship Information List
-#-----------------------------
-
 BEGIN WorldIndex
-	BEGIN Alpha END
+	BEGIN Bravo END
 WorldIndex END
-
 BEGIN MapData
-	BEGIN BattleMap_Testing_Area2 END
+	BEGIN Bravo_Battle_Map END
 MapData END
-
 BEGIN PlayerData
-	BEGIN Z1 END
-	BEGIN Z1 END
-	BEGIN Z1 END
-	BEGIN Z1 END
-	BEGIN Z1 END
-	BEGIN Z1 END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Frigate2 END
+	BEGIN Frigate3 END
+	BEGIN Destroyer END
+	BEGIN Destroyer END
+	BEGIN Destroyer END
+	BEGIN Destroyer3 END
+	BEGIN Destroyer4 END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
 	BEGIN Cruiser END
 	BEGIN Cruiser END
 	BEGIN Cruiser END
@@ -28,10 +28,22 @@ BEGIN PlayerData
 	BEGIN Battleship END
 	BEGIN Battleship END
 	BEGIN Battleship END
+	BEGIN Battleship6 END
+	BEGIN Battleship6 END
 PlayerData END
-
 BEGIN AIData
-	BEGIN Z1 END
-	BEGIN Z1 END
-	BEGIN Z1 END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Corvette END
+	BEGIN Cruiser END
+	BEGIN Cruiser3 END
+	BEGIN Cruiser4 END
+	BEGIN Cruiser5 END
+	BEGIN Battleship END
+	BEGIN Battleship END
+	BEGIN Battleship6 END
+	BEGIN Battleship6 END
 AIData END

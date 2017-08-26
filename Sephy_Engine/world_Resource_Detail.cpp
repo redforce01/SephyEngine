@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "world_Resource_Detail.h"
-
 #include "world_User.h"
 #include "world_Resource_UI.h"
 
@@ -15,6 +14,9 @@ CWorld_Resource_Detail::CWorld_Resource_Detail()
 
 CWorld_Resource_Detail::~CWorld_Resource_Detail()
 {
+	for (auto iter : list_number)
+		SAFE_DELETE(iter);
+	list_number.clear();
 }
 
 bool CWorld_Resource_Detail::initialize(Graphics * g, Input * i)
@@ -110,7 +112,14 @@ void CWorld_Resource_Detail::render()
 	list_number.clear();
 }
 
-void CWorld_Resource_Detail::replace_number_img(RECT rect, UINT _number)
+void CWorld_Resource_Detail::release()
+{
+	for (auto iter : list_number)
+		SAFE_DELETE(iter);
+	list_number.clear();
+}
+
+void CWorld_Resource_Detail::replace_number_img(RECT rect, int _number)
 {
 	//Add kind of number image
 	std::string number = std::to_string(_number);

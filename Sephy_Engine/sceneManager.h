@@ -40,10 +40,12 @@ public:
 	SceneManager();
 	~SceneManager();
 
+	bool initialize();
 	void update();
 	void release();
 	void addScene(std::string sceneName, Game* pScene);	
 	void addLoadingScene(std::string sceneName, Game* pScene);
+	
 	bool changeScene(std::string sceneName);
 	bool changeSceneWithLoading(std::string sceneName, std::string loadingScene);
 

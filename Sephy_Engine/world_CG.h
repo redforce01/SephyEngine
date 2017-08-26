@@ -23,8 +23,8 @@ namespace worldcgNS
 	const std::string MOVE_RT = "RT";
 	const std::string MOVE_RB = "RB";
 
-	const UINT battle_min = 19;
-	const UINT battle_max = 72;
+	const int battle_min = 19;
+	const int battle_max = 72;
 
 	const float speed = 5.0f;
 	const float delay = 0.05f;
@@ -33,12 +33,14 @@ namespace worldcgNS
 class CWorld_Player;
 class CWorld_CG : public SystemUIDialog
 {
+private :
+	CWorld_Player* user;
+
 private:
 	Graphics* m_pGraphics;
 	Input* m_pInput;
 	TextDX m_dxFont;
 
-	CWorld_Player* user;
 	CWorld_Battle_UI* battle_ui;
 
 	e_worldcg current_cg;
@@ -50,7 +52,7 @@ private:
 
 	e_direct direct;
 
-	UINT move_island;
+	int move_island;
 
 	float degree;
 	float speed;
@@ -59,7 +61,7 @@ private:
 	bool is_click;
 	bool is_complete;
 
-	UINT img_num;
+	int img_num;
 
 public:
 	void SetLoadLinkUser(CWorld_Player* _user) { user = _user; }
@@ -70,10 +72,11 @@ public:
 	virtual bool initialize(Graphics* g, Input* i) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
+	void release();
 
-	void create_battle_cg(UINT _x, UINT _y);
+	void create_battle_cg(int _x, int _y);
 	void update_battle_cg(float frameTime);
-	void create_move_ship_cg(POINT _pt, POINT _destination, UINT _move);
+	void create_move_ship_cg(POINT _pt, POINT _destination, int _move);
 	void update_move_ship_cg();
 	void set_is_complete(bool _is) { is_complete = _is; }
 

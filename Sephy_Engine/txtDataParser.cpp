@@ -59,6 +59,7 @@ bool TxtDataParser::saveDataFromArray(std::string filePath, std::vector<std::str
 		for (auto iter : vData)
 		{
 			writeFile << iter;
+			writeFile << '\n';
 		}
 		writeFile.close();
 		return true;

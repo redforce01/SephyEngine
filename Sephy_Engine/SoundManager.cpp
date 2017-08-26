@@ -253,3 +253,12 @@ UINT CSoundManager::getLength(std::string keyName)
 
 	return 0;
 }
+
+void CSoundManager::allStop()
+{
+	for (auto iter : _mTotalSounds)
+	{
+		if (isPlaySound(iter.first))
+			this->stop(iter.first);
+	}
+}

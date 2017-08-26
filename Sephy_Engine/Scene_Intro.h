@@ -7,7 +7,7 @@
 
 class CScene_Intro : public Game
 {
-	CIntro_MainSystem m_IntroMainSystem;
+	CIntro_MainSystem* m_pIntroMainSystem;
 public:
 	CScene_Intro();
 	~CScene_Intro();

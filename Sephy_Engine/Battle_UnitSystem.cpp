@@ -76,11 +76,6 @@ CBattle_UnitSystem::~CBattle_UnitSystem()
 		SAFE_DELETE(iter);
 	}
 	m_vDigit.clear();
-	for (auto iter : m_vFleetMakeShips)
-	{
-		SAFE_DELETE(iter);
-	}
-	m_vFleetMakeShips.clear();
 	for (auto iter : m_vOperator)
 	{
 		SAFE_DELETE(iter);
@@ -146,11 +141,9 @@ void CBattle_UnitSystem::update(float frameTime)
 {
 	if (m_bBattleFinish)
 	{
-
 		return;
 	}
-
-
+	
 	m_pBattle_UI_FleetListView->update(frameTime);
 	m_pBattle_UI_FleetMarkView->update(frameTime);
 	m_pBattle_UI_FleetMakeView->update(frameTime);
@@ -218,42 +211,6 @@ void CBattle_UnitSystem::update(float frameTime)
 			m_vOperator.erase(iter);
 		}
 	}
-
-	//========================================
-	// Battle Finish Check
-	//  + Player Has Starting Area Count >= 2 ? -> Finish
-	//  + Enemy Ships Size <= 0 ? -> Finish
-	//========================================
-	if (m_bBattleFinish == false)
-	{
-		auto vStartingArea = m_pBattleMapSystem->getStartingArea();
-		int playerStartingAreaCount = 0;
-		for (auto iter : vStartingArea)
-		{
-			if (iter->isPlayerArea() == false)
-				continue;
-
-			playerStartingAreaCount++;
-		}
-		if (playerStartingAreaCount >= 2)
-		{
-			m_bBattleFinish = true;
-			m_bPlayerWin = true;
-			m_pBattleResultSystem->saveBattleResult();
-		}
-		else if (m_vCompterShips.size() <= 0)
-		{
-			m_bBattleFinish = true;
-			m_bPlayerWin = true;
-			m_pBattleResultSystem->saveBattleResult();
-		}
-		else if (m_vPlayerShips.size() <= 0)
-		{
-			m_bBattleFinish = true;
-			m_bPlayerWin = false;
-			m_pBattleResultSystem->saveBattleResult();
-		}		
-	}	
 }
 
 void CBattle_UnitSystem::render()
@@ -350,79 +307,6 @@ void CBattle_UnitSystem::collision()
 			iter->collision(computerIter);
 		}
 	}
-	//==================================================
-	// Collision Check - Player Ships Rader - FogSystem
-	//  + ...
-	//==================================================
-#pragma region _FOG OF WAR - COLLISION CHECK
-	//std::vector<int> m_vCheckedFogCell;
-	//auto vFog = m_pBattleFogSystem->getAllFogCell();
-	//for (auto playerIter : m_vPlayerShips)
-	//{
-	//	if (playerIter->getShipActive() == false)
-	//		continue;
-
-	//	if (playerIter->getShipDestroy())
-	//		continue;
-
-	//	float objShipX = playerIter->getShipEntity()[0].second->getX();
-	//	float objShipY = playerIter->getShipEntity()[0].second->getY();
-	//	float objShipWidth = playerIter->getShipWidth();
-	//	float objShipHeight = playerIter->getShipHeight();
-
-	//	if (MyUtil::getObjInScreen(objShipX, objShipY, objShipWidth, objShipHeight, g_fScreenWidth, g_fScreenHeight) == false)
-	//		continue;
-
-	//	auto shipCenterX = playerIter->getCurrentCenterX();
-	//	auto shipCenterY = playerIter->getCurrentCenterY();
-	//	auto shipRaderRange = playerIter->getRaderRange();
-
-	//	int nCheckedNoneCell = 0;
-	//	for (auto fogIter : vFog)
-	//	{
-	//		float objFogX = fogIter->getX();
-	//		float objFogY = fogIter->getY();
-	//		float objFogWidth = fogIter->getWidth();
-	//		float objFogHeight = fogIter->getHeight();
-
-	//		if (MyUtil::getObjInScreen(objFogX, objFogY, objFogWidth, objFogHeight, g_fScreenWidth, g_fScreenHeight) == false)
-	//			continue;
-
-	//		bool bContinueFlag = false;
-	//		for (auto checkIter : m_vCheckedFogCell)
-	//		{
-	//			if (nCheckedNoneCell == checkIter)
-	//			{
-	//				bContinueFlag = true;
-	//				nCheckedNoneCell++;
-	//				break;
-	//			}
-	//		}
-
-	//		if (bContinueFlag)
-	//			continue;
-	//		
-	//		float fogCenterX = fogIter->getCenterX();
-	//		float fogCenterY = fogIter->getCenterY();
-	//		float fogRadius = battleFogCellNS::FOG_RADIUS;
-	//		
-	//		float distance = MyUtil::getDistance(shipCenterX, shipCenterY, fogCenterX, fogCenterY);
-	//		if (distance < shipRaderRange - battleFogCellNS::FOG_RADIUS)
-	//		{
-	//			fogIter->setFogKey(battleFogCellNS::FOG_NONE_CELL_FILENAME);
-	//			m_vCheckedFogCell.emplace_back(nCheckedNoneCell);
-	//			nCheckedNoneCell++;
-	//			continue;
-	//		}
-	//		else
-	//		{
-	//			fogIter->setFogKey(battleFogCellNS::FOG_FULL_CELL_FILENAME);
-	//			nCheckedNoneCell++;
-	//		}
-	//	}
-	//}
-#pragma endregion
-
 
 	//==================================================
 	// Collision Check Player Ships Rader - Detect EnemyShip 
@@ -430,17 +314,28 @@ void CBattle_UnitSystem::collision()
 	//==================================================
 	for (auto aiShipIter : m_vCompterShips)
 	{
-		auto aiShipX = aiShipIter->getCurrentCenterX();
-		auto aiShipY = aiShipIter->getCurrentCenterY();
-		auto aiShipRadius = aiShipIter->getShipHeight() / 2;
+		auto aiShipCollision = aiShipIter->getShipCollision();
+
+		auto aiShipX = aiShipCollision.x;
+		auto aiShipY = aiShipCollision.y;
+		auto aiShipRadius = aiShipCollision.radius;
 
 		for (auto playerIter : m_vPlayerShips)
 		{
+			if (playerIter->getShipActive() == false)
+				continue;
+
+			if (playerIter->getDummyShip())
+				continue;
+
+			if (playerIter->getShipDestroy())
+				continue;
+
 			auto playerShipX = playerIter->getCurrentCenterX();
 			auto playerShipY = playerIter->getCurrentCenterY();
 			auto playerRaderRange = playerIter->getRaderRange();
 
-			if (MyUtil::ptInCircle(playerShipX, playerShipY, playerRaderRange, aiShipX, aiShipY) == false)
+			if (MyUtil::circleIncircle(playerShipX, playerShipY, playerRaderRange, aiShipX, aiShipY, aiShipRadius) == false)
 			{
 				aiShipIter->setDetected(false);
 				continue;
@@ -630,6 +525,36 @@ void CBattle_UnitSystem::collision()
 
 			iter->capturing(true);
 			break;
+		}
+	}
+	
+	//==================================================
+	// Observer Area - Enemy Ship Detect Collision Check
+	//==================================================
+	for (auto iter : vObserverArea)
+	{
+		if (iter->isPlayerArea() == false)
+			continue;
+
+		float areaCenterX = iter->getAreaCenterX();
+		float areaCenterY = iter->getAreaCenterY();
+		float areaRadius = iter->getAreaSightRadius();
+
+		for (auto aiShipIter : m_vCompterShips)
+		{
+			if (aiShipIter->getShipActive() == false)
+				continue;
+
+			auto aiShipCollision = aiShipIter->getShipCollision();
+
+			float shipCenterX = aiShipCollision.x;
+			float shipCenterY = aiShipCollision.y;
+			float shipRadius = aiShipCollision.radius;
+			
+			if (MyUtil::circleIncircle(areaCenterX, areaCenterY, areaRadius, shipCenterX, shipCenterY, shipRadius) == false)
+				continue;
+
+			aiShipIter->setDetected(true);
 		}
 	}
 
@@ -919,25 +844,6 @@ void CBattle_UnitSystem::updateFuncBeforeStart(float frameTime)
 
 void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 {
-	static bool debugAI = false;
-	if (debugAI == false)
-	{
-		debugAI = true;
-		for (auto iter : m_vCompterShips)
-		{
-			float randX = RANDOM_MAKER->GetInt(2000, 2500);
-			float randY = RANDOM_MAKER->GetInt(200, 300);
-			iter->setCurrentCenterX(randX);
-			iter->setCurrentCenterY(randY);
-			iter->setShipActive(true);
-			iter->setDetected(false);
-			iter->setPlayerShip(false);
-			iter->setTargetX(700);
-			iter->setTargetY(500);
-		}
-	}
-
-
 	//=======================================
 	// Update After - Battle Start 
 	//=======================================
@@ -1351,6 +1257,8 @@ void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 
 	//============================================
 	// Check Battle Phase - To Phase 3
+	//  + Check Repair Area - is Player? -> Phase 3 Active
+	//  + Check Observer Area - is Player? -> Phase 3 Active
 	//============================================
 	auto vRepairArea = m_pBattleMapSystem->getRepairArea();
 	if (m_bPhaseThreeUp == false)
@@ -1370,6 +1278,136 @@ void CBattle_UnitSystem::updateFuncAfterStart(float frameTime)
 			m_vOperator.emplace_back(phaseOperator);
 			break;
 		}
+	}
+	auto vObserverArea = m_pBattleMapSystem->getObserverArea();
+	if (m_bPhaseThreeUp == false)
+	{
+		for (auto iter : vObserverArea)
+		{
+			if (iter->isPlayerArea() == false)
+				continue;
+
+			m_bPhaseTwoUp = true;
+			m_bPhaseThreeUp = true;
+			m_nCurrentBattlePhase = 3;
+			CBattle_Operator* phaseOperator = new CBattle_Operator;
+			phaseOperator->initialize(m_pGraphics, m_pInput);
+			phaseOperator->setupEventPosition(m_pBattleCameraSystem->getCameraX(), m_pBattleCameraSystem->getCameraY());
+			phaseOperator->setupOperator(OPERATOR_TYPE::OPERATOR_TYPE_CAPTAIN, OPERATOR_SITUATION_TYPE::OPERATOR_SITUATION_P, "Phase 3 Active");
+			m_vOperator.emplace_back(phaseOperator);
+			break;
+		}
+	}
+
+	//========================================
+	// Battle Finish Check
+	//  + Player Has Starting Area Count >= 2 ? -> Finish
+	//  + Enemy Ships Size <= 0 ? -> Finish
+	//========================================
+	if (m_bBattleFinish == false)
+	{
+		auto vStartingArea = m_pBattleMapSystem->getStartingArea();
+		int playerStartingAreaCount = 0;
+		for (auto iter : vStartingArea)
+		{
+			if (iter->isPlayerArea() == false)
+				continue;
+
+			playerStartingAreaCount++;
+		}
+		if (playerStartingAreaCount >= 2)
+		{
+			m_bBattleFinish = true;
+			m_bPlayerWin = true;
+			m_pBattleResultSystem->saveBattleResult();
+			SOUNDMANAGER->stop(battleUnitSystemNS::BATTLE_START_BGM_PHASE_1_NAME);
+		}
+
+		if (m_vCompterShips.size() <= 0)
+		{
+			m_bBattleFinish = true;
+			m_bPlayerWin = true;
+			m_pBattleResultSystem->saveBattleResult();
+			SOUNDMANAGER->stop(battleUnitSystemNS::BATTLE_START_BGM_PHASE_1_NAME);
+		}
+		else
+		{
+			bool bFinish = false;
+			for (auto iter : m_vCompterShips)
+			{
+				if (iter->getShipActive() == false)
+				{
+					bFinish = false;
+					break;
+				}
+
+				if (iter->getShipDestroy() == false)
+				{
+					bFinish = false;
+					break;
+				}
+
+				bFinish = true;
+			}
+
+			if (bFinish)
+			{
+				m_bBattleFinish = true;
+				m_bPlayerWin = true;
+				m_pBattleResultSystem->saveBattleResult();
+				SOUNDMANAGER->stop(battleUnitSystemNS::BATTLE_START_BGM_PHASE_1_NAME);
+			}
+		}
+		
+		if (m_vPlayerShips.size() <= 0)
+		{
+			m_bBattleFinish = true;
+			m_bPlayerWin = false;
+			m_pBattleResultSystem->saveBattleResult();
+			SOUNDMANAGER->stop(battleUnitSystemNS::BATTLE_START_BGM_PHASE_1_NAME);
+		}
+		else
+		{
+			bool bFinish = false;
+			for (auto iter : m_vPlayerShips)
+			{
+				if (iter->getShipActive() == false)
+				{
+					bFinish = false;
+					break;
+				}
+
+				if (iter->getShipDestroy() == false)
+				{
+					bFinish = false;
+					break;
+				}
+
+				bFinish = true;
+			}
+
+			if (bFinish)
+			{
+				m_bBattleFinish = true;
+				m_bPlayerWin = false;
+				m_pBattleResultSystem->saveBattleResult();
+				SOUNDMANAGER->stop(battleUnitSystemNS::BATTLE_START_BGM_PHASE_1_NAME);
+			}
+		}
+	}
+}
+
+void CBattle_UnitSystem::setupEnemyShips()
+{
+	for (auto iter : m_vCompterShips)
+	{
+		int randX = RANDOM_MAKER->GetInt(-200, 200);
+		int randY = RANDOM_MAKER->GetInt(-200, 200);
+		iter->setCurrentCenterX(m_pBattleMapSystem->getEnemyStartingArea()->getCenterX() + randX);
+		iter->setCurrentCenterY(m_pBattleMapSystem->getEnemyStartingArea()->getCenterY() + randY);
+		iter->setShipActive(true);
+		iter->setPlayerShip(false);
+		iter->setDetected(false);
 	}
 }
 

@@ -14,8 +14,8 @@ CBattle_MapEventArea_RepairArea::CBattle_MapEventArea_RepairArea()
 	m_fCaptureTime	= 0.f;
 	m_bPlayerArea	= false;
 	m_bCapturing	= false;
-	//m_bDebug = g_bDebugMode;
-	m_bDebug = true;
+	m_bDebug = g_bDebugMode;
+	//m_bDebug = true;
 }
 
 
@@ -122,7 +122,7 @@ void CBattle_MapEventArea_RepairArea::render()
 		m_pGraphics->spriteEnd();
 	}
 
-	if (m_bDebug)
+	if (g_bDebugMode)
 	{
 		if (MyUtil::getObjInScreen(m_AreaCenterX, m_AreaCenterY, m_AreaRadius, m_AreaRadius, g_fScreenWidth, g_fScreenHeight) == false)
 			return;

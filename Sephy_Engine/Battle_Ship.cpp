@@ -46,16 +46,19 @@ CBattle_Ship::CBattle_Ship()
 	m_fMaxHealth				= 0.f;
 	m_fRepairSpeed				= 0.f;
 	m_fRepairSpeedOriginal		= 0.f;
-	m_fCurrentAngle				= 0.f;
+	m_fCurrentAngle				= D3DXToRadian(90.f);
 	m_fTargetAngle				= 0.f;
 	m_fRotateSpeed				= 0.f;
 	m_fCurrentSpeed				= 0.f;
 	m_fMaxSpeed					= 0.f;
+	m_fMaxSpeedOriginal			= 0.f;
 	m_fAccelateSpeed			= 0.f;
 	m_fRaderRange				= 0.f;
+	m_fRaderRangeOriginal		= 0.f;
 	m_fPerformance				= 0.f;
 	m_nSailorCount				= 0;
 	m_nTurretCount				= 0;
+	m_nTurretCountOriginal		= 0;
 	m_nAntiAirTurrectCount		= 0.f;
 	m_fAntiAirRange				= 0.f;
 	m_fAntiAirDamage			= 0.f;
@@ -97,15 +100,14 @@ CBattle_Ship::CBattle_Ship()
 	m_bAttackedSound			= false;
 	m_fUnattackedTime			= 0.f;
 	//===========================================
-	//m_bDebug					= g_bDebugMode;
-	m_bDebug					= true;
+	m_bDebug					= g_bDebugMode;
+	//m_bDebug					= false;
 	m_bDummy					= false;
 	//===========================================
 	ZeroMemory(&m_stUnitTouch, sizeof(m_stUnitTouch));
 	ZeroMemory(&m_stUnitCollision, sizeof(m_stUnitCollision));
 	ZeroMemory(&m_stRader, sizeof(m_stRader));
-	ZeroMemory(&m_stEvasion, sizeof(m_stEvasion));
-	
+	ZeroMemory(&m_stEvasion, sizeof(m_stEvasion));	
 }
 
 
@@ -589,7 +591,7 @@ void CBattle_Ship::render()
 	//======================================================
 	// ShipUI Debug Mode Rendering
 	//======================================================
-	if (m_bDebug)
+	if (g_bDebugMode)
 	{
 		// Draw Fleet Line To FlagShip
 		if (m_bIncludedFleet)
@@ -624,14 +626,16 @@ void CBattle_Ship::collision()
 	if (m_bDestroy)
 		return;
 
+#pragma region UNIT Tool Mode - Ship vs Ship Enemy Targetting Detection Function
+	//====================================================
+	// Ship Rader Collision Check
+	//  + Enemy Ship Detection
+	//  + Aim At Fire
+	//====================================================
+	float checkTargetDistance = 99999.f;
+	CBattle_Ship* pTargetShipUnitTool = nullptr;
 	if (m_bUnitToolMode)
 	{
-#pragma region UNIT Tool Mode - Ship vs Ship Enemy Targetting Detection Function
-		//====================================================
-		// Ship Rader Collision Check
-		//  + Enemy Ship Detection
-		//  + Aim At Fire
-		//====================================================
 		auto enemyShips = m_pUnitControlSystem->getComputerShips();
 		if (m_bPlayerShip == false)
 			enemyShips = m_pUnitControlSystem->getPlayerShips();
@@ -653,25 +657,38 @@ void CBattle_Ship::collision()
 
 			if (MyUtil::circleIncircle(raderX, raderY, raderRad, enemyShipX, enemyShipY, enemyShipRad))
 			{
-				auto targetEvasionX = iter->getShipEvasionCollision().x;
-				auto targetEvasionY = iter->getShipEvasionCollision().y;
-				auto targetEvasionRad = iter->getShipEvasionCollision().radius;
-
-				POINT target = RANDOM_MAKER->GetPtInCircle(targetEvasionX, targetEvasionY, targetEvasionRad);
-
-				for (auto turretIter : m_vTurret)
+				float targetDistance = MyUtil::getDistance(raderX, raderY, enemyShipX, enemyShipY);
+				if (checkTargetDistance  > targetDistance)
 				{
-					if (turretIter->IsReloading())
-						continue;
-
-					turretIter->FireInUnitTool(target.x, target.y);
+					checkTargetDistance = targetDistance;
+					pTargetShipUnitTool = iter;
 				}
-				break;
+				else
+				{
+					continue;
+				}
 			}
 		}
-#pragma endregion
+
+		if (pTargetShipUnitTool != nullptr)
+		{
+			auto targetEvasionX = pTargetShipUnitTool->getShipEvasionCollision().x;
+			auto targetEvasionY = pTargetShipUnitTool->getShipEvasionCollision().y;
+			auto targetEvasionRad = pTargetShipUnitTool->getShipEvasionCollision().radius;
+
+			POINT target = RANDOM_MAKER->GetPtInCircle(targetEvasionX, targetEvasionY, targetEvasionRad);
+
+			for (auto turretIter : m_vTurret)
+			{
+				if (turretIter->IsReloading())
+					continue;
+
+				turretIter->FireInUnitTool(target.x, target.y);
+			}
+		}
 		return;
 	}
+#pragma endregion
 	
 	// Collision Vector2
 	VECTOR2 collisionVector;
@@ -710,8 +727,7 @@ void CBattle_Ship::collision()
 			{
 				m_fCurrentSpeed = m_fCurrentSpeed * (95 / 100);
 				break;
-			}
-			
+			}			
 		}
 	}
 #pragma endregion
@@ -744,6 +760,8 @@ void CBattle_Ship::collision()
 	//====================================================
 	// Automatic Turret Aiming
 	//====================================================
+	float currentTargetDistance = 99999.f;
+	CBattle_Ship* pTargetShipInBattle = nullptr;
 	for (auto iter : enemyShips)
 	{
 		if (iter->getShipActive() == false)
@@ -764,24 +782,36 @@ void CBattle_Ship::collision()
 				
 		if (MyUtil::circleIncircle(raderX, raderY, raderRad, enemyShipX, enemyShipY, enemyShipRad))
 		{
-			auto targetEvasionX = iter->getShipEvasionCollision().x;
-			auto targetEvasionY = iter->getShipEvasionCollision().y;
-			auto targetEvasionRad = iter->getShipEvasionCollision().radius;
-
-			POINT target = RANDOM_MAKER->GetPtInCircle(targetEvasionX, targetEvasionY, targetEvasionRad);
-
-			if (m_bAutoGunOnOff)
+			float targetDistance = MyUtil::getDistance(raderX, raderY, enemyShipX, enemyShipY);
+			if (currentTargetDistance > targetDistance)
 			{
-				for (auto turretIter : m_vTurret)
-				{
-					if (turretIter->IsReloading())
-						continue;
-
-					turretIter->Fire(target.x, target.y);
-				}
+				currentTargetDistance = targetDistance;
+				pTargetShipInBattle = iter;
 			}
+			else
+			{
+				continue;
+			}
+		}
+	}
+	
+	if (pTargetShipInBattle != nullptr)
+	{
+		auto targetEvasionX = pTargetShipInBattle->getShipEvasionCollision().x;
+		auto targetEvasionY = pTargetShipInBattle->getShipEvasionCollision().y;
+		auto targetEvasionRad = pTargetShipInBattle->getShipEvasionCollision().radius;
 
-			break;
+		POINT target = RANDOM_MAKER->GetPtInCircle(targetEvasionX, targetEvasionY, targetEvasionRad);
+
+		if (m_bAutoGunOnOff)
+		{
+			for (auto turretIter : m_vTurret)
+			{
+				if (turretIter->IsReloading())
+					continue;
+
+				turretIter->Fire(target.x, target.y);
+			}
 		}
 	}
 #pragma endregion
@@ -870,7 +900,7 @@ void CBattle_Ship::updateSprite(float frameTime)
 	totalResult.emplace_back(m_strSpriteSunkenKey);
 	totalResult.emplace_back(m_strSpriteSunkenShadowKey);
 #pragma endregion
-
+	//===================================================================
 	// Entity TextureManager Change Texture [Update: Sprite] - Start
 	// Each Frame Updated Sprite Texture
 	for (int i = 0; i < m_vEntity.size(); i++)
@@ -878,6 +908,7 @@ void CBattle_Ship::updateSprite(float frameTime)
 		m_vEntity[i].second->setTextureManager(IMAGEMANAGER->getTexture(totalResult[i]));
 	}
 	// End - Entity TextureManager Change Texture
+	//===================================================================
 }
 
 void CBattle_Ship::updateShipSprite()
@@ -971,7 +1002,6 @@ void CBattle_Ship::updateSunkenSprite(float frameTime)
 			m_fSunkenDeltaTime += frameTime;
 		}
 	}
-
 	
 }
 
@@ -1109,16 +1139,16 @@ void CBattle_Ship::HitDamage(float damage)
 		{
 			m_pBattleUnitSystem->addDamageScoreToPlayer(damage);
 		}
-	}
-		
-	m_bAttacked = true;
-	if (m_bAttackedSound == false)
-	{
-		m_bAttackedSound = true;
 
-		if (m_bSelected)
+		m_bAttacked = true;
+		if (m_bAttackedSound == false)
 		{
-			playSoundDamagedOperator();
+			m_bAttackedSound = true;
+
+			if (m_bSelected)
+			{
+				playSoundDamagedOperator();
+			}
 		}
 	}
 }
@@ -1131,6 +1161,51 @@ void CBattle_Ship::takeRepairBuf(bool bTakeOnOff, float bufSpeed)
 	}
 	else
 		m_fRepairSpeed = m_fRepairSpeedOriginal;
+}
+
+void CBattle_Ship::takeBrokenControlTower(bool bTakeOnOff)
+{
+	if (bTakeOnOff)
+	{
+		m_fRaderRange = m_fRaderRangeOriginal / 2;
+	}
+	else
+	{
+		m_fRaderRange = m_fRaderRangeOriginal;
+	}
+}
+
+void CBattle_Ship::takeEngineBroken(bool bTakeOnOff)
+{
+	if (bTakeOnOff)
+	{
+		m_fMaxSpeed = m_fMaxSpeedOriginal / 2;
+	}
+	else
+	{
+		m_fMaxSpeed = m_fMaxSpeedOriginal;
+	}
+}
+
+void CBattle_Ship::takeTurretBroken(bool bTakeOnOff)
+{
+	if (bTakeOnOff)
+	{
+	}
+	else
+	{
+	}
+}
+
+void CBattle_Ship::takeSailorDead(int nDeadSailorCount)
+{
+	m_nSailorCount -= nDeadSailorCount;
+	std::string message = "Sailor Dead : " + std::to_string(nDeadSailorCount);
+	CBattle_Operator* pSailorOperator = new CBattle_Operator;
+	pSailorOperator->initialize(m_pGraphics, m_pInput);
+	pSailorOperator->setupEventPosition(this->getCurrentCenterX(), this->getCurrentCenterY());
+	pSailorOperator->setupOperator(OPERATOR_TYPE::OPERATOR_TYPE_SAILOR, OPERATOR_SITUATION_TYPE::OPERATOR_SITUATION_N, message);
+	m_pBattleUnitSystem->addOperator(pSailorOperator);
 }
 
 void CBattle_Ship::updateMovement(float frameTime)
@@ -1275,6 +1350,14 @@ bool CBattle_Ship::updateRotate(float frameTime)
 
 	if (m_bDestroy)
 		return true;
+
+	//========================================================
+	// Speed < MAGIC NUMBER 
+	//  - return false ( No Rotate )
+	//========================================================
+	float rotateLimit = m_fAccelateSpeed * 2.0f;
+	if (m_fCurrentSpeed < rotateLimit)
+		return false;
 	
 	VECTOR2 CurrentPos = *m_vEntity[0].second->getCenter();
 	m_fTargetAngle = MyUtil::getAngle(CurrentPos.x, CurrentPos.y, m_fTargetX, m_fTargetY);
@@ -1288,6 +1371,12 @@ bool CBattle_Ship::updateRotate(float frameTime)
 	float fChanging = fabsf(m_fCurrentAngle - m_fTargetAngle);
 	if (fChanging < m_fRotateSpeed * frameTime)
 		return false;
+	
+	//========================================================
+	// Speed Decrease When Rotate
+	//========================================================
+	float decrease = m_fAccelateSpeed * (0.03f);
+	m_fCurrentSpeed -= decrease;
 
 	switch ((int)(m_fCurrentAngle / (D3DX_PI / 2)))
 	{
@@ -1403,9 +1492,9 @@ void CBattle_Ship::setupShipDataFormat(std::vector<std::string> vArray)
 	m_fRepairSpeedOriginal = m_fRepairSpeed	= std::stof(vArray[++dataNumber]);
 	m_fRotateSpeed							= std::stof(vArray[++dataNumber]);
 	m_fAccelateSpeed						= std::stof(vArray[++dataNumber]);
-	m_fMaxSpeed								= std::stof(vArray[++dataNumber]);
-	m_fRaderRange							= std::stof(vArray[++dataNumber]);
-	m_nTurretCount							= std::stoi(vArray[++dataNumber]);
+	m_fMaxSpeedOriginal = m_fMaxSpeed		= std::stof(vArray[++dataNumber]);
+	m_fRaderRangeOriginal = m_fRaderRange	= std::stof(vArray[++dataNumber]);
+	m_nTurretCountOriginal = m_nTurretCount	= std::stoi(vArray[++dataNumber]);
 	m_strTurretID							= vArray[++dataNumber];
 	m_nAirCraftCapacity						= std::stoi(vArray[++dataNumber]);
 	m_fPerformance							= std::stof(vArray[++dataNumber]);

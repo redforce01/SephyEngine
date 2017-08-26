@@ -8,27 +8,24 @@ CWorld_Log_UI::CWorld_Log_UI()
 	rect_scroll = { 0, };
 	scroll_mount = 0;
 	line = 0;
-	img_log = new Image;
-	img_log_top = new Image;
 }
 
 CWorld_Log_UI::~CWorld_Log_UI()
 {
+	SAFE_DELETE(img_log);
+	SAFE_DELETE(img_log_top);
+
+	m_eventMessage.clear();
+	w_log_message.clear();
 }
 
 bool CWorld_Log_UI::initialize(Graphics * g, Input * i)
 {
-	//w_log_message.clear();
+	img_log = new Image;
+	img_log_top = new Image;
 
 	m_pGraphics = g;
 	m_pInput = i;
-
-	//SystemUIDialog::initializeDialog(m_pGraphics, m_pInput,
-	//	worldlogNS::x,
-	//	worldlogNS::y,
-	//	worldlogNS::viewer_width,
-	//	worldlogNS::viewer_height,
-	//	worldlogNS::MARGIN);
 
 	img_log->initialize(g, worldlogNS::viewer_width, worldlogNS::viewer_height, 0, IMAGEMANAGER->getTexture(worldlogNS::img_log));
 	img_log->setX(worldlogNS::x);
@@ -59,7 +56,6 @@ void CWorld_Log_UI::update(float frameTime)
 
 void CWorld_Log_UI::render()
 {
-	//SystemUIDialog::render();
 	m_pGraphics->spriteBegin();
 
 	img_log->draw();
@@ -67,8 +63,6 @@ void CWorld_Log_UI::render()
 	rect_text.left = worldlogNS::x + worldlogNS::distance_x + worldlogNS::MARGIN;
 	rect_text.right = rect_text.left + worldlogNS::text_width - worldlogNS::MARGIN;
 	rect_text.bottom = g_fScreenHeight - worldlogNS::y + worldlogNS::distance_y + worldlogNS::text_height - worldlogNS::MARGIN;
-
-	//line = (worldlogNS::text_height - worldlogNS::MARGIN) / worldlogNS::FONT_HEIGHT;
 
 	if (scroll_mount > worldlogNS::MAX_LINES - worldlogNS::LINE)
 		scroll_mount = worldlogNS::MAX_LINES - worldlogNS::LINE;
@@ -85,6 +79,16 @@ void CWorld_Log_UI::render()
 	m_pGraphics->spriteEnd();
 }
 
+void CWorld_Log_UI::release()
+{
+	SAFE_DELETE(img_log);
+	SAFE_DELETE(img_log_top);
+
+	m_eventMessage.clear();
+	w_log_message.clear();
+}
+
+//**********	out put log		**********//
 void CWorld_Log_UI::print_world_log(const std::string message)
 {
 	if (SOUNDMANAGER->isPlaySound(worldlogNS::SOUND_LOG) == false)

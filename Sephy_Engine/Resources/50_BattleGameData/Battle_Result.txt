@@ -1,19 +1,38 @@
 BEGIN WorldIndex
-	BEGIN Alpha END
+	BEGIN Bravo END
 WorldIndex END
-
 BEGIN PlayerData
-	BEGIN DamageScore 10000 END
+	BEGIN DamageScore 55184 END
 	BEGIN Corvette END
 	BEGIN Corvette END
 	BEGIN Corvette END
 	BEGIN Corvette END
+	BEGIN Destroyer END
+	BEGIN Destroyer END
+	BEGIN Destroyer4 END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
+	BEGIN Cruiser END
+	BEGIN Battleship END
+	BEGIN Battleship END
+	BEGIN Battleship END
+	BEGIN Battleship6 END
 PlayerData END
-
 BEGIN AIData
-	BEGIN DamageScore 10000 END
+	BEGIN DamageScore 201311 END
 	BEGIN Corvette END
 	BEGIN Corvette END
 	BEGIN Corvette END
 	BEGIN Corvette END
+	BEGIN Cruiser END
+	BEGIN Cruiser3 END
+	BEGIN Cruiser4 END
+	BEGIN Cruiser5 END
+	BEGIN Battleship END
+	BEGIN Battleship END
+	BEGIN Battleship6 END
+	BEGIN Battleship6 END
 AIData END

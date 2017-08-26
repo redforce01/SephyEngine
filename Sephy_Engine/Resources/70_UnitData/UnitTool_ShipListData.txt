@@ -13,6 +13,5 @@
 +7.	Carrier
 +8.	Corvette
 +10.	Cruiser
-+11.	Cruiser1
 +21.	Frigate3
 +22.	Z1

@@ -47,7 +47,6 @@ void CBattle_ShipTailEffect::update(float frameTime)
 	{
 		m_fEffectTime = 0.f;
 		m_bActive = false;
-
 	}
 }
 
@@ -64,6 +63,7 @@ void CBattle_ShipTailEffect::render()
 void CBattle_ShipTailEffect::setActive()
 {
 	m_bActive = true;
+	m_fEffectTime = 0.f;
 	Image::setX(m_pMaster->getCurrentCenterX() - (Image::getWidth() / 2));
 	Image::setY(m_pMaster->getCurrentCenterY() - (Image::getHeight() / 2));
 }

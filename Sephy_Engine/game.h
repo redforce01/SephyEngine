@@ -25,6 +25,8 @@ namespace gameNS
 	const std::string command_help = "help";
 	const std::string command_timer = "timer";
 	const std::string command_fps = "fps";
+	const std::string command_mute = "mute";
+	const std::string command_debug = "debug";
 }
 
 class Game
@@ -48,7 +50,6 @@ protected:
     DWORD   sleepTime;              // number of milli-seconds to sleep between frames
     bool    paused;                 // true if game is paused
     bool    initialized;
-	bool	started;
     std::string  command;           // command from console
 
 	bool timerOn;
@@ -133,14 +134,6 @@ public:
 	float getTimeDelta() const 
 	{
 		return this->frameTime;
-	}
-	bool getInitializd() const
-	{
-		return this->initialized;
-	}
-	void setInitialized(bool b) 
-	{
-		this->initialized = b;
 	}
 
 	float getFPS() const

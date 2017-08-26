@@ -57,6 +57,7 @@ extern HWND g_hWndScene;
 extern HINSTANCE g_hInst;
 extern MainNode* g_MainNode;
 extern Graphics* g_Graphics;
+extern Input* g_Input;
 extern WNDCLASSEX g_wcx;
 extern bool g_EngineShutDown;
 

@@ -6,9 +6,10 @@
 class CWorld_User;
 class CChild_Island	//neighborhood island infor
 {
-private:
+private :
 	CWorld_User* user;
 
+private:
 	E_RESOURCE type;	//resource type
 	int resource;	//resource amount
 
@@ -18,14 +19,15 @@ public:
 	CChild_Island();
 	~CChild_Island();
 
-	void turn_end();
-
-	void initialize(E_RESOURCE _type, int _resource)
+void initialize(E_RESOURCE _type, int _resource)
 	{
 		type = _type;
 		resource = _resource;
 	}
+	void release();
+	void turn_end();
+
+	int get_resource() { return resource; }
 
 	E_RESOURCE get_type() { return type; }
-	int get_resource() { return resource; }
 };

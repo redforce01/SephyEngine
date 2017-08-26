@@ -5,8 +5,8 @@
 
 CBattle_ResultSystem::CBattle_ResultSystem()
 {
-	m_fPlayerScore		= 0;
-	m_fComputerScore	= 0;
+	m_fPlayerScore = 0;
+	m_fComputerScore = 0;
 }
 
 
@@ -16,7 +16,7 @@ CBattle_ResultSystem::~CBattle_ResultSystem()
 
 void CBattle_ResultSystem::saveBattleResult()
 {
-	std::string filePath = "Resources/50_BattleGameData/Battle_Result.txt";
+	std::string filePath = "Resources\\50_BattleGameData\\Battle_Result.txt";
 	std::vector<std::string> vResult;
 	auto playerShips = m_pBattleUnitSystem->getPlayerShips();
 	auto enemyShips = m_pBattleUnitSystem->getComputerShips();
@@ -31,32 +31,33 @@ void CBattle_ResultSystem::saveBattleResult()
 	// Player Ship Data Save
 	//====================================================================
 	vResult.emplace_back(battleResultSystemNS::DATA_BEGIN_KEY + " " + battleResultSystemNS::PLAYER_DATA_KEY);
-	vResult.emplace_back('\t' + battleResultSystemNS::DATA_BEGIN_KEY + " " + battleResultSystemNS::DAMAGE_SCORE_KEY 
-		+ std::to_string((int)m_pBattleUnitSystem->getDamageScoreFromPlayer()) + battleResultSystemNS::DATA_END_KEY);
+	vResult.emplace_back('\t' + battleResultSystemNS::DATA_BEGIN_KEY + " " + battleResultSystemNS::DAMAGE_SCORE_KEY + " "
+		+ std::to_string((int)m_pBattleUnitSystem->getDamageScoreFromPlayer()) + " " + battleResultSystemNS::DATA_END_KEY);
 	for (auto iter : playerShips)
 	{
 		if (iter->getShipDestroy() == true)
 			continue;
 
-		strShipKey = '\t' + battleResultSystemNS::DATA_BEGIN_KEY + " " + iter->getShipName() + battleResultSystemNS::DATA_END_KEY;
+		strShipKey = '\t' + battleResultSystemNS::DATA_BEGIN_KEY + " " + iter->getShipName() + " " + battleResultSystemNS::DATA_END_KEY;
 		vResult.emplace_back(strShipKey);
 	}
-	vResult.emplace_back(battleResultSystemNS::PLAYER_DATA_KEY + " " + battleResultSystemNS::PLAYER_DATA_KEY);
+	vResult.emplace_back(battleResultSystemNS::PLAYER_DATA_KEY + " " + battleResultSystemNS::DATA_END_KEY);
 
 	//====================================================================
 	// Computer Ship Data Save
 	//====================================================================
 	vResult.emplace_back(battleResultSystemNS::DATA_BEGIN_KEY + " " + battleResultSystemNS::ENEMY_DATA_KEY);
-	vResult.emplace_back('\t' + battleResultSystemNS::DATA_BEGIN_KEY + " " + battleResultSystemNS::DAMAGE_SCORE_KEY
-		+ std::to_string((int)m_pBattleUnitSystem->getDamageScoreFromComputer()) + battleResultSystemNS::DATA_END_KEY);
+	vResult.emplace_back('\t' + battleResultSystemNS::DATA_BEGIN_KEY + " " + battleResultSystemNS::DAMAGE_SCORE_KEY + " "
+		+ std::to_string((int)m_pBattleUnitSystem->getDamageScoreFromComputer()) + " " + battleResultSystemNS::DATA_END_KEY);
 	for (auto iter : enemyShips)
 	{
 		if (iter->getShipDestroy() == true)
 			continue;
 
-		strShipKey = '\t' + battleResultSystemNS::DATA_BEGIN_KEY + " " + iter->getShipName() + battleResultSystemNS::DATA_END_KEY;
+		strShipKey = '\t' + battleResultSystemNS::DATA_BEGIN_KEY + " " + iter->getShipName() + " " + battleResultSystemNS::DATA_END_KEY;
 		vResult.emplace_back(strShipKey);
 	}
+	vResult.emplace_back(battleResultSystemNS::ENEMY_DATA_KEY + " " + battleResultSystemNS::DATA_END_KEY);
 
 	TXTDATA_PARSER->saveDataFromArray(filePath, vResult);
 }
@@ -68,6 +69,7 @@ void CBattle_ResultSystem::loadBattleResult()
 	if (vArray.size() <= 0)
 		return;
 
+	std::string strWorldIndex;
 	std::vector<std::string> vPlayerShips;
 	std::vector<std::string> vComputerShips;
 
@@ -92,10 +94,10 @@ void CBattle_ResultSystem::loadBattleResult()
 
 		if (bRecogWorldIndex)
 		{
-			m_strWorldIndex = iter;
+			strWorldIndex = iter;
 			continue;
 		}
-		
+
 		//=================================================
 		// Emplace Player Ship List
 		//  + Damage Score
@@ -140,9 +142,21 @@ void CBattle_ResultSystem::loadBattleResult()
 			continue;
 		}
 	}
-	
+
+	recogWorldIndex(strWorldIndex);
 	recogPlayerShipData(vPlayerShips);
 	recegComputerShipData(vComputerShips);
+}
+
+void CBattle_ResultSystem::recogWorldIndex(std::string strWorldIndex)
+{
+	int startKeyPos = strWorldIndex.rfind(battleResultSystemNS::DATA_BEGIN_KEY);
+	int endKeyPos = strWorldIndex.rfind(battleResultSystemNS::DATA_END_KEY);
+
+	std::string result = strWorldIndex.substr(startKeyPos + battleResultSystemNS::DATA_BEGIN_KEY.length() + 1,
+		endKeyPos - battleResultSystemNS::DATA_BEGIN_KEY.length() - battleResultSystemNS::DATA_END_KEY.length());
+
+	m_strWorldIndex = result;
 }
 
 void CBattle_ResultSystem::recogPlayerShipData(std::vector<std::string> vArray)
@@ -185,7 +199,7 @@ void CBattle_ResultSystem::recegComputerShipData(std::vector<std::string> vArray
 			std::string damageScore = iter.substr(startKeyPos + battleResultSystemNS::DATA_BEGIN_KEY.length() + 1,
 				endKeyPos - battleResultSystemNS::DATA_BEGIN_KEY.length() - battleResultSystemNS::DATA_END_KEY.length());
 			auto pairData = TXTDATA_PARSER->tokenizeFromString(damageScore, ' ');
-			m_fPlayerScore = std::stoi(pairData[pairData.size() - 1]);
+			m_fComputerScore = std::stoi(pairData[pairData.size() - 1]);
 			scoreIndex++;
 			continue;
 		}

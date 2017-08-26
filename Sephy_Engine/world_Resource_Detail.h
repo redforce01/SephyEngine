@@ -5,19 +5,19 @@
 
 namespace world_resource_detailNS
 {
-	const UINT KIND_RESOURCE = 4;
-	const UINT WIDTH = 150;
-	const UINT HEIGHT = 50;
+	const int KIND_RESOURCE = 4;
+	const int WIDTH = 150;
+	const int HEIGHT = 50;
 
-	const UINT RT_WIDTH = 130;
-	const UINT RT_HEIGHT = 20;
+	const int RT_WIDTH = 130;
+	const int RT_HEIGHT = 20;
 
-	const UINT MARGIN = 10;
+	const int MARGIN = 10;
 
 	//number img infor
 	const std::string IMG_NUMBER = "Score";
-	const UINT IMG_NUMBER_WIDTH = 9;		//Score -> Image Size
-	const UINT IMG_NUMBER_HEIGHT = 13;
+	const int IMG_NUMBER_WIDTH = 9;		//Score -> Image Size
+	const int IMG_NUMBER_HEIGHT = 13;
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE = 17;
@@ -56,7 +56,8 @@ public:
 	virtual bool initialize(Graphics* g, Input* i) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
+	void release();
 
-	void replace_number_img(RECT rect, UINT _number);
+	void replace_number_img(RECT rect, int _number);
 };
 

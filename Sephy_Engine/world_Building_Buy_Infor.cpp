@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "world_Building_Buy_Infor.h"
+#include "world_Player.h"
 
 
 CWorld_Building_Buy_Infor::CWorld_Building_Buy_Infor()
@@ -15,6 +16,7 @@ CWorld_Building_Buy_Infor::CWorld_Building_Buy_Infor()
 
 CWorld_Building_Buy_Infor::~CWorld_Building_Buy_Infor()
 {
+	list_number.clear();
 }
 
 bool CWorld_Building_Buy_Infor::initialize(Graphics * g, Input * i)
@@ -104,7 +106,7 @@ void CWorld_Building_Buy_Infor::render()
 	list_number.clear();
 }
 
-void CWorld_Building_Buy_Infor::replace_number_img(RECT rect, UINT _number)
+void CWorld_Building_Buy_Infor::replace_number_img(RECT rect, int _number)
 {
 	//Add kind of number image
 	std::string number = std::to_string(_number);
@@ -142,6 +144,7 @@ void CWorld_Building_Buy_Infor::replace_number_img(RECT rect, UINT _number)
 	rect = rc_temp;
 }
 
+//**********	detail build info	**********//
 void CWorld_Building_Buy_Infor::buy_draw()
 {
 	std::string str = "";
@@ -154,22 +157,20 @@ void CWorld_Building_Buy_Infor::buy_draw()
 	m_dxFont.print("RESEARCH : ", rt_resource[RESEARCH], DT_VCENTER + DT_LEFT);
 	m_dxFont.print("TURN : ", rt_turn, DT_VCENTER + DT_LEFT);
 
-	replace_number_img(rt_resource[MONEY], building->get_need_resource()[MONEY]);
-	replace_number_img(rt_resource[IRON], building->get_need_resource()[IRON]);
+	if (player->get_buf_type() == 5)
+	{
+		replace_number_img(rt_resource[MONEY], building->get_need_resource()[MONEY] * 0.9f);
+		replace_number_img(rt_resource[IRON], building->get_need_resource()[IRON] * 0.9f);
+	}
+	else
+	{
+		replace_number_img(rt_resource[MONEY], building->get_need_resource()[MONEY]);
+		replace_number_img(rt_resource[IRON], building->get_need_resource()[IRON]);
+	}
+
 	replace_number_img(rt_resource[FUEL], building->get_need_resource()[FUEL]);
 	replace_number_img(rt_resource[RESEARCH], building->get_need_resource()[RESEARCH]);
 	replace_number_img(rt_turn, building->get_turn());
-
-	//str = std::to_string(building->get_need_resource()[MONEY]);
-	//m_dxFont.print(str, rt_resource[MONEY], DT_VCENTER + DT_RIGHT);
-	//str = std::to_string(building->get_need_resource()[IRON]);
-	//m_dxFont.print(str, rt_resource[IRON], DT_VCENTER + DT_RIGHT);
-	//str = std::to_string(building->get_need_resource()[FUEL]);
-	//m_dxFont.print(str, rt_resource[FUEL], DT_VCENTER + DT_RIGHT);
-	//str = std::to_string(building->get_need_resource()[RESEARCH]);
-	//m_dxFont.print(str, rt_resource[RESEARCH], DT_VCENTER + DT_RIGHT);
-	//str = std::to_string(building->get_turn());
-	//m_dxFont.print(str, rt_turn, DT_VCENTER + DT_RIGHT);
 }
 
 void CWorld_Building_Buy_Infor::w_move_rl(float _speed)

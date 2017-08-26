@@ -29,6 +29,9 @@ void CScene_BattleLoading::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
 
+	m_fBackAlpha = 0;
+	m_bVisible = true;
+
 	m_pBlackBack = new Image;
 	m_pBlackBack->initialize(graphics, 0, 0, 0, IMAGEMANAGER->getTexture(sceneBattleLoadingNS::LOADING_BLACK_BACKGROUND));
 	m_pBlackBack->setColorFilter(sceneBattleLoadingNS::LOADING_BLACK_BACK_COLOR_FILTER);
@@ -86,6 +89,12 @@ void CScene_BattleLoading::update()
 
 void CScene_BattleLoading::release()
 {
+	SAFE_DELETE(m_pBlackBack);
+	SAFE_DELETE(m_pLoadingBackground);
+	SAFE_DELETE(m_pProgressBarBack);
+	SAFE_DELETE(m_pProgressBar);
+	m_fBackAlpha = 0.f;
+	m_bVisible = true;
 }
 
 void CScene_BattleLoading::ai()

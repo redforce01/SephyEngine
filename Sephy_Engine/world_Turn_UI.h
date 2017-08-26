@@ -5,23 +5,29 @@
 
 namespace worldturnNS
 {
-	const float DELAY = 1.5f;
-	const UINT x = 213;	//Viewer location (cur + pass + distance * 2)
-	const UINT y = 15;
+	const int x = 163;	//Viewer location (cur + pass + distance * 2)
+	const int y = 15;
+
+	const std::string TURN_NAME = "cur-wait-00";
+	const int TURN_MIN = 1;
+	const int TURN_MAX = 17;
+
+	const int COUNT_LIMIT = 48;	//(17 - 1) * 3 -> 모래시계 3 circle
+	const float DELAY = 0.04f;
 
 	const std::string SOUND_TURN = "Turn_End";
 
 	const std::string img_name = "Turn_Button_";	//turn img
-	const UINT cur_turn_width = 73;
-	const UINT cur_turn_height = 73;
+	const int cur_turn_width = 73;
+	const int cur_turn_height = 73;
 	const COLOR_ARGB CUR_BACKGROUND_COLOR = SETCOLOR_ARGB(192, 26, 32, 44);
 
-	const UINT pass_turn_width = 100;
-	const UINT pass_turn_height = 100;
+	const int pass_turn_width = 50;	//100
+	const int pass_turn_height = 50;	//100
 
-	const UINT distance = 15;
+	const int distance = 15;
 
-	const UINT MARGIN = 4;					// text margin from Viewer edge
+	const int MARGIN = 4;					// text margin from Viewer edge
 
 	const char FONT[] = "Courier New";		// Viewer font
 	const int FONT_SIZE = 26;
@@ -34,17 +40,26 @@ class CWorld_Turn_UI : public SystemUIDialog
 {
 private:
 	CWorld_Player* player;
-	RECT rect_turn;
 
+private:
 	Graphics* m_pGraphics;
 	Input* m_pInput;
 
-	SystemButton* button;
+	Image* button;
+
+	RECT rect_turn;
+	RECT rt_pass;
 
 	float turn_delay;
+
+	int img_count;
+
 	bool is_turn;
-	//std::map<std::string, std::string> m_turnMessage;
-	//Image* img_turn;
+	bool is_update;
+	bool mouse_up;
+
+	void click_event();
+	void pass_turn(float frameTime);
 
 public:
 	void SetLoadLinkPlayer(CWorld_Player* _player) { player = _player; }
@@ -55,20 +70,8 @@ public:
 	virtual bool initialize(Graphics* g, Input* i) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
+	void release();
 
-	static void click_event();
-
-	//void addMessage(std::string key, std::string message)
-	//{
-	//	m_turnMessage.emplace(key, message);
-	//}
-	//void setMessage(std::string key, std::string message)
-	//{
-	//	m_turnMessage.find(key)->second = message;
-	//}
-	//void removeMessage(std::string key)
-	//{
-	//	m_turnMessage.erase(key);
-	//}
+	void set_is_update(bool _is) { is_update = _is; }
 };
 

@@ -27,6 +27,7 @@ HRESULT MainNode::initialize()
 	//Need Hwnd Managers initialize
 	IMAGEMANAGER->initialize(g_Graphics);
 	SOUNDMANAGER->initialize();
+	SCENEMANAGER->initialize();
 	
 	// Create the game, sets up message handler
 	SCENEMANAGER->addScene("Intro", new CScene_Intro);
@@ -42,8 +43,10 @@ HRESULT MainNode::initialize()
 	if (g_bDebugMode)
 		SCENEMANAGER->changeScene(g_strDebugSceneName);
 	else
-		//SCENEMANAGER->changeScene("BattleLoading");
-		SCENEMANAGER->changeSceneWithLoading("Intro", "BattleLoading");
+	{
+		//SCENEMANAGER->changeScene("Intro");
+		SCENEMANAGER->changeSceneWithLoading("Battle", "BattleLoading");
+	}
 	
 	return S_OK;
 }

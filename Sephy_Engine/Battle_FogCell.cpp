@@ -22,16 +22,7 @@ bool CBattle_FogCell::initialize(Graphics* g, float x, float y)
 
 	Image::setX(x);
 	Image::setY(y);
-	Image::setColorFilter(battleFogCellNS::FOG_COLOR_FILTER);
+	Image::setColorFilter(battleFogCellNS::FOG_COLOR_FILTER);	
 	
 	return success;
-}
-
-void CBattle_FogCell::update(float frameTime)
-{
-}
-
-void CBattle_FogCell::render()
-{
-	Image::draw();
 }

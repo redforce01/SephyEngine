@@ -219,6 +219,7 @@ public:
 	void updateFuncBeforeStart(float frameTime);
 	void updateFuncAfterStart(float frameTime);
 
+	void setupEnemyShips();
 	//==================================================
 	// All Unit Move Functions Called From CameraSystem
 	void moveX(float fDistance);
@@ -266,6 +267,7 @@ public:
 	{
 		m_pBattle_UI_FleetMakeView->setActive(false);
 		m_bBattleStart = bStart;
+		setupEnemyShips();
 	}
 
 	void setBattleFinish(bool bFinish)

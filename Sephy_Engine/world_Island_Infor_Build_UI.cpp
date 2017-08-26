@@ -18,12 +18,6 @@ void CWorld_Island_Infor_Build_UI::rect_initialize(RECT _rt)
 			rt_box[i] = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3];
 			rt_box[i].top = rt_box[i].bottom + world_island_infor_buildNS::MARGIN / 2;
 			rt_box[i].bottom = rt_box[i].top + world_island_infor_buildNS::BOX_HEIGHT;
-			//rt_box[i].top = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3].top +
-			//	world_island_infor_buildNS::BOX_HEIGHT +
-			//	world_island_infor_buildNS::MARGIN / 2;
-			//rt_box[i].bottom = rt_box[i - world_island_infor_buildNS::MAX_BOX / 3].bottom +
-			//	world_island_infor_buildNS::BOX_HEIGHT +
-			//	world_island_infor_buildNS::MARGIN / 2;
 
 			continue;
 		}
@@ -49,8 +43,6 @@ CWorld_Island_Infor_Build_UI::CWorld_Island_Infor_Build_UI()
 		rt_box[i] = { 0, };
 
 	mouse_up = false;
-
-	buy_infor = new CWorld_Building_Buy_Infor;
 }
 
 
@@ -58,16 +50,20 @@ CWorld_Island_Infor_Build_UI::~CWorld_Island_Infor_Build_UI()
 {
 	for (auto iter : img_list)
 		SAFE_DELETE(iter);
+	img_list.clear();
 }
 
-void CWorld_Island_Infor_Build_UI::initialize(Graphics * g, Input * i, UINT _index, RECT _rt)
+void CWorld_Island_Infor_Build_UI::initialize(Graphics * g, Input * i, int _index, RECT _rt)
 {
+	buy_infor = new CWorld_Building_Buy_Infor;
+
 	m_pGraphics = g;
 	m_pInput = i;
 	index = _index;
 
 	rect_initialize(_rt);
-
+	
+	buy_infor->SetLoadLinkPlayer(player);
 	buy_infor->initialize(g, i);
 
 	m_dxFont.initialize(g, world_island_infor_buildNS::FONT_SIZE, true, false, world_island_infor_buildNS::FONT);

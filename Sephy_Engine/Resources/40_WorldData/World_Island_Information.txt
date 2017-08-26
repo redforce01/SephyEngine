@@ -1,6 +1,6 @@
 ### Island Data -> name / id / player&computer / x / y / width / height / tile xpos / tile ypos / nodes / ?? + child island
 + Alpha		0	1	2319	1739	146	85	2322	1679	1	2
-+ Brabo		1	0	1835	1467	166	73	1889	1535	0	3	6	14
++ Bravo		1	0	1835	1467	166	73	1889	1535	0	3	6	14
 + Charlie	2	0	2631	1441	150	88	2666	1504	0	3	4
 + Delta		3	0	2295	1307	146	114	2236	1354	1	2	5	6
 + Echo		4	0	2969	1247	147	111	3014	1323	2	5

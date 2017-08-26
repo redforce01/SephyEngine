@@ -37,6 +37,10 @@ private:
 	Channel** _channel;
 	arrSounds _mTotalSounds;
 public:
+	CSoundManager();
+	~CSoundManager();
+
+public:
 	void loadSoundData();
 
 public:
@@ -54,9 +58,9 @@ public:
 	void update();
 	UINT getLength(std::string keyName);
 
-public:
-	CSoundManager();
-	~CSoundManager();
+
+	void allStop();
+
 };
 
 #define SOUNDMANAGER CSoundManager::GetInstance()

@@ -15,9 +15,44 @@ public:
 	RandomMaker();
 	~RandomMaker();
 
+	//======================================
+	// Get Random - bool
+	//  + return bool (true or false)
+	//======================================
 	bool GetBool() const;
+
+	//======================================
+	// Get Random - int
+	//  + return -21 * (10 ^ 8) ~ 21 * (10 ^ 8)
+	//======================================
 	int GetInt() const;
-	int GetInt(int rangeMin, int rangeMax) const;	
+
+	//======================================
+	// Get Random - int( With Seed )
+	//  + Using Seed
+	//  + This Random Function ( used std::mt19937 )
+	//  + return -21 * (10 ^ 8) ~ 21 * (10 ^ 8)
+	//======================================
+	int GetInt(int seed) const;
+
+	//======================================
+	// Get Random - int
+	//  + return rangeMin ~ rangeMax
+	//  + sample : 
+	//   - min, max = (-10, 10)
+	//   - result = -10 ~ 10
+	//======================================
+	int GetInt(int rangeMin, int rangeMax) const;
+
+	//======================================
+	// Get Random Vector int
+	//  + return 
+	//   - emplace random int to - &vec
+	//  + sample :
+	//   - vec , size(10)
+	//   - for(index : 0 ~ 10)
+	//     { vec[index] = random int; }
+	//======================================
 	void GetVectorInt(std::vector<int> &vec, int size);
 
 	std::pair<int, int> GetPairInt() const;

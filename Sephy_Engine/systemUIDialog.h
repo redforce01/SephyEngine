@@ -45,7 +45,7 @@ public:
 
 // protected Member Functions
 protected:
-	bool initializeDialog(Graphics* g, Input* i, int x, int y, int w, int h, int m);
+	bool initializeDialog(Graphics* g, Input* i, int x, int y, int w, int h, int m = 0);
 	bool vertexSetup(int x, int y, int w, int h);
 
 private:

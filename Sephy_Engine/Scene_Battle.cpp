@@ -28,6 +28,7 @@ void CScene_Battle::update()
 
 void CScene_Battle::release()
 {
+	SAFE_DELETE(m_pBattleMainSystem);
 }
 
 void CScene_Battle::ai()

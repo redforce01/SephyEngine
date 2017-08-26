@@ -12,14 +12,22 @@ namespace battleFogSystemNS
 {
 	const std::string ERROR_MESSAGE = "Battle Fog System Initialize Failed";
 	const std::string FOG_RESOURCE_FOLDER_NAME = "54_Battle_Texture_Fog";
+	const float FOG_WIDTH = 100;
+	const float FOG_HEIGHT = 86;
 }
 
+class CBattle_MapSystem;
 class CBattle_UnitSystem;
 class CBattle_FogSystem : public SystemBase
 {
 private:
+	CBattle_MapSystem* m_pBattleMapSystem;
 	CBattle_UnitSystem* m_pBattleUnitSystem;
 public:
+	void setMemoryLinkBattleMapSysten(CBattle_MapSystem* pBattleMapSystem)
+	{
+		m_pBattleMapSystem = pBattleMapSystem;
+	}
 	void setMemoryLinkBattleUnitSystem(CBattle_UnitSystem* pBattleUnitSystem)
 	{
 		m_pBattleUnitSystem = pBattleUnitSystem;
@@ -36,17 +44,7 @@ public:
 	virtual bool initialize(Game* gamePtr) override;
 	virtual void update(float frameTime) override;
 	virtual void render() override;
-
-	//================================================
-	// Member Functions
-	//================================================
-
-	void moveX(float distance);
-	void moveY(float distance);
-
-	void setupAllFog(float mapTotalWidth, float mapTotalHeight);
-
-
+	
 	//================================================
 	// Getter Functions
 	//================================================

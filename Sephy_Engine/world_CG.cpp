@@ -17,7 +17,8 @@ CWorld_CG::CWorld_CG()
 
 CWorld_CG::~CWorld_CG()
 {
-	SAFE_DELETE(img);
+	if(img != nullptr)
+		SAFE_DELETE(img);
 
 	if (battle_ui != nullptr)
 		SAFE_DELETE(battle_ui);
@@ -60,13 +61,22 @@ void CWorld_CG::render()
 	
 	if (is_click == true)
 		battle_ui->render();
-
-	//img->drawRect();
-	//m_pGraphics->drawLine(temp1.x, temp1.y, temp2.x, temp2.y, 2.0f, graphicsNS::RED);
-	//m_pGraphics->drawLine(pt.x, pt.y, destination.x, destination.y, 2.0f, graphicsNS::RED);
 }
 
-void CWorld_CG::create_battle_cg(UINT _x, UINT _y)
+void CWorld_CG::release()
+{
+	if (img != nullptr)
+		SAFE_DELETE(img);
+
+	if (battle_ui != nullptr)
+	{
+		battle_ui->release();
+		SAFE_DELETE(battle_ui);
+	}
+}
+
+//**********	enemy island arrived animation	**********//
+void CWorld_CG::create_battle_cg(int _x, int _y)
 {
 	img = new Image;
 	//battle effect initialize
@@ -95,11 +105,8 @@ void CWorld_CG::create_battle_cg(UINT _x, UINT _y)
 
 void CWorld_CG::update_battle_cg(float frameTime)
 {
-	//끝 2자리 빼서 int 전환 후 ++ 후 다시 붙이기
-	//19~72
 	std::string str = worldcgNS::img_battle;
 
-	//img index++
 	if (++img_num > worldcgNS::battle_max)
 		img_num = worldcgNS::battle_min;
 
@@ -107,7 +114,6 @@ void CWorld_CG::update_battle_cg(float frameTime)
 
 	speed += frameTime;
 
-	//img change (after delay time)
 	if (speed > worldcgNS::delay)
 	{
 		img->setTextureManager(IMAGEMANAGER->getTexture(str));
@@ -125,31 +131,19 @@ void CWorld_CG::update_battle_cg(float frameTime)
 			is_click = false;
 		}
 	}
-	//else {
-	//	if (m_pInput->getMouseLButton())
-	//		mouse_up = true;
-	//	else
-	//	{
-	//		if (mouse_up == true)
-	//		{
-	//			RECT rt = RectMake(img->getX(), img->getY(), img->getSpriteData().width, img->getSpriteData().height);
-
-	//			if (PtInRect(&rt, m_pInput->getMousePt()))
-	//			{
-	//				battle_ui = new CWorld_Battle_UI;
-	//				battle_ui->initialize(m_pGraphics, m_pInput, img->getCenterX(), img->getCenterY());
-	//				battle_ui->SetLoadLinkPlayer(user);
-
-	//				is_click = true;
-	//			}
-	//		}
-	//		mouse_up = false;
-	//	}
-	//}
 }
 
-void CWorld_CG::create_move_ship_cg(POINT _pt, POINT _destination, UINT _move)
+//**********	move ship between island and island		**********//
+void CWorld_CG::create_move_ship_cg(POINT _pt, POINT _destination, int _move)
 {
+	if (img != nullptr)
+		SAFE_DELETE(img);
+
+	current_cg = e_worldcg::NONE;
+	is_complete = false;
+	is_click = false;
+	mouse_up = false;
+
 	if (SOUNDMANAGER->isPlaySound(worldcgNS::SOUND_MOVE) == false)
 		SOUNDMANAGER->play(worldcgNS::SOUND_MOVE, g_fSoundMasterVolume * g_fSoundEffectVolume);
 
@@ -228,10 +222,6 @@ void CWorld_CG::create_move_ship_cg(POINT _pt, POINT _destination, UINT _move)
 
 void CWorld_CG::update_move_ship_cg()
 {
-	//float posx = pt.x - top->getX();
-	//float posy = pt.y - top->getY();
-	//float distance = sqrt(posx*posx + posy*posy);
-
 	float posx = pt.x - destination.x;
 	float posy = destination.y - pt.y;
 	float distance = sqrt(posx*posx + posy*posy);
@@ -239,28 +229,8 @@ void CWorld_CG::update_move_ship_cg()
 
 	degree = pt_degree;
 
-	//if (degree < 0)
-	//	degree += 360;
-
-	//img->setDegrees(direct - degree);
-	// ====================== 해당 지점으로 이동 ==========================
-	//float targetPtRad = 1.0f;   // 타겟지점으로부터의 반지름 For Circle   
-	//float objectRad = img->getWidth() / 4;   // 오브젝트의 반지름
-
-	//Double ang = RadianToDegree(Math.Atan2(ydf, xdf));
-	//return ang + 90;
-
-	//if (distance < targetPtRad + objectRad)
 	if (distance <= img->getWidth())
 	{
-		// ================= 그자리에 멈춤 ======================
-		//top->setX(pt.x - top->getWidth() * top->getScale() / 2);
-		//top->setY(pt.y - top->getHeight() * top->getScale() / 2);
-		//body->setX(pt.x - body->getWidth() * body->getScale() / 2);
-		//body->setY(pt.y - body->getHeight() * body->getScale() / 2);
-		//middle->setX(pt.x - middle->getWidth() * middle->getScale() / 2);
-		//middle->setY(pt.y - middle->getHeight() * middle->getScale() / 2);
-		//SAFE_DELETE(img);
 		current_cg = e_worldcg::NONE;
 
 		SAFE_DELETE(img);
@@ -280,8 +250,6 @@ void CWorld_CG::update_move_ship_cg()
 		}
 
 		create_battle_cg(user->get_data()->get_Island()[move_island]->getPt().x, user->get_data()->get_Island()[move_island]->getPt().y);
-
-		//SAFE_DELETE(this); //자기 자신 없애기..
 
 		return;
 	}

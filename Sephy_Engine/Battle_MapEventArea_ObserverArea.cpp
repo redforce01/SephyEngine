@@ -13,8 +13,8 @@ CBattle_MapEventArea_ObserverArea::CBattle_MapEventArea_ObserverArea()
 	m_fCaptureTime = 0.f;
 	m_bPlayerArea = false;
 	m_bCapturing = false;
-	//m_bDebug = g_bDebugMode;
-	m_bDebug = true;
+	m_bDebug = g_bDebugMode;
+	//m_bDebug = true;
 }
 
 
@@ -118,7 +118,7 @@ void CBattle_MapEventArea_ObserverArea::render()
 		m_pGraphics->spriteEnd();
 	}
 
-	if (m_bDebug)
+	if (g_bDebugMode)
 	{
 		if (MyUtil::getObjInScreen(m_AreaCenterX, m_AreaCenterY, m_AreaSightRadius, m_AreaSightRadius, g_fScreenWidth, g_fScreenHeight) == false)
 			return;

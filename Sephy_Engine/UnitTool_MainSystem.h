@@ -6,6 +6,11 @@
 #include "UnitTool_UnitControlSystem.h"
 #include "UnitTool_SceneControlSystem.h"
 
+namespace unitToolMainSystemNS
+{
+	const UCHAR CHANGE_SCENE_TO_LOBBY_KEY = VK_ESCAPE;
+}
+
 class CUnitTool_MainSystem : public SystemBase
 {
 private:

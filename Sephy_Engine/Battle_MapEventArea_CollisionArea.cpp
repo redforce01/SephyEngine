@@ -9,8 +9,8 @@ CBattle_MapEventArea_CollisionArea ::CBattle_MapEventArea_CollisionArea ()
 	m_y = 0.f;;
 	m_width = 0.f;
 	m_height = 0.f;
-	//m_bDebug = g_bDebugMode;
-	m_bDebug = true;
+	m_bDebug = g_bDebugMode;
+	//m_bDebug = true;
 }
 
 
@@ -32,7 +32,7 @@ void CBattle_MapEventArea_CollisionArea ::render()
 	if (MyUtil::getObjInScreen(m_x, m_y, m_width, m_height, g_fScreenWidth, g_fScreenHeight) == false)
 		return;
 
-	if (m_bDebug)
+	if (g_bDebugMode)
 	{
 		m_pGraphics->drawRect(m_rcCollision, 1.0f, battleMapUICollisionAreaNS::COLLISION_BOX_COLOR);
 	}

@@ -9,17 +9,17 @@
 //=============================================================================
 Game::Game()
 {
-    input = new Input();        // initialize keyboard input immediately
+    //input = new Input();        // initialize keyboard input immediately
     // additional initialization is handled in later call to input->initialize()
     paused = false;             // game is not paused
     graphics = NULL;
+	input = NULL;
     console = NULL;
     messageDialog = NULL;
     inputDialog = NULL;
     fps = 100;
     fpsOn = false;              // default to fps display off
     initialized = false;
-	started = false;
 	timerOn = false;
 }
 
@@ -116,22 +116,26 @@ void Game::initialize(HWND hw)
     //graphics->initialize(g_hWndScene, GAME_WIDTH, GAME_HEIGHT, FULLSCREEN);
 
 	// Using Global Graphics
-	graphics = g_Graphics;						//global graphics value
+	graphics = g_Graphics;		//Global graphics value
+	input = g_Input;			//Global Input value
 
-    // initialize input, do not capture mouse
-    input->initialize(hwnd, false);             // throws GameError
+    // initialize input, do not capture mouse	
+    //input->initialize(hwnd, false);             // throws GameError
 
     // initialize console
-    console = new Console();
+	if(console == nullptr)
+		console = new Console();
     console->initialize(graphics, input);       // prepare console
     console->print("---Console---");
 
     // initialize messageDialog
-    messageDialog = new MessageDialog();
+	if(messageDialog == nullptr)
+		messageDialog = new MessageDialog();
     messageDialog->initialize(graphics, input, hwnd);
 
     // initialize inputDialog
-    inputDialog = new InputDialog();
+	if(inputDialog == nullptr)
+		inputDialog = new InputDialog();
     inputDialog->initialize(graphics, input, hwnd);
 
     // initialize DirectX font
@@ -191,13 +195,11 @@ void Game::renderGame()
         {
             // convert fps to string
             _snprintf_s(buffer, BUF_SIZE, "fps %d ", (int)fps);
-            //dxFont.print(buffer,GAME_WIDTH-100,GAME_HEIGHT-28);
 			dxFont.print(buffer, g_fScreenWidth - 100, g_fScreenHeight - 28);
         }
 		if (timerOn)
 		{
 			_snprintf_s(buffer, BUF_SIZE, "timer %.1f ", (float)TIMEMANAGER->getFrameDeltaSec());
-			//dxFont.print(buffer, GAME_WIDTH - 100, GAME_HEIGHT - 40);
 			dxFont.print(buffer, g_fScreenWidth - 100, g_fScreenHeight - 40);
 			TIMEMANAGER->drawTimeInfo();
 		}
@@ -304,7 +306,10 @@ void Game::run(HWND hwnd)
         console->showHide();
         paused = console->getVisible(); // pause game when console is visible
     }
+
+	graphics->spriteBegin();
     consoleCommand();               // process user entered console command
+	graphics->spriteEnd();
 
     input->readControllers();       // read state of controllers
 
@@ -360,6 +365,34 @@ void Game::consoleCommand()
 		else
 			console->print("timer Off");
 	}
+
+	if (command.compare(gameNS::command_mute) == 0)
+	{
+		if (g_fSoundMasterVolume > 0.f)
+		{
+			console->print("mute On");
+			g_fSoundMasterVolume = 0.f;
+			SOUNDMANAGER->allStop();
+		}
+		else
+		{
+			console->print("mute Off");
+			SOUNDMANAGER->allStop();
+			g_fSoundMasterVolume = 1.0f;
+		}
+	}
+
+	if (command.compare(gameNS::command_debug) == 0)
+	{
+		g_bDebugMode = !g_bDebugMode;
+		if (g_bDebugMode)
+		{
+			console->print("debug mode On");
+		}
+		else
+			console->print("debug mode Off");
+		
+	}
 }
 
 //=============================================================================
@@ -394,10 +427,6 @@ void Game::deleteAll()
 {
     releaseAll();               // call onLostDevice() for every graphics item
     
-	if(graphics != g_Graphics)
-		SAFE_DELETE(graphics);
-
-    SAFE_DELETE(input);
     SAFE_DELETE(console);
     SAFE_DELETE(messageDialog);
     SAFE_DELETE(inputDialog);
